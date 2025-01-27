@@ -59,6 +59,7 @@ const login = async () => {
     });
 
     const tokenResult = response.data.token.result;
+
     if (tokenResult && typeof tokenResult === 'string') {
       token.value = tokenResult;
     } else {
@@ -79,7 +80,7 @@ const login = async () => {
     if (accessDenied.value) {
       return;
     }
-/*OVO TU TI NEĆE ŠTIMAT AKO IZMJENIŠ ROLE */
+/*ROLE */
 /**--------------------------------------------------------------------------------------------------------------------------------------------------------- */
 /**--------------------------------------------------------------------------------------------------------------------------------------------------------- */
 /**--------------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -91,16 +92,19 @@ if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
     if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'User') {
       router.push({ path: '/home' });
     }
-    if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Worker') {
+    if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Worker'  || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Menager' ) {
       router.push({ path: '/workerHome' });
     }
     if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Vet' || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'HeadVet') {
       router.push({ path: '/vetHome' });
     }
+    if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Surenderer' || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'AnimalWelffereOfficer' || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Association') {
+      router.push({ path: '/surenderersHome' });
+    }
      else {
       console.error('Error fetching role details:', error);
     }
-    /**http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "User"  HeadVet*/
+ 
 /**--------------------------------------------------------------------------------------------------------------------------------------------------------- */
 /**--------------------------------------------------------------------------------------------------------------------------------------------------------- */
     console.log('Login successful');

@@ -186,6 +186,64 @@
         <label for="personalityDescription" class="block text-sm font-bold mb-2">Personality Description:</label>
         <textarea id="personalityDescription" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="personalityDescription"></textarea>
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- Surenderer info -->
+
+    
+  
+    <!-- Surenderer info -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+      <div>
+        <label for="username" class="block text-sm font-bold mb-2">Username Surenderer:</label>
+        <input type="text" id="username" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="username" />
+      </div>
+      <div>
+        <label for="checkUser" class="block text-sm font-bold mb-2">Chack User</label>
+        <svg @click="checkUser" class="w-10 h-10 text-white dark:text-white cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+          <path fill-rule="evenodd" d="M17 10v1.126c.367.095.714.24 1.032.428l.796-.797 1.415 1.415-.797.796c.188.318.333.665.428 1.032H21v2h-1.126c-.095.367-.24.714-.428 1.032l.797.796-1.415 1.415-.796-.797a3.979 3.979 0 0 1-1.032.428V20h-2v-1.126a3.977 3.977 0 0 1-1.032-.428l-.796.797-1.415-1.415.797-.796A3.975 3.975 0 0 1 12.126 16H11v-2h1.126c.095-.367.24-.714.428-1.032l-.797-.796 1.415-1.415.796.797A3.977 3.977 0 0 1 15 11.126V10h2Zm.406 3.578.016.016c.354.358.574.85.578 1.392v.028a2 2 0 0 1-3.409 1.406l-.01-.012a2 2 0 0 1 2.826-2.83ZM5 8a4 4 0 1 1 7.938.703 7.029 7.029 0 0 0-3.235 3.235A4 4 0 0 1 5 8Zm4.29 5H7a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h6.101A6.979 6.979 0 0 1 9 15c0-.695.101-1.366.29-2Z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <div>
         <label for="image" class="block text-sm font-bold mb-2 text-white">Image:</label>
         <div class="flex items-center justify-center w-full">
@@ -211,9 +269,12 @@
   </div>
 </template>
 
+
+
 <script>
 import AdminNavigation from './AdminNavigation.vue';
 import axios from 'axios';
+//import jwtDecode from 'jwt-decode';
 
 export default {
   components: {
@@ -249,10 +310,32 @@ export default {
       image: null,
       selectedFiles: [],
       fileName: '',
-      token: 'your-token-here', // Token for authentication, replace with actual token
+      token: 'your-token-here',
+      username: '',
+      idUser:''
+  
     };
   },
   methods: {
+    async checkUser() {
+   
+        const userResponse = await axios.get(`https://localhost:5001/api/auth/getUserByUsername/${this.username}`);
+        const userData = userResponse.data;
+        console.log(userData.id);
+
+        if (this.accessDenied) {
+          return;
+        }
+      
+    },
+
+
+
+
+
+
+
+
     onFileChange(event) {
       const file = event.target.files[0];
       if (file) {
@@ -269,69 +352,67 @@ export default {
       });
     },
     async handleSubmit() {
-  console.log("Submitting form data...");
+      console.log("Submitting form data...");
 
-  try {
-    // Prepare form data
-    const formData = new FormData();
-    formData.append('name', this.name);
-    formData.append('family', this.selectedFamily);
-    formData.append('species', this.species);
-    formData.append('subspecies', this.subspecies);
-    formData.append('age', this.age);
-    formData.append('gender', this.gender);
-    formData.append('weight', this.weight);
-    formData.append('height', this.height);
-    formData.append('length', this.length);
-    formData.append('neutered', this.neutered);
-    formData.append('vaccinated', this.vaccinated);
-    formData.append('microchipped', this.microchipped);
-    formData.append('trained', this.trained);
-    formData.append('socialized', this.socialized);
-    formData.append('healthIssues', this.healthIssues);
-    formData.append('personalityDescription', this.personalityDescription);
-    formData.append('adopted', this.adopted);
+      try {
+        // Prepare form data
+        const formData = new FormData();
+        formData.append('name', this.name);
+        formData.append('family', this.selectedFamily);
+        formData.append('species', this.species);
+        formData.append('subspecies', this.subspecies);
+        formData.append('age', this.age);
+        formData.append('gender', this.gender);
+        formData.append('weight', this.weight);
+        formData.append('height', this.height);
+        formData.append('length', this.length);
+        formData.append('neutered', this.neutered);
+        formData.append('vaccinated', this.vaccinated);
+        formData.append('microchipped', this.microchipped);
+        formData.append('trained', this.trained);
+        formData.append('socialized', this.socialized);
+        formData.append('healthIssues', this.healthIssues);
+        formData.append('personalityDescription', this.personalityDescription);
+        formData.append('adopted', this.adopted);
 
-    if (this.selectedFiles.length > 0) {
-      const file = this.selectedFiles[0];
-      formData.append('image', file);  // Dodajemo stvarnu datoteku umjesto Base64
-      console.log("File added to FormData:", file);
-    }
+        if (this.selectedFiles.length > 0) {
+          const file = this.selectedFiles[0];
+          formData.append('image', file);  // Dodajemo stvarnu datoteku umjesto Base64
+          console.log("File added to FormData:", file);
+        }
 
-    // Ispis svih podataka koji se šalju
-    for (let pair of formData.entries()) {
-      console.log(pair[0]+ ', ' + pair[1]); 
-    }
+        // Ispis svih podataka koji se šalju
+        for (let pair of formData.entries()) {
+          console.log(pair[0] + ', ' + pair[1]);
+        }
 
-    // Axios post request
-    console.log("Sending data to API...");
-    const response = await axios.post('https://localhost:5001/api/animal/addAnimal', formData, {
-      headers: {
-        Authorization: `Bearer ${this.token}`,  // Authorization header
-        // 'Content-Type' is not needed for FormData, Axios will set it automatically
-      },
-    });
+        // Axios post request
+        console.log("Sending data to API...");
+        const response = await axios.post('https://localhost:5001/api/animal/addAnimal', formData, {
+          headers: {
+            Authorization: `Bearer ${this.token}`,  // Authorization header
+            // 'Content-Type' is not needed for FormData, Axios will set it automatically
+          },
+        });
 
-    console.log("Response data:", response.data);
-    alert("Animal successfully added!");
+        console.log("Response data:", response.data);
+        alert("Animal successfully added!");
 
-  } catch (error) {
-    console.error("Error submitting form:", error);
-    if (error.response) {
-      console.error("Response data:", error.response.data);
-      console.error("Status:", error.response.status);
-      console.error("Headers:", error.response.headers);
-    } else if (error.request) {
-      console.error("Request error:", error.request);
-    } else {
-      console.error("Error message:", error.message);
-    }
-    console.error("Config:", error.config);
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+          console.error("Status:", error.response.status);
+          console.error("Headers:", error.response.headers);
+        } else if (error.request) {
+          console.error("Request error:", error.request);
+        } else {
+          console.error("Error message:", error.message);
+        }
+        console.error("Config:", error.config);
+      }
+    },
   }
-}
-
-,
-  },
 };
 </script>
 

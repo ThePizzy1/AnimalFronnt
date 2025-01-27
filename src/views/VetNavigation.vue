@@ -19,7 +19,7 @@
        
           
             <li>
-              <router-link to="" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
+              <router-link to="/vetAllAnimals" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
                 <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path d="M0 96C0 43 43 0 96 0H384h32c17.7 0 32 14.3 32 32V352c0 17.7-14.3 32-32 32v64c17.7 0 32 14.3 32 32s-14.3 32-32 32H384 96c-53 0-96-43-96-96V96zM64 416c0 17.7 14.3 32 32 32H352V384H96c-17.7 0-32 14.3-32 32zM208 112v48H160c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h48v48c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V224h48c8.8 0 16-7.2 16-16V176c0-8.8-7.2-16-16-16H272V112c0-8.8-7.2-16-16-16H224c-8.8 0-16 7.2-16 16z"></path>
@@ -46,6 +46,28 @@
               </router-link>
             </li>
            
+         
+
+
+
+
+
+
+
+            <li>
+          <div class="flex items-center justify-between p-2 rounded-lg hover:bg-gray-700 group" @click="toggleDropdown('visits')">
+            <div class="flex items-center">
+              <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/>
+</svg>
+
+              <span class="flex-1 ms-3 whitespace-nowrap">Visits</span>
+            </div>
+            <svg class="w-4 h-4 transition-transform transform" :class="{ 'rotate-180': dropdowns.animals }" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+          <ul v-show="dropdowns.visits" class="pl-4 space-y-2">
             <li>
               <router-link to="" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
                 <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
@@ -56,10 +78,7 @@
               </router-link>
             </li>
 
-
-
-
-           <li>
+            <li>
           <router-link to="" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
             <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
               <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -78,7 +97,7 @@
          <span class="flex-1 ms-3 whitespace-nowrap">Operations</span>
         </router-link>
           </li>
-
+           
           <li>
           <router-link to="" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
             <svg class="w-5 h-5 fill-[#fcfcfc]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
@@ -88,6 +107,28 @@
          <span class="flex-1 ms-3 whitespace-nowrap">Checkups</span>
         </router-link>
           </li>
+          </ul>
+        </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+          
+
           <li>
           <router-link to="" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
             <svg class="w-5 h-5 fill-[#fcfcfc]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">

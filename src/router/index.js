@@ -30,6 +30,11 @@ const router = createRouter({
       component: () => import('../views/WorkerHome.vue')
     },
     {
+      path: '/surenderersHome',
+      name: 'SurenderersHome',
+      component: () => import('../views/SurenderersHome.vue')
+    },
+    {
       path: '/vetNavigation',
       name: 'VetNavigation',
       component: () => import('../views/VetNavigation.vue')
@@ -39,6 +44,16 @@ const router = createRouter({
       name: 'VetHome',
       component: () => import('../views/VetHme.vue')
     },
+    {
+      path: '/vetAllAnimals',
+      name: 'VetAllAnimals',
+      component: () => import('../views/VetAllAnimals.vue')
+    },
+    {
+      path: '/vetSingleAnimal/:id',
+      name: 'VetSingleAnimal',
+      component: () => import('../views/VetSingleAnimal.vue')
+    },//C:\Users\ivozab\Documents\AnimalRescue\src\views\VetSingleAnimal.vue
     {
       path: '/footer',
       name: 'Footer',
