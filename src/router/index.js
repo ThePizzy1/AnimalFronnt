@@ -42,7 +42,7 @@ const router = createRouter({
     {
       path: '/vetHome',
       name: 'VetHome',
-      component: () => import('../views/VetHme.vue')
+      component: () => import('../views/VetHome.vue')
     },
     {
       path: '/vetAllAnimals',
