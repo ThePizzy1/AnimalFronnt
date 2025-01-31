@@ -2,31 +2,31 @@
     <div class="container mx-auto px-4">  
       <!-- Navigation and content layout -->
       <div class="flex">
-    
-      <VetNavigation class="w-1/6" />
+        <!-- Admin navigation -->
+      <WorkerNavigation class="w-1/6" />
   
         <!-- Warning message -->
         <div class="w-5/6 ml-auto">
           <div class="flex justify-center items-center h-screen">
             <div class="text-center">
-              <h1 class="text-3xl font-bold text-white-500 mb-4">Animals on medication</h1>
-      
+              <h1 class="text-3xl font-bold text-white-500 mb-4">Inventory</h1>
+    
             </div>
           </div>
   
-        
+         
         </div>
       </div>
     </div>
   </template>
   
   <script>
-  import VetNavigation from '../Vet/VetNavigation.vue';
+  import WorkerNavigation from './WorkerNavigation.vue';
 
   
   export default {
     components: {
-      VetNavigation,
+        WorkerNavigation,
     },
     // Add your component logic here
   };

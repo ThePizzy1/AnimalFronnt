@@ -92,8 +92,8 @@
   </template>
   
   <script>
- import Navigation from  './Navigation.vue';
- import Footer from  './User/Footer.vue';
+ import Navigation from  '../User/Navigation.vue';
+ import Footer from  '../User/Footer.vue';
  export default {
     components: {
       Navigation,

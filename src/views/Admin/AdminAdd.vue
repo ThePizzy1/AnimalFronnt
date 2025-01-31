@@ -1,8 +1,7 @@
 <template>
   <div class="flex">
-    <!-- Navigation -->
     <div class="w-1/6 text-white p-4 rounded-l-lg">
-      <AdminNavigation />
+      <component :is="role === 'Admin' ? 'AdminNavigation' : 'WorkerNavigation'" />
     </div>
     <!-- Form -->
     <div class="w-4/6 text-white p-4 rounded-r-lg">
@@ -272,16 +271,22 @@
 
 
 <script>
-import AdminNavigation from './AdminNavigation.vue';
+import AdminNavigation from '../Admin/AdminNavigation.vue';
+import WorkerNavigation from '../Worker/WorkerNavigation.vue';
+
 import axios from 'axios';
 //import jwtDecode from 'jwt-decode';
 
+localStorage.getItem('userRole');
+console.log(localStorage.getItem('userRole'));
 export default {
   components: {
     AdminNavigation,
+    WorkerNavigation
   },
   data() {
     return {
+      role: localStorage.getItem('userRole') || 'Worker', 
       name: '',
       selectedFamily: '',
       species: '',

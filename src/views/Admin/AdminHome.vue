@@ -49,7 +49,7 @@ Any added data must comply with privacy protection rules. It is not allowed to e
 </template>
 
 <script>
-import AdminNavigation from './AdminNavigation.vue';
+import AdminNavigation from '../Admin/AdminNavigation.vue';
 
 export default {
   components: {

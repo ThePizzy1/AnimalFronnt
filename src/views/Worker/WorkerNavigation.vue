@@ -11,7 +11,7 @@
     </div>
         <ul class="space-y-2 font-medium">
           <li>
-             <router-link to="" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
+             <router-link to="/workerAnimals" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
                               <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 
                 <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -34,7 +34,7 @@
 
 
              <li>
-             <router-link to="" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
+             <router-link to="/foodInventory" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
               <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 
               <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -45,7 +45,7 @@
                </router-link>
              </li>
              <li>
-             <router-link to="" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
+             <router-link to="/toyInventory" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
               <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
 
                 <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -56,7 +56,7 @@
                </router-link>
              </li>
              <li>
-             <router-link to="" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
+             <router-link to="/inventory" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
               <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
 
                 <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -67,7 +67,7 @@
                </router-link>
              </li>
              <li>
-             <router-link to="" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
+             <router-link to="/funds" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
               <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 
                 <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -79,19 +79,19 @@
              </li>
 
              <li>
-             <router-link to="" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
+             <router-link to="/news" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
               <svg class="w-5 h-5 fill-[#fcfcfc]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 
-<!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-<path d="M512 416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96C0 60.7 28.7 32 64 32H192c20.1 0 39.1 9.5 51.2 25.6l19.2 25.6c6 8.1 15.5 12.8 25.6 12.8H448c35.3 0 64 28.7 64 64V416zM232 376c0 13.3 10.7 24 24 24s24-10.7 24-24V312h64c13.3 0 24-10.7 24-24s-10.7-24-24-24H280V200c0-13.3-10.7-24-24-24s-24 10.7-24 24v64H168c-13.3 0-24 10.7-24 24s10.7 24 24 24h64v64z"></path>
+                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <path d="M512 416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96C0 60.7 28.7 32 64 32H192c20.1 0 39.1 9.5 51.2 25.6l19.2 25.6c6 8.1 15.5 12.8 25.6 12.8H448c35.3 0 64 28.7 64 64V416zM232 376c0 13.3 10.7 24 24 24s24-10.7 24-24V312h64c13.3 0 24-10.7 24-24s-10.7-24-24-24H280V200c0-13.3-10.7-24-24-24s-24 10.7-24 24v64H168c-13.3 0-24 10.7-24 24s10.7 24 24 24h64v64z"></path>
 
-</svg>
+                </svg>
               <span class="flex-1 ms-3 whitespace-nowrap">News</span>
                </router-link>
              </li>
 
           <li>
-             <router-link to="" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
+             <router-link to="/workerStatistics" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
               <svg class="flex-shrink-0 w-5 h-5 transition duration-75 group-hover:text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M3 17h3v4H3v-4zm5-6h3v10H8V11zm5-4h3v14h-3V7zm5-4h3v18h-3V3z"/>
              </svg>

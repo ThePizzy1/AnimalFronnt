@@ -266,7 +266,7 @@
   <script>
   import { defineComponent } from 'vue';
   import { useRouter } from 'vue-router';
-  import AdminNavigation from '../views/AdminNavigation.vue';
+  import AdminNavigation from '../Admin/AdminNavigation.vue';
   import axios from 'axios';
   import { ref, onMounted } from 'vue';
 

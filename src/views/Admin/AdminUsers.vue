@@ -65,7 +65,7 @@
 </template>
 <script>
 import axios from 'axios';
-import AdminNavigation from './Admin/AdminNavigation.vue';
+import AdminNavigation from '../Admin/AdminNavigation.vue';
 
 export default {
   components: {

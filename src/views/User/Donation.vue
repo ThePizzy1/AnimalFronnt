@@ -112,8 +112,8 @@
   <Footer/>
 </template>
 <script>
-import Navigation from './Navigation.vue';
-import Footer from './Footer.vue';
+import Navigation from '../Navigation.vue';
+import Footer from '../Footer.vue';
 
 export default {
     components: {

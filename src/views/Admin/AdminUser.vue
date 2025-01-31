@@ -194,9 +194,9 @@
 
 <script>
 import axios from 'axios';
-import Navigation from './Navigation.vue';
-import Footer from './Footer.vue';
-import Loading from './Loading.vue'; // Import the Loading component
+import Navigation from '../Navigation.vue';
+import Footer from '../Footer.vue';
+import Loading from '../Loading.vue'; // Import the Loading component
 import { ref } from 'vue';
 
 const token = ref(localStorage.getItem('token'));

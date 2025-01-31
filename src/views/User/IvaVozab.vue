@@ -25,7 +25,7 @@
   </template>
   
   <script setup>
-import Navigation from './Navigation.vue';
+import Navigation from '../Navigation.vue';
   </script>
   
   <style scoped>

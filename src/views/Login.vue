@@ -74,7 +74,7 @@ const login = async () => {
     localStorage.setItem('userName', decodedToken.sub);
     console.log("userId:"+decodedToken.id_usera);
     console.log("userName:"+decodedToken.sub);
-    console.log("userRole:"+decodedToken.role);
+
     await fetchUserDetails(decodedToken.id_usera);
 
     if (accessDenied.value) {
@@ -88,21 +88,28 @@ const login = async () => {
 
 if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Admin') {
       router.push({ path: '/adminHome' });
+      console.log("userRole: Admin");
+      localStorage.setItem('userRole','Admin' );
     }
     if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'User') {
       router.push({ path: '/home' });
+   
     }
     if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Worker'  || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Menager' ) {
       router.push({ path: '/workerHome' });
+      localStorage.setItem('userRole','Worker' );
     }
     if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Vet' || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'HeadVet') {
       router.push({ path: '/vetHome' });
+      localStorage.setItem('userRole','Vet' );
     }
     if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Surenderer' || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'AnimalWelffereOfficer' || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Association') {
       router.push({ path: '/surenderersHome' });
+      localStorage.setItem('userRole','Surenderer' );
     }
      else {
       console.error('Error fetching role details:', error);
+      localStorage.setItem('userRole','' );
     }
  
 /**--------------------------------------------------------------------------------------------------------------------------------------------------------- */

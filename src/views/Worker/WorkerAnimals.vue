@@ -1,8 +1,7 @@
 <template>
- 
-    <div class="container mx-auto px-4">
+<div class="container mx-auto px-4">
       <div class="flex">
-        <VetNavigation class="w-1/6" />
+        <WorkerNavigation class="w-1/6" />
         <div class="w-5/6 shadow-lg rounded-lg overflow-hidden text-white ml-auto">
           <h1 class="ml-5 text-2xl font-bold mb-4 text-white">Animal List</h1>
           <div class="mb-4 mx-5">
@@ -119,15 +118,15 @@
         </div>
       </div>
     </div>
-   
   </template>
+  
   <script>
+  import WorkerNavigation from './WorkerNavigation.vue';
   import axios from 'axios';
-  import VetNavigation from '../Vet/VetNavigation.vue';
   import Loading from '../Loading.vue';
   export default {
     components: {
-        VetNavigation,
+      WorkerNavigation,
       Loading,
     },
     data() {
@@ -206,7 +205,7 @@
   
     methods: {
       navigateToDetails(idAnimal) {
-      this.$router.push(`/vetSingleAnimal/${idAnimal}`);
+      this.$router.push(`/workerSingleAnimal/${idAnimal}`);
     },
       populateFilters() {
         this.families = [...new Set(this.items.map(item => item.family))];
