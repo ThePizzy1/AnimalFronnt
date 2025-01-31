@@ -22,7 +22,7 @@ const router = createRouter({
     {
       path: '/workerNavigation',
       name: 'WorkerNavigation',
-      component: () => import('../views/WorkerNavigation.vue')
+      component: () => import('../views/Worker/WorkerNavigation.vue')
     },
     {
       path: '/workerHome',
@@ -37,32 +37,32 @@ const router = createRouter({
     {
       path: '/vetNavigation',
       name: 'VetNavigation',
-      component: () => import('../views/VetNavigation.vue')
+      component: () => import('../views/Vet/VetNavigation.vue')
     },
     {
       path: '/vetHome',
       name: 'VetHome',
-      component: () => import('../views/VetHome.vue')
+      component: () => import('../views/Vet/VetHome.vue')
     },
     {
       path: '/vetAllAnimals',
       name: 'VetAllAnimals',
-      component: () => import('../views/VetAllAnimals.vue')
+      component: () => import('../views/Vet/VetAllAnimals.vue')
     },
     {
       path: '/vetSingleAnimal/:id',
       name: 'VetSingleAnimal',
-      component: () => import('../views/VetSingleAnimal.vue')
+      component: () => import('../views/Vet/VetSingleAnimal.vue')
     },//C:\Users\ivozab\Documents\AnimalRescue\src\views\VetSingleAnimal.vue
     {
       path: '/footer',
       name: 'Footer',
-      component: () => import('../views/Footer.vue')
+      component: () => import('../views/User/Footer.vue')
     },
     {
       path: '/adminNavigation',
       name: 'Adminnavigation',
-      component: () => import('../views/AdminNavigation.vue')
+      component: () => import('../views/Admin/AdminNavigation.vue')
     },
     {
       path: '/search',
@@ -81,7 +81,7 @@ const router = createRouter({
     {
       path: '/addUsers',
       name: 'AddUsers',
-      component: () => import('../views/AddUser.vue')
+      component: () => import('../views/Admin/AddUser.vue')
     },
     {
       path: '/adminAdopted',
@@ -100,7 +100,7 @@ const router = createRouter({
     {
       path: '/statistic',
       name: 'Stanistic',
-      component: () => import('../views/Statistic.vue')
+      component: () => import('../views/Admin/Statistic.vue')
     },
    
     {
@@ -112,7 +112,7 @@ const router = createRouter({
       path: '/animal/:id',
       name: 'Animal',
       props: true,
-      component: () => import('../views/Animal.vue')
+      component: () => import('../views/User/Animal.vue')
     },
     {
       path: '/user/:id',

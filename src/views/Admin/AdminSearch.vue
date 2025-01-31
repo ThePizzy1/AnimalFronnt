@@ -141,7 +141,7 @@
 </template>
 <script>
 import axios from 'axios';
-import AdminNavigation from './AdminNavigation.vue';
+import AdminNavigation from './Admin/AdminNavigation.vue';
 import Loading from './Loading.vue';
 export default {
   components: {

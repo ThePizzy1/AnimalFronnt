@@ -162,7 +162,7 @@
 <script>
 import axios from 'axios';
 import Navigation from './Navigation.vue';
-import Footer from './Footer.vue';
+import Footer from './User/Footer.vue';
 import { ref, onMounted } from 'vue';
 
 export default {

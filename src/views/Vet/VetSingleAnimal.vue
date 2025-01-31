@@ -158,7 +158,7 @@
   <script>
   import { defineComponent } from 'vue';
   import { useRouter } from 'vue-router';
-  import VetNavigation from '../views/VetNavigation.vue';
+  import VetNavigation from './Vet/VetNavigation.vue';
   import axios from 'axios';
   import { ref, onMounted } from 'vue';
 
