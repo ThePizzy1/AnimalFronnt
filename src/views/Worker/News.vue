@@ -1,36 +1,125 @@
 <template>
-    <div class="container mx-auto px-4">  
-      <!-- Navigation and content layout -->
-      <div class="flex">
-        <!-- Admin navigation -->
-      <WorkerNavigation class="w-1/6" />
-  
-        <!-- Warning message -->
-        <div class="w-5/6 ml-auto">
-          <div class="flex justify-center items-center h-screen">
-            <div class="text-center">
-              <h1 class="text-3xl font-bold text-white-500 mb-4">News</h1>
-    
-            </div>
-          </div>
-  
-         
+  <div class="flex">
+    <div class="w-1/6 text-white p-4 rounded-l-lg">
+      <WorkerNavigation />
+    </div>
+    <div class="w-5/6 text-white p-4 rounded-r-lg mr-8">
+      <h1 class="text-xl font-bold mb-4">News</h1>
+
+      <button type="button" class="mb-4 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
+        <svg class="w-8 h-8 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+          <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+          <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
+        </svg>
+        <span class="block text-sm font-bold mx-2">Add News</span>
+      </button>
+
+      <div class="grid grid-cols-4 gap-4 mb-4">
+        <div>
+          <label for="name" class="block text-sm font-bold mb-2">Name:</label>
+          <input v-model="filters.name" id="name" type="text" class="rounded-full text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white  shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" />
+        </div>
+        <div>
+          <label for="description" class="block text-sm font-bold mb-2">Description:</label>
+          <input v-model="filters.description" id="description" type="text" class="rounded-full text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" />
+        </div>
+        <div>
+          <label for="dateTime" class="block text-sm font-bold mb-2">Date:</label>
+          <input v-model="filters.dateTime" id="dateTime" type="date" class="rounded-full text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white  shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" />
         </div>
       </div>
-    </div>
-  </template>
-  
-  <script>
-  import WorkerNavigation from './WorkerNavigation.vue';
 
-  
-  export default {
-    components: {
-        WorkerNavigation,
+      <div class="overflow-x-auto shadow-2lx sm:rounded-lg">
+        <table class="min-w-full leading-normal">
+          <thead>
+            <tr>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Name</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Description</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in filteredItems" :key="item.id" class="border-b border-customBlack cursor-pointer" @click="navigateToDetails(item.id)">
+              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.name }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.description }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-left">{{ formatDate(item.dateTime) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import WorkerNavigation from './WorkerNavigation.vue';
+import axios from 'axios';
+
+export default {
+  components: {
+    WorkerNavigation,
+  },
+  data() {
+    return {
+      items: [],
+      filters: {
+        name: '',
+        description: '',
+        dateTime: '',
+      },
+      isLoading: true, // Početno stanje učitavanja
+    };
+  },
+  computed: {
+    filteredItems() {
+      return this.items.filter(item => {
+        return (!this.filters.name || item.name.includes(this.filters.name)) &&
+               (!this.filters.description || item.description.includes(this.filters.description)) &&
+               (!this.filters.dateTime || new Date(item.dateTime).toISOString().split('T')[0] === this.filters.dateTime);
+      });
     },
-    // Add your component logic here
-  };
-  </script>
+  },
+  mounted() {
+    this.fetchData();
+  },
+  methods: {
+    async fetchData() {
+      try {
+        const response = await axios.get('https://localhost:5001/api/animal/news_db');
+        this.items = response.data;
+        console.log(this.items);
+        this.isLoading = false;
+      } catch (error) {
+        console.error('There was an error!', error);
+        this.isLoading = false;
+      }
+    },
+    formatDate(date) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(date).toLocaleDateString(undefined, options);
+    },
+    navigateToDetails(id) {
+      // Implement navigation to details page
+      console.log(`Navigate to details of item with ID: ${id}`);
+    },
+  },
+  watch: {
+    filters: {
+      handler() {
+        this.filteredItems = this.items.filter(item => {
+          return (
+            (!this.filters.name || item.name.includes(this.filters.name)) &&
+            (!this.filters.description || item.description.includes(this.filters.description)) &&
+            (!this.filters.dateTime || new Date(item.dateTime).toISOString().split('T')[0] === this.filters.dateTime)
+          );
+        });
+      },
+      deep: true,
+    },
+  },
+};
+</script>
+
   
   <style scoped>
   .container {

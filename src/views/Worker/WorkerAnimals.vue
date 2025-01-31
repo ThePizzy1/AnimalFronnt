@@ -9,28 +9,28 @@
               <div class="grid grid-cols-4 gap-4 ">
                 <div>
                   <label for="family" class="block text-sm font-bold mb-2">Family:</label>
-                  <select v-model="filters.family" id="family" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                  <select v-model="filters.family" id="family" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                     <option value="">All</option>
                     <option v-for="family in families" :key="family" :value="family">{{ family }}</option>
                   </select>
                 </div>
                 <div>
                   <label for="species" class="block text-sm font-bold mb-2">Species:</label>
-                  <select v-model="filters.species" id="species" class= "text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                  <select v-model="filters.species" id="species" class= "text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                     <option value="">All</option>
                     <option v-for="species in speciesList" :key="species" :value="species">{{ species }}</option>
                   </select>
                 </div>
                 <div>
                   <label for="subspecies" class="block text-sm font-bold mb-2">Subspecies:</label>
-                  <select v-model="filters.subspecies" id="subspecies" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                  <select v-model="filters.subspecies" id="subspecies" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                     <option value="">All</option>
                     <option v-for="subspecies in subspeciesList" :key="subspecies" :value="subspecies">{{ subspecies }}</option>
                   </select>
                 </div>
                 <div>
                   <label for="gender" class="block text-sm font-bold mb-2">Gender:</label>
-                  <select v-model="filters.gender" id="gender" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                  <select v-model="filters.gender" id="gender" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                     <option value="">All</option>
                     <option value="Female">Female</option>
                     <option value="Male">Male</option>

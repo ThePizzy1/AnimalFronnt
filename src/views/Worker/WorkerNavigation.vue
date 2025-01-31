@@ -55,17 +55,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">Toy Inventory</span>
                </router-link>
              </li>
-             <li>
-             <router-link to="/inventory" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
-              <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
-
-                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                <path d="M192 64C86 64 0 150 0 256S86 448 192 448H448c106 0 192-86 192-192s-86-192-192-192H192zM496 168a40 40 0 1 1 0 80 40 40 0 1 1 0-80zM392 304a40 40 0 1 1 80 0 40 40 0 1 1 -80 0zM168 200c0-13.3 10.7-24 24-24s24 10.7 24 24v32h32c13.3 0 24 10.7 24 24s-10.7 24-24 24H216v32c0 13.3-10.7 24-24 24s-24-10.7-24-24V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h32V200z"></path>
-
-                </svg>
-                    <span class="flex-1 ms-3 whitespace-nowrap"> Inventory</span>
-               </router-link>
-             </li>
+         
              <li>
              <router-link to="/funds" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
               <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
