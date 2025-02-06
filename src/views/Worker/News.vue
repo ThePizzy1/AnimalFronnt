@@ -52,6 +52,7 @@
 </template>
 
 <script>
+//dodaj button remuve u tablici
 import WorkerNavigation from './WorkerNavigation.vue';
 import axios from 'axios';
 

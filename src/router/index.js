@@ -67,11 +67,6 @@ const router = createRouter({
       component: () => import('../views/Worker/Funds.vue')
     },
 
-    {
-      path: '/inventory',
-      name: 'Inventory',
-      component: () => import('../views/Worker/Inventory.vue')
-    },
 
     {
       path: '/news',
