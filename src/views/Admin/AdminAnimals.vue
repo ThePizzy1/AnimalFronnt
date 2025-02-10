@@ -147,7 +147,7 @@
       
       </div>
       <div class="flex justify-center text-sm text-red-500 ">
-      <p>You can only remove deceased animals.</p>
+      <p>You can only remove deceased animals.</p> <!-- Napravi da se uginule životinje u recordu prikazuju kao mrtve -->
     
     </div>
     </div>

@@ -27,12 +27,7 @@
               </tr>
             </thead>
             <tbody>
-  <tr v-for="adopter in filteredAdopters" 
-    :key="adopter.Id" 
-    :class="{ 
-      'flagged-row': adopter.flag, 
-      'cursor-not-allowed opacity-50': adopter.numberOfAdoptedAnimals === 0 
-    }" 
+  <tr v-for="adopter in filteredAdopters" :key="adopter.Id"  :class="{  'flagged-row': adopter.flag,  'cursor-not-allowed opacity-50': adopter.numberOfAdoptedAnimals === 0 }" 
     class="border-b border-customBlack"
     @click="adopter.numberOfAdoptedAnimals > 0 ? navigateToDetails(adopter.id) : null">
 
@@ -95,7 +90,7 @@ export default {
       .then(response => {
         this.adopters = response.data.map(adopter => ({
           ...adopter,
-          flagged: false, // Assume initially not flagged
+          flagged: false, 
         }));
       })
       .catch(error => {

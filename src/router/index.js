@@ -89,6 +89,21 @@ const router = createRouter({
       component: () => import('../views/Worker/WorkerSingleAnimal.vue')
     },
     {
+      path: '/singleFood/:id',
+      name: 'SingleFood',
+      component: () => import('../views/Worker/SingleFood.vue')
+    },
+    {
+      path: '/singleToy/:id',
+      name: 'SingleToy',
+      component: () => import('../views/Worker/SingleToy.vue')
+    },
+    {
+      path: '/singleNews/:id',
+      name: 'SingleNews',
+      component: () => import('../views/Worker/SingleNews.vue')
+    },
+    {
       path: '/workerStatistics',
       name: 'WorkerStatistics',
       component: () => import('../views/Worker/WorkerStatistics.vue')
@@ -108,6 +123,10 @@ const router = createRouter({
       name: 'SurenderersHome',
       component: () => import('../views/SurenderersHome.vue')
     },
+
+
+
+
 
 
 
@@ -177,6 +196,31 @@ const router = createRouter({
       name: 'AnimalsOnMedication',
       component: () => import('../views/Vet/AnimalsOnMedication.vue')
     },
+ {
+      path: '/singleAnimalOnMedication/:id',
+      name: 'SingleAnimalOnMedication',
+      component: () => import('../views/Vet/SingleAnimalOnMedication.vue')
+    },
+
+    {
+      path: '/singleContageusAnimal/:id',
+      name: 'SingleContageusAnimal',
+      component: () => import('../views/Vet/SingleContageusAnimal.vue')
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
  //ADMIN
     {
