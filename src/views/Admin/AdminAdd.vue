@@ -317,7 +317,8 @@ export default {
       fileName: '',
       token: 'your-token-here',
       username: '',
-      idUser:''
+      idUser:'',
+      anialId:""
   
     };
   },
@@ -382,6 +383,7 @@ export default {
 
         if (this.selectedFiles.length > 0) {
           const file = this.selectedFiles[0];
+          console.log("Selected file:", file);
           formData.append('image', file);  // Dodajemo stvarnu datoteku umjesto Base64
           console.log("File added to FormData:", file);
         }
@@ -393,30 +395,53 @@ export default {
 
         // Axios post request
         console.log("Sending data to API...");
+        
         const response = await axios.post('https://localhost:5001/api/animal/addAnimal', formData, {
           headers: {
             Authorization: `Bearer ${this.token}`,  // Authorization header
             // 'Content-Type' is not needed for FormData, Axios will set it automatically
           },
         });
+        console.log("Data sent to API:");
 
-        console.log("Response data:", response.data);
-        alert("Animal successfully added!");
+        console.log("Animal created:", response.data);
+        console.log("Animal ID:", response.data.idAnimal);
+        this.anialId=response.data.idAnimal;
+         alert("Animal successfully added!");
 
-      } catch (error) {
-        console.error("Error submitting form:", error);
-        if (error.response) {
-          console.error("Response data:", error.response.data);
-          console.error("Status:", error.response.status);
-          console.error("Headers:", error.response.headers);
-        } else if (error.request) {
-          console.error("Request error:", error.request);
-        } else {
-          console.error("Error message:", error.message);
-        }
-        console.error("Config:", error.config);
-      }
+        const formDataRecord = new FormData();
+        formDataRecord.append('animalId', this.anialId);
+        formDataRecord.append('redordId', 1);
+        //greška iva šta updata ako ne postoji record
+        const responseRecord = await axios.post('https://localhost:5001/api/animal/addAnimalRecord', formDataRecord,{
+          headers: {
+            Authorization: `Bearer ${this.token}`,  // Authorization header
+    
+          },
+        });
+        console.log("Record created:" , responseRecord.data);
+     
+
+
+
+
+
+
+          } catch (error) {
+            console.error("Error submitting form:", error);
+            if (error.response) {
+              console.error("Response data:", error.response.data);
+          
+            } else if (error.request) {
+              console.error("Request error:", error.request);
+            } else {
+              console.error("Error message:", error.message);
+            }
+            console.error("Config:", error.config);
+          }
     },
+
+
   }
 };
 </script>
