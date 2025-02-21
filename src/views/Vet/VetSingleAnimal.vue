@@ -176,6 +176,8 @@
 
 </template>
   <script>
+//ovdije  idu podaci o životinji, podaci o ljekovima, di je nađena, koi je njen trenutni record,podaci o nalazia,operacjama, pregledima,
+//Pogledaj ideju da se klikom u svakoj tablici zapravo poziva ova stranica ako imaš tu sve pa nema smisla u drugome
   import { defineComponent } from 'vue';
   import { useRouter } from 'vue-router';
   import VetNavigation from '../Vet/VetNavigation.vue';

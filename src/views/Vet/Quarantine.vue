@@ -93,7 +93,7 @@
 </template>
 
 <script>
-
+//ispis životinja kojima je record Quarantine
 import WorkerNavigation from '../Vet/VetNavigation.vue';
 import axios from 'axios';
 
