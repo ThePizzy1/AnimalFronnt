@@ -127,65 +127,69 @@
                 <div class="grid gap-4 mb-4 grid-cols-2">
                   <div class="col-span-2 sm:col-span-1">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Brand Name</label>
-                        <input type="text" name="name" id="name" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Cuwex" required="">
+                        <input type="text" name="name" id="name" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Cuwex" v-model="brandNameAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                        <input type="text" name="name" id="name" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Bone123" required="">
+                        <input type="text" name="name" id="name" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Bone123" v-model="nameAdd" required="">
                     </div>
                   
               
                     <div class="col-span-2 sm:col-span-1">
                         <label for="intake" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Food Type</label>
-                        <input type="text" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Bone" required="">
+                        <input type="text" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Bone" v-model="foodTypeAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="intake" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Animal Type</label>
-                        <input type="text" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Dog" required="">
+                        <input type="text" name="intake" id="animalType" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Dog" v-model="animalTypeAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-2">
                         <label for="intake" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age Group</label>
-                        <input type="text" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5" required="">
+                        <input type="text" name="intake" id="ageGroup" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5"v-model="ageGroupAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-2">
                         <label for="intake" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Expiration Date</label>
-                        <input type="date" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5" required="">
+                        <input type="date" name="intake" id="expirationDate" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5"v-model="exporationDateAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="intake" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weith</label>
-                        <input type="number" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="5" required="">
+                        <input type="decimal" name="intake" id="weith" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="5"v-model="weightAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="intake" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mesurment Units</label>
-                        <input type="text" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="kg" required="">
+                        <input type="text" name="intake" id="mesurmentUnits" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="kg" v-model="measurementWeightAdd" required="">
                     </div>
 
                     <div class="col-span-2 sm:col-span-1">
                         <label for="intake" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight Per Serving</label>
-                        <input type="number" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="5" required="">
+                        <input type="decimal" name="intake" id="weithPerServing" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="5" v-model="weightPerServingAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="intake" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mesurment Units</label>
-                        <input type="text" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="kg" required="">
+                        <input type="text" name="intake" id="mesurmentUnits" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="kg" v-model="measurementPerServingAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="intake" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Calories Per Serving</label>
-                        <input type="number" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5" required="">
+                        <input type="decimal" name="intake" id="caloriesPerServingAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5"v-model="caloriesPerServingAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="intake" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fiber Content</label>
-                        <input type="number" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5" required="">
+                        <input type="decimal" name="intake" id="fiberContent" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5" v-model="fiberContentAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="intake" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fat Content</label>
-                        <input type="number" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5" required="">
+                        <input type="decimal" name="intake" id="fatContent" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5" v-model="fatContentAdd" required="">
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                        <label for="intake" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
+                        <input type="number" name="intake" id="quantity" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5" v-model="quantityAdd" required="">
                     </div>
                     <div class="col-span-2">
                         <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Notes</label>
-                        <textarea id="description" rows="2" class="block p-1 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-emerald-300 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500" placeholder="Write description here"></textarea>                    
+                        <textarea id="description" rows="2" class="block p-1 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-emerald-300 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500" placeholder="Write description here" v-model="notesAdd"></textarea>                    
                     </div>
                 </div>
-                <button type="submit" class="text-white inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
+                <button @click="handleSubmit" class="text-white inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
                     <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                     Add 
                 </button>
@@ -216,6 +220,26 @@ export default {
       foodTypes: [],
       animalTypes: [],
       ageGroups: [],
+      //brandName, name, foodType, animalType, ageGroup, weight, caloriesPerServing, weightPerServing, measurementPerServing, fatContent, fiberContent, exporationDate, quantity, notes, measurementWeight
+      brandNameAdd: '',
+      nameAdd: '',
+      foodTypeAdd: '',
+      animalTypeAdd: '',
+      ageGroupAdd: '',
+      weightAdd: '',
+      caloriesPerServingAdd: '',
+      weightPerServingAdd: '',
+      measurementPerServingAdd: '',
+      fatContentAdd: '',
+      fiberContentAdd: '',
+      exporationDateAdd: '',
+      quantityAdd: '',
+      notesAdd: '',
+      measurementWeightAdd: '',
+      quantityAdd: '',
+      
+
+
       filters: {
         brandName: '',
         foodType: '',
@@ -239,7 +263,65 @@ export default {
     this.fetchData();
   },
   methods: {
-    async fetchData() {
+    async handleSubmit(){
+      console.log('Brand Name:', this.brandNameAdd);
+console.log('Name:', this.nameAdd);
+console.log('Food Type:', this.foodTypeAdd);
+console.log('Animal Type:', this.animalTypeAdd);
+console.log('Age Group:', this.ageGroupAdd);
+console.log('Weight:', this.weightAdd);
+console.log('Calories Per Serving:', this.caloriesPerServingAdd);
+console.log('Weight Per Serving:', this.weightPerServingAdd);
+console.log('Measurement Per Serving:', this.measurementPerServingAdd);
+console.log('Fat Content:', this.fatContentAdd);
+console.log('Fiber Content:', this.fiberContentAdd);
+console.log('Expiration Date:', `${this.exporationDateAdd}T00:00:00.00`);
+console.log('Quantity:', this.quantityAdd);
+console.log('Notes:', this.notesAdd);
+console.log('Measurement Weight:', this.measurementWeightAdd);
+alert('Data added successfully. Proceed?');
+ //tu egdj egreška u formatiranju
+      const response = await axios.post('https://localhost:5001/api/animal/addFood',{
+                  ageGroup:this.ageGroupAdd, 
+                  animalType:this.animalTypeAdd,
+                  brandName:this.brandNameAdd, 
+                  caloriesPerServing:this.caloriesPerServingAdd,
+                  exporationDate: `${this.exporationDateAdd}T$00:00:00.00`,
+                  fatContent: this.fatContentAdd,
+                  fiberContent: this.fiberContentAdd,
+                  foodType: this.foodTypeAdd, 
+                  measurementPerServing: this.measurementPerServingAdd, 
+                  measurementWeight: this.measurementWeightAdd,
+                  name: this.nameAdd,
+                  notes: this.notesAdd,       
+                  quantity: this.quantityAdd,
+                  weight: this.weightAdd,                
+                  weightPerServing: this.weightPerServingAdd,
+
+      },
+      {
+          headers: {
+            Authorization: `Bearer ${this.token}`,  // Authorization header
+    
+          },
+        }
+    
+    ); 
+      console.log(response);
+      this.add=true;
+      alert('Data.'+response);
+      if(response.status === 200){
+        alert('Data added successfully.');
+ 
+          this.add = false;
+          this.fetchData();
+        }
+        else{ 
+          alert('Failed to add data. Try again.');
+
+          this.add = true;}
+    },
+   async fetchData() {
       try {
         const response = await axios.get('https://localhost:5001/api/animal/food_db');
         this.items = response.data;

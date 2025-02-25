@@ -86,17 +86,17 @@
               </router-link>
             </li>
             <li>
-              <router-link to="" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
+              <router-link to="/adminVete" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
                 <span class="ms-3">Veterinarinans</span>
               </router-link>
             </li>
             <li>
-              <router-link to="/adminAdopted" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
+              <router-link to="/adminWorkers" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
                 <span class="ms-3">Workers</span>
               </router-link>
             </li>
             <li>
-              <router-link to="/adminRaturnd" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
+              <router-link to="/adminSurenderers" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
                 <span class="ms-3">Surenderers</span>
               </router-link>
             </li>

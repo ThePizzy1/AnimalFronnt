@@ -4,11 +4,11 @@
       <component :is="role === 'Admin' ? 'AdminNavigation' : 'WorkerNavigation'" />
     </div>
     <!-- Form -->
-    <div class="w-3/6 text-white p-4 rounded-r-lg mb-2 mx-auto ">
-      <div class="mt-2  p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105"> 
+    <div class="w-3/6 text-white p-8 rounded-r-lg mb-2 mx-auto overflow-hidden ">
+      <div class="mt-4 mb-4  p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105"> 
               <h2 class="text-xl mt-2 font-bold mb-4">Animal info</h2>        
      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 mb-5 lg:grid-cols-3 gap-4 mb-auto">
        
         <!-- Common Animal Fields -->
         <div>
@@ -75,7 +75,7 @@
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="microchipped" class="sr-only peer">
             <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-            <span class="ms-3 text-sm font-medium">Microchipped</span>
+            <span class="ms-3 text-sm font-medium overflow-hidden break-before-all">Microchipped</span>
           </label>
         </div>
         <div>
@@ -108,10 +108,11 @@
         <label for="personalityDescription" class="block text-sm font-bold mb-2">Personality Description:</label>
         <textarea id="personalityDescription" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="personalityDescription"></textarea>
       </div></div>
+      <div class="mt-2 mb-2"></div>
       <!-- Additional Fields based on selected family -->
       <template v-if="selectedFamily === 'Mammal'">
 
-        <div class="mt-5 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105"> 
+        <div class="mt-auto p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden"> 
             <h2 class="text-xl mt-2 font-bold mb-4">Mammal info</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
@@ -125,7 +126,7 @@
         </div></div>
       </template>
       <template v-else-if="selectedFamily === 'Bird'">
-        <div class="mt-5 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105"> 
+        <div class="mt-5 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden"> 
            <h2 class="text-xl mt-2 font-bold mb-4">Bird info</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
@@ -143,7 +144,7 @@
         </div></div>
       </template>
       <template v-else-if="selectedFamily === 'Fish'">
-        <div class="mt-5 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105"> 
+        <div class="mt-5 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden"> 
             <h2 class="text-xl mt-2 font-bold mb-4">Fish info</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
@@ -162,7 +163,7 @@
       </template>
 
       <template v-else-if="selectedFamily === 'Reptile'">
-        <div class="mt-5 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105"> 
+        <div class="mt-5 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden"> 
             <h2 class="text-xl mt-2 font-bold mb-4">Reptile info</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
@@ -184,7 +185,7 @@
         </div></div>
       </template>
       <template v-else-if="selectedFamily === 'Amphibian'">
-        <div class="mt-5 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105"> 
+        <div class="mt-5 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden"> 
           <h2 class="text-xl mt-2 font-bold mb-4">Amphibian info</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
@@ -221,7 +222,7 @@
 
 
       <!-- Surenderer info -->
-      <div class="mt-4 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105">
+      <div class="mt-4 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden">
     <h2 class="text-xl mt-2 font-bold mb-4">Surenderer info</h2>
     <div class="grid grid-cols-1 md:grid-cols-2  gap-4 mb-4">
       <div>
@@ -254,7 +255,7 @@
   </div>
 
   <!-- Owner info -->
-  <div class="mt-4 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105">
+  <div class="mt-4 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden">
       <h2 class="text-xl mt-2 font-bold mb-4">Owner info</h2>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
@@ -286,7 +287,7 @@
   <!-- Found info -->
 
 
-  <div class="mt-4 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105">
+  <div class="mt-4 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden">
       <h2 class="text-xl mt-2 font-bold mb-4">Found info</h2>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
@@ -337,9 +338,9 @@
 
 
 
-      <div class="mt-2">
+      <div class="mt-2 p-2">
         <label for="image" class="mt-2 block text-sm font-bold mb-2 text-white">Image:</label>
-        <div class="flex items-center justify-center w-full">
+        <div class="flex items-center justify-center w-full ">
           <label :key="fileName" for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:scale-105">
             <div v-if="!fileName" class="flex flex-col items-center justify-center pt-5 pb-6">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white">

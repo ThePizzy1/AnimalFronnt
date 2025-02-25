@@ -103,7 +103,7 @@ export default {
       filters: {
         startTime: '',
         endTime: '',
-        typeOfVisit: 'Operation', // Set default filter to "Operation"
+       // Set default filter to "Operation"
       },
       isLoading: true, // Početno stanje učitavanja
     };
