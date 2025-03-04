@@ -88,20 +88,24 @@
   <table class="min-w-full leading-normal">
     <thead>
       <tr>
-     
+        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"></th>
         <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Name</th>
         <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Family</th>
         <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Species</th>
         <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Subspecies</th>
         <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Age</th>
         <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Gender</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"></th>
+        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Adoption</th>
        
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in filteredItems" :key="item.idAnimal" class="border-b border-customBlack cursor-pointer"@click="navigateToDetails(item.idAnimal)">
-      
+      <tr v-for="item in filteredItems" :key="item.idAnimal" class="border-b border-customBlack cursor-pointer">
+        <td class="px-5 py-5 text-sm font-bold text-left">
+                    <svg @click="openSinglModal(item)" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+                </td>
         <td class="px-5 py-5 text-sm font-bold">{{ item.name }}</td>
         <td class="px-5 py-5 text-sm font-bold">{{ item.family }}</td>
         <td class="px-5 py-5 text-sm font-bold">{{ item.species }}</td>

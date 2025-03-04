@@ -192,6 +192,11 @@ const router = createRouter({
       component: () => import('../views/Vet/Vaccination.vue')
     },
     {
+      path: '/euthanasia',
+      name: 'Euthanasia',
+      component: () => import('../views/Vet/Euthanasia.vue')//C:\Users\ivozab\Documents\AnimalRescue\src\views\Vet\Euthanasia.vue
+    },
+    {
       path: '/animalsOnMedication',
       name: 'AnimalsOnMedication',
       component: () => import('../views/Vet/AnimalsOnMedication.vue')

@@ -242,8 +242,11 @@ export default {
           Authorization: `Bearer ${this.token}`,  // Authorization header
         },
       });
-
-      alert('Data added successfully: ' + response.data);
+      Swal.fire({
+            title: "Item added!",
+            draggable: true,
+            icon: "success"
+          });
       window.location.reload();
     } catch (error) {
       console.log('Name:', this.nameAdd);
@@ -255,7 +258,12 @@ export default {
       console.log('Quantity:', this.quantityAdd);
       console.log('Notes:', this.notesAdd);
       console.error('There was an error!', error);
-      alert('Failed to add data. Try again.');
+      Swal.fire({
+            title: "Oops!",
+            text: "There was an error adding the item!",
+            draggable: true,
+            icon: "error"
+          });
     }
   },
     
@@ -280,7 +288,7 @@ try {
     Swal.fire({
       title: "Ooops!",
       text: "You can't take more toys, there are none left!",
-      icon: "warning"
+      icon: "error"
     });
               return;
   }else{

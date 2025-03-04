@@ -347,7 +347,11 @@ export default {
         }
     
     );
-    alert('Data.'+response);
+    Swal.fire({
+            title: "Item added!",
+            draggable: true,
+            icon: "success"
+          });
     window.location.reload();
   }
     catch(error){
@@ -366,7 +370,12 @@ console.log('Quantity:', this.quantityAdd);
 console.log('Notes:', this.notesAdd);
 console.log('Measurement Weight:', this.measurementWeightAdd);
       console.error('There was an error!', error);
-   alert('Failed to add data. Try again.');
+      Swal.fire({
+            title: "Ooops!",
+            text: "There was an error!",
+            draggable: true,
+            icon: "error"
+          });
 
     }
     

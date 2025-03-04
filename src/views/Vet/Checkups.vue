@@ -18,7 +18,7 @@
         <table class="min-w-full leading-normal">
           <thead>
             <tr>
-
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"></th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Start Time</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">End Time</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Type of Visit</th>
@@ -26,8 +26,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in filteredItems" :key="item.id" :class="{'cursor-not-allowed opacity-50': !getTodayDate( item.endTime) , 'cursor-allowed opacity-100': getTodayDate( item.endTime) }" class="border-b border-customBlack cursor-pointer" @click="navigateToDetails(item.id)">
-
+            <tr v-for="item in filteredItems" :key="item.id" :class="{'cursor-not-allowed opacity-50': !getTodayDate( item.endTime) , 'cursor-allowed opacity-100': getTodayDate( item.endTime) }" class="border-b border-customBlack cursor-pointer" >
+              <td class="px-5 py-5 text-sm font-bold text-left">
+                    <svg @click="openSinglModal(item)" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+                </td>
               <td class="px-5 py-5 text-sm font-bold text-left">{{ formatDate(item.startTime) }}</td>
               <td class="px-5 py-5 text-sm font-bold text-left">{{ formatDate(item.endTime) }}</td>
               <td class="px-5 py-5 text-sm font-bold text-left">{{ item.typeOfVisit }}</td>
@@ -67,26 +71,44 @@
             <!-- Modal body -->
             <form class="p-4 md:p-5">
                 <div class="grid gap-4 mb-4 grid-cols-2">
-                    <div class="col-span-2">
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Animal Code</label>
-                        <input type="number" name="name" id="name" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="1245" required="">
-                    </div>
-                  
+                  <div class="col-span-2 sm:col-span-1">
+                            <label for="code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Animal code:</label>
+                            <div class="flex items-center">
+                            <input type="text" id="code" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" v-model="code"/>
+                             <div class="ml-2">
+                            <svg v-if="this.animalExists && this.animalExists!=null && this.code" class="w-5 h-5 fill-[#FFFD00]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                            </svg>
+                            <svg v-if="!this.animalExists  && this.animalExists!=null && this.code" class="w-5 h-5 fill-[#e00000]" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+                            </svg>
+                            </div>
+                            </div>
+                            </div>
+                            
+                            <div class="col-span-2 sm:col-span-1">
+                              <label for="checkAnimal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Check</label>      
+                              <svg @click="checkAnimal" class="w-8 h-8 ml- text-gray-800 dark:text-white cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+                              </svg>
+
+                            </div>
+
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="intake" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start Date</label>
-                        <input type="date" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"  required="">
+                        <label for="dateStartAdd" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start Date</label>
+                        <input type="date" v-model="startTimeAdd" name="dateStartAdd" id="dateStartAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"  required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="intake" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End Date</label>
-                        <input type="date" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="0.25" required="">
+                        <label for="dateEndAdd" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End Date</label>
+                        <input type="date" v-model="endTimeAdd" name="dateEndAdd" id="dateEndAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"  required="">
                     </div>
               
                     <div class="col-span-2">
                         <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Notes</label>
-                        <textarea id="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-emerald-300 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500" placeholder="Write notes here"></textarea>                    
+                        <textarea id="description" v-model="notesAdd" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-emerald-300 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500" placeholder="Write notes here"></textarea>                    
                     </div>
                 </div>
-                <button type="submit" class="text-white inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
+                <button @click="handleSubmit" type="submit" class="text-white inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
                     <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                     Add 
                 </button>
@@ -108,6 +130,12 @@ export default {
   data() {
     return {
       add:false,
+      code: '',
+      startTimeAdd: '',
+      endTimeAdd: '',
+      typeOfVisitAdd: 'Checkups',
+      notesAdd: '',
+      animalExists: null,
       items: [],
       filters: {
         startTime: '',
@@ -130,6 +158,75 @@ export default {
     this.fetchData();
   },
   methods: {
+      /** "animalId": 1,
+    "startTime": "2026-05-20T00:00:00",
+    "endTime": "2026-05-20T00:00:00",
+     "typeOfVisit": "Operation",
+    "notes": "Operation text" */
+    async handleSubmit(){
+   try{
+     const response = await axios.post('https://localhost:5001/api/animal/addVetVisit',{
+      animalId: this.registerId,
+      startTime: `${this.startTimeAdd}T00:00:00.00`,
+      endTime:`${this.endTimeAdd}T00:00:00.00` ,
+      typeOfVisit: this.typeOfVisitAdd,
+      notes: this.notesAdd
+                 
+
+     },
+     {
+         headers: {
+           Authorization: `Bearer ${this.token}`,  
+   
+         },
+       }
+   
+   );
+   alert("Item added!");
+   Swal.fire({
+           title: "Item added!",
+           draggable: true,
+           icon: "success"
+         });
+   window.location.reload();
+ }
+   catch(error){
+console.log("Animal:"+this.registerId);
+console.log("Start:"+this.startTimeAdd);
+console.log("End:"+this.endTimeAdd);
+console.log("Type:"+this.typeOfVisitAdd);
+console.log("Notes:"+this.notesAdd);
+alert("There was an error!");
+     console.error('There was an error!', error);
+     Swal.fire({
+           title: "Ooops!",
+           text: "There was an error!",
+           draggable: true,
+           icon: "error"
+         });
+
+   }
+   
+   },
+    async checkAnimal() {
+   try{
+        const animalResponse = await axios.get(`https://localhost:5001/api/animal/allanimal/${this.code}`);
+        const animalData = animalResponse.data;
+        
+      this.registerId=animalData.idAnimal;
+      console.log("Id animal:"+this.registerId);
+       
+        if(this.registerId!=null){
+          this.animalExists=true;
+        }
+        else{
+          this.animalExists=false;
+        }
+   }
+   catch (error) {this.animalExists=false}
+      
+    },
+
     async fetchData() {
       try {
         const response = await axios.get('https://localhost:5001/api/animal/vetvisit_db');
