@@ -356,19 +356,19 @@ export default {
   }
     catch(error){
       console.log('Name:', this.nameAdd);
-console.log('Food Type:', this.foodTypeAdd);
-console.log('Animal Type:', this.animalTypeAdd);
-console.log('Age Group:', this.ageGroupAdd);
-console.log('Weight:', this.weightAdd);
-console.log('Calories Per Serving:', this.caloriesPerServingAdd);
-console.log('Weight Per Serving:', this.weightPerServingAdd);
-console.log('Measurement Per Serving:', this.measurementPerServingAdd);
-console.log('Fat Content:', this.fatContentAdd);
-console.log('Fiber Content:', this.fiberContentAdd);
-console.log('Expiration Date:', `${this.exporationDateAdd}T00:00:00.00`);
-console.log('Quantity:', this.quantityAdd);
-console.log('Notes:', this.notesAdd);
-console.log('Measurement Weight:', this.measurementWeightAdd);
+                console.log('Food Type:', this.foodTypeAdd);
+                console.log('Animal Type:', this.animalTypeAdd);
+                console.log('Age Group:', this.ageGroupAdd);
+                console.log('Weight:', this.weightAdd);
+                console.log('Calories Per Serving:', this.caloriesPerServingAdd);
+                console.log('Weight Per Serving:', this.weightPerServingAdd);
+                console.log('Measurement Per Serving:', this.measurementPerServingAdd);
+                console.log('Fat Content:', this.fatContentAdd);
+                console.log('Fiber Content:', this.fiberContentAdd);
+                console.log('Expiration Date:', `${this.exporationDateAdd}T00:00:00.00`);
+                console.log('Quantity:', this.quantityAdd);
+                console.log('Notes:', this.notesAdd);
+                console.log('Measurement Weight:', this.measurementWeightAdd);
       console.error('There was an error!', error);
       Swal.fire({
             title: "Ooops!",

@@ -227,7 +227,7 @@
   <script>
   import WorkerNavigation from '../Vet/VetNavigation.vue';
   import axios from 'axios';
-  
+  import Swal from 'sweetalert2'
   export default {
     components: {
       WorkerNavigation,
