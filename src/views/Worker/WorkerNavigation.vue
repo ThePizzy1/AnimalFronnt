@@ -80,14 +80,7 @@
                </router-link>
              </li>
 
-          <li>
-             <router-link to="/workerStatistics" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
-              <svg class="flex-shrink-0 w-5 h-5 transition duration-75 group-hover:text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M3 17h3v4H3v-4zm5-6h3v10H8V11zm5-4h3v14h-3V7zm5-4h3v18h-3V3z"/>
-             </svg>
-               <span class="flex-1 ms-3 whitespace-nowrap">Statistics</span>
-               </router-link>
-             </li>
+        
       </ul>
         <router-link to="/" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Sign out</router-link>
     </div>

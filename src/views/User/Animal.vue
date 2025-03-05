@@ -143,6 +143,7 @@
   </div>
 </template>
 <script>
+//ovdije ide ispis životinje, sa podacima di je nađena koji je njentrenutini record trenutne bolesti,
 import { defineComponent } from 'vue';
 import { RouterLink } from 'vue-router';
 import axios from 'axios';

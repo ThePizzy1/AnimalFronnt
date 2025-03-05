@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/User/Home.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -192,6 +192,11 @@ const router = createRouter({
       component: () => import('../views/Vet/Vaccination.vue')
     },
     {
+      path: '/euthanasia',
+      name: 'Euthanasia',
+      component: () => import('../views/Vet/Euthanasia.vue')//C:\Users\ivozab\Documents\AnimalRescue\src\views\Vet\Euthanasia.vue
+    },
+    {
       path: '/animalsOnMedication',
       name: 'AnimalsOnMedication',
       component: () => import('../views/Vet/AnimalsOnMedication.vue')
@@ -260,24 +265,26 @@ const router = createRouter({
       path: '/adminAdd',
       name: 'AdminAdd',
       component: () => import('../views/Admin/AdminAdd.vue')
-    },
+    }, 
+  
     {
       path: '/statistic',
       name: 'Stanistic',
       component: () => import('../views/Admin/Statistic.vue')
     },
-   
-    {
+   {
       path: '/animals',
       name: 'Animals',
       component: () => import('../views/User/Animals.vue')
     },
+   
     {
       path: '/animal/:id',
       name: 'Animal',
       props: true,
       component: () => import('../views/User/Animal.vue')
     },
+
     {
       path: '/user/:id',
       name: 'User',
@@ -291,7 +298,22 @@ const router = createRouter({
       component: () => import('../views/Admin/AdminAnimals.vue')
     },
 
+  {
+      path: '/adminVete',
+      name: 'AdminVete',
+      component: () => import('../views/Admin/AdminVete.vue')
+    },
+    {
+      path: '/adminWorkers',
+      name: 'AdminWorkers',
+      component: () => import('../views/Admin/AdminWorkers.vue')//C:\Users\ivozab\Documents\AnimalRescue\src\views\Admin\AdminWorkers.vue
+    },
 
+    {
+      path: '/adminSurenderers',
+      name: 'AdminSurenderers',
+      component: () => import('../views/Admin/AdminSurenderers.vue')//C:\Users\ivozab\Documents\AnimalRescue\src\views\Admin\AdminSurenderers.vue
+    },
 
     //REST OF ROUTES
     {

@@ -7,7 +7,7 @@
   
       <div class="w-3/4 flex flex-col space-y-10 ">
   <!-- Display animal details panel -->
-  <div class="flex flex-col md:flex-row mx-4 shadow-2xl px-10 py-10 relative" v-if="animal">
+  <div class="flex flex-col md:flex-row mx-4 shadow-2xl px-10 py-10 relative overflow-hidden" v-if="animal">
     <!-- Slika sa lijeve strane -->
     <div class="md:w-1/3">
       <img :src="'data:image/jpeg;base64,' + animal.picture" :alt="animal.name" class="w-full h-auto rounded-lg">
@@ -127,7 +127,7 @@
            <!-- Modal for remove confirmation -->
     <div v-if="showRemuve" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <!-- Modal Content -->
-      <div class="rounded-lg relative flex flex-col justify-between"
+      <div class="rounded-lg relative flex flex-col justify-between "
            style="background-image: url('/remuve.png'); background-size: cover; background-position: center; width: 500px; height: 700px;">
         <h2 class="text-2xl font-bold mb-4 p-4 mt-2 ml-2 rounded-t-lg" style="color: #220F38;"></h2>
         <div class="p-8 flex flex-col items-center rounded-b-lg w-full">
@@ -156,7 +156,7 @@
 
   
        <!-- Edit animal details panel -->
-       <div v-if="isEditing" class="flex flex-col md:flex-row mx-4 shadow-2xl px-10 py-10">
+       <div v-if="isEditing" class="flex flex-col md:flex-row mx-4 shadow-2xl px-10 py-10 overflow-hidden">
           
         <div class="md:w-2/3 md:ml-4 mt-4 md:mt-0">
           <h1 class="text-2xl font-bold mb-4 text-white">Edit {{ animalEdit.name }}</h1>
@@ -166,14 +166,14 @@
   <div class="md:w-2/3 md:ml-4 mt-4 md:mt-0">
 
   <div class="grid grid-cols-2 gap-4 text-white">
-    <div class="flex items-center"><strong>Family:</strong> <span class="ml-2" id="family">{{ animalEdit.family }}</span></div>
-    <div class="flex items-center"><strong>Species:</strong> <span class="ml-2" id="species">{{ animalEdit.species }}</span></div>
-    <div class="flex items-center"><strong>Subspecies:</strong> <span class="ml-2" id="subspecies">{{ animalEdit.subspecies }}</span></div>
-    <div class="flex items-center"><strong>Age:</strong> <input v-model="animalEdit.age" id="age" class="form-input text-gray-500 rounded-md p-2 ml-2" /><strong class="ml-2">years</strong></div>
-    <div class="flex items-center"><strong>Gender:</strong> <span class="ml-2" id="gender">{{ animalEdit.gender }}</span></div>
-    <div class="flex items-center ml-2"><strong>Weight:</strong> <input v-model="animalEdit.weight" id="weight" class="form-input text-gray-500 rounded-md p-2 ml-2" /><strong class="ml-2">kg</strong></div>
-    <div class="flex items-center"><strong>Height:</strong> <input v-model="animalEdit.height" id="height" class="form-input text-gray-500 rounded-md p-2 ml-2" /><strong class="ml-2">cm</strong></div>
-    <div class="flex items-center"><strong>Length:</strong> <input v-model="animalEdit.length" id="length" class="form-input text-gray-500 rounded-md p-2 ml-2" /><strong class="ml-2">cm</strong></div>
+    <div class="flex items-center "><strong>Family:</strong> <span class="ml-2 text-wrap" id="family">{{ animalEdit.family }}</span></div>
+    <div class="flex items-center"><strong>Species:</strong> <span class="ml-2 text-wrap" id="species">{{ animalEdit.species }}</span></div>
+    <div class="flex items-center"><strong>Subspecies:</strong> <span class="ml-2 text-wrap" id="subspecies">{{ animalEdit.subspecies }}</span></div>
+    <div class="flex items-center"><strong>Age:</strong> <input v-model="animalEdit.age" id="age" class="form-input text-gray-500 rounded-md p-2 ml-2 text-wrap" /><strong class="ml-2">years</strong></div>
+    <div class="flex items-center"><strong>Gender:</strong> <span class="ml-2 text-wrap" id="gender">{{ animalEdit.gender }}</span></div>
+    <div class="flex items-center ml-2"><strong>Weight:</strong> <input v-model="animalEdit.weight" id="weight" class="form-input text-gray-500 rounded-md p-2 ml-2 text-wrap" /><strong class="ml-2">kg</strong></div>
+    <div class="flex items-center"><strong>Height:</strong> <input v-model="animalEdit.height" id="height" class="form-input text-gray-500 rounded-md p-2 ml-2 text-wrap" /><strong class="ml-2">cm</strong></div>
+    <div class="flex items-center"><strong>Length:</strong> <input v-model="animalEdit.length" id="length" class="form-input text-gray-500 rounded-md p-2 ml-2 text-wrap" /><strong class="ml-2">cm</strong></div>
   </div>
   <div class="mt-4 grid grid-cols-2 gap-4">
     <div class="flex items-center">
