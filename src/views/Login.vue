@@ -96,7 +96,7 @@ if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
    
     }
     if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Worker'  || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Menager' ) {
-      router.push({ path: '/workerHome' });
+     router.push({ path: '/workerHome' });
       localStorage.setItem('userRole','Worker' );
     }
     if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Vet' || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'HeadVet') {
@@ -119,8 +119,8 @@ if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
  
     if (error.response && error.response.status === 401) {
       loginError.value = 'The entry is not valid';
-    } else {
-      loginError.value = 'An error occurred during login. Please try again.';
+    } else  {
+     
     }
   } finally {
     loading.value = false;

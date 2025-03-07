@@ -6,17 +6,6 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-
-var VITE_API_BASE_URL=""
-  
-
-
-
-
-
-
-
-
     
 const app = createApp(App)
 

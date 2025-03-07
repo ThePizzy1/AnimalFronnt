@@ -67,6 +67,18 @@
             <div><strong>Health Issues:</strong> {{ animal.healthIssues }}</div>
             <div><strong>Personality Description:</strong> {{ animal.personalityDescription }}</div>
           </div>
+          <button @click="fetchMedicinesDetails(this.animal)"   class="block  mt-2 size-fit mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"type="button">
+            <svg class="w-8 h-8 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
+            </svg>
+            <span class="block text-sm font-bold mx-2  "> Show Medicines</span>
+          </button>
+          <button @click="fetchMedicinesDetails(this.animal)"   class="block  mt-2 size-fit mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"type="button">
+            <svg class="w-8 h-8 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
+            </svg>
+            <span class="block text-sm font-bold mx-2  ">Vet Visit</span>
+          </button>
 
 
 
@@ -122,50 +134,49 @@
           </template>
        </div>
         </div>
-        <!-- Display medicines details panel  BUTTON-->
-       <!-- Display medicines details panel  BUTTON-->
-       <button @click="showMedicinesModal = true"  style="width: 200px;" class="block   w-sm mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"type="button">
-    <svg class="w-8 h-8 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 
-<!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-<path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
-
-</svg>
-<span class="block text-sm font-bold mx-2  "> Show Medicines</span>
-   
-      </button>
-       <div class="w-3/4 flex flex-col space-y-10">
+  <!--Modal medisines-->
+       <div class="flex flex-col   size-fit">
         <div v-if="showMedicinesModal" style="height: 500px;" class="flex  flex-col md:flex-row mx-4  px-10 py-10 relative">
-        <div class=" p-6 bg-white rounded-lg shadow-lg w-2/4">
+        <div class=" p-6 bg-white rounded-lg shadow-lg  size-fit">
           <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200" >
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                   Medicines
                 </h3>
-                <button @click="showMedicinesModal = false && fetchMedicinesDetails()" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+                <button @click="showMedicinesModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <table class="min-w-full bg-white">
-              <thead>
-                <tr>
-                  <th class="py-2">Name</th>
-                  <th class="py-2">Dosage</th>
-                  <th class="py-2">Frequency</th>
-                  <th class="py-2">Used</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="medicine in filteredItems" :key="medicine.id">
-                  <td class="py-2">{{ medicine.nameOfMedicines }}</td>
-                  <td class="py-2">{{ medicine.amountOfMedicine + medicine.mesurmentUnit }}</td>
-                  <td class="py-2">{{ medicine.medicationIntake + medicine.frequencyOfMedicationUse }}</td>
-                  <td class="py-2">{{ medicine.usage }}</td>
-                </tr>
-              </tbody>
-            </table>
+            <table class="min-w-full leading-normal ">
+          <thead>
+            <tr>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-gray-500 uppercase tracking-wider"></th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-gray-500 uppercase tracking-wider">Name</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-gray-500 uppercase tracking-wider">Descriptio</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-gray-500 uppercase tracking-wider">Vet</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-gray-500 uppercase tracking-wider">Amount Of Medicine</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-gray-500 uppercase tracking-wider">Medication Intake</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-gray-500 uppercase tracking-wider">Frequency Of Medication Use</th>
+          
+            
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="medicine in filteredItems" :key="medicine.id" class="border-b border-customBlack cursor-pointer" >
+             
+              <td class="px-5 py-5 text-sm font-bold text-center">{{ medicine.nameOfMedicines }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-center">{{ medicine.description }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-center">{{ medicine.vetUsername }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-center" >{{ medicine.amountOfMedicine +medicine.mesurmentUnit }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-center">{{ medicine.medicationIntake }} </td>
+              <td class="px-5 py-5 text-sm font-bold text-center">{{ medicine.frequencyOfMedicationUse }}</td>
+
+            </tr>
+          </tbody>
+        </table>
     </div>
     </div>
   </div>   
@@ -198,6 +209,8 @@
         contageus: [],
         labs: [],
         vetVisit: [],
+        medicines:[null],
+        singleId:'',
         animalEdit: null,
         additionalDetailsEdit: null,
         additionalDetails: {},
@@ -205,31 +218,36 @@
         showRemuve: false,
         isEditing: false, 
         showMedicinesModal: false,  
+        filters: {
+        idAn: '',
+     
+      },
       };
     },
-    computed: {
-    filteredItems() {
-      return this.items.filter(item => {
-        return (!this.filters.id || item.id === this.filters.id);
+    computed: { filteredItems() {
+      return this.medicines.filter(medicine => {
+        return (!this.filters.idAn || medicine.id === this.filters.idAn) 
       });
     },
-  },  mounted() {
-    this.fetchMedicinesDetails();
-  },
+ 
+  }, 
     async created() {
       const idA = this.$route.params.id;
-      console.log("id"+idA);
+      console.log("id:"+idA);
       this.fetchAnimalDetails(idA);
-      this.fetchMedicinesDetails(idA);
+      
     },
     methods: {
-      async fetchMedicinesDetails(id) {
+      async fetchMedicinesDetails(animal) {
         try{
-        const idAnimal = parseInt(this.$route.params.id, 10);
-        console.log("id"+idAnimal);
-          const response = await instance.get(`animal/medsAnimal/1`);
+          this.showMedicinesModal= true;
+           this.singleId=animal.idAnimal;
+           console.log(this.singleId);
+          const response = await instance.get(`animal/medsAnimal/${this.singleId}`);
           this.medicines = response.data;
-          console.log("medicines",this.medicines);
+          console.log(response.data);
+      
+          console.log("medicines"+this.medicines);
         } catch (error) {
           console.error('There was an error!', error);
           this.isLoading = false;
@@ -242,22 +260,13 @@
           this.fileName = file.name;
         }
       },
-      async removeAnimal() {
-        const idAnimal = parseInt(this.$route.params.id, 10);
-        console.log(idAnimal);
-        try {
-          await instance.delete(`animal/${idAnimal}`);
-          this.$router.push('/search');
-        } catch (error) {
-          console.error('Error removing animal:', error);
-        }
-      },
+      
       async fetchAnimalDetails(id) {
         try {
           const response = await instance.get(`animal/allanimal/${id}`);
           this.animal = response.data;
           this.animalEdit = response.data;
-
+          console.log(response.data);
           if (this.animal && this.animal.family) {
             let familyRoute = '';
             switch (this.animal.family) {
@@ -324,5 +333,17 @@
 
 
     },
+    watch: {
+    filters: {
+      handler() {
+        this.filteredItems = this.medicines.filter(medicine => {
+          return (
+             (!this.filters.id || medicine.id === this.filters.id)
+          );
+        });
+      },
+      deep: true,
+    },
+  },
   });
 </script>

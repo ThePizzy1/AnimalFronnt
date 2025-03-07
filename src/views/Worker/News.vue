@@ -33,8 +33,8 @@
         <table class="min-w-full leading-normal">
           <thead>
             <tr>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"></th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Name</th>
- 
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Date</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"></th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"></th>
@@ -42,8 +42,12 @@
           </thead>
           <tbody>
             <tr v-for="item in filteredItems" :key="item.id" class="border-b border-customBlack cursor-pointer" >
+              <td class="px-5 py-5 text-sm font-bold text-left">
+                  <svg @click="openSinglModal(item)" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                  </svg>
+             </td>  
               <td class="px-5 py-5 text-sm font-bold text-left"@click="navigateToDetails(item.id)">{{ item.name }}</td>
-         
               <td class="px-5 py-5 text-sm font-bold text-left"@click="navigateToDetails(item.id)">{{ formatDate(item.dateTime) }}</td>
               <td class="px-5 py-5 text-sm font-bold text-left">
                 <button type="button"   @click="openUpdateModal(item)" class="mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
@@ -57,7 +61,7 @@
               </button>
               </td>
               <td class="px-5 py-5 text-sm font-bold text-left">
-                <button type="button" class="mb-4  text-white bg-red-400 hover:bg-red-500 focus:ring-3 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <button  @click="remove(key)" type="button" class="mb-4  text-white bg-red-400 hover:bg-red-500 focus:ring-3 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                   <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM184 232H328c13.3 0 24 10.7 24 24s-10.7 24-24 24H184c-13.3 0-24-10.7-24-24s10.7-24 24-24z"></path>
@@ -162,17 +166,63 @@
         </form>
       </div>
     </div>
+</div>
 
 
 
-</div> 
+          
+ <!-- Single item modal -->
+ <div v-if="single" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center overflow-x-auto custom-scrollbar">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+        <!-- Modal header -->
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+            Animal Details
+          </h3>
+          <button @click="single = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <form class="p-4 md:p-5">
+          <div class="grid gap-4 mb-4 grid-cols-2">
+            <div class="col-span-2 ">
+              <label for="singleCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+              <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              {{ this.singleItem.name }}
+            </span>
+            </div>
+            <div class="col-span-2 ">
+              <label for="animalName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date</label>
+              <span type="text" id="animalName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                {{formatDate(this.singleItem.dateTime) }}
+            </span>
+            </div>
+            <div class="col-span-2">
+              <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+              <span type="text" id="singleName"  class="overflow-x-auto custom-scrollbar bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                {{ this.singleItem.description }}
+            </span>
+            </div>
+         
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
 </template>
 
 <script>
 //dodaj button remuve u tablici
 import WorkerNavigation from './WorkerNavigation.vue';
 import instance from '@/axiosBase';
-
+  import Swal from 'sweetalert2'
 export default {
   components: {
     WorkerNavigation,
@@ -189,6 +239,10 @@ export default {
       nameUpdate: '',
       dateUpdate: '',
       descriptionUpdate: '',
+
+      single: false,
+      singleItem:[],
+
       filters: {
         name: '',
         description: '',
@@ -211,6 +265,32 @@ export default {
     this.fetchData();
   },
   methods: {
+    async remove(id){
+    await  Swal.fire({
+          title: "Do you want to save the changes?",
+          showDenyButton: true,
+        
+          confirmButtonText: "Save",
+          denyButtonText: `Don't save`
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            Swal.fire("Saved!", "", "success");
+          const newsResponse =  instance.delete(`animal/deleteNews/${id}`);
+           console.log(newsResponse);
+
+          } else if (result.isDenied) {
+            Swal.fire("Changes are not saved", "", "info");
+          }
+        });
+      
+    },
+    async openSinglModal(item) {
+      this.single = true;
+      this.singleItem = item;
+      
+    },
+
     openUpdateModal(item) {
       this.update = true;
       this.idUpdate = item.id;
@@ -240,8 +320,8 @@ export default {
             Authorization: `Bearer ${this.token}`,  // Authorization header
           },
         });
-alert("Item updated!");
-        Swal.fire({
+
+      await  Swal.fire({
             title: "Item added!",
             draggable: true,
             icon: "success"
@@ -255,7 +335,7 @@ alert("Item updated!");
         console.log('Description:', this.descriptionUpdate);
         console.error('There was an error!', error);
         alert("Item not updated!");
-        Swal.fire({
+        await Swal.fire({
             title: "Oops!",
             text: "Failed to add item. Try again.",
             draggable: true,

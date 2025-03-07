@@ -117,6 +117,159 @@
         </div>
     </div>
 </div> 
+
+
+
+         <!-- Single item modal -->
+         <div v-if="single" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center overflow-x-auto custom-scrollbar">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+              <!-- Modal content -->
+              <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                    Animal Details
+                  </h3>
+                  <button @click="single = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                  </button>
+                </div>
+                <!-- Modal body -->
+                <form class="p-4 md:p-5">
+                  <div class="grid gap-4 mb-4 grid-cols-2  sm:col-span-1">
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start Time</label>
+                      <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                      {{ formatDate(this.singleItem.startTime) }}
+                    </span>
+                    </div>
+                
+                
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End Time</label>
+                      <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                      {{formatDate(this.singleItem.endTime) }}
+                    </span>
+                    </div>
+                    <div class="col-span-2 ">
+                      <label for="singleCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vissit Type</label>
+                      <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                      {{ this.singleItem.typeOfVisit }}
+                    </span>
+                    </div>
+                    <div class="col-span-2 ">
+                      <label for="singleCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Notes</label>
+                      <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                      {{ this.singleItem.notes}}
+                    </span>
+                    </div>
+                    <div class="col-span-2 ">
+                      <label for="singleCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Animal Name</label>
+                      <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                      {{ this.itemsSingle.name }}
+                    </span>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="animalName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Family</label>
+                      <span type="text" id="animalName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ itemsSingle.family }}
+                    </span>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Species</label>
+                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ this.itemsSingle.species }}
+                    </span>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subspecies</label>
+                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ this.itemsSingle.subspecies }}
+                    </span>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
+                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ this.itemsSingle.age }}
+                    </span>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ this.itemsSingle.gender }}
+                    </span>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight</label>
+                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ this.itemsSingle.weight }}
+                    </span>
+                    </div>
+                    
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hight</label>
+                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ this.itemsSingle.height }}
+                    </span>
+                    </div>
+                    
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lenght</label>
+                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ this.itemsSingle.length }}
+                    </span>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                      <label class="inline-flex items-center cursor-pointer">
+                        <input type="checkbox" v-model="this.itemsSingle.neutered" class="sr-only peer" disabled>
+                        <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
+                        <span class="ms-3 text-sm font-medium text-white">Neutered</span>
+                      </label>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                      <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" v-model="this.itemsSingle.vaccinated" class="sr-only peer" disabled>
+                    <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
+                    <span class="ms-3 text-sm font-medium text-white">Vaccinated</span>
+                  </label>
+                </div>
+                <div class="col-span-2 sm:col-span-1">
+                  <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" v-model="this.itemsSingle.microchipped" class="sr-only peer" disabled>
+                    <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
+                    <span class="ms-3 text-sm font-medium text-white">Microchipped</span>
+                  </label>
+                </div>
+                <div class="col-span-2 sm:col-span-1">
+                  <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" v-model="this.itemsSingle.trained" class="sr-only peer" disabled>
+                    <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
+                    <span class="ms-3 text-sm font-medium text-white">Trained</span>
+                  </label>
+                </div>
+                <div class="col-span-2 sm:col-span-1">
+                  <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" v-model="this.itemsSingle.socialized" class="sr-only peer" disabled>
+                    <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
+                    <span class="ms-3 text-sm font-medium text-white">Socialized</span>
+                  </label>
+                </div>
+
+
+
+
+
+
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
 </template>
 
 <script>
@@ -137,6 +290,10 @@ export default {
       notesAdd: '',
       animalExists: null,
       items: [],
+          animalIdSingle: '',
+          single: false,
+          singleItem:[],
+          itemsSingle: [],
       filters: {
         startTime: '',
         endTime: '',
@@ -158,11 +315,18 @@ export default {
     this.fetchData();
   },
   methods: {
-      /** "animalId": 1,
-    "startTime": "2026-05-20T00:00:00",
-    "endTime": "2026-05-20T00:00:00",
-     "typeOfVisit": "Operation",
-    "notes": "Operation text" */
+    async openSinglModal(item) {
+            this.single = true;
+            console.log(item);
+            this.singleItem = item;
+            console.log(this.singleItem);
+            this.animalIdSingle = item.animalId;
+            console.log(this.animalIdSingle);
+          
+            const animalResponse = await instance.get(`animal/allanimal/${this.animalIdSingle}`);
+                this.itemsSingle = animalResponse.data;
+                console.log(this.itemsSingle);
+          },
     async handleSubmit(){
    try{
      const response = await instance.post('animal/addVetVisit',{

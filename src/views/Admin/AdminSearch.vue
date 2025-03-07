@@ -267,36 +267,36 @@ export default {
   font-size: 1rem;
 }
 
-.shadow-lg {
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+  .shadow-lg {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
 
-/* Custom scrollbar */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 12px;
-}
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 12px;
+  }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 6px;
-  border: 3px solid transparent;
-}
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    border: 3px solid transparent;
+  }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-}
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
 
-/* Fix scrollbar on Firefox */
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-}
+  /* Fix scrollbar on Firefox */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  }
 
-.custom-scrollbar:hover {
-  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
-}
+  .custom-scrollbar:hover {
+    scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+  }
 </style>  
