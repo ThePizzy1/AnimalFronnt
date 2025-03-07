@@ -62,7 +62,7 @@
     
   <script>
   import VetNavigation from '../Vet/VetNavigation.vue';
-  import axios from 'axios';
+  import instance from '@/axiosBase';
   import Loading from '../Loading.vue';
   
   export default {
@@ -89,10 +89,10 @@
       async fetchData() {
         try {
             const id = this.$route.params.id;
-          const response = await axios.get(`https://localhost:5001/api/animal/meds/${id}`);
+          const response = await instance.get(`animal/meds/${id}`);
           this.item= response.data;
     console.log(this.item);
-    const responseA = await axios.get(`https://localhost:5001/api/animal/animal/${this.item.animalId}`);
+    const responseA = await instance.get(`animal/animal/${this.item.animalId}`);
           this.itemA= responseA.data;
           console.log(this.itemA);
        

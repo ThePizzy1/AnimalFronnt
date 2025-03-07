@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import instance from '@/axiosBase';
 import AdminNavigation from '../Admin/AdminNavigation.vue';
 
 export default {
@@ -99,7 +99,7 @@ export default {
     };
   },
   mounted() {
-    axios.interceptors.request.use(
+    instance.interceptors.request.use(
       config => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -112,7 +112,7 @@ export default {
       }
     );
 
-    axios.get('https://localhost:5001/api/animal/reaturned_db')
+    instance.get('animal/reaturned_db')
       .then(response => {
         this.returnedAnimals = response.data;
         this.loadAdoptions();
@@ -123,7 +123,7 @@ export default {
   },
   methods: {
     loadAdoptions() {
-      axios.get('https://localhost:5001/api/animal/adopted_db')
+      instance.get('animal/adopted_db')
         .then(response => {
           this.adoptions = response.data;
         })

@@ -146,7 +146,7 @@
 //ovdije ide ispis životinje, sa podacima di je nađena koji je njentrenutini record trenutne bolesti,
 import { defineComponent } from 'vue';
 import { RouterLink } from 'vue-router';
-import axios from 'axios';
+import instance from '@/axiosBase';
 
 export default defineComponent({
   name: 'AnimalDetails',
@@ -168,7 +168,7 @@ export default defineComponent({
   methods: {
     async fetchAnimalDetails(id) {
       try {
-        const response = await axios.get(`https://localhost:5001/api/animal/animal/${id}`);
+        const response = await instance.get(`animal/animal/${id}`);
         this.animal = response.data;
 
         if (this.animal && this.animal.family) {
@@ -194,7 +194,7 @@ export default defineComponent({
               return;
           }
 
-          const familyResponse = await axios.get(`https://localhost:5001/api/animal/${familyRoute}/${id}`);
+          const familyResponse = await instance.get(`animal/${familyRoute}/${id}`);
           this.additionalDetails = familyResponse.data;
         }
       } catch (error) {
@@ -212,12 +212,12 @@ export default defineComponent({
           };
 
           // Save adoption data
-          await axios.post('https://localhost:5001/api/animal/addAdoptedAnimal', adoptionData);
+          await instance.post('animal/addAdoptedAnimal', adoptionData);
           
           // Update animal status
-          await axios.put(`https://localhost:5001/api/animal/adoptionstatus/${id}`);
+          await instance.put(`animal/adoptionstatus/${id}`);
           const userId=localStorage.getItem('adopterid');
-          await axios.put(`https://localhost:5001/api/animal/incrementAdopted/${userId}`);//INKREMENT NE RADI
+          await instance.put(`animal/incrementAdopted/${userId}`);//INKREMENT NE RADI
           // Redirect after successful adoption and status update
           this.$router.push('/animals');
         } catch (error) {

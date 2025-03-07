@@ -95,7 +95,7 @@
 import { RouterLink } from 'vue-router';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import axios from 'axios';
+import instance from '@/axiosBase';
 
 const router = useRouter();
 
@@ -132,7 +132,7 @@ const register = async () => {
   }
 
   try {
-    const response = await axios.post('https://localhost:5001/api/auth/registerAdmin', {
+    const response = await instance.post('auth/registerAdmin', {
   username: registerData.value.username,
   password: registerData.value.password,
   email: registerData.value.email,

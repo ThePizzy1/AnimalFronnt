@@ -3,7 +3,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { RouterLink, RouterView } from 'vue-router'
 import { ref, onMounted } from 'vue';
-import axios from 'axios';
+import instance from '@/axiosBase';
 
 const token = ref(localStorage.getItem('token'));
 const userId = ref(localStorage.getItem('userId'));

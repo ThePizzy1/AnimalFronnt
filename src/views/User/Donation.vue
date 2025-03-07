@@ -115,7 +115,7 @@
 import Navigation from '../User/Navigation.vue';
 import Footer from '../User/Footer.vue';
 import Swal from 'sweetalert2'
-import axios from 'axios';
+import instance from '@/axiosBase';
 import moment from 'moment';
 export default {
     components: {
@@ -138,7 +138,7 @@ export default {
         
              console.log( moment().format());
                 try{
-                const response = await axios.post('https://localhost:5001/api/animal/addFunds',{
+                const response = await instance.post('animal/addFunds',{
                     amount:parseFloat( this.amount),
                     purpose: this.picked, 
                     dateTime: moment().format() ,

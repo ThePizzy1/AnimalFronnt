@@ -193,7 +193,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import instance from '@/axiosBase';
 import Navigation from '../Navigation.vue';
 import Footer from '../Footer.vue';
 import Loading from '../Loading.vue'; // Import the Loading component
@@ -244,7 +244,7 @@ export default {
     
     fetchAdoptionDetails() {
       const idUser = this.$route.params.id;
-      axios.get(`https://localhost:5001/api/animal/adopted/${idUser}`, {
+      instance.get(`animal/adopted/${idUser}`, {
         headers: {
           Authorization: `Bearer ${token.value}`,
         },
@@ -266,7 +266,7 @@ export default {
     },
     fetchReturnedDetails() {
       const idUser = this.$route.params.id;
-      axios.get(`https://localhost:5001/api/animal/returned/${idUser}`, {
+      instance.get(`animal/returned/${idUser}`, {
         headers: {
           Authorization: `Bearer ${token.value}`,
         },

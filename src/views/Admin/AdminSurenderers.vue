@@ -36,7 +36,7 @@
   
   <script>
   
-  import axios from 'axios';
+  import instance from '@/axiosBase';
   import AdminNavigation from './AdminNavigation.vue';
   
   
@@ -76,7 +76,7 @@
     methods: {
       async fetchData() {
         try {
-          const response = await axios.get('https://localhost:5001/api/auth/getAll');
+          const response = await instance.get('auth/getAll');
           console.error('There was an error!', response);
           this.items = response.data.filter(item => item.roles.includes('AnimalWelffereOfficer') ||item.roles.includes('Association') || item.roles.includes('Surenderer')); 
           console.log(this.items);

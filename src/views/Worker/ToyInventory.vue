@@ -176,7 +176,7 @@
 <script>
 import Swal from 'sweetalert2'
 import WorkerNavigation from './WorkerNavigation.vue';
-import axios from 'axios';
+import instance from '@/axiosBase';
 
 export default {
   components: {
@@ -226,7 +226,7 @@ export default {
     
     async handleSubmit() {
     try {
-      const response = await axios.post('https://localhost:5001/api/animal/addToy', {
+      const response = await instance.post('animal/addToy', {
         brandName: this.brandNameAdd,
         name: this.nameAdd,
         animalType: this.animalTypeAdd,
@@ -274,7 +274,7 @@ export default {
     async increment(id){
 
 try {
-  const response = await axios.put("https://localhost:5001/api/animal/updateToyDomainIncrement",{id:id});
+  const response = await instance.put("animal/updateToyDomainIncrement",{id:id});
 
   console.log(this.items);
   window.location.reload();
@@ -292,7 +292,7 @@ try {
     });
               return;
   }else{
-  const response = await axios.put("https://localhost:5001/api/animal/updateToysDomainDecrement",{id:id});
+  const response = await instance.put("animal/updateToysDomainDecrement",{id:id});
 
   console.log(this.items);
   window.location.reload();}
@@ -304,7 +304,7 @@ try {
 },
     async fetchData() {
       try {
-        const response = await axios.get('https://localhost:5001/api/animal/toys_db');
+        const response = await instance.get('animal/toys_db');
         this.items = response.data;
         console.log(this.items);
         this.populateFilters();

@@ -46,7 +46,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import axios from 'axios';
+import instance from '@/axiosBase';
 import { ref, onMounted } from 'vue';
 
 const router = useRouter(); // Router instanca sada unutar setup funkcije
@@ -103,13 +103,13 @@ const formatDateInput = (event) => {
 const register = async () => {
   try {
     // Fetch user data
-    const userResponse = await axios.get(`https://localhost:5001/api/auth/getUserByUsername/${registerData.value.username}`);
+    const userResponse = await instance.get(`auth/getUserByUsername/${registerData.value.username}`);
     const userData = userResponse.data;
     console.log(userData.id);
 
     // Prepare adopter data with user details
     try {
-      const addAdopterResponse = await axios.post('https://localhost:5001/api/animal/addAdopter', {
+      const addAdopterResponse = await instance.post('animal/addAdopter', {
         Adopter: {
           firstName: firstName.value,
           lastName: lastName.value,

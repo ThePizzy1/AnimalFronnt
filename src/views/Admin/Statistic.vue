@@ -54,7 +54,7 @@
   <script>
 import AdminNavigation from '../Admin/AdminNavigation.vue';
   import { defineComponent, ref, onMounted } from 'vue';
-  import axios from 'axios';
+  import instance from '@/axiosBase';
   import { Bar } from 'vue-chartjs';
   import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
   
@@ -160,17 +160,17 @@ const familyChartOptions = { // Opcije za novi graf
         try {
           const token = 'your-token-here'; // Replace with your token
   
-          const allAnimalsResponse = await axios.get('https://localhost:5001/api/animal/animal_pc', {
+          const allAnimalsResponse = await instance.get('animal/animal_pc', {
             headers: { Authorization: `Bearer ${token}` },
           });
           allAnimals.value = allAnimalsResponse.data || [];
   
-          const adoptedResponse = await axios.get('https://localhost:5001/api/animal/adopted_db', {
+          const adoptedResponse = await instance.get('animal/adopted_db', {
             headers: { Authorization: `Bearer ${token}` },
           });
           adoptedAnimals.value = adoptedResponse.data || [];
   
-          const returnedResponse = await axios.get('https://localhost:5001/api/animal/reaturned_db', {
+          const returnedResponse = await instance.get('animal/reaturned_db', {
             headers: { Authorization: `Bearer ${token}` },
           });
           returnedAnimals.value = returnedResponse.data || [];

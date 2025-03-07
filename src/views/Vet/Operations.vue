@@ -112,7 +112,7 @@
 
 <script>
 import WorkerNavigation from '../Vet/VetNavigation.vue';
-import axios from 'axios';
+import instance from '@/axiosBase';
 
 export default {
   components: {
@@ -156,7 +156,7 @@ export default {
     "notes": "Operation text" */
     async handleSubmit(){
    try{
-     const response = await axios.post('https://localhost:5001/api/animal/addVetVisit',{
+     const response = await instance.post('animal/addVetVisit',{
       animalId: this.registerId,
       startTime: `${this.startTimeAdd}T00:00:00.00`,
       endTime:`${this.endTimeAdd}T00:00:00.00` ,
@@ -202,7 +202,7 @@ alert("There was an error!");
 
     async checkAnimal() {
    try{
-        const animalResponse = await axios.get(`https://localhost:5001/api/animal/allanimal/${this.code}`);
+        const animalResponse = await instance.get(`animal/allanimal/${this.code}`);
         const animalData = animalResponse.data;
         
       this.registerId=animalData.idAnimal;
@@ -221,7 +221,7 @@ alert("There was an error!");
 
     async fetchData() {
       try {
-        const response = await axios.get('https://localhost:5001/api/animal/vetvisit_db');
+        const response = await instance.get('animal/vetvisit_db');
         this.items = response.data.filter(item => item.typeOfVisit === 'Operation'); 
         console.log(this.items);
         this.isLoading = false;

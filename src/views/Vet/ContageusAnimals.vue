@@ -142,7 +142,7 @@
   <script>
   import { TimeScale } from 'chart.js';
 import VetNavigation from '../Vet/VetNavigation.vue';
-  import axios from 'axios';
+  import instance from '@/axiosBase';
   
   export default {
     components: {
@@ -189,7 +189,7 @@ import VetNavigation from '../Vet/VetNavigation.vue';
     
    async checkAnimal() {
    try{
-        const animalResponse = await axios.get(`https://localhost:5001/api/animal/allanimal/${this.code}`);
+        const animalResponse = await instance.get(`animal/allanimal/${this.code}`);
         const animalData = animalResponse.data;
         
       this.registerId=animalData.idAnimal;
@@ -212,7 +212,7 @@ import VetNavigation from '../Vet/VetNavigation.vue';
     "contageus": false */
     async handleSubmit(){
    try{
-     const response = await axios.post('https://localhost:5001/api/animal/addContageus',{
+     const response = await instance.post('animal/addContageus',{
       animalId:this.registerId,
       desisseName:this.desisseNameAdd,
       startTime:this.startTimeAdd,
@@ -254,7 +254,7 @@ alert("There was an error!");
 
     async fetchData() {
       try {
-        const response = await axios.get('https://localhost:5001/api/animal/contageusanimals_db');
+        const response = await instance.get('animal/contageusanimals_db');
         this.items = response.data;
         console.log(this.items);
         this.populateFilters();

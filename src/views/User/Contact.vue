@@ -62,7 +62,7 @@
  import Navigation from  '../User/Navigation.vue';
  import Footer from  '../User/Footer.vue';
  import Swal from 'sweetalert2'
- import axios from 'axios';
+ import instance from '@/axiosBase';
 export default {components: {
       Navigation,
       Footer,
@@ -86,7 +86,7 @@ export default {components: {
  */
     async handleSubmit(){
      try{
-       const response = await axios.post('https://localhost:5001/api/animal/addContact',{
+       const response = await instance.post('animal/addContact',{
         Name: this.name,
         Email: this.email, 
         Description: this.message,

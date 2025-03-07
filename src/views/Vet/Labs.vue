@@ -38,7 +38,7 @@
 
 <script>
 import WorkerNavigation from '../Vet/VetNavigation.vue';
-import axios from 'axios';
+import instance from '@/axiosBase';
 
 export default {
   components: {
@@ -70,7 +70,7 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const response = await axios.get('https://localhost:5001/api/animal/labs_db');
+        const response = await instance.get('animal/labs_db');
         this.items = response.data;
         console.log(this.items);
         this.isLoading = false;

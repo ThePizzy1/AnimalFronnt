@@ -181,7 +181,7 @@
   import { defineComponent } from 'vue';
   import { useRouter } from 'vue-router';
   import VetNavigation from '../Vet/VetNavigation.vue';
-  import axios from 'axios';
+  import instance from '@/axiosBase';
   import { ref, onMounted } from 'vue';
 
   const token = ref(localStorage.getItem('token'));
@@ -227,7 +227,7 @@
         try{
         const idAnimal = parseInt(this.$route.params.id, 10);
         console.log("id"+idAnimal);
-          const response = await axios.get(`https://localhost:5001/api/animal/medsAnimal/1`);
+          const response = await instance.get(`animal/medsAnimal/1`);
           this.medicines = response.data;
           console.log("medicines",this.medicines);
         } catch (error) {
@@ -246,7 +246,7 @@
         const idAnimal = parseInt(this.$route.params.id, 10);
         console.log(idAnimal);
         try {
-          await axios.delete(`https://localhost:5001/api/animal/${idAnimal}`);
+          await instance.delete(`animal/${idAnimal}`);
           this.$router.push('/search');
         } catch (error) {
           console.error('Error removing animal:', error);
@@ -254,7 +254,7 @@
       },
       async fetchAnimalDetails(id) {
         try {
-          const response = await axios.get(`https://localhost:5001/api/animal/allanimal/${id}`);
+          const response = await instance.get(`animal/allanimal/${id}`);
           this.animal = response.data;
           this.animalEdit = response.data;
 
@@ -282,7 +282,7 @@
             }
 
             console.log("animal", familyRoute);
-            const familyResponse = await axios.get(`https://localhost:5001/api/animal/${familyRoute}/${id}`);
+            const familyResponse = await instance.get(`animal/${familyRoute}/${id}`);
             this.additionalDetails = familyResponse.data;
             this.additionalDetailsEdit = familyResponse.data;
           }
@@ -296,7 +296,7 @@
 // Fetch contageus details
         async fetchContageusDetails(id) {
       
-      const response = await axios.get(`https://localhost:5001/api/animal/contageusAnimal/${id}`);
+      const response = await instance.get(`animal/contageusAnimal/${id}`);
       this.contageus = response.data;
         },
 
@@ -304,13 +304,13 @@
 // Fetch labs details
         async fetchLabsDetails(id) {
       
-      const response = await axios.get(`https://localhost:5001/api/animal/labsAnimal/${id}`);
+      const response = await instance.get(`animal/labsAnimal/${id}`);
       this.labs = response.data;
         },
 
         async fetchVetVisitDetails(id) {
       
-      const response = await axios.get(`https://localhost:5001/api/animal/vetVisitAnimal/${id}`);
+      const response = await instance.get(`animal/vetVisitAnimal/${id}`);
       this.vetVisit = response.data;
         },
 

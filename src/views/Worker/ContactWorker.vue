@@ -69,7 +69,7 @@
   
   <script>
   import WorkerNavigation from './WorkerNavigation.vue';
-  import axios from 'axios';
+  import instance from '@/axiosBase';
   import Loading from '../Loading.vue';
   
   export default {
@@ -113,7 +113,7 @@
         async increment(id){
 
                 try {
-                const response = await axios.put("https://localhost:5001/api/animal/updateContactDomain",{id:id});
+                const response = await instance.put("animal/updateContactDomain",{id:id});
 
                 console.log(this.items);
                 window.location.reload();
@@ -129,7 +129,7 @@
         async fetchData() {
 
                 try {
-                const response = await axios.get('https://localhost:5001/api/animal/contact_db');
+                const response = await instance.get('animal/contact_db');
                 this.items = response.data;
                 console.log(this.items);
                 this.populateFilters();
@@ -143,7 +143,7 @@
 
 
       async fetchDataUser() {
-        axios.get('https://localhost:5001/api/animal/adopter_db')
+        instance.get('animal/adopter_db')
         .then(response => {
           this.adopters = response.data.map(adopter => ({
             ...adopter,

@@ -171,7 +171,7 @@
 <script>
 //dodaj button remuve u tablici
 import WorkerNavigation from './WorkerNavigation.vue';
-import axios from 'axios';
+import instance from '@/axiosBase';
 
 export default {
   components: {
@@ -227,7 +227,7 @@ export default {
       try {
         const id = this.$route.params.id;
         
-        const response = await axios.put("https://localhost:5001/api/animal/updateNewsDomain", {
+        const response = await instance.put("animal/updateNewsDomain", {
           Id: idUpdate,
           Name: this.nameUpdate,
           Description: this.descriptionUpdate,
@@ -277,7 +277,7 @@ alert("Item updated!");
 
     async handleSubmit() {
     try {
-      const response = await axios.post('https://localhost:5001/api/animal/addNews', {
+      const response = await instance.post('animal/addNews', {
         name: this.nameAdd,
         dateTime: `${this.dateAdd}T00:00:00.00`,
         description: this.descriptionAdd
@@ -309,7 +309,7 @@ alert("Item updated!");
   },
     async fetchData() {
       try {
-        const response = await axios.get('https://localhost:5001/api/animal/news_db');
+        const response = await instance.get('animal/news_db');
         this.items = response.data;
         console.log(this.items);
         this.isLoading = false;

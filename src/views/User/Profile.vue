@@ -160,7 +160,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import instance from '@/axiosBase';
 import Navigation from '../User/Navigation.vue';
 import Footer from '../User/Footer.vue';
 import { ref, onMounted } from 'vue';
@@ -226,7 +226,7 @@ export default {
 
     async fetchUserDetails() {
       try {
-        const response = await axios.get(`https://localhost:5001/api/animal/adopter/${this.userId}`, {
+        const response = await instance.get(`animal/adopter/${this.userId}`, {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
@@ -243,7 +243,7 @@ export default {
 
     async fetchAdoptionDetails() {
       try {
-        const response = await axios.get(`https://localhost:5001/api/animal/adopted/${this.adopterId}`, {
+        const response = await instance.get(`animal/adopted/${this.adopterId}`, {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
@@ -255,7 +255,7 @@ export default {
     },
     fetchReturnedDetails() {
       const idUser = this.$route.params.id;
-      axios.get(`https://localhost:5001/api/animal/returned/${this.adopterId}}`, {
+      instance.get(`animal/returned/${this.adopterId}}`, {
         headers: {
           Authorization: `Bearer ${token.value}`,
         },
@@ -272,7 +272,7 @@ export default {
     },
     async submitEditForm() {
       try {
-        await axios.put(`https://localhost:5001/api/animal/updateAdopter/${this.user.registerId}`, {
+        await instance.put(`animal/updateAdopter/${this.user.registerId}`, {
           Adopter: {
             firstName: this.editForm.firstName,
             lastName: this.editForm.lastName,
@@ -307,11 +307,11 @@ export default {
         try {
   // Prva operacija: brisanje
   console.log('code'+returnedAnimal.adoptionCode);
-  //await axios.put(`https://localhost:5001/api/animal/code/${returnedAnimal.adoptionCode}`);
+  //await instance.put(`animal/code/${returnedAnimal.adoptionCode}`);
   console.log('Successfully deleted the animal object.');
 
   // Druga operacija: slanje objekta
-  await axios.post('https://localhost:5001/api/animal/addReaturndAnimal', returnedAnimal, {
+  await instance.post('animal/addReaturndAnimal', returnedAnimal, {
     headers: {
       Authorization: `Bearer ${this.token}`,
     },
@@ -319,7 +319,7 @@ export default {
   console.log('Successfully posted the returned animal object.');
 
   // Treća operacija: ažuriranje statusa životinje
-  await axios.put(`https://localhost:5001/api/animal/adoptionstatusfalse/${returnedAnimal.animalId}`, {}, {
+  await instance.put(`animal/adoptionstatusfalse/${returnedAnimal.animalId}`, {}, {
     headers: {
       Authorization: `Bearer ${this.token}`,
     },
@@ -328,7 +328,7 @@ export default {
 
   // Četvrta operacija: inkrementiranje vraćenih životinja
   const userId = localStorage.getItem('adopterid');
-  await axios.put(`https://localhost:5001/api/animal/incrementReturned/${userId}`, {}, {
+  await instance.put(`animal/incrementReturned/${userId}`, {}, {
     headers: {
       Authorization: `Bearer ${this.token}`,
     },

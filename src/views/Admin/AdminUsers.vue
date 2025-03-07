@@ -59,7 +59,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
+import instance from '@/axiosBase';
 import AdminNavigation from '../Admin/AdminNavigation.vue';
 
 export default {
@@ -73,7 +73,7 @@ export default {
     };
   },
   mounted() {
-    axios.interceptors.request.use(
+    instance.interceptors.request.use(
       config => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -86,7 +86,7 @@ export default {
       }
     );
 
-    axios.get('https://localhost:5001/api/animal/adopter_db')
+    instance.get('animal/adopter_db')
       .then(response => {
         this.adopters = response.data.map(adopter => ({
           ...adopter,
@@ -132,7 +132,7 @@ export default {
  
 
 
-    axios.put(`https://localhost:5001/api/animal/flag/${id}`)
+    instance.put(`animal/flag/${id}`)
       .then(response => {
        
        console.log("Flagd ",id);

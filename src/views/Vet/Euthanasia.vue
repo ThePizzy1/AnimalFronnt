@@ -226,7 +226,7 @@
   
   <script>
   import WorkerNavigation from '../Vet/VetNavigation.vue';
-  import axios from 'axios';
+  import instance from '@/axiosBase';
   import Swal from 'sweetalert2'
   export default {
     components: {
@@ -290,7 +290,7 @@
       this.singleCode = item.animalId;
       this.singleName = item.nameOfDesissse;
       this.singleDate = item.date.split('T')[0]; // Extract date part
-      const animalResponse = await axios.get(`https://localhost:5001/api/animal/allanimal/${this.singleCode}`);
+      const animalResponse = await instance.get(`animal/allanimal/${this.singleCode}`);
           const animalData = animalResponse.data;
         this.singleAnimalName=animalData.name;
         console.log("Id animal:"+this.singleAnimalName); 
@@ -305,7 +305,7 @@
     "complited": false */
       async handleSubmit(){
      try{
-       const response = await axios.post('https://localhost:5001/api/animal/addEuthanasia',{
+       const response = await instance.post('animal/addEuthanasia',{
         animalId: this.registerId,
         date: `${this.dateAdd}T00:00:00.00` ,
         nameOfDesissse: this.nameOfDesissseAdd,
@@ -345,7 +345,7 @@
      },
       async checkAnimal(id) {
      try{
-          const animalResponse = await axios.get(`https://localhost:5001/api/animal/allanimal/${id}`);
+          const animalResponse = await instance.get(`animal/allanimal/${id}`);
           const animalData = animalResponse.data;
           
         this.registerId=animalData.idAnimal;
@@ -366,7 +366,7 @@
   
       async fetchData() {
         try {
-          const response = await axios.get('https://localhost:5001/api/animal/euthanasia_db');
+          const response = await instance.get('animal/euthanasia_db');
           this.items = response.data; 
           console.log(this.items);
           this.isLoading = false;

@@ -200,7 +200,7 @@
   <script>
 
 import VetNavigation from '../Vet/VetNavigation.vue';
-  import axios from 'axios';
+  import instance from '@/axiosBase';
   import Swal from 'sweetalert2'
   export default {
     components: {
@@ -283,7 +283,7 @@ import VetNavigation from '../Vet/VetNavigation.vue';
       this.singleCode = item.animalId;
       this.singleName = item.nameOfDesissse;
       this.singleDate = item.date.split('T')[0]; // Extract date part
-      const animalResponse = await axios.get(`https://localhost:5001/api/animal/allanimal/${this.singleCode}`);
+      const animalResponse = await instance.get(`animal/allanimal/${this.singleCode}`);
           const animalData = animalResponse.data;
         this.singleAnimalName=animalData.name;
         console.log("Id animal:"+this.singleAnimalName); 
@@ -291,7 +291,7 @@ import VetNavigation from '../Vet/VetNavigation.vue';
 
     async handleSubmit(){
    try{
-     const response = await axios.post('https://localhost:5001/api/animal/addMedicines',{
+     const response = await instance.post('animal/addMedicines',{
       animalId:this.registerId,
       nameOfMedicines:this.nameAdd,
       description:this.descriptionAdd,
@@ -348,7 +348,7 @@ alert("There was an error!");
 
    async checkAnimal() {
    try{
-        const animalResponse = await axios.get(`https://localhost:5001/api/animal/allanimal/${this.code}`);
+        const animalResponse = await instance.get(`animal/allanimal/${this.code}`);
         const animalData = animalResponse.data;
         
       this.registerId=animalData.idAnimal;
@@ -372,7 +372,7 @@ alert("There was an error!");
 
     async checkUser() {
    try{
-        const userResponse = await axios.get(`https://localhost:5001/api/auth/getUserByUsername/${this.username}`);
+        const userResponse = await instance.get(`auth/getUserByUsername/${this.username}`);
         const userData = userResponse.data;
         
       this.registerId=userData.id;
@@ -394,7 +394,7 @@ alert("There was an error!");
     },
     async fetchData() {
       try {
-        const response = await axios.get('https://localhost:5001/api/animal/medicines_db');
+        const response = await instance.get('animal/medicines_db');
         this.items = response.data;
         console.log(this.items);
         this.populateFilters();

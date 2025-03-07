@@ -209,7 +209,7 @@
 <script>
 import Swal from 'sweetalert2'
 import WorkerNavigation from './WorkerNavigation.vue';
-import axios from 'axios';
+import instance from '@/axiosBase';
 import Loading from '../Loading.vue';
 
 export default {
@@ -271,7 +271,7 @@ export default {
     async increment(id){
 
       try {
-        const response = await axios.put("https://localhost:5001/api/animal/updateFoodDomainIncrement",{id:id});
+        const response = await instance.put("animal/updateFoodDomainIncrement",{id:id});
     
         console.log(this.items);
         window.location.reload();
@@ -289,7 +289,7 @@ export default {
           });
                     return;
         }else{
-        const response = await axios.put("https://localhost:5001/api/animal/updateFoodDomainDecrement",{id:id});
+        const response = await instance.put("animal/updateFoodDomainDecrement",{id:id});
    
         console.log(this.items);
         window.location.reload();}
@@ -320,7 +320,7 @@ export default {
     "weight": 3,
     "weightPerServing": 2 */
     try{
-      const response = await axios.post('https://localhost:5001/api/animal/addFood',{
+      const response = await instance.post('animal/addFood',{
 
                             Name: this.nameAdd,
                             AgeGroup: this.ageGroupAdd,
@@ -383,7 +383,7 @@ export default {
    async fetchData() {
 
       try {
-        const response = await axios.get('https://localhost:5001/api/animal/food_db');
+        const response = await instance.get('animal/food_db');
         this.items = response.data;
         console.log(this.items);
         this.populateFilters();

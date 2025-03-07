@@ -115,7 +115,7 @@
   </template>
   
   <script>
-  import axios from 'axios';
+  import instance from '@/axiosBase';
 
   import Loading from './Loading.vue'; // Import the Loading component
   import { ref } from 'vue';

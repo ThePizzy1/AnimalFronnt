@@ -161,7 +161,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import instance from '@/axiosBase';
 import Navigation from '../User/Navigation.vue';
 import Footer from '../User/Footer.vue';
 
@@ -244,8 +244,8 @@ export default {
       console.log(this.searchQuery);
     },
     fetchData() {
-      axios
-        .get('https://localhost:5001/api/animal/animalA_db')
+      instance
+        .get('animal/animalA_db')
         .then(response => {
           this.items = response.data;
         })

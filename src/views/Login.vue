@@ -34,7 +34,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import axios from 'axios';
+import instance from '@/axiosBase';
 import { jwtDecode } from 'jwt-decode'; // Correct import
 import { useRouter } from 'vue-router';
 import { RouterLink } from 'vue-router';
@@ -53,7 +53,7 @@ const login = async () => {
   accessDenied.value = false;
 
   try {
-    const response = await axios.post('https://localhost:5001/api/auth/login', {
+    const response = await instance.post('auth/login', {
       username: username.value,
       password: password.value
     });
@@ -116,8 +116,7 @@ if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
 /**--------------------------------------------------------------------------------------------------------------------------------------------------------- */
     console.log('Login successful');
   } catch (error) {
-    console.error('Login error:', error);
-
+ 
     if (error.response && error.response.status === 401) {
       loginError.value = 'The entry is not valid';
     } else {
@@ -132,7 +131,7 @@ const fetchUserDetails = async (userId) => {
   const tokenValue = localStorage.getItem('token');
 
   try {
-    const response = await axios.get(`https://localhost:5001/api/animal/adopter/${userId}`, {
+    const response = await instance.get(`animal/adopter/${userId}`, {
       headers: {
         Authorization: `Bearer ${tokenValue}`
       }

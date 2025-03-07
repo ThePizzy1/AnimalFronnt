@@ -372,7 +372,7 @@ import { time } from 'echarts';
 import AdminNavigation from '../Admin/AdminNavigation.vue';
 import WorkerNavigation from '../Worker/WorkerNavigation.vue';
 
-import axios from 'axios';
+import instance from '@/axiosBase';
 //import jwtDecode from 'jwt-decode';
 
 localStorage.getItem('userRole');
@@ -433,7 +433,7 @@ export default {
   methods: {
     async checkUser() {
    try{
-        const userResponse = await axios.get(`https://localhost:5001/api/auth/getUserByUsername/${this.username}`);
+        const userResponse = await instance.get(`auth/getUserByUsername/${this.username}`);
         const userData = userResponse.data;
         
       this.registerId=userData.id;
@@ -509,13 +509,13 @@ export default {
           console.log(pair[0] + ', ' + pair[1]);
         }
 
-        // Axios post request
+        // instance post request
         console.log("Sending data to API...");
         
-        const response = await axios.post('https://localhost:5001/api/animal/addAnimal', formData, {
+        const response = await instance.post('animal/addAnimal', formData, {
           headers: {
             Authorization: `Bearer ${this.token}`,  // Authorization header
-            // 'Content-Type' is not needed for FormData, Axios will set it automatically
+            // 'Content-Type' is not needed for FormData, instance will set it automatically
           },
         });
         console.log("Data sent to API:");
@@ -527,7 +527,7 @@ export default {
 
     
         //Add record
-        const responseRecord = await axios.post('https://localhost:5001/api/animal/addAnimalRecord', 
+        const responseRecord = await instance.post('animal/addAnimalRecord', 
           {animalId: this.animalId,
             recordId: 1}
         ,{
@@ -542,7 +542,7 @@ export default {
 
        
    
-        const responseFound = await axios.post('https://localhost:5001/api/animal/addAnimalFound', 
+        const responseFound = await instance.post('animal/addAnimalFound', 
           { animalId:this.animalId,
           date:`${this.date}T${this.time}:00.0000000`,
          adress:this.adress,

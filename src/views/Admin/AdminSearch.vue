@@ -140,7 +140,7 @@
  
 </template>
 <script>
-import axios from 'axios';
+import instance from '@/axiosBase';
 import AdminNavigation from '../Admin/AdminNavigation.vue';
 import Loading from '../Loading.vue';
 export default {
@@ -198,7 +198,7 @@ export default {
       ];
       this.isLoading = false; 
     }, 2000);
-    axios.interceptors.request.use(
+    instance.interceptors.request.use(
       config => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -211,7 +211,7 @@ export default {
       }
     );
 
-    axios.get('https://localhost:5001/api/animal/animal_pc')
+    instance.get('animal/animal_pc')
       .then(response => {
         this.items = response.data;
         this.populateFilters();
@@ -232,7 +232,7 @@ export default {
       this.subspeciesList = [...new Set(this.items.map(item => item.subspecies))];
     },
     searchAnimals() {
-      axios.get('https://localhost:5001/api/animal/animal_pc', {
+      instance.get('animal/animal_pc', {
         params: this.filters
       })
       .then(response => {
