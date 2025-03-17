@@ -346,15 +346,6 @@ export default {
 
 
 
-
-
-
-
-
-
-
-
-
     async handleSubmit() {
     try {
       const response = await instance.post('animal/addNews', {
@@ -402,10 +393,7 @@ export default {
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       return new Date(date).toLocaleDateString(undefined, options);
     },
-    navigateToDetails(id) {
-      this.$router.push(`/singleNews/${id}`);
-      console.log(`Navigate to details of item with ID: ${id}`);
-    },
+  
   },
   watch: {
     filters: {

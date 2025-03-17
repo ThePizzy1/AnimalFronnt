@@ -138,33 +138,47 @@ export default {
         
              console.log( moment().format());
                 try{
-                const response = await instance.post('animal/addFunds',{
-                    amount:parseFloat( this.amount),
-                    purpose: this.picked, 
-                    dateTime: moment().format() ,
-                    adopterId: parseInt(this.adopterId)
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${this.token}`,  
-                
-                    },
-                    }
-                    );
+                            const response = await instance.post('animal/addFunds',{
+                                amount:parseFloat( this.amount),
+                                purpose: this.picked, 
+                    
+                                adopterId: parseInt(this.adopterId)
+                            },
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${this.token}`,  
+                            
+                                },
+                                }
+                                );
+                                     await  Swal.fire({
+                                        title: "Message sent!",
+                                        draggable: true,
+                                        icon: "success"
+                                        });
 
-                                            await  Swal.fire({
-                                                    title: "Message sent!",
-                                                    draggable: true,
-                                                    icon: "success"
-                                                    });
+                                        const responseUpdate=await instance.put('animal/updateBalansDomain',{
+                                            id:1,
+                                            balance:parseFloat( this.amount)
+
+                                        },
+                                        {
+                                        headers: {
+                                            Authorization: `Bearer ${this.token}`,  
+                                    
+                                        },
+                                        });
+                                        console.log("Update "+responseUpdate.status);
+
+
                                             window.location.reload();
                                             }
                                             catch(error){
-                                              console.log("Amount: ", this.amount);
-                                                console.log("Purpose: ", this.picked);
-                                                console.log("DateTime: ", moment().format()) ;
-                                                console.log("AdopterId: ", this.adopterId);
-                                                console.error('There was an error!', error);
+                                            console.log("Amount: ", this.amount);
+                                            console.log("Purpose: ", this.picked);
+                                            console.log("DateTime: ", moment().format()) ;
+                                            console.log("AdopterId: ", this.adopterId);
+                                            console.error('There was an error!', error);
                                                 await  Swal.fire({
                                                     title: "Ooops!",
                                                     text: "There was an error!",

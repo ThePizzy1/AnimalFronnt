@@ -221,35 +221,35 @@
                       <label class="inline-flex items-center cursor-pointer">
                         <input type="checkbox" v-model="this.itemsSingle.neutered" class="sr-only peer" disabled>
                         <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                        <span class="ms-3 text-sm font-medium text-white">Neutered</span>
+                        <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Neutered</span>
                       </label>
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                       <label class="inline-flex items-center cursor-pointer">
                     <input type="checkbox" v-model="this.itemsSingle.vaccinated" class="sr-only peer" disabled>
                     <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                    <span class="ms-3 text-sm font-medium text-white">Vaccinated</span>
+                    <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Vaccinated</span>
                   </label>
                 </div>
                 <div class="col-span-2 sm:col-span-1">
                   <label class="inline-flex items-center cursor-pointer">
                     <input type="checkbox" v-model="this.itemsSingle.microchipped" class="sr-only peer" disabled>
                     <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                    <span class="ms-3 text-sm font-medium text-white">Microchipped</span>
+                    <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Microchipped</span>
                   </label>
                 </div>
                 <div class="col-span-2 sm:col-span-1">
                   <label class="inline-flex items-center cursor-pointer">
                     <input type="checkbox" v-model="this.itemsSingle.trained" class="sr-only peer" disabled>
                     <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                    <span class="ms-3 text-sm font-medium text-white">Trained</span>
+                    <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Trained</span>
                   </label>
                 </div>
                 <div class="col-span-2 sm:col-span-1">
                   <label class="inline-flex items-center cursor-pointer">
                     <input type="checkbox" v-model="this.itemsSingle.socialized" class="sr-only peer" disabled>
                     <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                    <span class="ms-3 text-sm font-medium text-white">Socialized</span>
+                    <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Socialized</span>
                   </label>
                 </div>
 

@@ -95,9 +95,13 @@ if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
       router.push({ path: '/home' });
    
     }
-    if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Worker'  || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Menager' ) {
+    if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Worker'   ) {
      router.push({ path: '/workerHome' });
       localStorage.setItem('userRole','Worker' );
+    }
+    if( decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Menager'){
+      router.push({ path: '/workerHome' });
+      localStorage.setItem('userRole','Menager' );
     }
     if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Vet' || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'HeadVet') {
       router.push({ path: '/vetHome' });

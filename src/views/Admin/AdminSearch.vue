@@ -1,6 +1,7 @@
 <template>
  
   <div class="container mx-auto px-4">
+    <Loading :isLoading=true></Loading>
     <div class="flex">
       <AdminNavigation class="w-1/6" />
       <div class="w-5/6 shadow-lg rounded-lg overflow-hidden text-white ml-auto">
@@ -131,6 +132,7 @@
       </tr>
     </tbody>
   </table>
+  
 </div>
 
 
@@ -142,11 +144,11 @@
 <script>
 import instance from '@/axiosBase';
 import AdminNavigation from '../Admin/AdminNavigation.vue';
-import Loading from '../Loading.vue';
+
 export default {
   components: {
     AdminNavigation,
-    Loading,
+   
   },
   data() {
     return {
@@ -189,27 +191,6 @@ export default {
     },
   },
   mounted() {
-    setTimeout(() => {
-      // Ovde simuliramo stizanje podataka nakon 2 sekunde
-      this.data = [
-        { id: 1, name: 'Primer podataka 1' },
-        { id: 2, name: 'Primer podataka 2' },
-        { id: 3, name: 'Primer podataka 3' }
-      ];
-      this.isLoading = false; 
-    }, 2000);
-    instance.interceptors.request.use(
-      config => {
-        const token = localStorage.getItem('token');
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-      },
-      error => {
-        return Promise.reject(error);
-      }
-    );
 
     instance.get('animal/animal_pc')
       .then(response => {

@@ -128,7 +128,7 @@
   export default {
     components: {
         VetNavigation,
-      Loading,
+   
     },
     data() {
       return {

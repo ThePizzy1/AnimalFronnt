@@ -67,7 +67,11 @@ const router = createRouter({
       component: () => import('../views/Worker/Funds.vue')
     },
 
-
+    {
+      path: '/balans',
+      name: 'Balans',
+      component: () => import('../views/Worker/Balans.vue')//C:\Users\ivozab\Documents\AnimalRescue\src\views\Worker\Balans.vue
+    },
     {
       path: '/news',
       name: 'News',
