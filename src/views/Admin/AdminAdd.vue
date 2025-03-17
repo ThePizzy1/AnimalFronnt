@@ -371,7 +371,7 @@
 import { time } from 'echarts';
 import AdminNavigation from '../Admin/AdminNavigation.vue';
 import WorkerNavigation from '../Worker/WorkerNavigation.vue';
-
+  import Swal from 'sweetalert2'
 import instance from '@/axiosBase';
 //import jwtDecode from 'jwt-decode';
 
@@ -523,13 +523,17 @@ export default {
         console.log("Animal created:", response.data);
         console.log("Animal ID:", response.data.idAnimal);
         this.animalId=response.data.idAnimal;
-         alert("Animal successfully added!");
+       await Swal.fire({
+             title: "Animal added!",
+             draggable: true,
+             icon: "success"
+           });
+      
 
     
         //Add record
         const responseRecord = await instance.post('animal/addAnimalRecord', 
-          {animalId: this.animalId,
-            recordId: 1}
+          {animalId: this.animalId}
         ,{
           headers: {
             Authorization: `Bearer ${this.token}`,  // Authorization header

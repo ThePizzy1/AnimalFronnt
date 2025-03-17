@@ -271,7 +271,7 @@
 //ispis životinja kojima je record Quarantine
 import WorkerNavigation from '../Vet/VetNavigation.vue';
 import instance from '@/axiosBase';
-
+  import Swal from 'sweetalert2'
 export default {
   components: {
     WorkerNavigation,
@@ -330,40 +330,36 @@ export default {
       startTime: `${this.startTimeAdd}T00:00:00.00`,
       endTime:`${this.endTimeAdd}T00:00:00.00` ,
       typeOfVisit: this.typeOfVisitAdd,
-      notes: this.notesAdd
-                 
-
+      notes: this.notesAdd              
      },
      {
          headers: {
            Authorization: `Bearer ${this.token}`,  
    
          },
-       }
-   
-   );
-   alert("Item added!");
-   Swal.fire({
-           title: "Item added!",
-           draggable: true,
-           icon: "success"
-         });
-   window.location.reload();
- }
+       });
+  
+      await Swal.fire({
+              title: "Item added!",
+              draggable: true,
+              icon: "success"
+            });
+      window.location.reload();
+   }
    catch(error){
-console.log("Animal:"+this.registerId);
-console.log("Start:"+this.startTimeAdd);
-console.log("End:"+this.endTimeAdd);
-console.log("Type:"+this.typeOfVisitAdd);
-console.log("Notes:"+this.notesAdd);
-alert("There was an error!");
-     console.error('There was an error!', error);
-     Swal.fire({
-           title: "Ooops!",
-           text: "There was an error!",
-           draggable: true,
-           icon: "error"
-         });
+          console.log("Animal:"+this.registerId);
+          console.log("Start:"+this.startTimeAdd);
+          console.log("End:"+this.endTimeAdd);
+          console.log("Type:"+this.typeOfVisitAdd);
+          console.log("Notes:"+this.notesAdd);
+      
+        console.error('There was an error!', error);
+      await  Swal.fire({
+              title: "Ooops!",
+              text: "There was an error!",
+              draggable: true,
+              icon: "error"
+            });
 
    }
    

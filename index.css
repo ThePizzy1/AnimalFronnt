@@ -8,7 +8,7 @@ body {
 	height: wrap;
 }
 
-@keyframes gradient {
+/*@keyframes gradient {
 	0% {
 		background-position: 0% 50%;
 	}
@@ -19,3 +19,4 @@ body {
 		background-position: 0% 50%;
 	}
 }
+*/

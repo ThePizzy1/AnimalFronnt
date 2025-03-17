@@ -5,7 +5,7 @@
                     <component :is="role === 'Admin' ? 'AdminNavigation' : 'WorkerNavigation'" />
                 </div>
              <div class="w-5/6 text-white p-4 rounded-r-lg mr-8">
-                    <h1 class="text-xl font-bold mb-4">News</h1>
+                    <h1 class="text-xl font-bold mb-4">Balans</h1>
 
                     <button @click="add = true"  :class="{ 'cursor-allowed opacity-100': checkMenager==true,   'cursor-not-allowed opacity-50': checkMenager==false}" type="button" class="mb-4 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
                         <svg class="w-8 h-8 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
@@ -24,7 +24,7 @@
                             <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"></th>
                             <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Iban</th>
                             <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Type</th>
-                            <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">LastUpdated</th>
+                            <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Date</th>
                             <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Balance</th>
                             </tr>
                         </thead>
@@ -133,10 +133,6 @@
                     </div>
                   
               
-                    <div class="col-span-2 sm:col-span-2">
-                        <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date</label>
-                        <input type="date" v-model="lastUpdatedAdd" name="date" id="date" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required="">
-                    </div>
                     <div class="col-span-2 sm:col-span-2">
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                         <input type="password" v-model="password" name="password" id="password" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="••••••••" required="">
@@ -284,7 +280,7 @@ async checkData(){
 
 
             console.log(response.status);
-            alert("Response"+response.status);
+         
                 await  Swal.fire({
                         title: "Item added!",
                         draggable: true,

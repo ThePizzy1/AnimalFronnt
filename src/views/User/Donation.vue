@@ -152,7 +152,7 @@ export default {
                                 }
                                 );
                                      await  Swal.fire({
-                                        title: "Message sent!",
+                                        title: "Donation sent!",
                                         draggable: true,
                                         icon: "success"
                                         });
