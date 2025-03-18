@@ -4,7 +4,7 @@
     <Loading :isLoading=true></Loading>
     <div class="flex">
       <AdminNavigation class="w-1/6" />
-      <div class="w-5/6 shadow-lg rounded-lg overflow-hidden text-white ml-auto">
+      <div class="w-5/6  rounded-lg overflow-hidden text-white ml-auto">
         <h1 class="ml-5 text-2xl font-bold mb-4 text-white">Animal List</h1>
         <div class="mb-4 mx-5">
           <form @submit.prevent="searchAnimals">

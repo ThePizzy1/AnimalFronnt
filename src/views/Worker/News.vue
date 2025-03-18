@@ -17,7 +17,7 @@
       <div class="grid grid-cols-4 gap-4 mb-4">
         <div>
           <label for="name" class="block text-sm font-bold mb-2">Name:</label>
-          <input v-model="filters.name" id="name" type="text" class="rounded-full text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white  shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" />
+          <input v-model="filters.name" id="name" type="text" class="rounded-full text-white w-full py-2 px-3 bg-transparent  shadow-xl focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"  />
         </div>
         <div>
           <label for="description" class="block text-sm font-bold mb-2">Description:</label>
@@ -25,7 +25,7 @@
         </div>
         <div>
           <label for="dateTime" class="block text-sm font-bold mb-2">Date:</label>
-          <input v-model="filters.dateTime" id="dateTime" type="date" class="rounded-full text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white  shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" />
+          <input v-model="filters.dateTime" id="dateTime" type="date" class="rounded-full text-white w-full py-2 px-3 bg-transparent  shadow-xl focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"  />
         </div>
       </div>
 

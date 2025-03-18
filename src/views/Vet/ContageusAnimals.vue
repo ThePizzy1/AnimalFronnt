@@ -27,7 +27,7 @@
         </div>
         <div>
           <label for="startTime" class="block text-sm font-bold mb-2">Date:</label>
-          <input v-model="filters.startTime" id="startTime" type="date" class="rounded-full text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white  shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" />
+          <input v-model="filters.startTime" id="startTime" type="date" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"  />
         </div>
        
         <div>
@@ -290,9 +290,9 @@
   
   <script>
   import { TimeScale } from 'chart.js';
-import VetNavigation from '../Vet/VetNavigation.vue';
+  import VetNavigation from '../Vet/VetNavigation.vue';
   import instance from '@/axiosBase';
-  
+  import Swal from 'sweetalert2'
   export default {
     components: {
       VetNavigation,
@@ -371,31 +371,19 @@ import VetNavigation from '../Vet/VetNavigation.vue';
    catch (error) {this.animalExists=false}
       
     },
-    /**    "animalId": 2,
-    "desisseName": "Desise name text",
-    "startTime": "2026-05-20T00:00:00",
-    "description": "Desise Description text",
-    "contageus": false */
     async handleSubmit(){
    try{
      const response = await instance.post('animal/addContageus',{
       animalId:this.registerId,
       desisseName:this.desisseNameAdd,
-      startTime:this.startTimeAdd,
+      startTime:`${this.startTimeAdd}T00:00:00.00` ,
       description:this.descriptionAdd,
       contageus:true
-
      },
      {
-         headers: {
-           Authorization: `Bearer ${this.token}`,  
-   
-         },
-       }
-   
-   );
-   alert("Item added!");
-   Swal.fire({
+         headers: { Authorization: `Bearer ${this.token}`,   },
+      } );
+  await Swal.fire({
            title: "Item added!",
            draggable: true,
            icon: "success"
@@ -403,19 +391,14 @@ import VetNavigation from '../Vet/VetNavigation.vue';
    window.location.reload();
  }
    catch(error){
-  
-alert("There was an error!");
-     console.error('There was an error!', error);
-     Swal.fire({
+   console.error('There was an error!', error);
+   await Swal.fire({
            title: "Ooops!",
            text: "There was an error!",
            draggable: true,
            icon: "error"
          });
-
-   }
-   
-   },
+   } },
 
 
     async fetchData() {
@@ -430,6 +413,7 @@ alert("There was an error!");
         this.isLoading = false;
       }
     },
+
     formatDate(date) {
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       return new Date(date).toLocaleDateString(undefined, options);
@@ -438,7 +422,6 @@ alert("There was an error!");
       this.desisseName = [...new Set(this.items.map(item => item.desisseName))];
       this.startTime = [...new Set(this.items.map(item => item.startTime))];
       this.contageus = [...new Set(this.items.map(item => item.contageus))];
-   
     },
     navigateToDetails(id) {
       this.$router.push(`/singleContageusAnimal/${id}`);
@@ -452,7 +435,6 @@ alert("There was an error!");
           return (
             (!this.filters.desisseName || item.DesisseName === this.filters.desisseName) &&
             (!this.filters.startTime || item.StartTime === this.filters.startTime) &&
-   
             (!this.filters.contageus || item.Contageus === this.filters.contageus)
           );
         });

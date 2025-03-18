@@ -368,7 +368,7 @@
   
   <script>
 
-import VetNavigation from '../Vet/VetNavigation.vue';
+  import VetNavigation from '../Vet/VetNavigation.vue';
   import instance from '@/axiosBase';
   import Swal from 'sweetalert2'
   export default {
@@ -394,7 +394,6 @@ import VetNavigation from '../Vet/VetNavigation.vue';
           mesurmentUnitAdd: '',
           intakeAdd: '',
           descriptionAdd: '',
-
           animalIdSingle: '',
           single: false,
           singleItem:[],
@@ -452,59 +451,50 @@ import VetNavigation from '../Vet/VetNavigation.vue';
                 this.itemsSingle = animalResponse.data;
                 console.log(this.itemsSingle);
           },
+
     async handleSubmit(){
-   try{
-     const response = await instance.post('animal/addMedicines',{
-      animalId:this.registerId,
-      nameOfMedicines:this.nameAdd,
-      description:this.descriptionAdd,
-      vetUsername:this.username,
-      amountOfMedicine:this.amountOfMedicineAdd,
-      mesurmentUnit:this.mesurmentUnitAdd,
-      medicationIntake:this.intakeAdd,
-      frequencyOfMedicationUse:this.selected,
-      usage:true
-                 
+      try{
+        const response = await instance.post('animal/addMedicines',{
+          animalId:this.registerId,
+          nameOfMedicines:this.nameAdd,
+          description:this.descriptionAdd,
+          vetUsername:this.username,
+          amountOfMedicine:this.amountOfMedicineAdd,
+          mesurmentUnit:this.mesurmentUnitAdd,
+          medicationIntake:this.intakeAdd,
+          frequencyOfMedicationUse:this.selected,
+          usage:true              
+          },
+          {
+              headers: { Authorization: `Bearer ${this.token}`,  },
+            });
 
-     },
-     {
-         headers: {
-           Authorization: `Bearer ${this.token}`,  
-   
-         },
-       }
-   
-   );
-   alert("Item added!");
-   Swal.fire({
-           title: "Item added!",
-           draggable: true,
-           icon: "success"
-         });
-   window.location.reload();
- }
-   catch(error){
-    console.log("Name:"+this.nameAdd);
-    console.log("Description:"+this.descriptionAdd);
-    console.log("Vet:"+this.username);
-    console.log("Amount:"+this.amountOfMedicineAdd);
-    console.log("Mesurment:"+this.mesurmentUnitAdd);
-    console.log("Intake:"+this.intakeAdd);
-    console.log("Frequency:"+this.selected);
-    console.log("Usage:"+true);
+            await Swal.fire({
+                    title: "Item added!",
+                    draggable: true,
+                    icon: "success"
+                  });
+            window.location.reload();
+          }
+      catch(error){
+        console.log("Name:"+this.nameAdd);
+        console.log("Description:"+this.descriptionAdd);
+        console.log("Vet:"+this.username);
+        console.log("Amount:"+this.amountOfMedicineAdd);
+        console.log("Mesurment:"+this.mesurmentUnitAdd);
+        console.log("Intake:"+this.intakeAdd);
+        console.log("Frequency:"+this.selected);
+        console.log("Usage:"+true);
 
-alert("There was an error!");
-     console.error('There was an error!', error);
-     Swal.fire({
-           title: "Ooops!",
-           text: "There was an error!",
-           draggable: true,
-           icon: "error"
-         });
 
-   }
-   
-   },
+        console.error('There was an error!', error);
+        await  Swal.fire({
+              title: "Ooops!",
+              text: "There was an error!",
+              draggable: true,
+              icon: "error"
+            });
+      } },
 
 
 

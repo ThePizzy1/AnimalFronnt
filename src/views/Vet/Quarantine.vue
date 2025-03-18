@@ -13,7 +13,16 @@
         </svg>
         <span class="block text-sm font-bold mx-2">Add Quarantine</span>
       </button>
-
+      <div class="grid grid-cols-4 gap-4 mb-5">
+      <div>
+          <label for="startTime" class="block text-sm font-bold mb-2">Start Date:</label>
+          <input v-model="filters.startTime" id="startTime" type="date" class="rounded-full text-white w-full py-2 px-3 bg-transparent  shadow-xl focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"  />
+        </div>
+        <div>
+          <label for="startTime" class="block text-sm font-bold mb-2">End Date:</label>
+          <input v-model="filters.endTime" id="startTime" type="date" class="rounded-full text-white w-full py-2 px-3 bg-transparent  shadow-xl focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"  />
+        </div>
+        </div>
       <div class="overflow-x-auto shadow-2lx sm:rounded-lg">
         <table class="min-w-full leading-normal">
           <thead>

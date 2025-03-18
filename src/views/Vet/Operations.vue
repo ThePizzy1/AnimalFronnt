@@ -13,7 +13,16 @@
         </svg>
         <span class="block text-sm font-bold mx-2">Add Operation</span>
       </button>
-
+      <div class="grid grid-cols-4 gap-4 mb-5">
+      <div>
+          <label for="startTime" class="block text-sm font-bold mb-2">Start Date:</label>
+          <input v-model="filters.startTime" id="startTime" type="date" class="rounded-full text-white w-full py-2 px-3 bg-transparent  shadow-xl focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"  />
+        </div>
+        <div>
+          <label for="startTime" class="block text-sm font-bold mb-2">End Date:</label>
+          <input v-model="filters.endTime" id="startTime" type="date" class="rounded-full text-white w-full py-2 px-3 bg-transparent  shadow-xl focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"  />
+        </div>
+        </div>
       <div class="overflow-x-auto shadow-2lx sm:rounded-lg">
         <table class="min-w-full leading-normal">
           <thead>
@@ -267,7 +276,7 @@
 <script>
 import WorkerNavigation from '../Vet/VetNavigation.vue';
 import instance from '@/axiosBase';
-
+ import Swal from 'sweetalert2'
 export default {
   components: {
     WorkerNavigation,
@@ -313,7 +322,6 @@ export default {
             console.log(this.singleItem);
             this.animalIdSingle = item.animalId;
             console.log(this.animalIdSingle);
-          
             const animalResponse = await instance.get(`animal/allanimal/${this.animalIdSingle}`);
                 this.itemsSingle = animalResponse.data;
                 console.log(this.itemsSingle);
@@ -327,61 +335,41 @@ export default {
       endTime:`${this.endTimeAdd}T00:00:00.00` ,
       typeOfVisit: this.typeOfVisitAdd,
       notes: this.notesAdd
-                 
-
      },
      {
-         headers: {
-           Authorization: `Bearer ${this.token}`,  
-   
-         },
-       }
-   
-   );
-   alert("Item added!");
-   Swal.fire({
+         headers: {  Authorization: `Bearer ${this.token}`,  },
+       });
+       await Swal.fire({
            title: "Item added!",
            draggable: true,
            icon: "success"
          });
-   window.location.reload();
- }
-   catch(error){
-console.log("Animal:"+this.registerId);
-console.log("Start:"+this.startTimeAdd);
-console.log("End:"+this.endTimeAdd);
-console.log("Type:"+this.typeOfVisitAdd);
-console.log("Notes:"+this.notesAdd);
-alert("There was an error!");
-     console.error('There was an error!', error);
-     Swal.fire({
-           title: "Ooops!",
-           text: "There was an error!",
-           draggable: true,
-           icon: "error"
-         });
-
-   }
-   
-   },
+       window.location.reload();
+    }
+      catch(error){
+        console.error('There was an error!', error);
+        await  Swal.fire({
+              title: "Ooops!",
+              text: "There was an error!",
+              draggable: true,
+              icon: "error"
+            });
+      } },
 
     async checkAnimal() {
    try{
         const animalResponse = await instance.get(`animal/allanimal/${this.code}`);
-        const animalData = animalResponse.data;
-        
-      this.registerId=animalData.idAnimal;
-      console.log("Id animal:"+this.registerId);
-       
-        if(this.registerId!=null){
-          this.animalExists=true;
-        }
-        else{
-          this.animalExists=false;
-        }
+        const animalData = animalResponse.data;      
+        this.registerId=animalData.idAnimal;
+        console.log("Id animal:"+this.registerId);    
+          if(this.registerId!=null){
+            this.animalExists=true;
+          }
+          else{
+            this.animalExists=false;
+          }
    }
-   catch (error) {this.animalExists=false}
-      
+   catch (error) {this.animalExists=false}     
     },
 
     async fetchData() {
@@ -396,25 +384,19 @@ alert("There was an error!");
       }
     },
     getTodayDate(endD) {
-
-const today = new Date();
-const endDate = new Date(endD);
-console.log(today);
-console.log(endDate);
-if(endDate >= today){
-console.log("t");
-return true;
-}
-else{console.log("f");  return false;}
-
-},
+      const today = new Date();
+      const endDate = new Date(endD);
+      console.log(today);
+      console.log(endDate);
+      if(endDate >= today){
+      console.log("t");
+      return true;
+      }
+      else{console.log("f");  return false;}
+      },
     formatDate(date) {
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       return new Date(date).toLocaleDateString(undefined, options);
-    },
-    navigateToDetails(id) {
-      // Implement navigation to details page
-      console.log(`Navigate to details of item with ID: ${id}`);
     },
   },
   watch: {

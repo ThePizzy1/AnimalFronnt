@@ -222,6 +222,7 @@
   </template>
   
   <script>
+  //nema dobar alert i napravi da je info širi
   import WorkerNavigation from '../Vet/VetNavigation.vue';
   import instance from '@/axiosBase';
   import Swal from 'sweetalert2'
@@ -241,14 +242,11 @@
         updateCode: '',
         updateDate: '',
         updateName: '',
-   
         code: '',
         animalExists: null,
         dateAdd: '',
        nameOfDesissseAdd: '',
        complitedAdd:false,
-
-
         items: [],
         filters: {
           date: '',
@@ -270,127 +268,97 @@
       this.fetchData();
     },
     methods: {
-        openUpdateModal(item) {
-      this.update = true;
-  
-      this.updateCode = item.animalId;
-      this.updateName = item.nameOfDesissse;
-      this.updateDate = item.date.split('T')[0]; // Extract date part
-      console.log('id:', this.idUpdate);
-      
-        console.log('Name:', this.nameUpdate);
-        console.log('Date:', this.dateUpdate);
-        console.log('Description:', this.descriptionUpdate);
-    },
-    async openSinglModal(item) {
-      this.single = true;
-      this.singleCode = item.animalId;
-      this.singleName = item.nameOfDesissse;
-      this.singleDate = item.date.split('T')[0]; // Extract date part
-      const animalResponse = await instance.get(`animal/allanimal/${this.singleCode}`);
-          const animalData = animalResponse.data;
-        this.singleAnimalName=animalData.name;
-        console.log("Id animal:"+this.singleAnimalName); 
-    },
-
-
-
-
-  /**"animalId": 2,
-    "date": "2026-05-20T00:00:00",
-    "nameOfDesissse": "Operation text",
-    "complited": false */
+      openUpdateModal(item) {
+          this.update = true;
+          this.updateCode = item.animalId;
+          this.updateName = item.nameOfDesissse;
+          this.updateDate = item.date.split('T')[0]; // Extract date part
+          console.log('id:', this.idUpdate);
+            console.log('Name:', this.nameUpdate);
+            console.log('Date:', this.dateUpdate);
+            console.log('Description:', this.descriptionUpdate);
+        },
+      async openSinglModal(item) {
+          this.single = true;
+          this.singleCode = item.animalId;
+          this.singleName = item.nameOfDesissse;
+          this.singleDate = item.date.split('T')[0]; // Extract date part
+          const animalResponse = await instance.get(`animal/allanimal/${this.singleCode}`);
+              const animalData = animalResponse.data;
+            this.singleAnimalName=animalData.name;
+            console.log("Id animal:"+this.singleAnimalName); 
+        },
       async handleSubmit(){
-     try{
-       const response = await instance.post('animal/addEuthanasia',{
-        animalId: this.registerId,
-        date: `${this.dateAdd}T00:00:00.00` ,
-        nameOfDesissse: this.nameOfDesissseAdd,
-        complited: this.complitedAdd
-                   
-  
-       },
-       {
-           headers: {
-             Authorization: `Bearer ${this.token}`,  
-     
-           },
-         }
-     
-     );
-
-     Swal.fire({
-             title: "Item added!",
-             draggable: true,
-             icon: "success"
-           });
-     window.location.reload();
-   }
-     catch(error){
-
-
-       console.error('There was an error!', error);
-       Swal.fire({
-             title: "Ooops!",
-             text: "There was an error!",
-             draggable: true,
-             icon: "error"
-           });
-  
-     }
-     
-     },
-      async checkAnimal(id) {
-     try{
-          const animalResponse = await instance.get(`animal/allanimal/${id}`);
-          const animalData = animalResponse.data;
-          
-        this.registerId=animalData.idAnimal;
-        this.singleAnimalName=animalData.name;
-        console.log("Id animal:"+this.registerId);
-         
-          if(this.registerId!=null){
-            this.animalExists=true;
-           
-          }
-          else{
-            this.animalExists=false;
-          }
-     }
-     catch (error) {this.animalExists=false}
-        
-      },
-  
-      async fetchData() {
-        try {
-          const response = await instance.get('animal/euthanasia_db');
-          this.items = response.data; 
-          console.log(this.items);
-          this.isLoading = false;
-        } catch (error) {
-          console.error('There was an error!', error);
-          this.isLoading = false;
+        try{
+          const response = await instance.post('animal/addEuthanasia',{
+            animalId: this.registerId,
+            date: `${this.dateAdd}T00:00:00.00` ,
+            nameOfDesissse: this.nameOfDesissseAdd,
+            complited: this.complitedAdd
+          },
+            {
+              headers: {Authorization: `Bearer ${this.token}`,   },
+            } );
+            await  Swal.fire({
+                    title: "Item added!",
+                    draggable: true,
+                    icon: "success"
+                  });
+            window.location.reload();
         }
-      },
-      getTodayDate(endD) {
-  
-        const today = new Date();
-        const endDate = new Date(endD);
-        console.log(today);
-        console.log(endDate);
-      if(endDate >= today){
-        console.log("t");
-       return true;
-      }
-      else{console.log("f");  return false;}
-  
-      },
-      formatDate(date) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return new Date(date).toLocaleDateString(undefined, options);
-      },
-     
-    },
+        catch(error){
+          console.log('There was an error!', error);
+          await  Swal.fire({
+                title: "Ooops!",
+                text: "There was an error!",
+                draggable: true,
+                icon: "error"
+              });
+        }},
+
+      async checkAnimal(id) {
+        try{
+              const animalResponse = await instance.get(`animal/allanimal/${id}`);
+              const animalData = animalResponse.data;       
+              this.registerId=animalData.idAnimal;
+              this.singleAnimalName=animalData.name;
+              console.log("Id animal:"+this.registerId);  
+              if(this.registerId!=null){
+                this.animalExists=true;     
+              }
+              else{
+                this.animalExists=false;
+              }
+        }
+        catch (error) {this.animalExists=false} 
+          },
+      async fetchData() {
+            try {
+              const response = await instance.get('animal/euthanasia_db');
+              this.items = response.data; 
+              console.log(this.items);
+              this.isLoading = false;
+            } catch (error) {
+              console.error('There was an error!', error);
+              this.isLoading = false;
+            }
+          },
+        getTodayDate(endD) {
+            const today = new Date();
+            const endDate = new Date(endD);
+            console.log(today);
+            console.log(endDate);
+          if(endDate >= today){
+            console.log("t");
+          return true;
+          }
+          else{console.log("f");  return false;}
+          },
+        formatDate(date) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(date).toLocaleDateString(undefined, options);
+          }
+        },
     watch: {
       filters: {
         handler() {
