@@ -192,7 +192,7 @@ const router = createRouter({
     {
       path: '/euthanasia',
       name: 'Euthanasia',
-      component: () => import('../views/Vet/Euthanasia.vue')//C:\Users\ivozab\Documents\AnimalRescue\src\views\Vet\Euthanasia.vue
+      component: () => import('../views/Vet/Euthanasia.vue')
     },
     {
       path: '/animalsOnMedication',
@@ -210,10 +210,11 @@ const router = createRouter({
       name: 'SingleContageusAnimal',
       component: () => import('../views/Vet/SingleContageusAnimal.vue')
     },
-
-
-
-
+    {
+      path:'/addLab',
+      name:'AddLab',
+      component: () => import('../views/Vet/AddLab.vue')
+    },
 
 
 
@@ -304,13 +305,13 @@ const router = createRouter({
     {
       path: '/adminWorkers',
       name: 'AdminWorkers',
-      component: () => import('../views/Admin/AdminWorkers.vue')//C:\Users\ivozab\Documents\AnimalRescue\src\views\Admin\AdminWorkers.vue
+      component: () => import('../views/Admin/AdminWorkers.vue')
     },
 
     {
       path: '/adminSurenderers',
       name: 'AdminSurenderers',
-      component: () => import('../views/Admin/AdminSurenderers.vue')//C:\Users\ivozab\Documents\AnimalRescue\src\views\Admin\AdminSurenderers.vue
+      component: () => import('../views/Admin/AdminSurenderers.vue')
     },
 
     //REST OF ROUTES

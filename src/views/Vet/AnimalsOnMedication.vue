@@ -165,11 +165,11 @@
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="mesurmentUnit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mesurment Unit</label>
-                        <input v-model="mesurmentUnitAdd" type="text" name="mesurmentUnit" id="mesurmentUnit" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="0.25" required="">
+                        <input v-model="mesurmentUnitAdd" type="text" name="mesurmentUnit" id="mesurmentUnit" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="mm" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="intake" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Medication Intake</label>
-                        <input v-model="intakeAdd" type="number" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="0.25" required="">
+                        <input v-model="intakeAdd" type="number" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="1" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Frequency</label>
@@ -367,7 +367,8 @@
   </template>
   
   <script>
-
+//kod dodavanja se učita stranica ali ne i podaci -_-
+//greška količina koju životinja uzima zapisuje se nula i tu i u postmanu 
   import VetNavigation from '../Vet/VetNavigation.vue';
   import instance from '@/axiosBase';
   import Swal from 'sweetalert2'
@@ -454,6 +455,7 @@
 
     async handleSubmit(){
       try{
+        console.log("Medication intake:"+this.intakeAdd);
         const response = await instance.post('animal/addMedicines',{
           animalId:this.registerId,
           nameOfMedicines:this.nameAdd,

@@ -115,14 +115,61 @@
   </template>
   
   <script>
+//dekodiraj token u token ti piše sub to je ime korisnika, usrname, to povuci pošalji da dohvati podatke i tada
+//dohvati token dekodiiraj ga i povuci podatke
+//povuc pdatke o životinjama koe je predao
+//o tokenu ti pišu stvari na loginu
   import instance from '@/axiosBase';
+  export default {
+    
+    data() {
+      return {
+   
+        items: [],
+        animals: []       
 
-  import Loading from './Loading.vue'; // Import the Loading component
-  import { ref } from 'vue';
+      };
+    },
+    
+    mounted() {
+      this.fetchData();
+    },
+    methods: {
+    
   
-  const token = ref(localStorage.getItem('token'));
-  
+      async fetchData() {
+        try {
+          const userResponse = await instance.get(`auth/getUserByUsername`);
+          this.items = response.data;
+          console.log(this.items);
+          this.populateFilters();
+          this.isLoading = false;
+        } catch (error) {
+          console.error('There was an error!', error);
+          this.isLoading = false;
+        }
+      },
+      async fetchDataUser() {
+        instance.get('animal/adopter_db')
+        .then(response => {
+          this.adopters = response.data.map(adopter => ({
+            ...adopter,
+            flagged: false, // Assume initially not flagged
+          }));
+        })
+        .catch(error => {
+          console.error('There was an error!', error);
+        });
+      },
+    
+      formatDate(date) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(date).toLocaleDateString(undefined, options);
+      },
+    
+    },
 
+  };
   </script>
   
   <style scoped>

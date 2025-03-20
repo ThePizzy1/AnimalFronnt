@@ -23,11 +23,10 @@
           </select>
         </div>
         <div>
+          <div>
           <label for="dateTime" class="block text-sm font-bold mb-2">Date:</label>
-          <select v-model="filters.dateTime" id="dateTime" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-            <option value="">All</option>
-            <option v-for="dateTime in dateTimes" :key="dateTime" :value="dateTime">{{ dateTime }}</option>
-          </select>
+          <input v-model="filters.dateTime" id="dateTime" type="date" class="rounded-full text-gray-500 w-full py-2 px-3 bg-white  shadow-xl focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"  />
+        </div>
         </div>
      
       </div>
@@ -39,8 +38,6 @@
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Amount</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Purpose</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Date</th>
-              <th  class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Name</th>
-              <th  class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Adress</th>
             </tr>
           </thead>
           <tbody>
@@ -53,8 +50,7 @@
               <td class="px-5 py-5 text-sm font-bold text-left">{{ item.amount }}€</td>
               <td class="px-5 py-5 text-sm font-bold text-left">{{ item.purpose }}</td>
               <td class="px-5 py-5 text-sm font-bold text-left">{{ formatDate(item.dateTime) }}</td>
-              <td  class="px-5 py-5 text-sm font-bold text-left">{{  getAdopterName(item.adopterId) }}</td>
-              <td  class="px-5 py-5 text-sm font-bold text-left">{{  getAdopterAdress(item.adopterId) }}</td>
+            
             </tr>
           </tbody>
         </table>
@@ -211,9 +207,9 @@ export default {
       });
     },
     populateFilters() {
-      this.amount = [...new Set(this.items.map(item => item.amount))];
-      this.purpose = [...new Set(this.items.map(item => item.purpose))];
-      this.animalTypes = [...new Set(this.items.map(item => item.dateTime))];
+      this.amounts = [...new Set(this.items.map(item => item.amount))];
+      this.purposes = [...new Set(this.items.map(item => item.purpose))];
+      
 
     },
     getAdopterName(adopterId) {
@@ -251,14 +247,16 @@ export default {
 };
 </script>
   
+
+
+
+
+
+
+
+
+
   <style scoped>
-  .container {
-    color: white;
-    font-family: 'Poppins', sans-serif;
-  }
-  .sticky-content {
-      float: right;
-      margin-left: 20px;
-  }
+ 
   </style>
   

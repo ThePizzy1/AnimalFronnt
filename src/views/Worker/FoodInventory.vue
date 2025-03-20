@@ -114,8 +114,8 @@
 
   
    <!-- Main modal -->
-<div  v-if="add" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-    <div class="relative p-4 w-full max-w-md max-h-full">
+<div  v-if="add" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center  overflow-x-auto custom-scrollbar">
+    <div class="relative p-4 w-full max-w-md max-h-full custom-scrollbar">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
             <!-- Modal header -->

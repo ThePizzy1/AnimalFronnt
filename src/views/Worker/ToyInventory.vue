@@ -68,14 +68,14 @@
                   <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                   </svg>
              </td>  
-              <td class="px-5 py-5 text-sm font-bold text-center"@click="navigateToDetails(item.id)">{{ item.brandName }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-center"@click="navigateToDetails(item.id)">{{ item.name }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-center"@click="navigateToDetails(item.id)">{{ item.toyType }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-center"@click="navigateToDetails(item.id)">{{ item.animalType }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-center"@click="navigateToDetails(item.id)">{{ item.ageGroup }} years</td>
+              <td class="px-5 py-5 text-sm font-bold text-center">{{ item.brandName }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-center">{{ item.name }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-center">{{ item.toyType }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-center">{{ item.animalType }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-center">{{ item.ageGroup }} years</td>
          
-              <td class="px-5 py-5 text-sm font-bold text-center"@click="navigateToDetails(item.id)">{{ item.quantity }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-center"@click="navigateToDetails(item.id)">{{ item.notes }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-center">{{ item.quantity }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-center">{{ item.notes }}</td>
               <td class="px-5 py-5 text-sm font-bold text-left">
                 <button @click="increment(item.id)" type="button" class="mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
                <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">

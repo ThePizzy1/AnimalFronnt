@@ -17,7 +17,7 @@
       <div class="grid grid-cols-4 gap-4 mb-4">
         <div>
           <label for="name" class="block text-sm font-bold mb-2">Name:</label>
-          <input v-model="filters.name" id="name" type="text" class="rounded-full text-white w-full py-2 px-3 bg-transparent  shadow-xl focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"  />
+          <input v-model="filters.name" id="name" type="text" placeholder="Pero" class="rounded-full text-gray-500 w-full py-2 px-3 bg-white  shadow-xl focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"  />
         </div>
         <div>
           <label for="description" class="block text-sm font-bold mb-2">Description:</label>
@@ -25,7 +25,7 @@
         </div>
         <div>
           <label for="dateTime" class="block text-sm font-bold mb-2">Date:</label>
-          <input v-model="filters.dateTime" id="dateTime" type="date" class="rounded-full text-white w-full py-2 px-3 bg-transparent  shadow-xl focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"  />
+          <input v-model="filters.dateTime" id="dateTime" type="date" class="rounded-full text-gray-500 w-full py-2 px-3 bg-white  shadow-xl focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"  />
         </div>
       </div>
 
@@ -60,15 +60,7 @@
                  <span class="block text-sm font-bold mx-2 ">Update</span>
               </button>
               </td>
-              <td class="px-5 py-5 text-sm font-bold text-left">
-                <button  @click="remove(key)" type="button" class="mb-4  text-white bg-red-400 hover:bg-red-500 focus:ring-3 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-                  <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                  <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                  <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM184 232H328c13.3 0 24 10.7 24 24s-10.7 24-24 24H184c-13.3 0-24-10.7-24-24s10.7-24 24-24z"></path>
-                  </svg>
-              <span class="block text-sm font-bold mx-2 ">Remove</span>
-              </button>
-              </td>
+             
             </tr>
           </tbody>
         </table>
