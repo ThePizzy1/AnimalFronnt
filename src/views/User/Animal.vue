@@ -143,7 +143,12 @@
   </div>
 </template>
 <script>
-//ovdije ide ispis životinje, sa podacima di je nađena koji je njentrenutini record trenutne bolesti,
+//ovdije ide ispis životinje, sa podacima di je nađena koji je njen record trenutne bolesti,
+//Ovak ne radi adopt nekak mutavo to spremi, ako adoptaš jednu životinju više puta onda ti ju svai put prikaže opet
+//ako ju posvojiš tri puta imat ćeš tri njene kopije
+//to popravi tako što ćeš vidjet kad je životinja vraćena zadnje i samo prikazat one podatke posvajanja koji su nakon toga. ili nekako samo zadnje.
+// dodaj rekord 7 adopted, moraš dodat token za to
+//ako posvojiš nekako ne možeš uć više solo životinju
 import { defineComponent } from 'vue';
 import { RouterLink } from 'vue-router';
 import instance from '@/axiosBase';
@@ -155,6 +160,7 @@ export default defineComponent({
   },
   data() {
     return {
+      
       animal: null,
       additionalDetails: {},
       showAdoptForm: false,
@@ -216,13 +222,19 @@ export default defineComponent({
           
           // Update animal status
           await instance.put(`animal/adoptionstatus/${id}`);
+          await instance.put(`animal/updateAnimalRecord/`,  { 
+                  animalId:parseInt(id),
+                  recordId:7
+                });
+            
+              
           const userId=localStorage.getItem('adopterid');
           await instance.put(`animal/incrementAdopted/${userId}`);//INKREMENT NE RADI
           // Redirect after successful adoption and status update
           this.$router.push('/animals');
         } catch (error) {
           console.error('Error handling adoption:', error);
-          this.$router.push('/animals');
+         this.$router.push('/animals');
         }
       }
     }
