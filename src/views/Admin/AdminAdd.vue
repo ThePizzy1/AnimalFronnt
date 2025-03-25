@@ -349,6 +349,7 @@
 
 <script>
 //zapis životinje, rekorda, gdje je životinja pronađena, napravi nešto da se može upisat id osobe koja je donjela životinju
+//Dodaj zapis pojedinih podataka životinja primjer ti je u single animal admin pod brianjem
 import { time } from 'echarts';
 import AdminNavigation from '../Admin/AdminNavigation.vue';
 import WorkerNavigation from '../Worker/WorkerNavigation.vue';
@@ -408,6 +409,7 @@ export default {
       registerId:"",
       formatDateTime:"",
       userExists: null,
+      responseFamily:"",
   
     };
   },
@@ -434,10 +436,6 @@ export default {
         console.log(formattedDateTime);
       }
     },
-
-
-
-
     onFileChange(event) {
       const file = event.target.files[0];
       if (file) {
@@ -481,7 +479,7 @@ export default {
         if (this.selectedFiles.length > 0) {
           const file = this.selectedFiles[0];
           console.log("Selected file:", file);
-          formData.append('image', file);  // Dodajemo stvarnu datoteku umjesto Base64
+          formData.append('image', file);  
           console.log("File added to FormData:", file);
         }
 
@@ -490,43 +488,120 @@ export default {
           console.log(pair[0] + ', ' + pair[1]);
         }
 
-        // instance post request
-        console.log("Sending data to API...");
-        
         const response = await instance.post('animal/addAnimal', formData, {
-          headers: {
-            Authorization: `Bearer ${this.token}`,  // Authorization header
-            // 'Content-Type' is not needed for FormData, instance will set it automatically
-          },
-        });
-        console.log("Data sent to API:");
-
+          headers: { Authorization: `Bearer ${this.token}`,   }, });
+     
         console.log("Animal created:", response.data);
         console.log("Animal ID:", response.data.idAnimal);
         this.animalId=response.data.idAnimal;
-       await Swal.fire({
-             title: "Animal added!",
-             draggable: true,
-             icon: "success"
-           });
+        this.responseFamily=response.data.family;
+
+        if (this.animalId !=null && this.responseFamily!=null) {
+           
+     
+            //radi
+            switch (this.responseFamily) {
+              case 'Mammal':
+               var responseM= await instance.post('animal/addMammal', 
+                { 
+                  animalId:this.animalId,
+                  coatType:this.coatType,
+                  groomingProducts:this.groomingProducts,
+                }
+              ,{
+                headers: { Authorization: `Bearer ${this.token}`,   }, });
+                console.log("Mammel"+ responseM.data);
+                break;
+
+              case 'Bird':
+                var responseM= await instance.post('animal/addBird', 
+                { 
+                  animalId:this.animalId,
+                  cageSize:this.cageSize,
+                  recommendedToys:this.recommendedToys,
+                  sociability:this.sociability
+
+                }
+              ,{
+                headers: { Authorization: `Bearer ${this.token}`,   }, });
+                console.log("Bird");
+                break;
+
+              case 'Fish':
+              var responseM= await instance.post('animal/addFish', 
+                { 
+                  animalId:this.animalId,
+                  tankSize:this.tankSize,
+                  compatibleSpecies:this.compatibleSpecies,
+                  recommendedItems:this.recommendedItems
+
+                }
+              ,{
+                headers: { Authorization: `Bearer ${this.token}`,   }, });
+                console.log("Fish");
+                break;
+
+              case 'Reptile':              
+                 var responseM= await instance.post('animal/addReptile', 
+                { 
+                  animalId:this.animalId,
+                  tankSize:this.tankSize,
+                  sociability:this.sociability,
+                  compatibleSpecies:this.compatibleSpecies,
+                  recommendedItems: this.recommendedItems
+
+                }
+              ,{
+                headers: { Authorization: `Bearer ${this.token}`,   }, });
+                console.log("Reptile");
+                break;
+              case 'Amphibian':
+                var responseM= await instance.post('animal/addAmphibian', 
+                { 
+                  animalId:this.animalId,
+                  humidity:parseFloat(this.humidity),
+                  temperature:parseFloat(this.temperature)
+
+                }
+              ,{
+                headers: { Authorization: `Bearer ${this.token}`,   }, });
+                console.log("Amphibian");
+                break;
+              default:
+                console.error('Unknown family:', this.responseFamily);
+                return;
+            }
       
+         
+        
+        console.log("Family data added");
+
+
+
+
+
+
+
+        
+          
 
     
         //Add record
         const responseRecord = await instance.post('animal/addAnimalRecord', 
           {animalId: this.animalId}
         ,{
-          headers: {
-            Authorization: `Bearer ${this.token}`,  // Authorization header
-    
-          },
-        });
+          headers: {Authorization: `Bearer ${this.token}`, },});
+
         console.log("Record created:" , responseRecord.data);
 
-        //Add found info
+  await Swal.fire({
+                title: "Animal added!",
+                draggable: true,
+                icon: "success"
+              });
 
        
-   
+   //FAUND DATA
         const responseFound = await instance.post('animal/addAnimalFound', 
           { animalId:this.animalId,
           date:`${this.date}T${this.time}:00.0000000`,
@@ -540,18 +615,9 @@ export default {
           
           }
         ,{
-          headers: {
-            Authorization: `Bearer ${this.token}`,  // Authorization header
-    
-          },
-        });
+          headers: { Authorization: `Bearer ${this.token}`,   }, });
         console.log("Found created:" , responseFound.data);
-
-
-
-
-
-
+        }
           } catch (error) {
             console.error("Error submitting form:", error);
             if (error.response) {
@@ -565,7 +631,56 @@ export default {
             console.error("Config:", error.config);
           }
     },
+    async adAditionalData() {
+        try {
+       
 
+          if (this.animal && this.animal.family) {
+            let familyRoute = '';
+            const familyData = {};
+            familyData.idAnimal= parseInt(id);
+            switch (this.animal.family) {
+              case 'Mammal':
+                familyRoute = 'updateMammal';
+                familyData.coatType = this.coatType;
+                familyData.groomingProducts = this.groomingProducts;
+                break;
+              case 'Bird':
+                familyRoute = 'updateBird';
+                familyData.cageSize = this.cageSize;
+                familyData.recommendedToys = this.recommendedToys;
+                familyData.sociability = this.sociability;
+                break;
+              case 'Fish':
+                familyRoute = 'updateFish';
+                familyData.tankSize = this.tankSize;
+                familyData.compatibleSpecies = this.compatibleSpecies;
+                familyData.recommendedItems = this.recommendedItems;
+                break;
+              case 'Reptile':
+                familyRoute = 'updateReptile';
+                familyData.tankSize = this.tankSize;
+                familyData.sociability = this.sociability;
+                familyData.compatibleSpecies = this.compatibleSpecies;
+                break;
+              case 'Amphibian':
+                familyRoute = 'updateAmphibian';
+                familyData.humidity = this.humidity;
+                familyData.temperature = this.temperature;
+                break;
+              default:
+                console.error('Unknown family:', this.animal.family);
+                return;
+            }
+
+            await instance.push( `animal/${familyRoute}`,
+              familyData,
+              {
+                headers: {  Authorization: `Bearer ${token.value}`,  },});
+          }
+        } 
+        catch (error) { console.error('Error editing animal details:', error);}
+      },
 
   }
 };

@@ -113,15 +113,13 @@
         <button
         @click="showRemuve = true"
           :disabled="animal.adopted"
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
-        >
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed">
           Remove
-        
-      </button>
+         </button>
+
             <button
               @click="isEditing = !isEditing"
-              class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4"
-            >
+              class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4">
               Edit
             </button>
            <!-- Modal for remove confirmation -->
@@ -264,6 +262,7 @@
         
     </template>
   <script>
+  //ako ne radi brisanje to je zato što pola životinja nema rekord unjeli su se podaci za životinju i niš drugo
   import { defineComponent } from 'vue';
   import { useRouter } from 'vue-router';
   import AdminNavigation from '../Admin/AdminNavigation.vue';
@@ -302,8 +301,14 @@
       async removeAnimal() {
         const idAnimal = parseInt(this.$route.params.id, 10);
         console.log(idAnimal);
+        console.log("animal id:"+this.animal.idAnimal)
         try {
-          await instance.delete(`animal/${idAnimal}`);
+          await instance.put(`animal/updateAnimalRecord/`,  { 
+                  animalId:this.animal.idAnimal,
+                  recordId:8
+                }
+              ,{
+                headers: { Authorization: `Bearer ${token.value}`,   }, });
           this.$router.push('/search');
         } catch (error) {
           console.error('Error removing animal:', error);
@@ -375,54 +380,84 @@
             }
           );
           console.log('Animal details updated successfully');
-          
-          if (this.animal && this.animal.family) {
+          console.log(this.additionalDetailsEdit.animalId);
+          if (this.additionalDetailsEdit !=null && this.animal.family!=null) {
             let familyRoute = '';
             const familyData = {};
             familyData.idAnimal= parseInt(id);
-            switch (this.animal.family) {
+           //radi
+           switch (this.animal.family) {
               case 'Mammal':
-                familyRoute = 'mammel_db';
-                familyData.coatType = this.additionalDetailsEdit.coatType;
-                familyData.groomingProducts = this.additionalDetailsEdit.groomingProducts;
+               var responseM= await instance.put('animal/updateMammal', 
+                { 
+                  animalId:this.additionalDetailsEdit.animalId,
+                  coatType:this.additionalDetailsEdit.coatType,
+                  groomingProducts:this.additionalDetailsEdit.groomingProducts,
+                }
+              ,{
+                headers: { Authorization: `Bearer ${token.value}`,   }, });
+                console.log("Mammel"+ responseM.data);
                 break;
+
               case 'Bird':
-                familyRoute = 'bird';
-                familyData.cageSize = this.additionalDetailsEdit.cageSize;
-                familyData.recommendedToys = this.additionalDetailsEdit.recommendedToys;
-                familyData.sociability = this.additionalDetailsEdit.sociability;
+                var responseM= await instance.put('animal/updateBird', 
+                { 
+                  animalId:this.additionalDetailsEdit.animalId,
+                  cageSize:this.additionalDetailsEdit.cageSize,
+                  recommendedToys:this.additionalDetailsEdit.recommendedToys,
+                  sociability:this.additionalDetailsEdit.sociability
+
+                }
+              ,{
+                headers: { Authorization: `Bearer ${token.value}`,   }, });
+                console.log("Bird");
                 break;
+
               case 'Fish':
-                familyRoute = 'fish_db';
-                familyData.tankSize = this.additionalDetailsEdit.tankSize;
-                familyData.compatibleSpecies = this.additionalDetailsEdit.compatibleSpecies;
-                familyData.recommendedItems = this.additionalDetailsEdit.recommendedItems;
+              var responseM= await instance.put('animal/updateFish', 
+                { 
+                  animalId:this.additionalDetailsEdit.animalId,
+                  tankSize:this.additionalDetailsEdit.tankSize,
+                  compatibleSpecies:this.additionalDetailsEdit.compatibleSpecies,
+                  recommendedItems:this.additionalDetailsEdit.recommendedItems
+
+                }
+              ,{
+                headers: { Authorization: `Bearer ${token.value}`,   }, });
+                console.log("Fish");
                 break;
-              case 'Reptile':
-                familyRoute = 'reptile_db';
-                familyData.tankSize = this.additionalDetailsEdit.tankSize;
-                familyData.sociability = this.additionalDetailsEdit.sociability;
-                familyData.compatibleSpecies = this.additionalDetailsEdit.compatibleSpecies;
+
+              case 'Reptile':              
+                 var responseM= await instance.put('animal/updateReptile', 
+                { 
+                  animalId:this.additionalDetailsEdit.animalId,
+                  tankSize:this.additionalDetailsEdit.tankSize,
+                  sociability:this.additionalDetailsEdit.sociability,
+                  compatibleSpecies:this.additionalDetailsEdit.compatibleSpecies,
+                  recommendedItems: this.additionalDetailsEdit.recommendedItems
+
+                }
+              ,{
+                headers: { Authorization: `Bearer ${token.value}`,   }, });
+                console.log("Reptile");
                 break;
               case 'Amphibian':
-                familyRoute = 'amphibian_db';
-                familyData.humidity = this.additionalDetailsEdit.humidity;
-                familyData.temperature = this.additionalDetailsEdit.temperature;
+                var responseM= await instance.put('animal/updateAmphibian', 
+                { 
+                  animalId:this.additionalDetailsEdit.animalId,
+                  humidity:parseFloat( this.additionalDetailsEdit.humidity),
+                  temperature:parseFloat(this.additionalDetailsEdit.temperature)
+
+                }
+              ,{
+                headers: { Authorization: `Bearer ${token.value}`,   }, });
+                console.log("Amphibian");
                 break;
               default:
-                console.error('Unknown family:', this.animal.family);
+                console.error('Unknown family:', this.responseFamily);
                 return;
             }
-
-            await instance.put(
-              `animal/${familyRoute}/${id}`,
-              familyData,
-              {
-                headers: {
-                  Authorization: `Bearer ${token.value}`,
-                },
-              }
-            );
+            
           }
         } catch (error) {
           console.error('Error editing animal details:', error);

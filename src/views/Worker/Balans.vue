@@ -160,6 +160,7 @@
 
  </template>
  <script >
+ //AKO DODAVANJE NE RADI PROVJERI U BAZI DALI JE ZA DEFAULT STAVLJENO (getdate())
 import AdminNavigation from '../Admin/AdminNavigation.vue';
 import WorkerNavigation from '../Worker/WorkerNavigation.vue';
 import instance from '@/axiosBase';

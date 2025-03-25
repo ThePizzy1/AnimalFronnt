@@ -52,6 +52,9 @@
   </template>
   
   <script>
+//dodaj statistiku radnika, mjesečnu statistiku primanja, probaj i u koje vrijeme i kojeg datuma se najviše životinja pronalazi, koji surender najviše vraća životija
+
+
 import AdminNavigation from '../Admin/AdminNavigation.vue';
   import { defineComponent, ref, onMounted } from 'vue';
   import instance from '@/axiosBase';
