@@ -51,7 +51,7 @@
             <tr>
               <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-white uppercase tracking-wider"></th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-white uppercase tracking-wider">Name</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-white uppercase tracking-wider">Descriptio</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-white uppercase tracking-wider">Description</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-white uppercase tracking-wider">Vet</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-white uppercase tracking-wider">Amount Of Medicine</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-white uppercase tracking-wider">Medication Intake</th>
@@ -369,6 +369,7 @@
   <script>
 //kod dodavanja se učita stranica ali ne i podaci -_-
 //greška količina koju životinja uzima zapisuje se nula i tu i u postmanu 
+//Ne radi intake zapisuje 0
   import VetNavigation from '../Vet/VetNavigation.vue';
   import instance from '@/axiosBase';
   import Swal from 'sweetalert2'

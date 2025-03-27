@@ -382,7 +382,6 @@
           console.log('Animal details updated successfully');
           console.log(this.additionalDetailsEdit.animalId);
           if (this.additionalDetailsEdit !=null && this.animal.family!=null) {
-            let familyRoute = '';
             const familyData = {};
             familyData.idAnimal= parseInt(id);
            //radi

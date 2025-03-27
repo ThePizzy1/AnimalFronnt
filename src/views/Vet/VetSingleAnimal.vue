@@ -67,12 +67,13 @@
             <div><strong>Health Issues:</strong> {{ animal.healthIssues }}</div>
             <div><strong>Personality Description:</strong> {{ animal.personalityDescription }}</div>
           </div>
-          <button @click="fetchMedicinesDetails(this.animal)"   class="block  mt-2 size-fit mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"type="button">
+          <button @click="fetchMedicinesDetails()"   class="block  mt-2 size-fit mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"type="button">
             <svg class="w-8 h-8 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
             <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
             </svg>
-            <span class="block text-sm font-bold mx-2  "> Show Medicines</span>
+            <span class="block text-sm font-bold mx-2  ">Medicines</span>
           </button>
+
           <button @click="fetchMedicinesDetails(this.animal)"   class="block  mt-2 size-fit mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"type="button">
             <svg class="w-8 h-8 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
             <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
@@ -195,6 +196,8 @@
   import instance from '@/axiosBase';
   import { ref, onMounted } from 'vue';
 
+
+
   const token = ref(localStorage.getItem('token'));
 
   export default defineComponent({
@@ -238,28 +241,86 @@
       
     },
     methods: {
-      async fetchMedicinesDetails(animal) {
-        try{
-          this.showMedicinesModal= true;
-           this.singleId=animal.idAnimal;
-           console.log(this.singleId);
-          const response = await instance.get(`animal/medsAnimal/${this.singleId}`);
-          this.medicines = response.data;
-          console.log(response.data);
-      
-          console.log("medicines"+this.medicines);
-        } catch (error) {
-          console.error('There was an error!', error);
-          this.isLoading = false;
-        }
-      },
 
-      onFileChange(event) {
-        const file = event.target.files[0];
-        if (file) {
-          this.fileName = file.name;
-        }
-      },
+
+  async fetchMedicinesDetails() {
+   
+    /*  const getPdf = () => (
+  rest.get(`generateMedicines/${idA}`, {
+    params: {
+      cacheBustTimestamp: Date.now(), // prevents IE cache problems on re-download
+    },
+    responseType: 'blob',
+    timeout: 120,
+    headers: {
+      Accept: 'application/octet-stream',
+    },
+  })
+);
+
+ const downloadFile = async (response/*: AxiosResponse*//*, filename/*: string*//* = 'download') => {
+ /* const data = get(response, 'payload.data', null) || getProp(response, 'data', null);
+  if (!(data instanceof Blob)) return;
+
+  const blob = new Blob([data], { type: 'application/pdf' });
+  const link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.download = `${filename}-${+new Date()}.pdf`;
+  link.click();
+  window.URL.revokeObjectURL(link.href);
+  
+};*/
+const idA = this.$route.params.id;
+console.log("id:"+idA);
+const response = await instance.get(`pdf/generateMedicines/${idA}`,{
+  responseType: 'blob',
+  headers: {
+    Accept: 'application/pdf',
+  },
+  data: {
+
+  },
+});
+    const blob = new Blob([response.data], { type: 'application/pdf' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = `Medicines-${+new Date()}.pdf`;
+    link.click();
+    window.URL.revokeObjectURL(link.href);
+
+
+
+
+
+
+
+/*
+$.ajax({
+                url: 'https://localhost:5001/api/pdf/generateMedicines/'+idA,
+                type: 'GET',
+                contentType: 'text/csv',
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                data: {
+                },
+                success: function (data) {
+                    var a = document.createElement('a');
+                    var url = window.URL.createObjectURL(data);
+                    a.href = url;
+                    a.download = 'IzvozPodataka.csv';
+                    document.body.append(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
+                    enableButtons();
+                },
+                error: function (err) {
+                    enableButtons();
+                }
+            });
+*/
+   },
       
       async fetchAnimalDetails(id) {
         try {

@@ -350,7 +350,7 @@
 <script>
 //zapis životinje, rekorda, gdje je životinja pronađena, napravi nešto da se može upisat id osobe koja je donjela životinju
 //Dodaj zapis pojedinih podataka životinja primjer ti je u single animal admin pod brianjem
-import { time } from 'echarts';
+
 import AdminNavigation from '../Admin/AdminNavigation.vue';
 import WorkerNavigation from '../Worker/WorkerNavigation.vue';
   import Swal from 'sweetalert2'
