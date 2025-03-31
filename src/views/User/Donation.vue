@@ -158,7 +158,7 @@ export default {
                                         });
 
                                         const responseUpdate=await instance.put('animal/updateBalansDomain',{
-                                            id:1,
+                                            id:3,
                                             balance:parseFloat( this.amount)
 
                                         },

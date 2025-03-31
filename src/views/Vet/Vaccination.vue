@@ -32,7 +32,7 @@
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">End Time</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Type of Visit</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Notes</th>
-            </tr>
+             </tr>
           </thead>
           <tbody>
             <tr v-for="item in filteredItems" :key="item.id" :class="{'cursor-not-allowed opacity-50': !getTodayDate( item.endTime) , 'cursor-allowed opacity-100': getTodayDate( item.endTime) }" class="border-b border-customBlack cursor-pointer" >
@@ -351,7 +351,7 @@ export default {
            async handleSubmit(){
               try{
                 const response = await instance.post('animal/addVetVisit',{
-                  animalId: this.registerId,
+                  animalId: parseInt(this.registerId),
                   startTime: `${this.startTimeAdd}T00:00:00.00`,
                   endTime:`${this.endTimeAdd}T00:00:00.00` ,
                   typeOfVisit: this.typeOfVisitAdd,

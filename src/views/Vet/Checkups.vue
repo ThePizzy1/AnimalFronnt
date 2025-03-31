@@ -324,6 +324,7 @@ export default {
     this.fetchData();
   },
   methods: {
+    
     async openSinglModal(item) {
             this.single = true;
             console.log(item);
@@ -338,25 +339,24 @@ export default {
           },
     async handleSubmit(){
    try{
+    var responser=  await instance.put(`animal/updateAnimalRecord/`,  { 
+                            animalId:parseInt(this.registerId),
+                            recordId:2
+                          });
+           consol.log("Record:" +responser.data);       
      const response = await instance.post('animal/addVetVisit',{
-      animalId: this.registerId,
+      animalId: parseInt(this.registerId),
       startTime: `${this.startTimeAdd}T00:00:00.00`,
       endTime:`${this.endTimeAdd}T00:00:00.00` ,
       typeOfVisit: this.typeOfVisitAdd,
       notes: this.notesAdd
-                 
-
      },
-     {
-         headers: {
-           Authorization: `Bearer ${this.token}`,  
-   
-         },
-       }
-   
-   );
-   alert("Item added!");
-   Swal.fire({
+     { headers: {Authorization: `Bearer ${this.token}`,   },
+    });
+
+  consol.log("VetV:" +response.data);         
+
+  await Swal.fire({
            title: "Item added!",
            draggable: true,
            icon: "success"

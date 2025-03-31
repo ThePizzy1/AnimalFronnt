@@ -113,7 +113,7 @@
         <td class="px-5 py-5 text-sm font-bold">{{ item.age }}<strong> y</strong></td>
         <td class="px-5 py-5 text-sm font-bold">{{ item.gender }}</td>
         <td class="px-5 py-5 text-sm font-bold text-left">
-                <button type="button" class="mb-4 p-2 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
+                <button @click="approveAdoption(item.idAnimal)" type="button" class="mb-4 p-2 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
                   <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 
                           <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -270,6 +270,7 @@
 import instance from '@/axiosBase';
 import VetNavigation from '../Vet/VetNavigation.vue';
 import Loading from '../Loading.vue';
+import Swal from 'sweetalert2'
 export default {
   components: {
       VetNavigation,
@@ -318,7 +319,7 @@ export default {
     },
   },
   mounted() {
-    
+
     setTimeout(() => {
       // Ovde simuliramo stizanje podataka nakon 2 sekunde
       this.data = [
@@ -353,6 +354,29 @@ export default {
  
 
   methods: {
+    async approveAdoption(id){
+    var response=  await instance.put(`animal/updateAnimalRecord/`,  { 
+                            animalId:parseInt(id),
+                            recordId:6
+                          });
+            console.log(" "+response.data);
+            if(response.status==200){
+              
+          await Swal.fire({
+                    title: "Animal aded!",
+                    draggable: true,
+                    icon: "success"
+                  });
+            }
+            else{
+              
+          await Swal.fire({
+                    title: "Opps!",
+                    draggable: true,
+                    icon: "alert"
+                  });
+            }
+  },
     async openSinglModal(item) {
       this.single = true;
       this.itemsSingle=item;

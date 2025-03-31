@@ -164,6 +164,7 @@ import instance from '@/axiosBase';
 import Navigation from '../User/Navigation.vue';
 import Footer from '../User/Footer.vue';
 import { ref, onMounted } from 'vue';
+import Swal from 'sweetalert2'
 
 export default {
   components: {
@@ -305,36 +306,46 @@ export default {
 
         console.log('Returned Animal Object:', returnedAnimal);
         try {
-  // Prva operacija: brisanje
-  console.log('code'+returnedAnimal.adoptionCode);
-  //await instance.put(`animal/code/${returnedAnimal.adoptionCode}`);
-  console.log('Successfully deleted the animal object.');
+ 
+          var response=  await instance.put(`animal/updateAnimalRecord/`,  { 
+                            animalId:parseInt(id),
+                            recordId:9
+                          });
+            console.log(" "+response.data);
+            if(response.status==200){
+      await instance.post('animal/addReaturndAnimal', returnedAnimal, {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
 
-  // Druga operacija: slanje objekta
-  await instance.post('animal/addReaturndAnimal', returnedAnimal, {
-    headers: {
-      Authorization: `Bearer ${this.token}`,
-    },
-  });
-  console.log('Successfully posted the returned animal object.');
+         });
+         await instance.put(`animal/adoptionstatusfalse/${returnedAnimal.animalId}`, {}, {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          });
+           const userId = localStorage.getItem('adopterid');
+          await instance.put(`animal/incrementReturned/${userId}`, {}, {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          });
+          await Swal.fire({
+                    title: "Animal aded!",
+                    draggable: true,
+                    icon: "success"
+                  });
+        }
+        else{
+          await Swal.fire({
+                    title: "Something went wrong!",
+                    draggable: true,
+                    icon: "alert"
+                  });
+        }
 
-  // Treća operacija: ažuriranje statusa životinje
-  await instance.put(`animal/adoptionstatusfalse/${returnedAnimal.animalId}`, {}, {
-    headers: {
-      Authorization: `Bearer ${this.token}`,
-    },
-  });
-  console.log('Successfully updated the adoption status of the animal.');
 
-  // Četvrta operacija: inkrementiranje vraćenih životinja
-  const userId = localStorage.getItem('adopterid');
-  await instance.put(`animal/incrementReturned/${userId}`, {}, {
-    headers: {
-      Authorization: `Bearer ${this.token}`,
-    },
-  });
-  console.log('Successfully incremented the returned animal count.');
-  window.location.reload();
+        window.location.reload();
       } catch (error) {
         console.error('Error handling adoption:', error);
       }
@@ -344,6 +355,3 @@ export default {
 </script>
 
 
-<style scoped>
-/* Additional styles can be added here */
-</style>

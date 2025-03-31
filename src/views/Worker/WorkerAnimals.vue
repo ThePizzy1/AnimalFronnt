@@ -94,6 +94,7 @@
           <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Subspecies</th>
           <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Age</th>
           <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Gender</th>
+          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"></th>
   
          
         </tr>
@@ -107,7 +108,14 @@
           <td class="px-5 py-5 text-sm font-bold">{{ item.subspecies }}</td>
           <td class="px-5 py-5 text-sm font-bold">{{ item.age }}<strong> y</strong></td>
           <td class="px-5 py-5 text-sm font-bold">{{ item.gender }}</td>
-          
+          <td class="px-5 py-5 text-sm font-bold">
+          <button @click="done(item.idAnimal)" type="button" class="mb-4 p-2 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
+            <svg class="w-6 h-6 text-white text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M16.8879 7.11205c.1788-.77492-.1192-1.66905-.7153-2.26515-1.0133-1.01335-2.5632-1.01335-3.5765 0-1.0134 1.01336-1.0134 2.5632 0 3.57655L8.42342 12.5961c-1.01336-1.0134-2.5632-1.0134-3.57655 0-1.01336 1.0133-1.01336 2.5632 0 3.5765.59609.5961 1.49023.8942 2.26515.7154-.17883.7749.11921 1.669.71531 2.2651 1.01335 1.0134 2.56317 1.0134 3.57657 0 1.0133-1.0134 1.0133-2.5632 0-3.5765l4.1726-4.1727c1.0134 1.0134 2.5632 1.0134 3.5766 0 1.0133-1.0133 1.0133-2.56318 0-3.57654-.5961-.59609-1.4903-.89414-2.2652-.71531Z"/>
+            </svg>
+            <span class="block text-sm font-bold mx-2 ">Socialized</span>
+             </button>
+          </td>
        
         </tr>
       </tbody>
@@ -204,6 +212,14 @@
    
   
     methods: {
+      async done(id) {
+      var responser=  await instance.put(`animal/updateAnimalRecord/`,  { 
+                            animalId:parseInt(id),
+                            recordId:5
+                          });
+          consol.log("response:" +response.data);
+            
+          },
       navigateToDetails(idAnimal) {
       this.$router.push(`/workerSingleAnimal/${idAnimal}`);
     },

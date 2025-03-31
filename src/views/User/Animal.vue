@@ -152,6 +152,7 @@
 import { defineComponent } from 'vue';
 import { RouterLink } from 'vue-router';
 import instance from '@/axiosBase';
+import Swal from 'sweetalert2'
 
 export default defineComponent({
   name: 'AnimalDetails',
@@ -216,22 +217,37 @@ export default defineComponent({
             adopterId: parseInt(localStorage.getItem('adopterid')),
             adoptionDate: new Date().toISOString().split('T')[0]
           };
-
+         var response=  await instance.put(`animal/updateAnimalRecord/`,  { 
+                            animalId:parseInt(id),
+                            recordId:7
+                          });
+            console.log(" "+response.data);
           // Save adoption data
+          if(response.status == 200){
           await instance.post('animal/addAdoptedAnimal', adoptionData);
           
           // Update animal status
           await instance.put(`animal/adoptionstatus/${id}`);
-          await instance.put(`animal/updateAnimalRecord/`,  { 
-                  animalId:parseInt(id),
-                  recordId:7
-                });
-            
+         
               
           const userId=localStorage.getItem('adopterid');
-          await instance.put(`animal/incrementAdopted/${userId}`);//INKREMENT NE RADI
-          // Redirect after successful adoption and status update
+          await instance.put(`animal/incrementAdopted/${userId}`);
+          
+          await Swal.fire({
+                    title: "Animal aded!",
+                    draggable: true,
+                    icon: "success"
+                  });
+          }
+          else{
+            await Swal.fire({
+                    title: "Something went wrong!",
+                    draggable: true,
+                    icon: "alert"
+                  });
+          }
           this.$router.push('/animals');
+
         } catch (error) {
           console.error('Error handling adoption:', error);
          this.$router.push('/animals');

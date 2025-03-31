@@ -330,7 +330,7 @@ export default {
     async handleSubmit(){
    try{
      const response = await instance.post('animal/addVetVisit',{
-      animalId: this.registerId,
+      animalId: parseInt(this.registerId),
       startTime: `${this.startTimeAdd}T00:00:00.00`,
       endTime:`${this.endTimeAdd}T00:00:00.00` ,
       typeOfVisit: this.typeOfVisitAdd,
