@@ -464,7 +464,7 @@
           vetUsername:this.username,
           amountOfMedicine:this.amountOfMedicineAdd,
           mesurmentUnit:this.mesurmentUnitAdd,
-          medicationIntake:this.intakeAdd,
+          medicationIntake:parseInt(this.intakeAdd),
           frequencyOfMedicationUse:this.selected,
           usage:true              
           },
