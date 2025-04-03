@@ -9,15 +9,7 @@
           <input type="text" id="generalSearch" placeholder="Search All Columns" class="text-gray-500 w-60 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="generalSearchQuery" />
         </div>
 
-         <!-- Get excel file of funds -->
-        
-         <button @click="funds()"   class="block mx-5 mt-2 size-fit mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"type="button">
-          <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2m-8 1V4m0 12-4-4m4 4 4-4"/>
-          </svg>
-            <span class="block text-sm font-bold mx-2  ">Download</span>
-          </button>
-            <p class="text-xs font-normal text-gray-200 mx-5">Download donations in the past month</p>
+      
         <!-- Table -->
         <div class="overflow-x-auto custom-scrollbar">
           <table class="min-w-full leading-normal">
@@ -124,27 +116,7 @@ export default {
   },
   methods:
   {
-   async funds(){
   
-
-const response = await instance.get(`excel/generateDva/`,{
-  responseType: 'blob',
-  headers: {
-    Accept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-  },
-  data: {
-
-  },
-});
-    const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.download = `Funds-${+new Date()}.xlsx`;
-    link.click();
-    window.URL.revokeObjectURL(link.href);
-
-    },
-    
     
     navigateToDetails(idUser) {
     this.$router.push(`/user/${idUser}`);

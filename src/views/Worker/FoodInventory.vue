@@ -59,6 +59,7 @@
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Expiration Date</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Quantity</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Notes</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Price</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"></th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"></th>
             </tr>
@@ -70,16 +71,16 @@
                   <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                   </svg>
              </td>  
-              <td class="px-5 py-5 text-sm font-bold text-left"@click="navigateToDetails(item.id)">{{ item.brandName }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left"@click="navigateToDetails(item.id)">{{ item.name }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left"@click="navigateToDetails(item.id)">{{ item.foodType }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left" @click="navigateToDetails(item.id)">{{ item.animalType }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left"@click="navigateToDetails(item.id)">{{ item.ageGroup }} years</td>
-              <td class="px-5 py-5 text-sm font-bold text-left"@click="navigateToDetails(item.id)">{{ item.weight }}{{ item.measurementWeight }}</td>
-             
-              <td class="px-5 py-5 text-sm font-bold text-left"@click="navigateToDetails(item.id)">{{ formatDate(item.exporationDate) }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left"@click="navigateToDetails(item.id)">{{ item.quantity }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left"@click="navigateToDetails(item.id)">{{ item.notes }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.brandName }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.name }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.foodType }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.animalType }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.ageGroup }} years</td>
+              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.weight }}{{ item.measurementWeight }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-left">{{ formatDate(item.exporationDate) }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.quantity }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.notes }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.price+" €" }}</td>
               <td class="px-5 py-5 text-sm font-bold text-left">
                
                 <button  @click="increment(item.id)"  type="button" class="mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">

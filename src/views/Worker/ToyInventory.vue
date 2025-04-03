@@ -54,9 +54,9 @@
               <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-white uppercase tracking-wider">Toy Type</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-white uppercase tracking-wider">Animal Type</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-white uppercase tracking-wider">Age Group</th>
-   
               <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-white uppercase tracking-wider">Quantity</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-white uppercase tracking-wider">Notes</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-white uppercase tracking-wider">Price</th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-white uppercase tracking-wider"></th>
               <th class="px-5 py-3 border-b-2 border-customBlack text-center text-sm font-bold text-white uppercase tracking-wider"></th>
             </tr>
@@ -72,10 +72,10 @@
               <td class="px-5 py-5 text-sm font-bold text-center">{{ item.name }}</td>
               <td class="px-5 py-5 text-sm font-bold text-center">{{ item.toyType }}</td>
               <td class="px-5 py-5 text-sm font-bold text-center">{{ item.animalType }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-center">{{ item.ageGroup }} years</td>
-         
+              <td class="px-5 py-5 text-sm font-bold text-center">{{ item.ageGroup }} years</td>  
               <td class="px-5 py-5 text-sm font-bold text-center">{{ item.quantity }}</td>
               <td class="px-5 py-5 text-sm font-bold text-center">{{ item.notes }}</td>
+              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.price+" €" }}</td>
               <td class="px-5 py-5 text-sm font-bold text-left">
                 <button @click="increment(item.id)" type="button" class="mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
                <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">

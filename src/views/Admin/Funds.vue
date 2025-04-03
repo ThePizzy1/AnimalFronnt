@@ -1,13 +1,22 @@
 <template>
   <div class="flex">
     <div class="w-1/6 text-white p-4 rounded-l-lg">
-      <WorkerNavigation />
+      <AdminNavigation />
     </div>
     <div class="w-5/6 text-white p-4 rounded-r-lg mr-8">
       <h1 class="text-xl font-bold mb-4">Funds Database</h1>
-
+     <!-- Get excel file of funds -->
+        
+           <button @click="funds()"   class="block mx-5 mt-2 size-fit mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"type="button">
+          <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2m-8 1V4m0 12-4-4m4 4 4-4"/>
+          </svg>
+            <span class="block text-sm font-bold mx-2  ">Download</span>
+          </button>
+            <p class="text-xs font-normal text-gray-200 mx-5">Download donations in the past month</p>
    
       <div class="grid grid-cols-4 gap-4 mb-4">
+      
         <div>
           <label for="amount" class="block text-sm font-bold mb-2">Amount:</label>
           <select v-model="filters.amount" id="amount" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
@@ -125,14 +134,14 @@
 </template>
 
 <script>
-import WorkerNavigation from './WorkerNavigation.vue';
+import AdminNavigation from './AdminNavigation.vue';
 import instance from '@/axiosBase';
 import Loading from '../Loading.vue';
 
 
 export default {
   components: {
-    WorkerNavigation,
+    AdminNavigation,
     Loading,
   },
   data() {
@@ -171,6 +180,27 @@ export default {
     this.fetchData();
   },
   methods: {
+    async funds(){
+  
+
+  const response = await instance.get(`excel/generateDva/`,{
+    responseType: 'blob',
+    headers: {
+      Accept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    },
+    data: {
+  
+    },
+  });
+      const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = `Funds-${+new Date()}.xlsx`;
+      link.click();
+      window.URL.revokeObjectURL(link.href);
+  
+      },
+      
     async openSinglModal(item) {
       this.single = true;
       this.singleItem = item;

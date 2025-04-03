@@ -15,6 +15,26 @@
         <!-- Podaci o životinji sa desne strane -->
         <div class="md:w-2/3 md:ml-4 mt-4 md:mt-0">
           <h1 class="text-2xl font-bold mb-4 text-white">{{ animal.name }}</h1>
+          <button @click="fetchMedicinesDetails()"   class="block  mt-2 size-fit mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"type="button">
+            <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2 2 2 0 0 0 2 2h12a2 2 0 0 0 2-2 2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2V4a2 2 0 0 0-2-2h-7Zm-6 9a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h.5a2.5 2.5 0 0 0 0-5H5Zm1.5 3H6v-1h.5a.5.5 0 0 1 0 1Zm4.5-3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h1.376A2.626 2.626 0 0 0 15 15.375v-1.75A2.626 2.626 0 0 0 12.375 11H11Zm1 5v-3h.375a.626.626 0 0 1 .625.626v1.748a.625.625 0 0 1-.626.626H12Zm5-5a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h1a1 1 0 1 0 0-2h-1v-1h1a1 1 0 1 0 0-2h-2Z" clip-rule="evenodd"/>
+          </svg>
+            <span class="block text-sm font-bold mx-2  ">Medicines</span>
+          </button>
+
+          <button @click="fetchVetVisits()"   class="block  mt-2 size-fit mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"type="button">
+            <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2 2 2 0 0 0 2 2h12a2 2 0 0 0 2-2 2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2V4a2 2 0 0 0-2-2h-7Zm-6 9a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h.5a2.5 2.5 0 0 0 0-5H5Zm1.5 3H6v-1h.5a.5.5 0 0 1 0 1Zm4.5-3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h1.376A2.626 2.626 0 0 0 15 15.375v-1.75A2.626 2.626 0 0 0 12.375 11H11Zm1 5v-3h.375a.626.626 0 0 1 .625.626v1.748a.625.625 0 0 1-.626.626H12Zm5-5a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h1a1 1 0 1 0 0-2h-1v-1h1a1 1 0 1 0 0-2h-2Z" clip-rule="evenodd"/>
+          </svg>
+            <span class="block text-sm font-bold mx-2  ">Vet Visit</span>
+          </button>
+          <button @click="fetchMedicalHistory()"   class="block  mt-2 size-fit mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"type="button">
+            <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2 2 2 0 0 0 2 2h12a2 2 0 0 0 2-2 2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2V4a2 2 0 0 0-2-2h-7Zm-6 9a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h.5a2.5 2.5 0 0 0 0-5H5Zm1.5 3H6v-1h.5a.5.5 0 0 1 0 1Zm4.5-3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h1.376A2.626 2.626 0 0 0 15 15.375v-1.75A2.626 2.626 0 0 0 12.375 11H11Zm1 5v-3h.375a.626.626 0 0 1 .625.626v1.748a.625.625 0 0 1-.626.626H12Zm5-5a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h1a1 1 0 1 0 0-2h-1v-1h1a1 1 0 1 0 0-2h-2Z" clip-rule="evenodd"/>
+          </svg>
+            <span class="block text-sm font-bold mx-2  ">Medical History</span>
+          </button>
+
           <div class="grid grid-cols-2 gap-4 text-white">
             <div><strong>Family:</strong> {{ animal.family }}</div>
             <div><strong>Species:</strong> {{ animal.species }}</div>
@@ -67,20 +87,7 @@
             <div><strong>Health Issues:</strong> {{ animal.healthIssues }}</div>
             <div><strong>Personality Description:</strong> {{ animal.personalityDescription }}</div>
           </div>
-          <button @click="fetchMedicinesDetails()"   class="block  mt-2 size-fit mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"type="button">
-            <svg class="w-8 h-8 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
-            </svg>
-            <span class="block text-sm font-bold mx-2  ">Medicines</span>
-          </button>
-
-          <button @click="fetchMedicinesDetails(this.animal)"   class="block  mt-2 size-fit mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"type="button">
-            <svg class="w-8 h-8 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
-            </svg>
-            <span class="block text-sm font-bold mx-2  ">Vet Visit</span>
-          </button>
-
+         
 
 
 
@@ -245,31 +252,6 @@
 
   async fetchMedicinesDetails() {
    
-    /*  const getPdf = () => (
-  rest.get(`generateMedicines/${idA}`, {
-    params: {
-      cacheBustTimestamp: Date.now(), // prevents IE cache problems on re-download
-    },
-    responseType: 'blob',
-    timeout: 120,
-    headers: {
-      Accept: 'application/octet-stream',
-    },
-  })
-);
-
- const downloadFile = async (response/*: AxiosResponse*//*, filename/*: string*//* = 'download') => {
- /* const data = get(response, 'payload.data', null) || getProp(response, 'data', null);
-  if (!(data instanceof Blob)) return;
-
-  const blob = new Blob([data], { type: 'application/pdf' });
-  const link = document.createElement('a');
-  link.href = window.URL.createObjectURL(blob);
-  link.download = `${filename}-${+new Date()}.pdf`;
-  link.click();
-  window.URL.revokeObjectURL(link.href);
-  
-};*/
 const idA = this.$route.params.id;
 console.log("id:"+idA);
 const response = await instance.get(`pdf/generateMedicines/${idA}`,{
@@ -288,40 +270,56 @@ const response = await instance.get(`pdf/generateMedicines/${idA}`,{
     link.click();
     window.URL.revokeObjectURL(link.href);
 
-
-
-
-
-
-
-/*
-$.ajax({
-                url: 'https://localhost:5001/api/pdf/generateMedicines/'+idA,
-                type: 'GET',
-                contentType: 'text/csv',
-                xhrFields: {
-                    responseType: 'blob'
-                },
-                data: {
-                },
-                success: function (data) {
-                    var a = document.createElement('a');
-                    var url = window.URL.createObjectURL(data);
-                    a.href = url;
-                    a.download = 'IzvozPodataka.csv';
-                    document.body.append(a);
-                    a.click();
-                    a.remove();
-                    window.URL.revokeObjectURL(url);
-                    enableButtons();
-                },
-                error: function (err) {
-                    enableButtons();
-                }
-            });
-*/
    },
+
+
+
+   async fetchVetVisits() {
+   
+   const idA = this.$route.params.id;
+   console.log("id:"+idA);
+   const response = await instance.get(`pdf/generateVetVisits/${idA}`,{
+     responseType: 'blob',
+     headers: {
+       Accept: 'application/pdf',
+     },
+     data: {
+   
+     },
+   });
+       const blob = new Blob([response.data], { type: 'application/pdf' });
+       const link = document.createElement('a');
+       link.href = window.URL.createObjectURL(blob);
+       link.download = `VetVisit-${+new Date()}.pdf`;
+       link.click();
+       window.URL.revokeObjectURL(link.href);
+      },
+
       
+
+  async fetchMedicalHistory() {
+   
+   const idA = this.$route.params.id;
+   console.log("id:"+idA);
+   const response = await instance.get(`pdf/generateMedicalHistory/${idA}`,{
+     responseType: 'blob',
+     headers: {
+       Accept: 'application/pdf',
+     },
+     data: {
+   
+     },
+   });
+       const blob = new Blob([response.data], { type: 'application/pdf' });
+       const link = document.createElement('a');
+       link.href = window.URL.createObjectURL(blob);
+       link.download = `MedicalHistory-${+new Date()}.pdf`;
+       link.click();
+       window.URL.revokeObjectURL(link.href);
+   
+   
+   
+      },
       async fetchAnimalDetails(id) {
         try {
           const response = await instance.get(`animal/allanimal/${id}`);

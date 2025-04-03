@@ -61,11 +61,7 @@ const router = createRouter({
       name: 'FoodInventory',
       component: () => import('../views/Worker/FoodInventory.vue')
     },
-    {
-      path: '/funds',
-      name: 'Funds',
-      component: () => import('../views/Worker/Funds.vue')
-    },
+  
 
     {
       path: '/balans',
@@ -312,6 +308,16 @@ const router = createRouter({
       path: '/adminSurenderers',
       name: 'AdminSurenderers',
       component: () => import('../views/Admin/AdminSurenderers.vue')
+    },
+    {
+      path: '/transactions',
+      name: 'Transactions',
+      component: () => import('../views/Admin/Transactions.vue')//C:\Users\ivozab\Documents\AnimalRescue\src\views\Admin\Transactions.vue
+    }, 
+     {
+      path: '/funds',
+      name: 'Funds',
+      component: () => import('../views/Admin/Funds.vue')
     },
 
     //REST OF ROUTES
