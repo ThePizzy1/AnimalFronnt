@@ -268,12 +268,6 @@
                     <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Socialized</span>
                   </label>
                 </div>
-
-
-
-
-
-
                   </div>
                 </form>
               </div>
@@ -343,7 +337,8 @@ export default {
                             animalId:parseInt(this.registerId),
                             recordId:2
                           });
-           consol.log("Record:" +responser.data);       
+           consol.log("Record:" +responser.data);  
+                
      const response = await instance.post('animal/addVetVisit',{
       animalId: parseInt(this.registerId),
       startTime: `${this.startTimeAdd}T00:00:00.00`,

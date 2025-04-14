@@ -64,99 +64,172 @@
           <!-- Panel 4 -->
           <div class="shadow-2xl p-10 shadow-xl rounded-lg 2xl:w-3/3">
             <h2 class="text-2xl font-bold mb-4">Animals</h2>
-            <div v-for="adoption in adoption" :key="adoption.code" class="flex shadow-2xl p-6 mb-4 rounded-lg ">
-              <div class="ml-10 grid grid-cols-4 gap-6">
-                <!-- Prvi stupac -->
-                <div class="col-span-1/4">
-                  <h3 class="text-xl font-bold mb-2">{{ adoption.animal.name }}</h3>
-                  <img v-if="adoption.animal.picture" class="w-40 h-40 rounded-xl" :src="'data:image/jpeg;base64,'+adoption.animal.picture" :alt="adoption.animal.name" />
-                </div>
-                <!-- Drugi stupac -->
-                <div class="col-span-1/4 mt-6">
-                  <div>
-                    <p class="hidden"><span class="font-bold">Adopton code:</span> {{ adoption.code }}</p>
-                    <p class="hidden"><span class="font-bold">Id:</span> {{ adoption.animal.idAnimal }}</p>
-                    <p><span class="font-bold">Family:</span> {{ adoption.animal.family }}</p>
-                    <p><span class="font-bold">Subspecies:</span> {{ adoption.animal.subspecies }}</p>
-                    <p><span class="font-bold">Species:</span> {{ adoption.animal.species }}</p>
-                    <p><span class="font-bold">Age:</span> {{ adoption.animal.age }}</p>
-                    <p><span class="font-bold">Gender:</span> {{ adoption.animal.gender }}</p>
-                  </div>
-                </div>
-                <!-- Treći stupac -->
-                <div class="col-span-1/4 mt-6">
-                  <div>
-                    <p><span class="font-bold">Weight:</span> {{ adoption.animal.weight }} kg</p>
-                    <p><span class="font-bold">Height:</span> {{ adoption.animal.height }} cm</p>
-                    <p><span class="font-bold">Length:</span> {{ adoption.animal.length }} cm</p>
-                    <p><span class="font-bold">Health Issues:</span> {{ adoption.animal.healthIssues }}</p>
-                    <p><span class="font-bold">Personality:</span> {{ adoption.animal.personalityDescription }}</p>
-                  </div>
-                </div>
-                <!-- Četvrti stupac za checkbox-ove -->
-                <div class="col-span-1 mt-6">
-                  <div class="flex flex-col space-y-2 mt-2">
-                    <!-- Checkbox za neutered -->
-                    <div class="flex items-center">
-                      <label class="inline-flex items-center cursor-pointer">
-                        <input type="checkbox" v-model="adoption.animal.neutered" class="sr-only peer" :disabled="adoption.animal.neutered">
-                        <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                        <span class="ms-3 text-sm font-medium text-white">Neutered</span>
-                      </label>
-                    </div>
-                    <!-- Checkbox za vaccinated -->
-                    <div class="flex items-center">
-                      <label class="inline-flex items-center cursor-pointer">
-                        <input type="checkbox" v-model="adoption.animal.vaccinated" class="sr-only peer" :disabled="adoption.animal.vaccinated">
-                        <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                        <span class="ms-3 text-sm font-medium text-white">Vaccinated</span>
-                      </label>
-                    </div>
-                    <!-- Checkbox za microchipped -->
-                    <div class="flex items-center">
-                      <label class="inline-flex items-center cursor-pointer">
-                        <input type="checkbox" v-model="adoption.animal.microchipped" class="sr-only peer" :disabled="adoption.animal.microchipped">
-                        <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                        <span class="ms-3 text-sm font-medium text-white">Microchipped</span>
-                      </label>
-                    </div>
-                    <!-- Checkbox za trained -->
-                    <div class="flex items-center">
-                      <label class="inline-flex items-center cursor-pointer">
-                        <input type="checkbox" v-model="adoption.animal.trained" class="sr-only peer" :disabled="adoption.animal.trained">
-                        <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                        <span class="ms-3 text-sm font-medium text-white">Trained</span>
-                      </label>
-                    </div>
-                    <!-- Checkbox za socialized -->
-                    <div class="flex items-center">
-                      <label class="inline-flex items-center cursor-pointer">
-                        <input type="checkbox" v-model="adoption.animal.socialized" class="sr-only peer" :disabled="adoption.animal.socialized">
-                        <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                        <span class="ms-3 text-sm font-medium text-white">Socialized</span>
-                      </label>
-                    </div>
-                  </div>
-                </div> </div>
-                 <!-- Peti stupac za "Return" button -->
-      <div class="col-span-1 mt-10">
-        <p ><span class="font-bold">Return Date:</span> {{this.formattedDate  }}</p>
-          <textarea v-model="adoption.returnDescription" placeholder="Enter return description" class="border p-2 rounded  text-gray-400 w-full mt-2"></textarea>
-          
-        <button @click="returnAnimal(adoption)" class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded">
-          Return
-        </button>
-     
+           
+               
+
+            <div class="grid md:grid-cols-5 sm:grid-cols-2 grid-cols-1 gap-2 lg:gap-4 rounded-md">
+            <div
+              v-for="adoption in adoption" :key="adoption.code"
+              @click="openModal(adoption)"
+              class="hover:scale-110 mt-4 relative  flex justify-center flex-col items-center rounded-lg shadow-lg">
+              <img v-if="adoption.animal.picture" class="w-full h-50  rounded-xl" :src="'data:image/jpeg;base64,' + adoption.animal.picture" :alt="adoption.animal.name" />
+              <div class="absolute bottom-0 w-full mx-2 bg-black mx-1 bg-opacity-90 text-white text-xl font-extrabold py-4 text-center rounded-b-xl">
+                {{ adoption.animal.name  }}
               </div>
             </div>
-         
+          </div>
         </div>
-    
+      </div>
+
         <Footer/>
       </div>
     </div>
   
-  </div>
+ 
+
+
+
+
+
+  <!-- Single item modal -->
+  <div v-if="modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center overflow-x-auto custom-scrollbar">
+            <div class="relative p-4 w-full max-w-xl max-h-full">
+              <!-- Modal content -->
+              <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                    Return Animal 
+                  </h3>
+                  <button @click="modal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                  </button>
+                </div>
+                <!-- Modal body -->
+                <form class="p-4 md:p-5">
+                  <div class="grid gap-4 mb-4 grid-cols-2  sm:col-span-1">
+                    <div class="col-span-2 ">
+                      <label for="singleCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Adoption code</label>
+                      <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                      {{ this.itemsSingle.code }}
+                    </span>
+                    </div>
+                    <div class="col-span-2 ">
+                      <label for="singleCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Animal Name</label>
+                      <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                      {{ this.itemsSingle.animal.name }}
+                    </span>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="animalName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Family</label>
+                      <span type="text" id="animalName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ itemsSingle.animal.family }}
+                    </span>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Species</label>
+                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ this.itemsSingle.animal.species }}
+                    </span>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subspecies</label>
+                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ this.itemsSingle.animal.subspecies }}
+                    </span>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
+                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ this.itemsSingle.animal.age }} years
+                    </span>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ this.itemsSingle.animal.gender }}
+                    </span>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight</label>
+                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ this.itemsSingle.animal.weight }} kg
+                    </span>
+                    </div>
+                    
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hight</label>
+                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ this.itemsSingle.animal.height }} cm
+                    </span>
+                    </div>
+                    
+                    <div class="col-span-2 sm:col-span-1">
+                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lenght</label>
+                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                        {{ this.itemsSingle.animal.length }} cm
+                    </span>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                      <label class="inline-flex items-center cursor-pointer">
+                        <input type="checkbox" v-model="this.itemsSingle.animal.neutered" class="sr-only peer" disabled>
+                        <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
+                        <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Neutered</span>
+                      </label>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                      <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" v-model="this.itemsSingle.animal.vaccinated" class="sr-only peer" disabled>
+                    <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
+                    <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Vaccinated</span>
+                  </label>
+                </div>
+                <div class="col-span-2 sm:col-span-1">
+                  <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" v-model="this.itemsSingle.animal.microchipped" class="sr-only peer" disabled>
+                    <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
+                    <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Microchipped</span>
+                  </label>
+                </div>
+                <div class="col-span-2 sm:col-span-1">
+                  <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" v-model="this.itemsSingle.animal.trained" class="sr-only peer" disabled>
+                    <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
+                    <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Trained</span>
+                  </label>
+                </div>
+                <div class="col-span-2 sm:col-span-1">
+                  <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" v-model="this.itemsSingle.animal.socialized" class="sr-only peer" disabled>
+                    <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
+                    <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Socialized</span>
+                  </label>
+                </div>
+                <div class="col-span-2 ">
+                  <p ><span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Return Date:</span> {{formatDateToISO(this.formattedDate)  }}</p>
+                    <textarea v-model="this.returnDescription" placeholder="Enter return description" class="border p-2 rounded  text-gray-400 w-full mt-2"></textarea>
+                </div>
+                <div class="col-span-2 ">
+                  <button @click="returnAnimal(this.itemsSingle)" class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded">
+                    Return
+                  </button>
+               </div>
+                      
+
+
+
+
+
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
 </template>
 
 <script>
@@ -167,6 +240,7 @@ import { ref, onMounted } from 'vue';
 import Swal from 'sweetalert2'
 
 export default {
+ 
   components: {
     Navigation,
     Footer,
@@ -177,6 +251,8 @@ export default {
       userId: localStorage.getItem('userId'),
       adopterId: localStorage.getItem('adopterid'),
       user: null,
+       modal:null,
+      itemsSingle:"",
       adoption: [],
       editForm: {
         firstName: '',
@@ -237,6 +313,7 @@ export default {
         this.editForm.firstName = this.user.firstName;
         this.editForm.lastName = this.user.lastName;
         this.editForm.residence = this.user.residence;
+   console.log(this.user.id);
       } catch (error) {
         console.error('Error fetching adopter details:', error);
       }
@@ -254,26 +331,10 @@ export default {
         console.error('Error fetching adoption details:', error);
       }
     },
-    fetchReturnedDetails() {
-      const idUser = this.$route.params.id;
-      instance.get(`animal/returned/${this.adopterId}}`, {
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-        },
-      })
-      .then(response => {
-        this.returned = response.data;
-        this.loading = false; 
-        // Set loading to false after data is fetched
-      })
-      .catch(error => {
-        console.error('Error fetching returned details:', error);
-        this.loading = false; // Set loading to false even if there is an error
-      });
-    },
+   
     async submitEditForm() {
       try {
-        await instance.put(`animal/updateAdopter/${this.user.registerId}`, {
+     await  instance.put(`animal/updateAdopter/${this.user.registerId}`, {
           Adopter: {
             firstName: this.editForm.firstName,
             lastName: this.editForm.lastName,
@@ -287,67 +348,80 @@ export default {
             Authorization: `Bearer ${this.token}`,
           },
         });
+     
+    
         console.log('Adopter details updated successfully');
+        alert("Animal reaturnd");
         this.fetchUserDetails(); // Refresh user details after update
       } catch (error) {
+        alert("Animal not reaturnd");
         console.error('Error updating adopter details:', error);
       }
     },
 
-    async returnAnimal(adoption) {
-   
-        const returnedAnimal = {
-          adoptionCode: parseInt(adoption.code),
-          animalId: parseInt(adoption.animal.idAnimal),
-          adopterId: parseInt(localStorage.getItem('adopterid')),
-          returnDate: new Date().toISOString().split('T')[0],
-          returnReason: adoption.returnDescription,
-        };
 
-        console.log('Returned Animal Object:', returnedAnimal);
+    async openModal(item) {
+            this.modal = true;
+            console.log(item);
+            this.itemsSingle = item;
+            console.log(this.itemsSingle);
+            console.log(item.returnDescription);
+         
+          },
+
+
+
+
+
+
+
+
+
+
+    async returnAnimal() {
         try {
- 
-          var response=  await instance.put(`animal/updateAnimalRecord/`,  { 
-                            animalId:parseInt(id),
+  
+      var response=  await instance.post('animal/addReaturndAnimal', {
+        adoptionCode: parseInt(this.itemsSingle.code),//ok
+          animalId: parseInt(this.itemsSingle.animal.idAnimal),//ok
+          adopterId: parseInt(this.user.id),//ok
+          returnReason: this.returnDescription,//ok
+         },
+         { headers: {Authorization: `Bearer ${this.token}`,   }}); 
+        console.log("addReaturndAnimal"+ response.data);
+         await instance.put(`animal/adoptionstatusfalse/${1}`);//neće čak iako postavim točan id
+         
+           //alert("incrementReturned"+this.user.id);
+      /*   await instance.put(`animal/incrementReturned/${this.user.id}`, {}, {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          });*/
+          alert("updateAnimalRecord"+this.itemsSingle.animal.idAnimal);
+          await instance.put(`animal/updateAnimalRecord/`,  { 
+                            animalId:parseInt(this.itemsSingle.animal.idAnimal),
                             recordId:9
                           });
             console.log(" "+response.data);
-            if(response.status==200){
-      await instance.post('animal/addReaturndAnimal', returnedAnimal, {
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
 
-         });
-         await instance.put(`animal/adoptionstatusfalse/${returnedAnimal.animalId}`, {}, {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
-          });
-           const userId = localStorage.getItem('adopterid');
-          await instance.put(`animal/incrementReturned/${userId}`, {}, {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
-          });
           await Swal.fire({
                     title: "Animal aded!",
                     draggable: true,
                     icon: "success"
                   });
-        }
-        else{
-          await Swal.fire({
-                    title: "Something went wrong!",
-                    draggable: true,
-                    icon: "alert"
-                  });
-        }
+      
 
 
-        window.location.reload();
+        //window.location.reload();
       } catch (error) {
+        console.log(`ACode: ${this.adoptionCode} Animal: ${this.animalId} Adopter: ${this.adopterId} Date:${this.returnDate} Description:${returnReason}`);
+        
         console.error('Error handling adoption:', error);
+        await Swal.fire({
+                    title: "Error!",
+                    draggable: true,
+                    icon: "error"
+                  });
       }
     },
   },

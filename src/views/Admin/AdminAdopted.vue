@@ -102,6 +102,7 @@ export default {
     instance.get('animal/adopted_db')
       .then(response => {
         this.adoptions = response.data;
+        console.log(`Response: ${response.data}`);
       })
       .catch(error => {
         console.error('There was an error!', error);

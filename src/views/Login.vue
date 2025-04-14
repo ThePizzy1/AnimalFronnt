@@ -108,8 +108,8 @@ if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
       localStorage.setItem('userRole','Vet' );
     }
     if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Surenderer' || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'AnimalWelffereOfficer' || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Association') {
-      router.push({ path: '/surenderersHome' });
-      localStorage.setItem('userRole','Surenderer' );
+      //router.push({ path: '/surenderersHome' });
+      //localStorage.setItem('userRole','Surenderer' );
     }
      else {
       console.error('Error fetching role details:', error);
