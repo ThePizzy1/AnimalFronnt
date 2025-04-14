@@ -223,7 +223,7 @@ export default defineComponent({
                           });
             console.log(" "+response.data);
           // Save adoption data
-          if(response.status == 200){
+         // if(response.status == 200){
           await instance.post('animal/addAdoptedAnimal', adoptionData);
           
           // Update animal status
@@ -238,14 +238,14 @@ export default defineComponent({
                     draggable: true,
                     icon: "success"
                   });
-          }
-          else{
+         // }
+        /*  else{
             await Swal.fire({
                     title: "Something went wrong!",
                     draggable: true,
                     icon: "alert"
                   });
-          }
+          }*/
           this.$router.push('/animals');
 
         } catch (error) {
