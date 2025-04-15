@@ -7,7 +7,7 @@ body {
 	animation: gradient 22s ease infinite;
 	height: wrap;
 }
-/*
+
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
@@ -19,4 +19,3 @@ body {
 		background-position: 0% 50%;
 	}
 }
-*/

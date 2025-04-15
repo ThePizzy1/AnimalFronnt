@@ -1,5 +1,6 @@
 <template>
      <div class="flex">
+
     <!-- Navigation -->
     <div class="w-1/6 text-white p-4 rounded-l-lg">
       <AdminNavigation />
@@ -9,7 +10,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div class="w-1/6 text-white p-4 rounded-l-lg">
-  <AdminNavigation />
+
 </div>
 
 <div class="w-5/6 text-white m-6 p-4 rounded-r-lg  p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105">
@@ -214,7 +215,7 @@ const clearErrors = () => {
 import AdminNavigation from '../Admin/AdminNavigation.vue';
 export default {
   components: {
-    AdminNavigation
+    AdminNavigation,
   }};
 </script>
 

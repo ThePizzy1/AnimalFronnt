@@ -49,7 +49,7 @@
     <input ref="message" type="text" v-model="message" class="w-full h-12 text-customGreen placeholder-customGreen bg-transparent text-lg shadow-sm font-normal leading-7 rounded-full border border-customGreen focus:outline-none pl-4 mb-10" placeholder="Message">
     
     <button @click="handleSubmit" class="w-full h-12 text-white text-base font-semibold leading-6 rounded-full transition-all duration-700 hover:bg-green-900 bg-green-800 shadow-sm">Send</button>
-    <p v-if="!this.name || !this.email || !this.message" class="text-customGreen text-center opacity-50 mt-1">All inputs need to befilled in! </p>
+    <p v-if="!this.name || !this.email || !this.message" class="text-customGreen text-center opacity-50 mt-1">All inputs need to be filled in! </p>
 
   </div>
 </div>

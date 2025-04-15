@@ -1,5 +1,7 @@
 <template>
     <div class="flex">
+      <Loading v-if="loadingError" />
+
       <div class="w-1/6 text-white p-4 rounded-l-lg">
         <AdminNavigation />
       </div>
@@ -38,15 +40,19 @@
   
   import instance from '@/axiosBase';
   import AdminNavigation from './AdminNavigation.vue';
+  import Loading  from '../Loading.vue';
+
   
   
   export default {
     components: {
       AdminNavigation,
+      Loading,
+
     },
     data() {
       return {
-      
+        loadingError:false,
         items: [],
         filters: {
           username: '',
@@ -58,7 +64,7 @@
           role: 'Vet', 
           roelH:'HeadVet'// Set default filter to "Operation"
         },
-        isLoading: true, // Početno stanje učitavanja
+        // Početno stanje učitavanja
       };
     },
     computed: {
@@ -76,12 +82,19 @@
     methods: {
       async fetchData() {
         try {
+          this.loadingError = true;
           const response = await instance.get('auth/getAll');
           console.error('There was an error!', response);
           this.items = response.data.filter(item => item.roles.includes('Worker') ||item.roles.includes('Menager')); 
           console.log(this.items);
+          if(this.items!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                } 
        
         } catch (error) {
+          this.loadingError = true;
           console.error('There was an error!', error);
         
         }

@@ -5,6 +5,11 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/404',
+      name: '404',
+      component: () => import('../views/404.vue')//C:\Users\ivozab\Documents\AnimalRescue\src\views\404.vue
+    },
+    {
       //USER
       path: '/home',
       name: 'Home',

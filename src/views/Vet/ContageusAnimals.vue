@@ -323,7 +323,7 @@
         startTime: '',
         contageus: '',
       },
-      isLoading: true,
+     
       animalExists:null // Početno stanje učitavanja
     };
   },
@@ -407,10 +407,10 @@
         this.items = response.data;
         console.log(this.items);
         this.populateFilters();
-        this.isLoading = false;
+        
       } catch (error) {
         console.error('There was an error!', error);
-        this.isLoading = false;
+        
       }
     },
 

@@ -1,7 +1,8 @@
 <template>
  
   <div class="container mx-auto px-4">
-    <Loading :isLoading=true></Loading>
+  
+    <Loading v-if="loadingError" />
     <div class="flex">
       <AdminNavigation class="w-1/6" />
       <div class="w-5/6  rounded-lg overflow-hidden text-white ml-auto">
@@ -83,9 +84,8 @@
             </div>
            
           </form>
-        </div>
-        <Loading :visible="isLoading" />
-        <div class="overflow-x-auto custom-scrollbar" v-if="!isLoading">
+      
+       
   <table class="min-w-full leading-normal">
     <thead>
       <tr>
@@ -144,14 +144,17 @@
 <script>
 import instance from '@/axiosBase';
 import AdminNavigation from '../Admin/AdminNavigation.vue';
-
+import Loading  from '../Loading.vue';
 export default {
   components: {
     AdminNavigation,
+    Loading,
    
   },
   data() {
     return {
+     
+      loadingError:true,
       items: [],
       families: [],
       speciesList: [],
@@ -166,9 +169,7 @@ export default {
         microchipped: false,
         trained: false,
         socialized: false,
-        adopted: false,
-       
-      isLoading: true, // Početno stanje učitavanja
+        adopted: false,    
       data: [] // Podaci koji će se prikazati kada dođu
    
       },
@@ -191,16 +192,26 @@ export default {
     },
   },
   mounted() {
-
+   
+    console.log("loading"+this.loadingError)
+    this.loadingError = true; 
     instance.get('animal/animal_pc')
       .then(response => {
-        this.items = response.data;
+          this.items = response.data;
+          if(this.items != null) {
+            setTimeout(() => {
+            this.loadingError = false; 
+          }, 1000)
+          } 
         this.populateFilters();
       })
       .catch(error => {
+        this.loadingError = true; 
         console.error('There was an error!', error);
       });
+      
   },
+ 
  
 
   methods: {
@@ -213,13 +224,18 @@ export default {
       this.subspeciesList = [...new Set(this.items.map(item => item.subspecies))];
     },
     searchAnimals() {
+      this.loadingError = true; 
       instance.get('animal/animal_pc', {
         params: this.filters
       })
       .then(response => {
         this.items = response.data;
+        if(this.items!=null){
+          this.loadingError = false;
+        }
       })
       .catch(error => {
+        this.loadingError = true; 
         console.error('There was an error!', error);
       });
     },

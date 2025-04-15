@@ -183,7 +183,7 @@ export default {
       items: [],
       single: false,
       singleItem:[],
-      isLoading: true,
+     
       
     };
   },
@@ -209,10 +209,10 @@ export default {
         const response = await instance.get('animal/balans_db');
         this.items = response.data;
         console.log(this.items);
-        this.isLoading = false;
+        
       } catch (error) {
         console.error('There was an error!', error);
-        this.isLoading = false;
+        
       }
     },  formatDate(date) {
       const options = { year: 'numeric', month: 'long', day: 'numeric' };

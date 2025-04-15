@@ -1,5 +1,7 @@
 <template>
   <div class="flex">
+    <Loading v-if="loadingError" />
+
     <div class="w-1/6 text-white p-4 rounded-l-lg">
       <WorkerNavigation />
     </div>
@@ -292,13 +294,18 @@
 <script>
 import WorkerNavigation from '../Vet/VetNavigation.vue';
 import instance from '@/axiosBase';
+import Loading from '../Loading.vue';
 
 export default {
   components: {
     WorkerNavigation,
+    Loading,
+
   },
   data() {
     return {
+      loadingError:false,
+
       add:false,
       code: '',
       startTimeAdd: '',
@@ -318,7 +325,7 @@ export default {
         typeOfVisit: 'Vaccination', 
         today: this.getTodayDate(),
       },
-      isLoading: true, // Početno stanje učitavanja
+      // Početno stanje učitavanja
     };
   },
   computed: {
@@ -341,15 +348,24 @@ export default {
             console.log(this.singleItem);
             this.animalIdSingle = item.animalId;
             console.log(this.animalIdSingle);
-          
+          this.loadingError=true;
             const animalResponse = await instance.get(`animal/allanimal/${this.animalIdSingle}`);
                 this.itemsSingle = animalResponse.data;
+                if(this.itemsSingle!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                } 
+                else {
+                  this.loadingError = true;
+                }
                 console.log(this.itemsSingle);
           },
 
 
            async handleSubmit(){
               try{
+                this.loadingError=true;
                 const response = await instance.post('animal/addVetVisit',{
                   animalId: parseInt(this.registerId),
                   startTime: `${this.startTimeAdd}T00:00:00.00`,
@@ -362,6 +378,16 @@ export default {
                       Authorization: `Bearer ${this.token}`,  
                     },
                   } );
+                        if(response.status==200) {
+                      setTimeout(() => {
+                      this.loadingError = false; 
+                      }, 500)
+                      } 
+                      else{
+                        setTimeout(() => {
+                      this.loadingError = false; 
+                      }, 2000)
+                      }
                                await  Swal.fire({
                                   title: "Item added!",
                                   draggable: true,
@@ -400,13 +426,18 @@ export default {
 
     async fetchData() {
       try {
+        this.loadingError=true;
         const response = await instance.get('animal/vetvisit_db');
         this.items = response.data.filter(item => item.typeOfVisit === 'Vaccination'); 
         console.log(this.items);
-        this.isLoading = false;
+        if(this.items!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                } 
       } catch (error) {
+        this.loadingError = true;
         console.error('There was an error!', error);
-        this.isLoading = false;
       }
     },
     getTodayDate(endD) {

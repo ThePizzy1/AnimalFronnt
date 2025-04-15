@@ -75,7 +75,7 @@
         item: [],
         itemA: [],
        
-        isLoading: true, // Početno stanje učitavanja
+        // Početno stanje učitavanja
       };
     },
     computed: {
@@ -98,7 +98,7 @@
        
         } catch (error) {
           console.error('There was an error!', error);
-          this.isLoading = false;
+          
         }
       },
       async fetchDataAnimal() {

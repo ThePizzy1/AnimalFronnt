@@ -1,5 +1,7 @@
 <template>
   <div class="container mt-5 mx-auto px-4">
+    <Loading v-if="loadingError" />
+
     <div class="flex">
       <AdminNavigation class="w-1/6" />
       <div class="w-5/6 shadow-lg rounded-lg overflow-hidden text-white ml-auto">
@@ -54,13 +56,16 @@
 <script>
 import instance from '@/axiosBase';
 import AdminNavigation from '../Admin/AdminNavigation.vue';
+import Loading  from '../Loading.vue';
 
 export default {
   components: {
     AdminNavigation,
+    Loading,
   },
   data() {
     return {
+      loadingError:false,
       adopters: [],
       generalSearchQuery: '',
     };
@@ -78,15 +83,21 @@ export default {
         return Promise.reject(error);
       }
     );
-
+    this.loadingError = true; 
     instance.get('animal/adopter_db')
       .then(response => {
         this.adopters = response.data.map(adopter => ({
           ...adopter,
           flagged: false, 
         }));
+        if(this.adopters!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                } 
       })
       .catch(error => {
+        this.loadingError = true; 
         console.error('There was an error!', error);
       });
   },

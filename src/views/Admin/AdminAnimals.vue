@@ -1,6 +1,7 @@
 <template>
     <div class="flex justify-center items-start mt-8 py-20 mx-25 ml-25">
       <!-- Navigation on the left side -->
+      <Loading v-if="loadingError" />
       <div class="w-1/4">
       <AdminNavigation/>
       </div>
@@ -266,6 +267,7 @@
   import { defineComponent } from 'vue';
   import { useRouter } from 'vue-router';
   import AdminNavigation from '../Admin/AdminNavigation.vue';
+  import Loading  from '../Loading.vue';
   import instance from '@/axiosBase';
   import { ref, onMounted } from 'vue';
 
@@ -275,9 +277,11 @@
     name: 'AnimalDetails',
     components: {
       AdminNavigation,
+      Loading,
     },
     data() {
       return {
+        loadingError:false,
         animal: null,
         animalEdit: null,
         additionalDetailsEdit: null,
@@ -303,23 +307,35 @@
         console.log(idAnimal);
         console.log("animal id:"+this.animal.idAnimal)
         try {
-          await instance.put(`animal/updateAnimalRecord/`,  { 
+          this.loadingError = true;
+          const responseDelate =  await instance.put(`animal/updateAnimalRecord/`,  { 
                   animalId:this.animal.idAnimal,
                   recordId:8
                 }
               ,{
                 headers: { Authorization: `Bearer ${token.value}`,   }, });
+                if(responseDelate.status==200) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                } 
           this.$router.push('/search');
         } catch (error) {
+          this.loadingError = true;
           console.error('Error removing animal:', error);
         }
       },
       async fetchAnimalDetails(id) {
         try {
+          this.loadingError = true;
           const response = await instance.get(`animal/allanimal/${id}`);
           this.animal = response.data;
           this.animalEdit = response.data;
-
+          if(this.animal != null && this.animal.idAnimal != null) {
+            setTimeout(() => {
+            this.loadingError = false; 
+          }, 1000)
+          } 
           if (this.animal && this.animal.family) {
             let familyRoute = '';
             switch (this.animal.family) {
@@ -349,6 +365,8 @@
             this.additionalDetailsEdit = familyResponse.data;
           }
         } catch (error) {
+          this.loadingError = true;
+
           console.error('Error fetching animal details:', error);
         }
       },

@@ -1,5 +1,7 @@
 <template>
     <div class="flex">
+      <Loading v-if="loadingError" />
+
       <div class="w-1/6 text-white p-4 rounded-l-lg">
         <WorkerNavigation />
       </div>
@@ -223,15 +225,20 @@
   
   <script>
   //nema dobar alert i napravi da je info širi
+  //napravi ako nešto ne može se učitat da je push to home nakon npr 5000
   import WorkerNavigation from '../Vet/VetNavigation.vue';
   import instance from '@/axiosBase';
+  import Loading from '../Loading.vue';
   import Swal from 'sweetalert2'
   export default {
     components: {
       WorkerNavigation,
+      Loading,
+
     },
     data() {
       return {
+        loadingError:false,
         add:false,
         single: false,
         update: false,
@@ -252,7 +259,6 @@
           date: '',
           name: '',
         },
-        isLoading: true,
       };
     },
     computed: {
@@ -283,9 +289,22 @@
           this.singleCode = item.animalId;
           this.singleName = item.nameOfDesissse;
           this.singleDate = item.date.split('T')[0]; // Extract date part
+          this.loadingError=true;
           const animalResponse = await instance.get(`animal/allanimal/${this.singleCode}`);
               const animalData = animalResponse.data;
-            this.singleAnimalName=animalData.name;
+               this.singleAnimalName=animalData.name;
+             if(this.singleAnimalName!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                }
+                else{
+                  setTimeout(() => {
+                this.loadingError = true; 
+                }, 5000)
+                this.$router.push(`/vetHome`);
+                }
+           
             console.log("Id animal:"+this.singleAnimalName); 
         },
       async handleSubmit(){
@@ -334,13 +353,22 @@
           },
       async fetchData() {
             try {
+              this.loadingError = true;
               const response = await instance.get('animal/euthanasia_db');
-              this.items = response.data; 
+              this.items = response.data;
+              if(this.items!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                } 
               console.log(this.items);
-              this.isLoading = false;
             } catch (error) {
+              setTimeout(() => {
+                this.loadingError = true; 
+                }, 5000)
+                this.$router.push(`/vetHome`);
+
               console.error('There was an error!', error);
-              this.isLoading = false;
             }
           },
         getTodayDate(endD) {

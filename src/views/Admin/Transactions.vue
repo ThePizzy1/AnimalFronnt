@@ -140,7 +140,7 @@
           dateTime: '',
           ageGroup: '',
         },
-        isLoading: true, // Početno stanje učitavanja
+        // Početno stanje učitavanja
       };
     },
   
@@ -186,10 +186,10 @@
           this.items = response.data;
           console.log(this.items);
           this.populateFilters();
-          this.isLoading = false;
+          
         } catch (error) {
           console.error('There was an error!', error);
-          this.isLoading = false;
+          
         }
       },
       async fetchDataUser() {

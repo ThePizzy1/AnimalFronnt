@@ -1,6 +1,8 @@
 <template>
     <div class="container mx-auto px-4">  
       <!-- Navigation and content layout -->
+      <Loading v-if="loadingError" />
+
       <div class="flex">
         <div class="w-1/6 text-white p-4 rounded-l-lg">
       <VetNavigation class="w-1/6" />
@@ -372,13 +374,18 @@
 //Ne radi intake zapisuje 0
   import VetNavigation from '../Vet/VetNavigation.vue';
   import instance from '@/axiosBase';
+  import Loading from '../Loading.vue';
+
   import Swal from 'sweetalert2'
   export default {
     components: {
       VetNavigation,
+      Loading,
+
     },
     data() {
     return {
+      loadingError:false,
       add: false,
       single: false,
         singleName: '',
@@ -418,7 +425,6 @@
         vetUsername: '',
         usage: '',
       },
-      isLoading: true, 
       userExists: null,
       animalExists: null,
       username: '',
@@ -448,15 +454,24 @@
             console.log(this.singleItem);
             this.animalIdSingle = item.animalId;
             console.log(this.animalIdSingle);
-          
+          this.loadingError=true;
             const animalResponse = await instance.get(`animal/allanimal/${this.animalIdSingle}`);
                 this.itemsSingle = animalResponse.data;
+                if(this.itemsSingle!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                } 
+                else {
+                  this.loadingError = true;
+                }
                 console.log(this.itemsSingle);
           },
 
     async handleSubmit(){
       try{
         console.log("Medication intake:"+this.intakeAdd);
+        this.loadingError=true;
         const response = await instance.post('animal/addMedicines',{
           animalId:this.registerId,
           nameOfMedicines:this.nameAdd,
@@ -471,7 +486,11 @@
           {
               headers: { Authorization: `Bearer ${this.token}`,  },
             });
-
+            if(response.status==200) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                } 
             await Swal.fire({
                     title: "Item added!",
                     draggable: true,
@@ -480,6 +499,7 @@
             window.location.reload();
           }
       catch(error){
+        this.loadingError=true;
         console.log("Name:"+this.nameAdd);
         console.log("Description:"+this.descriptionAdd);
         console.log("Vet:"+this.username);
@@ -506,7 +526,7 @@
    try{
         const animalResponse = await instance.get(`animal/allanimal/${this.code}`);
         const animalData = animalResponse.data;
-        
+       
       this.registerId=animalData.idAnimal;
       console.log("Id animal:"+this.registerId);
        
@@ -517,7 +537,8 @@
           this.animalExists=false;
         }
    }
-   catch (error) {this.animalExists=false}
+   catch (error) {
+    this.animalExists=false}
       
     },
 
@@ -530,7 +551,7 @@
    try{
         const userResponse = await instance.get(`auth/getUserByUsername/${this.username}`);
         const userData = userResponse.data;
-        
+       
       this.registerId=userData.id;
       console.log(this.registerId);
        
@@ -538,7 +559,8 @@
           this.userExists=true;
         }
    }
-   catch (error) {this.userExists=false}
+   catch (error) {
+    this.userExists=false}
       
     },
 
@@ -550,14 +572,21 @@
     },
     async fetchData() {
       try {
+        this.loadingError = true;
         const response = await instance.get('animal/medicines_db');
         this.items = response.data;
+        if(this.items!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                } 
         console.log(this.items);
         this.populateFilters();
-        this.isLoading = false;
+      
       } catch (error) {
+        this.loadingError=true;
         console.error('There was an error!', error);
-        this.isLoading = false;
+       
       }
     },
     populateFilters() {

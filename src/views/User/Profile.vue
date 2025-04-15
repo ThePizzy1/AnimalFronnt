@@ -1,4 +1,6 @@
 <template>
+  <Loading v-if="loadingError" />
+
   <Navigation/>
   <div class="my-6 text-white items-center justify-center flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
     <!-- Adopter Details Panels -->
@@ -7,7 +9,7 @@
         <h4 class="text-xl font-bold">Adopter Details</h4>
         <div v-if="user" class="flex flex-col 2xl:flex-row">
           <!-- Panel 1 -->
-          <div class="shadow-2xl p-10 shadow-xl rounded-lg w-full 2xl:w-3/6 mr-4">
+          <div class="shadow-2xl p-10  rounded-lg w-full 2xl:w-3/6 mr-4">
             <h2 class="text-2xl font-bold mb-4">Personal info</h2>
             <div class="">
               <div class="flex border-b py-2">
@@ -34,7 +36,7 @@
             </div>
           </div>
           <!-- Panel 2 -->
-          <div class="shadow-2xl p-10 shadow-xl rounded-lg w-full 2xl:w-3/6 mr-4 mt-8">
+          <div class="shadow-2xl p-10  rounded-lg w-full 2xl:w-3/6 mr-4 mt-8">
             <h2 class="text-2xl font-bold mb-4">Edit Personal Info</h2>
             <form @submit.prevent="submitEditForm" id="editForm">
               <!-- Input fields for editing -->
@@ -62,7 +64,7 @@
          
         </div>
           <!-- Panel 4 -->
-          <div class="shadow-2xl p-10 shadow-xl rounded-lg 2xl:w-3/3">
+          <div class="shadow-2xl p-4 mt-8 rounded-lg 2xl:w-3/3">
             <h2 class="text-2xl font-bold mb-4">Animals</h2>
            
                
@@ -238,15 +240,19 @@ import Navigation from '../User/Navigation.vue';
 import Footer from '../User/Footer.vue';
 import { ref, onMounted } from 'vue';
 import Swal from 'sweetalert2'
+import Loading from '../Loading.vue';
+
 
 export default {
  
   components: {
     Navigation,
     Footer,
+    Loading,
   },
   data() {
     return {
+      loadingError: false,
       token: localStorage.getItem('token'),
       userId: localStorage.getItem('userId'),
       adopterId: localStorage.getItem('adopterid'),
@@ -303,31 +309,51 @@ export default {
 
     async fetchUserDetails() {
       try {
+        this.loadingError = true;
         const response = await instance.get(`animal/adopter/${this.userId}`, {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
         });
         this.user = response.data;
+        if(this.user!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                }
         localStorage.setItem('adopterid', this.user.id);
         this.editForm.firstName = this.user.firstName;
         this.editForm.lastName = this.user.lastName;
         this.editForm.residence = this.user.residence;
-   console.log(this.user.id);
+         console.log(this.user.id);
       } catch (error) {
+        setTimeout(() => {
+                this.loadingError = true; 
+                }, 5000)
+                this.$router.push(`/Home`);
         console.error('Error fetching adopter details:', error);
       }
     },
 
     async fetchAdoptionDetails() {
       try {
+        this.loadingError = true;
         const response = await instance.get(`animal/adopted/${this.adopterId}`, {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
         });
         this.adoption = response.data;
+        if(this.adoption!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                }
       } catch (error) {
+        setTimeout(() => {
+                this.loadingError = true; 
+                }, 5000)
+                this.$router.push(`/Home`);
         console.error('Error fetching adoption details:', error);
       }
     },

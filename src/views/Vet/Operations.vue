@@ -1,5 +1,7 @@
 <template>
   <div class="flex">
+    <Loading v-if="loadingError" />
+
     <div class="w-1/6 text-white p-4 rounded-l-lg">
       <WorkerNavigation />
     </div>
@@ -276,13 +278,18 @@
 <script>
 import WorkerNavigation from '../Vet/VetNavigation.vue';
 import instance from '@/axiosBase';
+import Loading from '../Loading.vue';
+
  import Swal from 'sweetalert2'
 export default {
   components: {
     WorkerNavigation,
+    Loading,
+
   },
   data() {
     return {
+      loadingError:false,
       add:false,
       code: '',
       startTimeAdd: '',
@@ -298,7 +305,7 @@ export default {
         startTime: '',
         endTime: '',
       },
-      isLoading: true, 
+      
       animalExists:null// Početno stanje učitavanja
     };
   },
@@ -322,8 +329,20 @@ export default {
             console.log(this.singleItem);
             this.animalIdSingle = item.animalId;
             console.log(this.animalIdSingle);
+            this.loadingError=true;
             const animalResponse = await instance.get(`animal/allanimal/${this.animalIdSingle}`);
                 this.itemsSingle = animalResponse.data;
+                if(this.itemsSingle!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                }
+                 else{
+                  setTimeout(() => {
+                this.loadingError = true; 
+                }, 5000)
+                this.$router.push(`/vetHome`);
+                }
                 console.log(this.itemsSingle);
           },
 
@@ -374,13 +393,18 @@ export default {
 
     async fetchData() {
       try {
+        this.loadingError=true;
         const response = await instance.get('animal/vetvisit_db');
         this.items = response.data.filter(item => item.typeOfVisit === 'Operation'); 
         console.log(this.items);
-        this.isLoading = false;
+        if(this.items!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                }
       } catch (error) {
+        this.loadingError=true;
         console.error('There was an error!', error);
-        this.isLoading = false;
       }
     },
     getTodayDate(endD) {

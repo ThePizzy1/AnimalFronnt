@@ -1,4 +1,6 @@
 <template>
+      <Loading v-if="loadingError" />
+
   <Navigation />
 
 
@@ -164,14 +166,17 @@
 import instance from '@/axiosBase';
 import Navigation from '../User/Navigation.vue';
 import Footer from '../User/Footer.vue';
+import Loading from '../Loading.vue';
 
 export default {
   components: {
     Navigation,
     Footer,
+    Loading,
   },
   data() {
     return {
+      loadingError: false,
       items: [],
       filters: {
         family: '',
@@ -244,12 +249,22 @@ export default {
       console.log(this.searchQuery);
     },
     fetchData() {
+      this.loadingError = true;
       instance
         .get('animal/animalA_db')
         .then(response => {
           this.items = response.data;
+          if(this.items!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                }
         })
         .catch(error => {
+           setTimeout(() => {
+                this.loadingError = true; 
+                }, 5000)
+                this.$router.push(`/Home`);
           console.error('There was an error!', error);
         });
     },
@@ -259,6 +274,13 @@ export default {
   },
 };
 </script>
+
+
+
+
+
+
+
 <style scoped>
 .hover\:scale-110:hover {
   transform: scale(1.1);

@@ -1,5 +1,7 @@
 <template>
   <div class="flex">
+    <Loading v-if="loadingError" />
+
     <div class="w-1/6 text-white p-4 rounded-l-lg">
       <WorkerNavigation />
     </div>
@@ -291,13 +293,18 @@
 //ispis životinja kojima je record Quarantine
 import WorkerNavigation from '../Vet/VetNavigation.vue';
 import instance from '@/axiosBase';
-  import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import Loading from '../Loading.vue';
+
 export default {
   components: {
     WorkerNavigation,
+    Loading,
+
   },
   data() {
-    return {
+    return {      
+      loadingError:false,
       add: false,
       code: '',
       startTimeAdd: '',
@@ -315,7 +322,6 @@ export default {
         endTime: '',
         typeOfVisit: 'Quarantine', 
       },
-      isLoading: true, // Početno stanje učitavanja
     };
   },
   computed: {
@@ -346,9 +352,20 @@ export default {
             console.log(this.singleItem);
             this.animalIdSingle = item.animalId;
             console.log(this.animalIdSingle);
-          
+          this.loadingError=true;
             const animalResponse = await instance.get(`animal/allanimal/${this.animalIdSingle}`);
                 this.itemsSingle = animalResponse.data;
+                if(this.itemsSingle!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                }
+                 else{
+                  setTimeout(() => {
+                this.loadingError = true; 
+                }, 5000)
+                this.$router.push(`/vetHome`);
+                }
                 console.log(this.itemsSingle);
           },
     async handleSubmit(){
@@ -418,13 +435,18 @@ export default {
 
     async fetchData() {
       try {
+        this.loadingError = true; 
         const response = await instance.get('animal/vetvisit_db');
         this.items = response.data.filter(item => item.typeOfVisit === 'Quarantine'); 
         console.log(this.items);
-        this.isLoading = false;
+        if(this.items!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                }
       } catch (error) {
         console.error('There was an error!', error);
-        this.isLoading = false;
+        this.loadingError = true; 
       }
     },
     getTodayDate(endD) {

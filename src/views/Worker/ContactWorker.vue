@@ -1,6 +1,8 @@
 <template>
     <div class="flex">
       <div class="w-1/6 text-white p-4 rounded-l-lg">
+        <Loading v-if="loadingError" />
+
         <WorkerNavigation />
       </div>
       <div class="w-5/6 text-white p-4 rounded-r-lg mr-8">
@@ -142,6 +144,7 @@
     },
     data() {
       return {
+        loadingError:false,
         adopters: [],
         items: [],
         nameList: [],
@@ -159,7 +162,7 @@
             
         
         },
-        isLoading: true, // Početno stanje učitavanja
+        // Početno stanje učitavanja
       };
     },
     computed: {
@@ -205,14 +208,24 @@
         async fetchData() {
 
                 try {
+                this.loadingError = true;
                 const response = await instance.get('animal/contact_db');
                 this.items = response.data;
+                if(this.items!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                }
                 console.log(this.items);
                 this.populateFilters();
-                this.isLoading = false;
+                
                 } catch (error) {
+                  setTimeout(() => {
+                this.loadingError = true; 
+                }, 5000)
+                this.$router.push(`/workerHome`);
                 console.error('There was an error!', error);
-                this.isLoading = false;
+                
                 }
                 },
                     

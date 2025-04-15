@@ -240,7 +240,7 @@ export default {
         description: '',
         dateTime: '',
       },
-      isLoading: true, // Početno stanje učitavanja
+      // Početno stanje učitavanja
     };
   },
   computed: {
@@ -375,10 +375,10 @@ export default {
         const response = await instance.get('animal/news_db');
         this.items = response.data;
         console.log(this.items);
-        this.isLoading = false;
+        
       } catch (error) {
         console.error('There was an error!', error);
-        this.isLoading = false;
+        
       }
     },
     formatDate(date) {

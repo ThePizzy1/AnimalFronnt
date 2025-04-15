@@ -1,7 +1,10 @@
 <template>
  
     <div class="container mx-auto px-4">
+     <Loading v-if="loadingError" />
       <div class="flex">
+         
+
         <VetNavigation class="w-1/6" />
         <div class="w-5/6  rounded-lg overflow-hidden text-white ml-auto">
           <h1 class="ml-5 text-2xl font-bold mb-4 text-white">Animal List</h1>
@@ -82,9 +85,8 @@
               </div>
              
             </form>
-          </div>
-          <Loading :visible="isLoading" />
-          <div class="overflow-x-auto custom-scrollbar" v-if="!isLoading">
+          
+
     <table class="min-w-full leading-normal">
       <thead>
         <tr>
@@ -128,10 +130,12 @@
   export default {
     components: {
         VetNavigation,
+        Loading,
    
     },
     data() {
       return {
+        loadingError:false,
         items: [],
         families: [],
         speciesList: [],
@@ -148,7 +152,7 @@
           socialized: false,
           adopted: false,
          
-        isLoading: true, // Početno stanje učitavanja
+     
         data: [] // Podaci koji će se prikazati kada dođu
      
         },
@@ -171,15 +175,7 @@
       },
     },
     mounted() {
-      setTimeout(() => {
-        // Ovde simuliramo stizanje podataka nakon 2 sekunde
-        this.data = [
-          { id: 1, name: 'Primer podataka 1' },
-          { id: 2, name: 'Primer podataka 2' },
-          { id: 3, name: 'Primer podataka 3' }
-        ];
-        this.isLoading = false; 
-      }, 2000);
+    
       instance.interceptors.request.use(
         config => {
           const token = localStorage.getItem('token');
@@ -192,13 +188,20 @@
           return Promise.reject(error);
         }
       );
-  
+    this.loadingError = true; 
       instance.get('animal/animal_pc')
         .then(response => {
           this.items = response.data;
+          if(this.items!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                } 
           this.populateFilters();
         })
         .catch(error => {
+          this.loadingError = true; 
+
           console.error('There was an error!', error);
         });
     },
@@ -214,13 +217,22 @@
         this.subspeciesList = [...new Set(this.items.map(item => item.subspecies))];
       },
       searchAnimals() {
+        this.loadingError = true; 
+
         instance.get('animal/animal_pc', {
           params: this.filters
         })
         .then(response => {
           this.items = response.data;
+          if(this.items!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                } 
         })
         .catch(error => {
+          this.loadingError = true; 
+
           console.error('There was an error!', error);
         });
       },

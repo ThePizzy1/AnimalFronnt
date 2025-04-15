@@ -158,7 +158,7 @@ export default {
         socialized: false,
         adopted: false,
        
-      isLoading: true, // Početno stanje učitavanja
+      // Početno stanje učitavanja
       data: [] // Podaci koji će se prikazati kada dođu
    
       },
@@ -188,7 +188,7 @@ export default {
         { id: 2, name: 'Primer podataka 2' },
         { id: 3, name: 'Primer podataka 3' }
       ];
-      this.isLoading = false; 
+       
     }, 2000);
     instance.interceptors.request.use(
       config => {

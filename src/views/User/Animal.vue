@@ -1,16 +1,20 @@
-<template>
-  <div class="flex justify-center items-center mt-8 py-20 mx-25">
-    <div class="flex flex-col items-center">
-      <RouterLink to="/animals">
-        <svg class="h-12 w-12 text-neutral-100" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path stroke="none" d="M0 0h24v24H0z"/>  
-          <line x1="4" y1="12" x2="14" y2="12" />  
-          <line x1="4" y1="12" x2="8" y2="16" />  
-          <line x1="4" y1="12" x2="8" y2="8" />  
-          <line x1="20" y1="4" x2="20" y2="20" />
-        </svg>
-      </RouterLink>
+<template>  
+ <Loading v-if="loadingError" />
+
+ <div class="flex-1 rounded-lg p-8">
+                  
+                  <h4> <router-link to="/animals" :class="[active ? '' : '', 'text-white flex items-center p-2 rounded-lg hover:shadow-lg group']" @click="logout">   
+                    <svg class="w-6 h-6 fill-white mr-4" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                   <path d="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM231 127c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-71 71L376 232c13.3 0 24 10.7 24 24s-10.7 24-24 24l-182.1 0 71 71c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L119 273c-9.4-9.4-9.4-24.6 0-33.9L231 127z"></path>
+                    </svg>
+                     Go Back </router-link></h4>
+                   <div class="flex flex-col 2xl:flex-row">
+                   </div>
     </div>
+   
+
+  <div class="flex justify-center items-center mt-8 py-20 mx-25">
+ 
     <div class="w-full md:w-3/4 lg:w-1/2 flex flex-col md:flex-row mx-4 shadow-2xl px-10 py-10" v-if="animal">
       <!-- Slika sa lijeve strane -->
       <div class="md:w-1/3">
@@ -153,15 +157,18 @@ import { defineComponent } from 'vue';
 import { RouterLink } from 'vue-router';
 import instance from '@/axiosBase';
 import Swal from 'sweetalert2'
+import Loading from '../Loading.vue';
 
 export default defineComponent({
   name: 'AnimalDetails',
   components: {
-    RouterLink
+    RouterLink,
+    Loading,
+
   },
   data() {
     return {
-      
+      loadingError:false,
       animal: null,
       additionalDetails: {},
       showAdoptForm: false,
@@ -175,9 +182,14 @@ export default defineComponent({
   methods: {
     async fetchAnimalDetails(id) {
       try {
+        this.loadingError = true;
         const response = await instance.get(`animal/animal/${id}`);
         this.animal = response.data;
-
+        if(this.animal!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                }
         if (this.animal && this.animal.family) {
           let familyRoute = '';
           switch (this.animal.family) {
@@ -205,6 +217,11 @@ export default defineComponent({
           this.additionalDetails = familyResponse.data;
         }
       } catch (error) {
+        setTimeout(() => {
+                this.loadingError = true; 
+                }, 1000)
+                this.$router.push(`/Home`);
+
         console.error('Error fetching animal details:', error);
       }
     },
