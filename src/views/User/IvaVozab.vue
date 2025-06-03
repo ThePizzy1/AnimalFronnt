@@ -1,5 +1,5 @@
 <template>
-   <Navigation/>
+
     <section class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <div class="flex shadow-lg rounded-lg flex-col lg:flex-row items-center  rounded-lg shadow-xl p-6 space-y-6 lg:space-y-0 lg:space-x-12">
         <!-- Slika osobe -->
@@ -25,7 +25,7 @@
   </template>
   
   <script setup>
-import Navigation from '../Navigation.vue';
+
   </script>
   
   <style scoped>

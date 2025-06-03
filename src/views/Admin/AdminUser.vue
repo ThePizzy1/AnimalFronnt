@@ -194,8 +194,6 @@
 
 <script>
 import instance from '@/axiosBase';
-import Navigation from '../Navigation.vue';
-import Footer from '../Footer.vue';
 import Loading from '../Loading.vue'; // Import the Loading component
 import { ref } from 'vue';
 
