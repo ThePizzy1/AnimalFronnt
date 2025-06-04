@@ -65,6 +65,7 @@ const registerData = ref({
 const loadPasswordFromLocalStorage = () => {
   const storedPassword = localStorage.getItem('registeredPassword');
   if (storedPassword) {
+  
     registerData.value.password = storedPassword;
   } else {
     console.warn('Password not found in localStorage');
