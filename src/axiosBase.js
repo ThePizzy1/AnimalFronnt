@@ -1,9 +1,12 @@
 import axios from 'axios';
-const API_ENDPOINT ='https://localhost:5001/api/';
-const instance = axios.create({
-    baseURL: API_ENDPOINT,
 
+const baseURL = process.env.VUE_APP_API_ENDPOINT || 'http://localhost:5000/api/';
+
+console.log('API_ENDPOINT:', baseURL);
+
+const instance = axios.create({
+  baseURL,
 });
-console.log('API_ENDPOINT', API_ENDPOINT);
+
 export default instance;
-  
+

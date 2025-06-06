@@ -36,7 +36,7 @@
                 <span class="ms-3">Animals On Medication</span>
               </router-link>
             </li>
-          <!--  <li>
+            <li>
               <router-link to="/contageusAnimals" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
                 <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
                   Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.
@@ -44,7 +44,7 @@
                   </svg>
                 <span class="ms-3">Contagius Animals</span>
               </router-link>
-            </li>-->
+            </li>
            
          
             <li>

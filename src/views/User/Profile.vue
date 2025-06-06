@@ -1,5 +1,5 @@
 <template>
-  <Loading v-if="loadingError" />
+   <Loading v-if="loadingError" /> 
 
   <Navigation/>
   <div class="my-6 text-white items-center justify-center flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">

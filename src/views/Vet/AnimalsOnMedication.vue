@@ -1,7 +1,7 @@
 <template>
     <div class="container mx-auto px-4">  
       <!-- Navigation and content layout -->
-      <Loading v-if="loadingError" />
+       <Loading v-if="loadingError" /> 
 
       <div class="flex">
         <div class="w-1/6 text-white p-4 rounded-l-lg">

@@ -57,14 +57,14 @@
              </li>
          
            
-             <!-- <li>
+        <li>
              <router-link to="/news" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
               <svg class="w-5 h-5 fill-[#fcfcfc]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                 <path d="M512 416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96C0 60.7 28.7 32 64 32H192c20.1 0 39.1 9.5 51.2 25.6l19.2 25.6c6 8.1 15.5 12.8 25.6 12.8H448c35.3 0 64 28.7 64 64V416zM232 376c0 13.3 10.7 24 24 24s24-10.7 24-24V312h64c13.3 0 24-10.7 24-24s-10.7-24-24-24H280V200c0-13.3-10.7-24-24-24s-24 10.7-24 24v64H168c-13.3 0-24 10.7-24 24s10.7 24 24 24h64v64z"></path>
                 </svg>
               <span class="flex-1 ms-3 whitespace-nowrap">News</span>
                </router-link>
-             </li>-->
+             </li>
              <li>
              <router-link to="/contactWorker" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
               <svg class="w-5 h-5 text-gray-800 dark:text-white fill-[#ffffff]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -75,7 +75,7 @@
                </router-link>
              </li>
             
-           <!--  <li >
+           <li >
              <router-link to="/balans"  :class="{ 'cursor-allowed opacity-100': checkMenager==true,   'invisible cursor-not-allowed opacity-50': checkMenager==false}" class="flex items-center p-2 rounded-lg hover:bg-gray-700 group">
               <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 7V6a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1M3 18v-7a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
@@ -83,7 +83,7 @@
 
                <span class="flex-1 ms-3 whitespace-nowrap">Balans</span>
                </router-link>
-             </li>-->
+             </li>
 
       </ul>
         <router-link to="/" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Sign out</router-link>

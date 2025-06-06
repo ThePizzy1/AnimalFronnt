@@ -1,5 +1,5 @@
 <template>
-      <Loading v-if="loadingError" />
+       <Loading v-if="loadingError" /> 
 
   <Navigation />
 

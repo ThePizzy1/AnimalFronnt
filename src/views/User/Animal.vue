@@ -1,5 +1,5 @@
 <template>  
- <Loading v-if="loadingError" />
+  <Loading v-if="loadingError" /> 
 
  <div class="flex-1 rounded-lg p-8">
                   

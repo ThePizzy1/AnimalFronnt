@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-5 mx-auto px-4">
-    <Loading v-if="loadingError" />
+     <Loading v-if="loadingError" /> 
 
     <div class="flex">
       <AdminNavigation class="w-1/6" />

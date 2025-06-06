@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <div class="w-1/6 text-white p-4 rounded-l-lg">
-      <Loading v-if="loadingError" />
+       <Loading v-if="loadingError" /> 
 
       <WorkerNavigation />
     </div>

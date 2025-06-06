@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-center items-start mt-8 py-20 mx-25 ml-25">
       <!-- Navigation on the left side -->
-      <Loading v-if="loadingError" />
+       <Loading v-if="loadingError" /> 
       <div class="w-1/4">
       <AdminNavigation/>
       </div>

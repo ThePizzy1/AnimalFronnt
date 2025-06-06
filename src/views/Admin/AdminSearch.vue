@@ -2,7 +2,7 @@
  
   <div class="container mx-auto px-4">
   
-    <Loading v-if="loadingError" />
+     <Loading v-if="loadingError" /> 
     <div class="flex">
       <AdminNavigation class="w-1/6" />
       <div class="w-5/6  rounded-lg overflow-hidden text-white ml-auto">
