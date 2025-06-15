@@ -60,35 +60,35 @@
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentAnimal.neutered" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-sm font-medium text-white">Neutered</span>
+                            <span class="ms-3 text-base font-medium text-white">Neutered</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentAnimal.vaccinated" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-sm font-medium text-white">Vaccinated</span>
+                            <span class="ms-3 text-base font-medium text-white">Vaccinated</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentAnimal.microchipped" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-sm font-medium text-white">Microchipped</span>
+                            <span class="ms-3 text-base font-medium text-white">Microchipped</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentAnimal.trained" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-sm font-medium text-white">Trained</span>
+                            <span class="ms-3 text-base font-medium text-white">Trained</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentAnimal.socialized" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-sm font-medium text-white">Socialized</span>
+                            <span class="ms-3 text-base font-medium text-white">Socialized</span>
                           </label>
                         </div>
                       </div>
@@ -141,35 +141,35 @@
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentReturnedAnimal.neutered" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-sm font-medium text-white">Neutered</span>
+                            <span class="ms-3 text-base font-medium text-white">Neutered</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentReturnedAnimal.vaccinated" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-sm font-medium text-white">Vaccinated</span>
+                            <span class="ms-3 text-base font-medium text-white">Vaccinated</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentReturnedAnimal.microchipped" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-sm font-medium text-white">Microchipped</span>
+                            <span class="ms-3 text-base font-medium text-white">Microchipped</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentReturnedAnimal.trained" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-sm font-medium text-white">Trained</span>
+                            <span class="ms-3 text-base font-medium text-white">Trained</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentReturnedAnimal.socialized" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-sm font-medium text-white">Socialized</span>
+                            <span class="ms-3 text-base font-medium text-white">Socialized</span>
                           </label>
                         </div>
                       </div>

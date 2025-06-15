@@ -18,13 +18,13 @@
             <thead>
               <tr>
                
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">First Name</th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Last Name</th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Date of Birth</th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Residence</th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Username</th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Flagd </th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"> </th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">First Name</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Last Name</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Date of Birth</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Residence</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Username</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Flagd </th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider"> </th>
               </tr>
             </thead>
             <tbody>
@@ -32,13 +32,13 @@
     class="border-b border-customBlack"
     @click="adopter.numberOfAdoptedAnimals > 0 ? navigateToDetails(adopter.id) : null">
 
-  <td class="px-5 py-5 text-sm font-bold">{{ adopter.firstName }}</td>
-  <td class="px-5 py-5 text-sm font-bold">{{ adopter.lastName }}</td>
-  <td class="px-5 py-5 text-sm font-bold">{{ formatDate(adopter.dateOfBirth) }}</td>
-  <td class="px-5 py-5 text-sm font-bold">{{ adopter.residence }}</td>
-  <td class="px-5 py-5 text-sm font-bold">{{ adopter.username }}</td>
-  <td class="px-5 py-5 text-sm font-bold">{{ adopter.flag }}</td>
-  <td class="px-5 py-5 text-sm font-bold">
+  <td class="px-5 py-5 text-base font-bold">{{ adopter.firstName }}</td>
+  <td class="px-5 py-5 text-base font-bold">{{ adopter.lastName }}</td>
+  <td class="px-5 py-5 text-base font-bold">{{ formatDate(adopter.dateOfBirth) }}</td>
+  <td class="px-5 py-5 text-base font-bold">{{ adopter.residence }}</td>
+  <td class="px-5 py-5 text-base font-bold">{{ adopter.username }}</td>
+  <td class="px-5 py-5 text-base font-bold">{{ adopter.flag }}</td>
+  <td class="px-5 py-5 text-base font-bold">
     <button @click="flagAdopter(adopter.id)"   :class="{ 'bg-red-500 hover:bg-red-700': adopter.flag,  'bg-gray-500 hover:bg-gray-700': !adopter.flagged 
      }"class="text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"> Flag</button>
   </td>

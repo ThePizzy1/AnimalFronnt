@@ -28,22 +28,22 @@
           <table class="min-w-full leading-normal">
             <thead>
               <tr>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">
                   Code
                 </th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">
                   Animal Code
                 </th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">
                   Adopter Code
                 </th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">
                   Adoption Date
                 </th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">
                   Return Date
                 </th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">
                   Return Reason
                 </th>
               </tr>
@@ -54,22 +54,22 @@
                 :key="returnData.returnCode"
                 class="border-b border-customBlack"
               >
-                <td class="px-5 py-5 text-sm font-bold">
+                <td class="px-5 py-5 text-base font-bold">
                   {{ returnData.returnCode }}
                 </td>
-                <td class="px-5 py-5 text-sm font-bold">
+                <td class="px-5 py-5 text-base font-bold">
                   {{ returnData.animalId }}
                 </td>
-                <td class="px-5 py-5 text-sm font-bold">
+                <td class="px-5 py-5 text-base font-bold">
                   {{ returnData.adopterId }}
                 </td>
-                <td class="px-5 py-5 text-sm font-bold">
+                <td class="px-5 py-5 text-base font-bold">
                   {{ formatDate(getAdoptionDate(returnData.adoptionCode)) }}
                 </td>
-                <td class="px-5 py-5 text-sm font-bold">
+                <td class="px-5 py-5 text-base font-bold">
                   {{ formatDate(returnData.returnDate) }}
                 </td>
-                <td class="px-5 py-5 text-sm font-bold">
+                <td class="px-5 py-5 text-base font-bold">
                   {{ returnData.returnReason }}
                 </td>
               </tr>

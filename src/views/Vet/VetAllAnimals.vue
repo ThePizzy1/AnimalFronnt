@@ -12,28 +12,28 @@
             <form @submit.prevent="searchAnimals">
               <div class="grid grid-cols-4 gap-4 ">
                 <div>
-                  <label for="family" class="block text-sm font-bold mb-2">Family:</label>
+                  <label for="family" class="block text-base font-bold mb-2">Family:</label>
                   <select v-model="filters.family" id="family" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                     <option value="">All</option>
                     <option v-for="family in families" :key="family" :value="family">{{ family }}</option>
                   </select>
                 </div>
                 <div>
-                  <label for="species" class="block text-sm font-bold mb-2">Species:</label>
+                  <label for="species" class="block text-base font-bold mb-2">Species:</label>
                   <select v-model="filters.species" id="species" class= "text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                     <option value="">All</option>
                     <option v-for="species in speciesList" :key="species" :value="species">{{ species }}</option>
                   </select>
                 </div>
                 <div>
-                  <label for="subspecies" class="block text-sm font-bold mb-2">Subspecies:</label>
+                  <label for="subspecies" class="block text-base font-bold mb-2">Subspecies:</label>
                   <select v-model="filters.subspecies" id="subspecies" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                     <option value="">All</option>
                     <option v-for="subspecies in subspeciesList" :key="subspecies" :value="subspecies">{{ subspecies }}</option>
                   </select>
                 </div>
                 <div>
-                  <label for="gender" class="block text-sm font-bold mb-2">Gender:</label>
+                  <label for="gender" class="block text-base font-bold mb-2">Gender:</label>
                   <select v-model="filters.gender" id="gender" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                     <option value="">All</option>
                     <option value="Female">Female</option>
@@ -44,42 +44,42 @@
                   <label class="inline-flex items-center cursor-pointer">
                     <input type="checkbox" v-model="filters.neutered" class="sr-only peer">
                     <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                    <span class="ms-3 text-sm font-medium text-white dark:text-gray-300">Neutered</span>
+                    <span class="ms-3 text-base font-medium text-white dark:text-gray-300">Neutered</span>
                   </label>
                 </div>
                 <div>
                   <label class="inline-flex items-center cursor-pointer">
                     <input type="checkbox" v-model="filters.vaccinated" class="sr-only peer">
                     <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                    <span class="ms-3 text-sm font-medium text-white  dark:text-gray-300">Vaccinated</span>
+                    <span class="ms-3 text-base font-medium text-white  dark:text-gray-300">Vaccinated</span>
                   </label>
                 </div>
                 <div>
                   <label class="inline-flex items-center cursor-pointer">
                     <input type="checkbox" v-model="filters.microchipped" class="sr-only peer">
                     <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                    <span class="ms-3 text-sm font-medium text-whitedark:text-gray-300">Microchipped</span>
+                    <span class="ms-3 text-base font-medium text-whitedark:text-gray-300">Microchipped</span>
                   </label>
                 </div>
                 <div>
                   <label class="inline-flex items-center cursor-pointer">
                     <input type="checkbox" v-model="filters.trained" class="sr-only peer">
                     <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                    <span class="ms-3 text-sm font-medium text-white  d">Trained</span>
+                    <span class="ms-3 text-base font-medium text-white  d">Trained</span>
                   </label>
                 </div>
                 <div>
                   <label class="inline-flex items-center cursor-pointer">
                     <input type="checkbox" v-model="filters.socialized" class="sr-only peer">
                     <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                    <span class="ms-3 text-sm font-medium text-white">Socialized</span>
+                    <span class="ms-3 text-base font-medium text-white">Socialized</span>
                   </label>
                 </div>
                 <div>
                   <label class="inline-flex items-center cursor-pointer">
                     <input type="checkbox" v-model="filters.adopted" class="sr-only peer">
                     <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                    <span class="ms-3 text-sm font-medium text-white" >Adopted</span>
+                    <span class="ms-3 text-base font-medium text-white" >Adopted</span>
                   </label>
                 </div>
               </div>
@@ -90,26 +90,26 @@
     <table class="min-w-full leading-normal">
       <thead>
         <tr>
-       
-          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Name</th>
-          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Family</th>
-          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Species</th>
-          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Subspecies</th>
-          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Age</th>
-          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Gender</th>
+          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Code</th>
+          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Name</th>
+          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Family</th>
+          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Species</th>
+          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Subspecies</th>
+          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Age</th>
+          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Gender</th>
   
          
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in filteredItems" :key="item.idAnimal" class="border-b border-customBlack cursor-pointer"@click="navigateToDetails(item.idAnimal)">
-        
-          <td class="px-5 py-5 text-sm font-bold">{{ item.name }}</td>
-          <td class="px-5 py-5 text-sm font-bold">{{ item.family }}</td>
-          <td class="px-5 py-5 text-sm font-bold">{{ item.species }}</td>
-          <td class="px-5 py-5 text-sm font-bold">{{ item.subspecies }}</td>
-          <td class="px-5 py-5 text-sm font-bold">{{ item.age }}<strong> y</strong></td>
-          <td class="px-5 py-5 text-sm font-bold">{{ item.gender }}</td>
+        <td class="px-5 py-5 text-base font-bold">{{ item.idAnimal }}</td>
+          <td class="px-5 py-5 text-base font-bold">{{ item.name }}</td>
+          <td class="px-5 py-5 text-base font-bold">{{ item.family }}</td>
+          <td class="px-5 py-5 text-base font-bold">{{ item.species }}</td>
+          <td class="px-5 py-5 text-base font-bold">{{ item.subspecies }}</td>
+          <td class="px-5 py-5 text-base font-bold">{{ item.age }}<strong> y</strong></td>
+          <td class="px-5 py-5 text-base font-bold">{{ item.gender }}</td>
           
        
         </tr>
@@ -198,6 +198,7 @@
                 }, 1000)
                 } 
           this.populateFilters();
+     
         })
         .catch(error => {
           this.loadingError = true; 

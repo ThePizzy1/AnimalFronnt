@@ -47,10 +47,20 @@ const router = createRouter({
       component: () => import('../views/User/Donation.vue')
     },
 
+    {
+      path: '/singleAnimalUser/:id',
+      name: 'SingleAnimalUser',
+      component: () => import('../views/User/SingleAnimalUser.vue')//C:\Users\Korisnik\Documents\AnimalRescue\src\views\User\SingleAnimalUser.vue
+    },
 
 
 
     //WORKERS
+      {
+      path: '/workerProfile',
+      name: 'WorkerProfile',
+      component: () => import('../views/Worker/WorkerProfile.vue')//C:\Users\Korisnik\Documents\AnimalRescue\src\views\Worker\WorkerProfile.vue
+    },
     {
       path: '/workerNavigation',
       name: 'WorkerNavigation',
@@ -130,6 +140,11 @@ const router = createRouter({
 
 
     //VET
+    {
+        path: '/vetProfile',
+      name: 'VetProfile',
+      component: () => import('../views/Vet/VetProfile.vue'),//C:\Users\Korisnik\Documents\AnimalRescue\src\views\Vet\VetProfile.vue
+    },
     {
       path: '/vetNavigation',
       name: 'VetNavigation',

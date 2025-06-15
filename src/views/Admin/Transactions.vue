@@ -15,28 +15,28 @@
           <table class="min-w-full leading-normal ">
             <thead>
               <tr>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"></th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Iban</th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Iban Animal Shelter</th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Type</th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Date</th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Cost</th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Purpose</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider"></th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Iban</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Iban Animal Shelter</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Type</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Date</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Cost</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Purpose</th>
             </tr>
             </thead>
             <tbody>
               <tr v-for="item in items" :key="item.id" class="border-b border-customBlack cursor-pointer" @click="navigateToDetails(item.id)">
-                <td class="px-5 py-5 text-sm font-bold text-left">
+                <td class="px-5 py-5 text-base font-bold text-left">
                     <svg @click="openSinglModal(item)" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                </td>  
-                <td class="px-5 py-5 text-sm font-bold text-left">{{ item.iban }}€</td>
-                <td class="px-5 py-5 text-sm font-bold text-left">{{ item.ibanAnimalShelter }}</td>
-                <td class="px-5 py-5 text-sm font-bold text-left">{{ item.type }}</td>
-                <td class="px-5 py-5 text-sm font-bold text-left">{{ formatDate(item.date) }}</td>
-                <td class="px-5 py-5 text-sm font-bold text-left">{{ item.cost+" €" }}</td>
-                <td class="px-5 py-5 text-sm font-bold text-left">{{ item.purpose }}</td>
+                <td class="px-5 py-5 text-base font-bold text-left">{{ item.iban }}€</td>
+                <td class="px-5 py-5 text-base font-bold text-left">{{ item.ibanAnimalShelter }}</td>
+                <td class="px-5 py-5 text-base font-bold text-left">{{ item.type }}</td>
+                <td class="px-5 py-5 text-base font-bold text-left">{{ formatDate(item.date) }}</td>
+                <td class="px-5 py-5 text-base font-bold text-left">{{ item.cost+" €" }}</td>
+                <td class="px-5 py-5 text-base font-bold text-left">{{ item.purpose }}</td>
               </tr>
             </tbody>
           </table>
@@ -61,7 +61,7 @@
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
               Animal Details
             </h3>
-            <button @click="single = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+            <button @click="single = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
               <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
               </svg>
@@ -72,32 +72,32 @@
           <form class="p-4 md:p-5">
             <div class="grid gap-4 mb-4 grid-cols-2">
               <div class="col-span-2">
-                <label for="singleCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User</label>
-                <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                <label for="singleCode" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">User</label>
+                <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.sigleUser.firstName }} {{ this.sigleUser.lastName }}
               </span>
               </div>
               <div class="col-span-2 ">
-                <label for="singleCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Residence</label>
-                <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                <label for="singleCode" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Residence</label>
+                <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.sigleUser.residence }}
               </span>
               </div>
               <div class="col-span-2 ">
-                <label for="animalName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Purpose</label>
-                <span type="text" id="animalName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                <label for="animalName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Purpose</label>
+                <span type="text" id="animalName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                   {{ this.singleItem.purpose }}
               </span>
               </div>
               <div class="col-span-2 ">
-                <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount</label>
-                <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Amount</label>
+                <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                   {{ this.singleItem.amount }} €
               </span>
               </div>
               <div class="col-span-2 ">
-                <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date</label>
-                <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Date</label>
+                <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                   {{ formatDate(this.singleItem.dateTime)}}
               </span>
               </div>

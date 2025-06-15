@@ -11,21 +11,21 @@
           <thead>
             <tr>
 
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Name</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Last Name</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Username</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Email</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Phone NUMBER</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Name</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Last Name</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Username</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Email</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Phone NUMBER</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in filteredItems" :key="item.id"  class="border-b border-customBlack cursor-pointer">
 
-              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.firstName}}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.lastName}}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.userName }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.email }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.phoneNumber }}</td>
+              <td class="px-5 py-5 text-base font-bold text-left">{{ item.firstName}}</td>
+              <td class="px-5 py-5 text-base font-bold text-left">{{ item.lastName}}</td>
+              <td class="px-5 py-5 text-base font-bold text-left">{{ item.userName }}</td>
+              <td class="px-5 py-5 text-base font-bold text-left">{{ item.email }}</td>
+              <td class="px-5 py-5 text-base font-bold text-left">{{ item.phoneNumber }}</td>
             </tr>
           </tbody>
         </table>

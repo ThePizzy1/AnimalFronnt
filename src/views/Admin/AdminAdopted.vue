@@ -46,18 +46,18 @@
           <table class="min-w-full leading-normal">
             <thead>
               <tr>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Code</th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Animal Code</th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Adopter Code</th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Adoption Date</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Code</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Animal Code</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Adopter Code</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Adoption Date</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="adoption in filteredAdoptions" :key="adoption.code" class="border-b border-customBlack">
-                <td class="px-5 py-5 text-sm font-bold">{{ adoption.code }}</td>
-                <td class="px-5 py-5 text-sm font-bold">{{ adoption.animalId }}</td>
-                <td class="px-5 py-5 text-sm font-bold">{{ adoption.adopterId }}</td>
-                <td class="px-5 py-5 text-sm font-bold">{{ formatDate(adoption.adoptionDate) }}</td>
+                <td class="px-5 py-5 text-base font-bold">{{ adoption.code }}</td>
+                <td class="px-5 py-5 text-base font-bold">{{ adoption.animalId }}</td>
+                <td class="px-5 py-5 text-base font-bold">{{ adoption.adopterId }}</td>
+                <td class="px-5 py-5 text-base font-bold">{{ formatDate(adoption.adoptionDate) }}</td>
               </tr>
             </tbody>
           </table>

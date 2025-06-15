@@ -76,21 +76,21 @@
       <label class="inline-flex items-center cursor-pointer">
         <input type="checkbox" v-model="filters.neutered" @change="applyFilters" class="sr-only peer">
         <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-        <span class="ms-3 text-sm font-medium">Neutered</span>
+        <span class="ms-3 text-base font-medium">Neutered</span>
       </label>
     </div>
     <div class="hover:scale-110 flex flex-col">
       <label class="inline-flex items-center cursor-pointer">
         <input type="checkbox" v-model="filters.vaccinated" @change="applyFilters" class="sr-only peer">
         <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-        <span class="ms-3 text-sm font-medium">Vaccinated</span>
+        <span class="ms-3 text-base font-medium">Vaccinated</span>
       </label>
     </div>
     <div class="hover:scale-110 flex flex-col">
       <label class="inline-flex items-center cursor-pointer">
         <input type="checkbox" v-model="filters.microchipped" @change="applyFilters" class="sr-only peer">
         <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-        <span class="ms-3 text-sm font-medium">Microchipped</span>
+        <span class="ms-3 text-base font-medium">Microchipped</span>
       </label>
     </div>
     <div class="hover:scale-110 flex flex-col">
@@ -98,21 +98,21 @@
         <input type="checkbox" v-model="filters.trained" @change="applyFilters" class="sr-only peer">
         <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none
         peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-        <span class="ms-3 text-sm font-medium">Trained</span>
+        <span class="ms-3 text-base font-medium">Trained</span>
       </label>
     </div>
     <div class="hover:scale-110 flex flex-col">
       <label class="inline-flex items-center cursor-pointer">
         <input type="checkbox" v-model="filters.socialized" @change="applyFilters" class="sr-only peer">
         <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-        <span class="ms-3 text-sm font-medium">Socialized</span>
+        <span class="ms-3 text-base font-medium">Socialized</span>
       </label>
     </div>
    
   </div>
   <div class="flex items-center justify-center ">
     <div class="relative w-2/5">
-      <input v-model="searchQuery" @keydown.enter="submitSearch" class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none w-full" type="search" name="search" placeholder="Search" />
+      <input v-model="searchQuery" @keydown.enter="submitSearch" class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-base focus:outline-none w-full" type="search" name="search" placeholder="Search" />
       <button type="submit" @click="submitSearch" class="absolute right-0 top-0 mt-2.5 mr-4">
         <svg
           class="text-gray-600 h-4 w-4 fill-current"
@@ -253,6 +253,7 @@ export default {
       instance
         .get('animal/animalA_db')
         .then(response => {
+          console.log(response.data);
           this.items = response.data;
           if(this.items!=null) {
                 setTimeout(() => {

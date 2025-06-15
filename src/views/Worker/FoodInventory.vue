@@ -8,39 +8,39 @@
     <div class="w-5/6 text-white p-4 rounded-r-lg mr-8">
       <h1 class="text-xl font-bold mb-4">Animal Food Database</h1>
 
-      <button @click="add = true" type="button" class="mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
+      <button @click="add = true" type="button" class="mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-base p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
           <svg class="w-8 h-8 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 
               <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
               <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
 
               </svg>
-        <span class="block text-sm font-bold mx-2 ">Add food</span>
+        <span class="block text-base font-bold mx-2 ">Add food</span>
         </button>
       <div class="grid grid-cols-4 gap-4 mb-4">
         <div>
-          <label for="brandName" class="block text-sm font-bold mb-2">Brand Name:</label>
+          <label for="brandName" class="block text-base font-bold mb-2">Brand Name:</label>
           <select v-model="filters.brandName" id="brandName" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
             <option value="">All</option>
             <option v-for="brand in brands" :key="brand" :value="brand">{{ brand }}</option>
           </select>
         </div>
         <div>
-          <label for="foodType" class="block text-sm font-bold mb-2">Food Type:</label>
+          <label for="foodType" class="block text-base font-bold mb-2">Food Type:</label>
           <select v-model="filters.foodType" id="foodType" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
             <option value="">All</option>
             <option v-for="type in foodTypes" :key="type" :value="type">{{ type }}</option>
           </select>
         </div>
         <div>
-          <label for="animalType" class="block text-sm font-bold mb-2">Animal Type:</label>
+          <label for="animalType" class="block text-base font-bold mb-2">Animal Type:</label>
           <select v-model="filters.animalType" id="animalType" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
             <option value="">All</option>
             <option v-for="animal in animalTypes" :key="animal" :value="animal">{{ animal }}</option>
           </select>
         </div>
         <div>
-          <label for="ageGroup" class="block text-sm font-bold mb-2">Age Group:</label>
+          <label for="ageGroup" class="block text-base font-bold mb-2">Age Group:</label>
           <select v-model="filters.ageGroup" id="ageGroup" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
             <option value="">All</option>
             <option v-for="age in ageGroups" :key="age" :value="age">{{ age }}</option>
@@ -51,56 +51,54 @@
         <table class="min-w-full leading-normal ">
           <thead>
             <tr>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"></th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Brand Name</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Name</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Food Type</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Animal Type</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Age Group</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Weight</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Expiration Date</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Quantity</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Notes</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Price</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"></th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"></th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider"></th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Brand Name</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Name</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Food Type</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Animal Type</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Age Group</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Weight</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Expiration Date</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Quantity</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Price</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider"></th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider"></th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in filteredItems" :key="item.id" class="border-b border-customBlack cursor-pointer" >
-              <td class="px-5 py-5 text-sm font-bold text-left">
+              <td class="px-5 py-5 text-base font-bold text-left">
                   <svg @click="openSinglModal(item)" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                   <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                   </svg>
              </td>  
-              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.brandName }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.name }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.foodType }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.animalType }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.ageGroup }} years</td>
-              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.weight }}{{ item.measurementWeight }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left">{{ formatDate(item.exporationDate) }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.quantity }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.notes }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left">{{ item.price+" €" }}</td>
-              <td class="px-5 py-5 text-sm font-bold text-left">
+              <td class="px-5 py-5 text-base font-bold text-left">{{ item.brandName }}</td>
+              <td class="px-5 py-5 text-base font-bold text-left">{{ item.name }}</td>
+              <td class="px-5 py-5 text-base font-bold text-left">{{ item.foodType }}</td>
+              <td class="px-5 py-5 text-base font-bold text-left">{{ item.animalType }}</td>
+              <td class="px-5 py-5 text-base font-bold text-left">{{ item.ageGroup }} years</td>
+              <td class="px-5 py-5 text-base font-bold text-left">{{ item.weight }}{{ item.measurementWeight }}</td>
+              <td class="px-5 py-5 text-base font-bold text-left">{{ formatDate(item.exporationDate) }}</td>
+              <td class="px-5 py-5 text-base font-bold text-left">{{ item.quantity }}</td>
+              <td class="px-5 py-5 text-base font-bold text-left">{{ item.price+" €" }}</td>
+              <td class="px-5 py-5 text-base font-bold text-left">
                
-                <button  @click="increment(item.id)"  type="button" class="mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
+                <button  @click="increment(item.id)"  type="button" class="mb-4  text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-base p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
                <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
               <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
               <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
               </svg>
-              <span class="block text-sm font-bold mx-2 ">Add</span>
+              <span class="block text-base font-bold mx-2 ">Add</span>
               </button>
               </td>
-              <td class="px-5 py-5 text-sm font-bold text-left">
+              <td class="px-5 py-5 text-base font-bold text-left">
               
-                <button @click="decrement(item.id)" type="button" class="mb-4  text-white bg-red-400 hover:bg-red-500 focus:ring-3 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <button @click="decrement(item.id)" type="button" class="mb-4  text-white bg-red-400 hover:bg-red-500 focus:ring-3 focus:outline-none focus:ring-red-300 font-medium rounded-full text-base p-1.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                   <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM184 232H328c13.3 0 24 10.7 24 24s-10.7 24-24 24H184c-13.3 0-24-10.7-24-24s10.7-24 24-24z"></path>
                   </svg>
-              <span class="block text-sm font-bold mx-2 ">Remove</span>
+              <span class="block text-base font-bold mx-2 ">Remove</span>
               </button>
               </td>
 
@@ -117,7 +115,7 @@
 
   
    <!-- Main modal -->
-<div  v-if="add" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center  overflow-x-auto custom-scrollbar">
+<div  v-if="add" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center  items-center  overflow-x-auto custom-scrollbar">
     <div class="relative p-4 w-full max-w-md max-h-full custom-scrollbar">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
@@ -126,7 +124,7 @@
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                     Add Food
                 </h3>
-                <button @click="add = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+                <button @click="add = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
@@ -134,75 +132,79 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form class="p-4 md:p-5">
+            <form @submit.prevent="handleSubmit" class="p-4 md:p-5">
                 <div class="grid gap-4 mb-4 grid-cols-2">
                   <div class="col-span-2 sm:col-span-1">
-                        <label for="brandName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Brand Name</label>
-                        <input type="text" name="brandName" id="brandName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Cuwex" v-model="brandNameAdd" required="">
+                        <label for="brandName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Brand Name</label>
+                        <input type="text" name="brandName" id="brandName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Cuwex" v-model="brandNameAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                        <input type="text" name="name" id="name" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Bone123" v-model="nameAdd" required="">
+                        <label for="name" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Name</label>
+                        <input type="text" name="name" id="name" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Bone123" v-model="nameAdd" required="">
                     </div>
                   
               
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="foodType" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Food Type</label>
-                        <input type="text" name="foodType" id="foodType" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Bone" v-model="foodTypeAdd" required="">
+                        <label for="foodType" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Food Type</label>
+                        <input type="text" name="foodType" id="foodType" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Bone" v-model="foodTypeAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="animalType" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Animal Type</label>
-                        <input type="text" name="animalType" id="animalType" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Dog" v-model="animalTypeAdd" required="">
+                        <label for="animalType" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Animal Type</label>
+                        <input type="text" name="animalType" id="animalType" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Dog" v-model="animalTypeAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-2">
-                        <label for="ageGroup" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age Group</label>
-                        <input type="text" name="ageGroup" id="ageGroup" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5"v-model="ageGroupAdd" required="">
+                        <label for="ageGroup" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Age Group</label>
+                        <input type="text" name="ageGroup" id="ageGroup" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5"v-model="ageGroupAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-2">
-                        <label for="expirationDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Expiration Date</label>
-                        <input type="date" name="expirationDate" id="expirationDate" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5"v-model="exporationDateAdd" required="">
+                        <label for="expirationDate" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Expiration Date</label>
+                        <input type="date" name="expirationDate" id="expirationDate" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5"v-model="exporationDateAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="weith" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weith</label>
-                        <input type="number" name="weith" id="weith" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="5"v-model="weightAdd" required="">
+                        <label for="weith" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Weith</label>
+                        <input    type="number" min="0" name="weith" id="weith" step="0.1" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="5"v-model="weightAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="mesurmentUnits" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mesurment Units</label>
-                        <input type="text" name="mesurmentUnits" id="mesurmentUnits" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="kg" v-model="measurementWeightAdd" required="">
+                        <label for="mesurmentUnits" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Mesurment Units</label>
+                        <input type="text" name="mesurmentUnits" id="mesurmentUnits" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="kg" v-model="measurementWeightAdd" required="">
                     </div>
 
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="weithPerServing" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight Per Serving</label>
-                        <input type="number" name="intweithPerServingake" id="weithPerServing" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="5" v-model="weightPerServingAdd" required="">
+                        <label for="weithPerServing" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Weight Per Serving</label>
+                        <input    type="number" min="0" name="intweithPerServingake" step="0.01" id="weithPerServing" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="5" v-model="weightPerServingAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="mesurmentUnits" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mesurment Units</label>
-                        <input type="text" name="mesurmentUnits" id="mesurmentUnits" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="g" v-model="measurementPerServingAdd" required="">
+                        <label for="mesurmentUnits" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Mesurment Units</label>
+                        <input type="text" name="mesurmentUnits" id="mesurmentUnits" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="g" v-model="measurementPerServingAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="caloriesPerServingAdd" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Calories Per Serving</label>
-                        <input type="number" name="caloriesPerServingAdd" id="caloriesPerServingAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2.5"v-model="caloriesPerServingAdd" required="">
+                        <label for="caloriesPerServingAdd" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Calories Per Serving</label>
+                        <input    type="number" min="0" name="caloriesPerServingAdd" step="0.01" id="caloriesPerServingAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2.5"v-model="caloriesPerServingAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="fiberContent" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fiber Content</label>
-                        <input type="number" name="fiberContent" id="fiberContent" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2.5" v-model="fiberContentAdd" required="">
+                        <label for="fiberContent" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Fiber Content</label>
+                        <input    type="number" min="0" name="fiberContent" step="0.01" id="fiberContent" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2.5" v-model="fiberContentAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="fatContent" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fat Content</label>
-                        <input type="number" name="fatContent" id="fatContent" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2.5" v-model="fatContentAdd" required="">
+                        <label for="fatContent" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Fat Content</label>
+                        <input    type="number" min="0" name="fatContent" step="0.01" id="fatContent" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2.5" v-model="fatContentAdd" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
-                        <input type="number"  name="quantity" id="quantity" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2" v-model="quantityAdd" required="">
+                        <label for="quantity" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Quantity</label>
+                        <input    type="number" min="0"  name="quantity" step="1.0" id="quantity" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2" v-model="quantityAdd" required="">
+                    </div>
+                     <div class="col-span-2 sm:col-span-1">
+                        <label for="quantity" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Price</label>
+                        <input    type="number" min="0"  name="price" step="1.0" id="priceAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="10€/pc" v-model="priceAdd" required="">
                     </div>
                     <div class="col-span-2">
-                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Notes</label>
-                        <textarea id="description" rows="2" class="block p-1 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-emerald-300 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500" placeholder="Write description here" v-model="notesAdd"></textarea>                    
+                        <label for="description" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Notes</label>
+                        <textarea id="description" rows="2" class="block p-1 w-full text-base text-gray-900 bg-gray-50 rounded-lg border border-emerald-300 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500" placeholder="Write description here" v-model="notesAdd"></textarea>                    
                     </div>
                 </div>
                 
               
-                <button @click="handleSubmit" class="text-white inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
+                <button  class="text-white inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
                     <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                     Add 
                 </button>
@@ -227,7 +229,7 @@
           <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
             Animal Details
           </h3>
-          <button @click="single = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+          <button @click="single = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
             </svg>
@@ -238,69 +240,69 @@
         <form class="p-4 md:p-5">
           <div class="grid gap-4 mb-4 grid-cols-2">
             <div class="col-span-2 sm:col-span-1">
-              <label for="singleCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-              <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleCode" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Name</label>
+              <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
               {{ this.singleItem.name }}
             </span>
             </div>
             <div class="col-span-2 sm:col-span-1">
-              <label for="animalName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Barand Name</label>
-              <span type="text" id="animalName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="animalName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Barand Name</label>
+              <span type="text" id="animalName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.singleItem.brandName }}
             </span>
             </div>
             <div class="col-span-2">
-              <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Food Type</label>
-              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Food Type</label>
+              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.singleItem.foodType }}
             </span>
             </div>
             <div class="col-span-2  ">
-              <label for="singleDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age Group</label>
-              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleDate" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Age Group</label>
+              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.singleItem.ageGroup }}
             </span>
             </div>
             <div class="col-span-2  sm:col-span-1">
-              <label for="singleDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight</label>
-              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleDate" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Weight</label>
+              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.singleItem.weight }}{{ this.singleItem.measurementWeight }}
             </span>
             </div>
           
             <div class="col-span-2  sm:col-span-1">
-              <label for="singleDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Calories per Serving</label>
-              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleDate" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Calories per Serving</label>
+              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.singleItem.caloriesPerServing }}{{ this.singleItem.measurementPerServing }}
             </span>
             </div>
             <div class="col-span-2  sm:col-span-1">
-              <label for="singleDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fat Content</label>
-              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleDate" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Fat Content</label>
+              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.singleItem.fatContent }}
             </span>
             </div>
             <div class="col-span-2  sm:col-span-1">
-              <label for="singleDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fiber Content</label>
-              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleDate" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Fiber Content</label>
+              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.singleItem.fiberContent }}
             </span>
             </div>
             <div class="col-span-2  ">
-              <label for="singleDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Expiration Date</label>
-              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleDate" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Expiration Date</label>
+              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ formatDate(this.singleItem.exporationDate) }}
             </span>
             </div>
             <div class="col-span-2  ">
-              <label for="singleDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
-              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleDate" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Quantity</label>
+              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.singleItem.quantity }}
             </span>
             </div>
             <div class="col-span-2  ">
-              <label for="singleDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Notes</label>
-              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleDate" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Notes</label>
+              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.singleItem.notes }}
             </span>
             </div>
@@ -351,6 +353,7 @@ export default {
       notesAdd: '',
       measurementWeightAdd: '',
       quantityAdd: '',
+      priceAdd: '',
       
       single: false,
       singleItem:[],
@@ -452,9 +455,10 @@ export default {
                             MeasurementPerServing: this.measurementPerServingAdd,
                             MeasurementWeight: this.measurementWeightAdd,
                             Notes: this.notesAdd,
-                            Quantity: 2,
-                            Weight:  3,
-                            WeightPerServing: 2
+                            Quantity: parseInt( this.quantityAdd),
+                            Weight:  parseFloat( this.weightAdd),
+                            WeightPerServing: parseFloat( this.weightPerServingAdd),
+                            Price: parseFloat( this.priceAdd),
 
       },
       {

@@ -1,238 +1,120 @@
 <template>
-   <Loading v-if="loadingError" /> 
+  <Loading v-if="loadingError" />
 
-  <Navigation/>
+  <Navigation />
+
   <div class="my-6 text-white items-center justify-center flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
-    <!-- Adopter Details Panels -->
-    <div class="w-full flex flex-col 2xl:w-5/6 space-y-4">
-      <div class="flex-1 rounded-lg p-8">
-        <h4 class="text-xl font-bold">Adopter Details</h4>
-        <div v-if="user" class="flex flex-col 2xl:flex-row">
-          <!-- Panel 1 -->
-          <div class="shadow-2xl p-10  rounded-lg w-full 2xl:w-3/6 mr-4">
-            <h2 class="text-2xl font-bold mb-4">Personal info</h2>
-            <div class="">
-              <div class="flex border-b py-2">
-                <span class="font-bold w-24">Username:</span>
+    <div class="w-full flex flex-col  space-y-4">
+      <div class="flex-5 rounded-lg p-8">
+        <div class="my-6 text-white flex flex-col items-center justify-center space-y-4 2xl:flex-row 2xl:space-y-0 2xl:space-x-4">
+        <div class="w-full bg-green/10 shadow-2xl p-2 max-w-5xl flex flex-col space-y-4 px-4">
+         
+         <h4 class="text-xl  font-bold text-center mb-6">Adopter Details</h4>
+
+        <div v-if="user" class="flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-8 justify-center">
+          <!-- Panel 1: Personal Info (stylized) -->
+          <div class=" p-8 rounded-lg w-full max-w-xl mx-auto 2xl:mx-0 2xl:w-3/6">
+            <h2 class="text-2xl font-bold mb-6 text-center">Personal Info</h2>
+            <div class="text-lg space-y-2">
+              <div class="flex justify-between border-b border-white/20 py-2">
+                <span class="font-semibold">Username:</span>
                 <span>{{ user.username }}</span>
               </div>
-              <div class="flex border-b py-2">
-                <span class="font-bold w-24">First name:</span>
+              <div class="flex justify-between border-b border-white/20 py-2">
+                <span class="font-semibold">First name:</span>
                 <span>{{ user.firstName }}</span>
               </div>
-              <div class="flex border-b py-2">
-                <span class="font-bold w-24">Last name:</span>
+              <div class="flex justify-between border-b border-white/20 py-2">
+                <span class="font-semibold">Last name:</span>
                 <span>{{ user.lastName }}</span>
               </div>
-              <div class="flex border-b py-2">
-                <span class="font-bold w-24">Date of Birth:</span>
+              <div class="flex justify-between border-b border-white/20 py-2">
+                <span class="font-semibold">Date of Birth:</span>
                 <span>{{ formatDateToISO(user.dateOfBirth) }}</span>
               </div>
-              <div class="flex border-b py-2">
-                <span class="font-bold w-24">Residence:</span>
+              <div class="flex justify-between border-b border-white/20 py-2">
+                <span class="font-semibold">Residence:</span>
                 <span>{{ user.residence }}</span>
               </div>
-              
             </div>
-          </div>
-          <!-- Panel 2 -->
-          <div class="shadow-2xl p-10  rounded-lg w-full 2xl:w-3/6 mr-4 mt-8">
-            <h2 class="text-2xl font-bold mb-4">Edit Personal Info</h2>
-            <form @submit.prevent="submitEditForm" id="editForm">
-              <!-- Input fields for editing -->
-              <div class="flex border-b py-2">
-                <label for="firstName" class="font-bold w-24">First name:</label>
-                <input v-model="editForm.firstName" class="rounded-lg p-2 text-gray-400" type="text" id="firstName" name="firstName" required>
-              </div>
-              <div class="flex border-b py-2">
-                <label for="lastName" class="font-bold w-24">Last name:</label>
-                <input v-model="editForm.lastName" class="rounded-lg p-2 text-gray-400" type="text" id="lastName" name="lastName" required>
-              </div>
-              <div class="flex border-b py-2">
-                <label for="residence" class="font-bold w-24">Residence:</label>
-                <input v-model="editForm.residence" class="rounded-lg p-2 text-gray-400" type="text" id="residence" name="residence" required>
-              </div>
-              <!-- Save Changes button -->
-              <div class="flex justify-end mt-4">
-                <button type="submit" class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded whitespace-normal">
-                  Save Changes
-                </button>
-              </div>
-            </form>
+
+            <div class="flex justify-end mt-6">
+              <button @click="editModal = true" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded transition">
+                Update
+              </button>
+            </div>
           </div>
         
-         
         </div>
-          <!-- Panel 4 -->
-          <div class="shadow-2xl p-4 mt-8 rounded-lg 2xl:w-3/3">
-            <h2 class="text-2xl font-bold mb-4">Animals</h2>
-           
-               
+        </div>
+        </div>
+        <!-- Panel 4: Adopted Animals -->
+        <div class="shadow-2xl p-4 mt-8 rounded-lg 2xl:w-3/3">
+          <h2 class="text-2xl font-bold mb-4">Adopted Animals</h2>
 
-            <div class="grid md:grid-cols-5 sm:grid-cols-2 grid-cols-1 gap-2 lg:gap-4 rounded-md">
-            <div
-              v-for="adoption in adoption" :key="adoption.code"
-              @click="openModal(adoption)"
-              class="hover:scale-110 mt-4 relative  flex justify-center flex-col items-center rounded-lg shadow-lg">
-              <img v-if="adoption.animal.picture" class="w-full h-50  rounded-xl" :src="'data:image/jpeg;base64,' + adoption.animal.picture" :alt="adoption.animal.name" />
-              <div class="absolute bottom-0 w-full mx-2 bg-black mx-1 bg-opacity-90 text-white text-xl font-extrabold py-4 text-center rounded-b-xl">
-                {{ adoption.animal.name  }}
+          <div class="grid md:grid-cols-5 sm:grid-cols-2 grid-cols-1 gap-2 lg:gap-4 rounded-md">
+            <router-link
+              v-for="adoption in adoption"
+              :key="adoption.code"
+              :to="'/singleAnimalUser/' + adoption.code"
+              class="hover:scale-110 mt-4 relative flex justify-center flex-col items-center rounded-lg shadow-lg transition-transform duration-200"
+            >
+              <img
+                v-if="adoption.animal.picture"
+                class="w-full h-90 rounded-xl object-cover"
+                :src="'data:image/jpeg;base64,' + adoption.animal.picture"
+                :alt="adoption.animal.name"
+              />
+              <div class="absolute bottom-0 w-full bg-black bg-opacity-90 text-white text-xl font-extrabold py-4 text-center rounded-b-xl">
+                {{ adoption.animal.name }}
               </div>
-            </div>
+            </router-link>
           </div>
         </div>
       </div>
 
-        <Footer/>
+      <Footer />
+    </div>
+  </div>
+
+  <!-- Modal: Edit Personal Info -->
+  <div v-if="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <div class="bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="flex items-center justify-between p-4 border-b dark:border-gray-600">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Edit Personal Info</h3>
+          <button @click="editModal = false"
+            class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+            ✕
+          </button>
+        </div>
+
+        <form @submit.prevent="submitEditForm" class="p-4 space-y-4">
+          <div>
+            <label for="firstName" class="block mb-1 text-sm font-medium text-gray-900">First name:</label>
+            <input v-model="editForm.firstName" class="w-full text-gray-900 p-2 border border-emerald-300 rounded-lg" type="text" id="firstName" required />
+          </div>
+          <div>
+            <label for="lastName" class="block mb-1 text-sm font-medium text-gray-900">Last name:</label>
+            <input v-model="editForm.lastName" class="w-full text-gray-900 p-2 border border-emerald-300 rounded-lg" type="text" id="lastName" required />
+          </div>
+          <div>
+            <label for="residence" class="block mb-1 text-sm font-medium text-gray-900">Residence:</label>
+            <input v-model="editForm.residence" class="w-full text-gray-900 p-2 border border-emerald-300 rounded-lg" type="text" id="residence" required />
+          </div>
+
+          <div class="flex justify-end">
+            <button type="submit"
+              class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2 px-4 rounded">
+              Save Changes
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-  
- 
-
-
-
-
-
-  <!-- Single item modal -->
-  <div v-if="modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center overflow-x-auto custom-scrollbar">
-            <div class="relative p-4 w-full max-w-xl max-h-full">
-              <!-- Modal content -->
-              <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
-                <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                    Return Animal 
-                  </h3>
-                  <button @click="modal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                  </button>
-                </div>
-                <!-- Modal body -->
-                <form class="p-4 md:p-5">
-                  <div class="grid gap-4 mb-4 grid-cols-2  sm:col-span-1">
-                    <div class="col-span-2 ">
-                      <label for="singleCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Adoption code</label>
-                      <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                      {{ this.itemsSingle.code }}
-                    </span>
-                    </div>
-                    <div class="col-span-2 ">
-                      <label for="singleCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Animal Name</label>
-                      <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                      {{ this.itemsSingle.animal.name }}
-                    </span>
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                      <label for="animalName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Family</label>
-                      <span type="text" id="animalName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                        {{ itemsSingle.animal.family }}
-                    </span>
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Species</label>
-                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                        {{ this.itemsSingle.animal.species }}
-                    </span>
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subspecies</label>
-                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                        {{ this.itemsSingle.animal.subspecies }}
-                    </span>
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
-                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                        {{ this.itemsSingle.animal.age }} years
-                    </span>
-                    </div>
-
-                    <div class="col-span-2 sm:col-span-1">
-                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
-                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                        {{ this.itemsSingle.animal.gender }}
-                    </span>
-                    </div>
-
-                    <div class="col-span-2 sm:col-span-1">
-                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight</label>
-                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                        {{ this.itemsSingle.animal.weight }} kg
-                    </span>
-                    </div>
-                    
-                    <div class="col-span-2 sm:col-span-1">
-                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hight</label>
-                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                        {{ this.itemsSingle.animal.height }} cm
-                    </span>
-                    </div>
-                    
-                    <div class="col-span-2 sm:col-span-1">
-                      <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lenght</label>
-                      <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                        {{ this.itemsSingle.animal.length }} cm
-                    </span>
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                      <label class="inline-flex items-center cursor-pointer">
-                        <input type="checkbox" v-model="this.itemsSingle.animal.neutered" class="sr-only peer" disabled>
-                        <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                        <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Neutered</span>
-                      </label>
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                      <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" v-model="this.itemsSingle.animal.vaccinated" class="sr-only peer" disabled>
-                    <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                    <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Vaccinated</span>
-                  </label>
-                </div>
-                <div class="col-span-2 sm:col-span-1">
-                  <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" v-model="this.itemsSingle.animal.microchipped" class="sr-only peer" disabled>
-                    <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                    <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Microchipped</span>
-                  </label>
-                </div>
-                <div class="col-span-2 sm:col-span-1">
-                  <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" v-model="this.itemsSingle.animal.trained" class="sr-only peer" disabled>
-                    <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                    <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Trained</span>
-                  </label>
-                </div>
-                <div class="col-span-2 sm:col-span-1">
-                  <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" v-model="this.itemsSingle.animal.socialized" class="sr-only peer" disabled>
-                    <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                    <span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Socialized</span>
-                  </label>
-                </div>
-                <div class="col-span-2 ">
-                  <p ><span class="ms-3 text-sm font-medium text-gray-900  dark:text-white">Return Date:</span> {{formatDateToISO(this.formattedDate)  }}</p>
-                    <textarea v-model="this.returnDescription" placeholder="Enter return description" class="border p-2 rounded  text-gray-400 w-full mt-2"></textarea>
-                </div>
-                <div class="col-span-2 ">
-                  <button @click="returnAnimal(this.itemsSingle)" class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded">
-                    Return
-                  </button>
-               </div>
-                      
-
-
-
-
-
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
+  </div>
 </template>
+
 
 <script>
 import instance from '@/axiosBase';
@@ -258,6 +140,7 @@ export default {
       adopterId: localStorage.getItem('adopterid'),
       user: null,
        modal:null,
+       editModal: false,
       itemsSingle:"",
       adoption: [],
       editForm: {
@@ -343,6 +226,7 @@ export default {
             Authorization: `Bearer ${this.token}`,
           },
         });
+        console.log(response.data);
         this.adoption = response.data;
         if(this.adoption!=null) {
                 setTimeout(() => {
@@ -375,9 +259,13 @@ export default {
           },
         });
      
+      Swal.fire({
+          icon: 'success',
+          title: 'Profile updated!',
+          timer: 2000,
+          showConfirmButton: false,
+        });
     
-        console.log('Adopter details updated successfully');
-        alert("Animal reaturnd");
         this.fetchUserDetails(); // Refresh user details after update
       } catch (error) {
         alert("Animal not reaturnd");

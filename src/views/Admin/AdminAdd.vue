@@ -12,11 +12,11 @@
        
         <!-- Common Animal Fields -->
         <div>
-          <label for="name" class="block text-sm font-bold mb-2">Name:</label>
+          <label for="name" class="block text-base font-bold mb-2">Name:</label>
           <input type="text" id="name" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="name" />
         </div>
         <div>
-          <label for="family" class="block text-sm font-bold mb-2">Family:</label>
+          <label for="family" class="block text-base font-bold mb-2">Family:</label>
           <select id="family" v-model="selectedFamily" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500">
             <option value="Mammal">Mammal</option>
             <option value="Bird">Bird</option>
@@ -26,86 +26,86 @@
           </select>
         </div>
         <div>
-          <label for="species" class="block text-sm font-bold mb-2">Species:</label>
+          <label for="species" class="block text-base font-bold mb-2">Species:</label>
           <input type="text" id="species" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="species" />
         </div>
         <div>
-          <label for="subspecies" class="block text-sm font-bold mb-2">Subspecies:</label>
+          <label for="subspecies" class="block text-base font-bold mb-2">Subspecies:</label>
           <input type="text" id="subspecies" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="subspecies" />
         </div>
         <div>
-          <label for="age" class="block text-sm font-bold mb-2">Age:</label>
-          <input type="number" id="age" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="age" />
+          <label for="age" class="block text-base font-bold mb-2">Age:</label>
+          <input    type="number" min="0" id="age" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="age" />
         </div>
         <div>
-          <label for="gender" class="block text-sm font-bold mb-2">Gender:</label>
+          <label for="gender" class="block text-base font-bold mb-2">Gender:</label>
           <select id="gender" v-model="gender" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500">
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
         </div>
         <div>
-          <label for="weight" class="block text-sm font-bold mb-2">Weight:</label>
-          <input type="number" id="weight" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="weight" />
+          <label for="weight" class="block text-base font-bold mb-2">Weight:</label>
+          <input    type="number" min="0" id="weight" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="weight" />
         </div>
         <div>
-          <label for="height" class="block text-sm font-bold mb-2">Height:</label>
-          <input type="number" id="height" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="height" />
+          <label for="height" class="block text-base font-bold mb-2">Height:</label>
+          <input    type="number" min="0" id="height" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="height" />
         </div>
         <div>
-          <label for="length" class="block text-sm font-bold mb-2">Length:</label>
-          <input type="number" id="length" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="length" />
+          <label for="length" class="block text-base font-bold mb-2">Length:</label>
+          <input    type="number" min="0" id="length" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="length" />
         </div>
         
         <div>
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="neutered" class="sr-only peer">
             <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-            <span class="ms-3 text-sm font-medium">Neutered</span>
+            <span class="ms-3 text-base font-medium">Neutered</span>
           </label>
         </div>
         <div>
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="vaccinated" class="sr-only peer">
             <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-            <span class="ms-3 text-sm font-medium">Vaccinated</span>
+            <span class="ms-3 text-base font-medium">Vaccinated</span>
           </label>
         </div>
         <div>
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="microchipped" class="sr-only peer">
             <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-            <span class="ms-3 text-sm font-medium overflow-hidden break-before-all">Microchipped</span>
+            <span class="ms-3 text-base font-medium overflow-hidden break-before-all">Microchipped</span>
           </label>
         </div>
         <div>
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="trained" class="sr-only peer">
             <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-            <span class="ms-3 text-sm font-medium">Trained</span>
+            <span class="ms-3 text-base font-medium">Trained</span>
           </label>
         </div>
         <div>
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="socialized" class="sr-only peer">
             <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-            <span class="ms-3 text-sm font-medium">Socialized</span>
+            <span class="ms-3 text-base font-medium">Socialized</span>
           </label>
         </div>
         <div>
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="adopted" class="sr-only peer">
             <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focused:ring-4 peer-focused:ring-green-300 dark:peer-focused:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-            <span class="ms-3 text-sm font-medium">Adopted</span>
+            <span class="ms-3 text-base font-medium">Adopted</span>
           </label>
         </div>
       </div>
       <div class="w-full px-2 mb-4">
-        <label for="healthIssues" class="block text-sm font-bold mb-2">Health Issues:</label>
+        <label for="healthIssues" class="block text-base font-bold mb-2">Health Issues:</label>
         <textarea id="healthIssues" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="healthIssues"></textarea>
       </div>
       <div class="w-full px-2 mb-4">
-        <label for="personalityDescription" class="block text-sm font-bold mb-2">Personality Description:</label>
+        <label for="personalityDescription" class="block text-base font-bold mb-2">Personality Description:</label>
         <textarea id="personalityDescription" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="personalityDescription"></textarea>
       </div></div>
       <div class="mt-2 mb-2"></div>
@@ -116,11 +116,11 @@
             <h2 class="text-xl mt-2 font-bold mb-4">Mammal info</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
-            <label for="coatType" class="block text-sm font-bold mb-2">Coat Type:</label>
+            <label for="coatType" class="block text-base font-bold mb-2">Coat Type:</label>
             <input type="text" id="coatType" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="coatType" />
           </div>
           <div>
-            <label for="groomingProducts" class="block text-sm font-bold mb-2">Grooming Products:</label>
+            <label for="groomingProducts" class="block text-base font-bold mb-2">Grooming Products:</label>
             <input type="text" id="groomingProducts" class="text-gray-500 w-v py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="groomingProducts" />
           </div>
         </div></div>
@@ -130,15 +130,15 @@
            <h2 class="text-xl mt-2 font-bold mb-4">Bird info</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
-            <label for="cageSize" class="block text-sm font-bold mb-2">Cage Size:</label>
+            <label for="cageSize" class="block text-base font-bold mb-2">Cage Size:</label>
             <input type="text" id="cageSize" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="cageSize" />
           </div>
           <div>
-            <label for="recommendedToys" class="block text-sm font-bold mb-2">Recommended Toys:</label>
+            <label for="recommendedToys" class="block text-base font-bold mb-2">Recommended Toys:</label>
             <input type="text" id="recommendedToys" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="recommendedToys" />
           </div>
           <div>
-            <label for="sociability" class="block text-sm font-bold mb-2">Sociability:</label>
+            <label for="sociability" class="block text-base font-bold mb-2">Sociability:</label>
             <input type="text" id="sociability" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="sociability" />
           </div>
         </div></div>
@@ -148,15 +148,15 @@
             <h2 class="text-xl mt-2 font-bold mb-4">Fish info</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
-            <label for="tankSize" class="block text-sm font-bold mb-2">Tank Size:</label>
+            <label for="tankSize" class="block text-base font-bold mb-2">Tank Size:</label>
             <input type="text" id="tankSize" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="tankSize" />
           </div>
           <div>
-            <label for="compatibleSpecies" class="block text-sm font-bold mb-2">Compatible Species:</label>
+            <label for="compatibleSpecies" class="block text-base font-bold mb-2">Compatible Species:</label>
             <input type="text" id="compatibleSpecies" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="compatibleSpecies" />
           </div>
           <div>
-            <label for="recommendedItems" class="block text-sm font-bold mb-2">Recommended Items:</label>
+            <label for="recommendedItems" class="block text-base font-bold mb-2">Recommended Items:</label>
             <input type="text" id="recommendedItems" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="recommendedItems" />
           </div>
         </div></div>
@@ -167,19 +167,19 @@
             <h2 class="text-xl mt-2 font-bold mb-4">Reptile info</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
-            <label for="tankSize" class="block text-sm font-bold mb-2">Tank Size:</label>
+            <label for="tankSize" class="block text-base font-bold mb-2">Tank Size:</label>
             <input type="text" id="tankSize" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="tankSize" />
           </div>
           <div>
-            <label for="sociability" class="block text-sm font-bold mb-2">Sociability:</label>
+            <label for="sociability" class="block text-base font-bold mb-2">Sociability:</label>
             <input type="text" id="sociability" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="sociability" />
           </div>
           <div>
-            <label for="compatibleSpecies" class="block text-sm font-bold mb-2">Compatible Species:</label>
+            <label for="compatibleSpecies" class="block text-base font-bold mb-2">Compatible Species:</label>
             <input type="text" id="compatibleSpecies" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="compatibleSpecies" />
           </div>
           <div>
-            <label for="recommendedItems" class="block text-sm font-bold mb-2">Recommended Items:</label>
+            <label for="recommendedItems" class="block text-base font-bold mb-2">Recommended Items:</label>
             <input type="text" id="recommendedItems" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="recommendedItems" />
           </div>
         </div></div>
@@ -189,11 +189,11 @@
           <h2 class="text-xl mt-2 font-bold mb-4">Amphibian info</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
-            <label for="humidity" class="block text-sm font-bold mb-2">Humidity:</label>
+            <label for="humidity" class="block text-base font-bold mb-2">Humidity:</label>
             <input type="text" id="humidity" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="humidity" />
           </div>
           <div>
-            <label for="temperature" class="block text-sm font-bold mb-2">Temperature:</label>
+            <label for="temperature" class="block text-base font-bold mb-2">Temperature:</label>
             <input type="text" id="temperature" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="temperature" />
           </div>
         </div></div>
@@ -207,7 +207,7 @@
     <h2 class="text-xl mt-2 font-bold mb-4">Surenderer info</h2>
     <div class="grid grid-cols-1 md:grid-cols-2  gap-4 mb-4">
       <div>
-      <label for="username" class="block text-sm font-bold mb-2">Username Surenderer:</label>
+      <label for="username" class="block text-base font-bold mb-2">Username Surenderer:</label>
       <div class="flex items-center">
         
         <input type="text" id="username" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="username"/>
@@ -222,7 +222,7 @@
       </div>
     </div>
       <div>
-      <label for="checkUser" class="block text-sm font-bold mb-2">Check User</label>
+      <label for="checkUser" class="block text-base font-bold mb-2">Check User</label>
      
        
         
@@ -242,20 +242,20 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
    
       <div>
-        <label for="name" class="block text-sm font-bold mb-2">Name:</label>
+        <label for="name" class="block text-base font-bold mb-2">Name:</label>
         <input type="text" id="ownerName" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="ownerName" />
       </div>
       <div>
-        <label for="surname" class="block text-sm font-bold mb-2">Surname:</label>
+        <label for="surname" class="block text-base font-bold mb-2">Surname:</label>
         <input type="text" id="ownerSurname" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="ownerSurname" />
       </div> 
        <div>
-        <label for="oib" class="block text-sm font-bold mb-2">OIB:</label>
+        <label for="oib" class="block text-base font-bold mb-2">OIB:</label>
         <input type="text" id="oib" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="ownerOIB" />
       </div>
     
       <div>
-        <label for="phoneNumber" class="block text-sm font-bold mb-2">Phone Number:</label>
+        <label for="phoneNumber" class="block text-base font-bold mb-2">Phone Number:</label>
         <input type="text" id="phoneNumber" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="ownerPhoneNumber" />
       </div>
     
@@ -274,16 +274,16 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
    
       <div>
-        <label for="adress" class="block text-sm font-bold mb-2">Adress:</label>
+        <label for="adress" class="block text-base font-bold mb-2">Adress:</label>
         <input type="text" id="adress" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="adress" />
       </div>
       <div>
-        <label for="date" class="block text-sm font-bold mb-2">Date:</label>
+        <label for="date" class="block text-base font-bold mb-2">Date:</label>
         <input type="date" id="date" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="date" />
       </div> 
                       
                       <div>
-                        <label for="time" class="block text-sm font-bold mb-2">Time:</label>
+                        <label for="time" class="block text-base font-bold mb-2">Time:</label>
                         <div class="relative">
                         <div class="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
                           <svg class="w-2 h-2 fill-[#8e8e8e]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
@@ -293,13 +293,13 @@
 
                                 </svg>
                         </div>
-                        <input type="time" id="time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"v-model="time" min="09:00" max="18:00" value="00:00" required />
+                        <input type="time" id="time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-base rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"v-model="time" min="09:00" max="18:00" value="00:00" required />
                     </div>  
                   </div> 
 
       
           <div class="w-full px-2 mb-4 ">
-        <label for="description" class="block text-sm font-bold mb-2"> Description:</label>
+        <label for="description" class="block text-base font-bold mb-2"> Description:</label>
         <textarea id="description" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="description"></textarea>
       </div>
 
@@ -320,17 +320,17 @@
 
 
       <div class="mt-2 p-2">
-        <label for="image" class="mt-2 block text-sm font-bold mb-2 text-white">Image:</label>
+        <label for="image" class="mt-2 block text-base font-bold mb-2 text-white">Image:</label>
         <div class="flex items-center justify-center w-full ">
           <label :key="fileName" for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:scale-105">
             <div v-if="!fileName" class="flex flex-col items-center justify-center pt-5 pb-6">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
               </svg>
-              <p class="mb-2 text-sm text-white"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+              <p class="mb-2 text-base text-white"><span class="font-semibold">Click to upload</span> or drag and drop</p>
             </div>
             <div v-else class="flex flex-col items-center justify-center pt-5 pb-6">
-              <p class="mb-2 text-sm text-white">{{ fileName }}</p>
+              <p class="mb-2 text-base text-white">{{ fileName }}</p>
             </div>
             <input id="dropzone-file" type="file" class="hidden" @change="onFileChange" />
           </label>

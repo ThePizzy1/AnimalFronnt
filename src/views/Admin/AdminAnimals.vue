@@ -31,35 +31,35 @@
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="animal.neutered" class="sr-only peer" disabled>
             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-            <span class="ms-3 text-sm font-medium text-white">Neutered</span>
+            <span class="ms-3 text-base font-medium text-white">Neutered</span>
           </label>
         </div>
         <div class="flex items-center">
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="animal.vaccinated" class="sr-only peer" disabled>
             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-            <span class="ms-3 text-sm font-medium text-white">Vaccinated</span>
+            <span class="ms-3 text-base font-medium text-white">Vaccinated</span>
           </label>
         </div>
         <div class="flex items-center">
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="animal.microchipped" class="sr-only peer" disabled>
             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-            <span class="ms-3 text-sm font-medium text-white">Microchipped</span>
+            <span class="ms-3 text-base font-medium text-white">Microchipped</span>
           </label>
         </div>
         <div class="flex items-center">
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="animal.trained" class="sr-only peer" disabled>
             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-            <span class="ms-3 text-sm font-medium text-white">Trained</span>
+            <span class="ms-3 text-base font-medium text-white">Trained</span>
           </label>
         </div>
         <div class="flex items-center">
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="animal.socialized" class="sr-only peer" disabled>
             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-            <span class="ms-3 text-sm font-medium text-white">Socialized</span>
+            <span class="ms-3 text-base font-medium text-white">Socialized</span>
           </label>
         </div>
       </div>
@@ -111,13 +111,7 @@
 
       <!-- Remove Button -->
       <div class="flex justify-center mt-20">
-        <button
-        @click="showRemuve = true"
-          :disabled="animal.adopted"
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed">
-          Remove
-         </button>
-
+ 
             <button
               @click="isEditing = !isEditing"
               class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4">
@@ -145,9 +139,8 @@
     </div>
       
       </div>
-      <div class="flex justify-center text-sm text-red-500 ">
-      <p>You can only remove deceased animals.</p> <!-- Napravi da se uginule životinje u recordu prikazuju kao mrtve -->
-    
+      <div class="flex justify-center text-base text-red-500 ">
+      
     </div>
     </div>
   </div>
@@ -179,35 +172,35 @@
       <label class="inline-flex items-center cursor-pointer" for="neutered">
         <input type="checkbox" v-model="animalEdit.neutered" id="neutered" class="sr-only peer" :disabled="animalEdit.neutered">
         <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-        <span class="ms-3 text-sm font-medium text-white">Neutered</span>
+        <span class="ms-3 text-base font-medium text-white">Neutered</span>
       </label>
     </div>
     <div class="flex items-center">
       <label class="inline-flex items-center cursor-pointer" for="vaccinated">
         <input type="checkbox" v-model="animalEdit.vaccinated" id="vaccinated" class="sr-only peer" :disabled="animalEdit.vaccinated">
         <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-        <span class="ms-3 text-sm font-medium text-white">Vaccinated</span>
+        <span class="ms-3 text-base font-medium text-white">Vaccinated</span>
       </label>
     </div>
     <div class="flex items-center">
       <label class="inline-flex items-center cursor-pointer" for="microchipped">
         <input type="checkbox" v-model="animalEdit.microchipped" id="microchipped" class="sr-only peer" :disabled="animalEdit.microchipped">
         <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-        <span class="ms-3 text-sm font-medium text-white">Microchipped</span>
+        <span class="ms-3 text-base font-medium text-white">Microchipped</span>
       </label>
     </div>
     <div class="flex items-center">
       <label class="inline-flex items-center cursor-pointer" for="trained">
         <input type="checkbox" v-model="animalEdit.trained" id="trained" class="sr-only peer" :disabled="animalEdit.trained">
         <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-        <span class="ms-3 text-sm font-medium text-white">Trained</span>
+        <span class="ms-3 text-base font-medium text-white">Trained</span>
       </label>
     </div>
     <div class="flex items-center">
       <label class="inline-flex items-center cursor-pointer" for="socialized">
         <input type="checkbox" v-model="animalEdit.socialized" id="socialized" class="sr-only peer" :disabled="animalEdit.socialized">
         <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-        <span class="ms-3 text-sm font-medium text-white">Socialized</span>
+        <span class="ms-3 text-base font-medium text-white">Socialized</span>
       </label>
     </div>
   </div>

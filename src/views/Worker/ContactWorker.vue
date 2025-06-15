@@ -15,21 +15,21 @@
      
         <div class="grid grid-cols-4 gap-4 mb-4">
           <div>
-            <label for="name" class="block text-sm font-bold mb-2">Name:</label>
+            <label for="name" class="block text-base font-bold mb-2">Name:</label>
             <select v-model="filters.name" id="name" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
               <option value="">All</option>
               <option v-for="name in nameList" :key="name" :value="name">{{ name }}</option>
             </select>
           </div>
           <div>
-            <label for="email" class="block text-sm font-bold mb-2">Email:</label>
+            <label for="email" class="block text-base font-bold mb-2">Email:</label>
             <select v-model="filters.email" id="email" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
               <option value="">All</option>
               <option v-for="n in emailList" :key="n" :value="n">{{ n }}</option>
             </select>
           </div>
           
-          <div class=" block text-sm font-bold mb-2 ">
+          <div class=" block text-base font-bold mb-2 ">
                 <label class="inline-flex items-center cursor-pointer mb-3"> Read: </label>
                 <label>
                   <input   type="checkbox" v-model="filters.read" class="sr-only peer">
@@ -42,30 +42,30 @@
           <table class="min-w-full leading-normal ">
             <thead>
               <tr>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider"></th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Name</th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Email</th>
-                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Message</th>
-                <th  class="px-5 py-3 border-b-2 border-customBlack text-left text-sm font-bold text-white uppercase tracking-wider">Read</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider"></th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Name</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Email</th>
+                <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Message</th>
+                <th  class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Read</th>
               
               </tr>
             </thead>
             <tbody>
               <tr v-for="item in filteredItems" :key="item.id"  :class="{'text-red-100 opacity-100': item.read==false, ' opacity-50 ': item.read==true}" class="border-b border-customBlack cursor-pointer" >
-                <td class="px-5 py-5 text-sm font-bold text-left">
+                <td class="px-5 py-5 text-base font-bold text-left">
                   <svg @click="openSinglModal(item)" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                   <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                   </svg>
              </td>  
-                <td class="px-5 py-5 text-sm font-bold text-left">{{ item.name }}</td>
-                <td class="px-5 py-5 text-sm font-bold text-left">{{ item.email }}</td>
-                <td class="px-5 py-5 text-sm font-bold text-left">{{ item.description }}</td>
-                <button  @click="increment(item.id)"  type="button" class="mb-4  mt-2 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
+                <td class="px-5 py-5 text-base font-bold text-left">{{ item.name }}</td>
+                <td class="px-5 py-5 text-base font-bold text-left">{{ item.email }}</td>
+                <td class="px-5 py-5 text-base font-bold text-left">{{ item.description }}</td>
+                <button  @click="increment(item.id)"  type="button" class="mb-4  mt-2 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-base p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
                     <svg class="w-5 h-5 text-gray-800 dark:text-white fill-[#ffffff]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm13.707-1.293a1 1 0 0 0-1.414-1.414L11 12.586l-1.793-1.793a1 1 0 0 0-1.414 1.414l2.5 2.5a1 1 0 0 0 1.414 0l4-4Z" clip-rule="evenodd"/>
                         </svg>
 
-              <span class="block text-sm font-bold mx-2 ">Yes</span>
+              <span class="block text-base font-bold mx-2 ">Yes</span>
               </button>
               </tr>
             </tbody>
@@ -87,7 +87,7 @@
           <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
             Animal Details
           </h3>
-          <button @click="single = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+          <button @click="single = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
             </svg>
@@ -98,26 +98,26 @@
         <form class="p-4 md:p-5">
           <div class="grid gap-4 mb-4 grid-cols-2">
             <div class="col-span-2">
-              <label for="singleCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User</label>
-              <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleCode" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">User</label>
+              <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
               {{ this.sigleUser.firstName }} {{ this.sigleUser.lastName }}
             </span>
             </div>
             <div class="col-span-2 ">
-              <label for="singleCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Residence</label>
-              <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleCode" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Residence</label>
+              <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
               {{ this.sigleUser.residence }}
             </span>
             </div>
             <div class="col-span-2 ">
-              <label for="animalName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-              <span type="text" id="animalName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="animalName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Email</label>
+              <span type="text" id="animalName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.singleItem.email }}
             </span>
             </div>
             <div class="col-span-2 ">
-              <label for="singleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Message</label>
-              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Message</label>
+              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.singleItem.description }} 
             </span>
             </div>

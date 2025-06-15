@@ -30,35 +30,35 @@
         <label class="inline-flex items-center cursor-pointer">
           <input type="checkbox" v-model="animal.neutered" class="sr-only peer" disabled>
           <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-          <span class="ms-3 text-sm font-medium text-white">Neutered</span>
+          <span class="ms-3 text-base font-medium text-white">Neutered</span>
         </label>
       </div>
       <div class="flex items-center">
         <label class="inline-flex items-center cursor-pointer">
           <input type="checkbox" v-model="animal.vaccinated" class="sr-only peer" disabled>
           <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-          <span class="ms-3 text-sm font-medium text-white">Vaccinated</span>
+          <span class="ms-3 text-base font-medium text-white">Vaccinated</span>
         </label>
       </div>
       <div class="flex items-center">
         <label class="inline-flex items-center cursor-pointer">
           <input type="checkbox" v-model="animal.microchipped" class="sr-only peer" disabled>
           <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-          <span class="ms-3 text-sm font-medium text-white">Microchipped</span>
+          <span class="ms-3 text-base font-medium text-white">Microchipped</span>
         </label>
       </div>
       <div class="flex items-center">
         <label class="inline-flex items-center cursor-pointer">
           <input type="checkbox" v-model="animal.trained" class="sr-only peer" disabled>
           <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-          <span class="ms-3 text-sm font-medium text-white">Trained</span>
+          <span class="ms-3 text-base font-medium text-white">Trained</span>
         </label>
       </div>
       <div class="flex items-center">
         <label class="inline-flex items-center cursor-pointer">
           <input type="checkbox" v-model="animal.socialized" class="sr-only peer" disabled>
           <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-          <span class="ms-3 text-sm font-medium text-white">Socialized</span>
+          <span class="ms-3 text-base font-medium text-white">Socialized</span>
         </label>
       </div>
     </div>
