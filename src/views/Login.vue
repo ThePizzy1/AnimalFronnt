@@ -87,9 +87,12 @@ const login = async () => {
    /**--------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Admin') {
-      router.push({ path: '/adminHome' });
+     
       console.log("userRole: Admin");
-      localStorage.setItem('userRole','Admin' );
+      localStorage.setItem('admin_token', token.value);
+      const adminToken = localStorage.getItem('admin_token');
+      localStorage.setItem('adminRole','Admin' ); 
+      router.push({ path: '/adminHome' });
     }
     if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'User') {
       router.push({ path: '/home' });

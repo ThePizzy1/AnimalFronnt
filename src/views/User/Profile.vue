@@ -199,6 +199,7 @@ export default {
           },
         });
         this.user = response.data;
+        console.log(this.user);
         if(this.user!=null) {
                 setTimeout(() => {
                 this.loadingError = false; 

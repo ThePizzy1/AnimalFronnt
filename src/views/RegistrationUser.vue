@@ -16,12 +16,10 @@
               <input :value="registerData.username" type="text" name="username" id="username" class="border border-gray-300 text-gray-500 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username" readonly>
               <div v-if="usernameError" class="text-red-500 text-base mt-2">{{ usernameError }}</div>
             </div>
-            <div>
-              <label for="dob" class="block mb-2 text-base font-medium text-customGreen dark:text-white">Date of Birth</label>
-              <input v-model="dob" type="date" id="dob" placeholder="YYYY/MM/DD"
-                class="border border-gray-300 text-gray-500 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                @input="formatDateInput">
-            </div>
+              <div class="col-span-2 sm:col-span-1">
+                        <label for="dateStartAdd" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Date</label>
+                        <input type="date" v-model="dob" name="dateStartAdd" id="dateStartAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"  required="">
+                    </div>
             <div>
               <label for="firstName" class="block mb-2 text-base font-medium text-customGreen dark:text-white">First Name</label>
               <input v-model="firstName" type="text" name="firstName" id="firstName" class="border border-gray-300 text-gray-500 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="First Name" required>
@@ -77,29 +75,7 @@ onMounted(() => {
   loadPasswordFromLocalStorage();
 });
 
-const formatDateInput = (event) => {
-  let input = event.target.value.replace(/\D/g, '');
-  if (input.length > 8) {
-    input = input.slice(0, 8);
-  }
 
-  let year = input.slice(0, 4);
-  let month = input.slice(4, 6);
-  let day = input.slice(6, 8);
-
-  if (month > 12) {
-    month = '12';
-  }
-
-  if (day > 31) {
-    day = '31';
-  }
-
-  const formatted = `${year}-${month}-${day}`;
-  dob.value = formatted;
-  const formattedDisplay = `${month}/${day}/${year}`;
-  console.log(formattedDisplay);
-};
 
 const register = async () => {
   try {

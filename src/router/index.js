@@ -57,6 +57,11 @@ const router = createRouter({
 
     //WORKERS
       {
+      path: '/userAddAnima',
+      name: 'UserAddAnima',
+      component: () => import('../views/Worker/UserAddAnima.vue')//C:\Users\Korisnik\Documents\AnimalRescue\src\views\Worker\UserAddAnima.vue
+    },
+      {
       path: '/workerProfile',
       name: 'WorkerProfile',
       component: () => import('../views/Worker/WorkerProfile.vue')//C:\Users\Korisnik\Documents\AnimalRescue\src\views\Worker\WorkerProfile.vue

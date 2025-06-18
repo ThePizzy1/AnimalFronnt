@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <div class="w-1/6 text-white p-4 rounded-l-lg">
-      <AdminNavigation/>
+     <WorkerNavigation />
     </div>
     <!-- Form -->
     <div class="w-3/6 text-white p-8 rounded-r-lg mb-2 mx-auto overflow-hidden ">
@@ -408,7 +408,8 @@
 //zapis životinje, rekorda, gdje je životinja pronađena, napravi nešto da se može upisat id osobe koja je donjela životinju
 //Dodaj zapis pojedinih podataka životinja primjer ti je u single animal admin pod brianjem
 
-import AdminNavigation from '../Admin/AdminNavigation.vue';
+
+import WorkerNavigation from '../Worker/WorkerNavigation.vue';
   import Swal from 'sweetalert2'
 import instance from '@/axiosBase';
 //import jwtDecode from 'jwt-decode';
@@ -417,11 +418,13 @@ localStorage.getItem('userRole');
 console.log(localStorage.getItem('userRole'));
 export default {
   components: {
-    AdminNavigation,
+
+    WorkerNavigation
   },
   data() {
     return {
-      token: localStorage.getItem('admin_token'),
+
+      token: localStorage.getItem('worker_token'),
       role: "", 
       name: '',
       selectedFamily: '',
@@ -562,9 +565,6 @@ export default {
            
      
             //radi
-            if(this.responseFamily != 'Other') {
-  
-            
             switch (this.responseFamily) {
               case 'Mammal':
                var responseM= await instance.post('animal/addMammal', 
@@ -633,10 +633,10 @@ export default {
                 console.log("Amphibian");
                 break;
               default:
-                console.log('Unknown family:', this.responseFamily);
-                break;
+                console.error('Unknown family:', this.responseFamily);
+                return;
             }
-          }
+      
          
         
         console.log("Family data added");
