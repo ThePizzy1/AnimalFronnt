@@ -3,53 +3,59 @@
 
   <Navigation />
 
-  <div class="my-6 text-white items-center justify-center flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
-    <div class="w-full flex flex-col  space-y-4">
+  <div class="my-6 text-stone-200 items-center justify-center flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
+    <div class="w-full flex flex-col space-y-4">
       <div class="flex-5 rounded-lg p-8">
-        <div class="my-6 text-white flex flex-col items-center justify-center space-y-4 2xl:flex-row 2xl:space-y-0 2xl:space-x-4">
-        <div class="w-full bg-green/10 shadow-2xl p-2 max-w-5xl flex flex-col space-y-4 px-4">
-         
-         <h4 class="text-xl  font-bold text-center mb-6">Adopter Details</h4>
+        <div class="my-6 text-stone-200 flex flex-col items-center justify-center space-y-4 2xl:flex-row 2xl:space-y-0 2xl:space-x-4">
+          <!-- header/panel container -->
+          <div class="w-full p-2 max-w-5xl flex flex-col space-y-4 px-4  ">
 
-        <div v-if="user" class="flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-8 justify-center">
-          <!-- Panel 1: Personal Info (stylized) -->
-          <div class=" p-8 rounded-lg w-full max-w-xl mx-auto 2xl:mx-0 2xl:w-3/6">
-            <h2 class="text-2xl font-bold mb-6 text-center">Personal Info</h2>
-            <div class="text-lg space-y-2">
-              <div class="flex justify-between border-b border-white/20 py-2">
-                <span class="font-semibold">Username:</span>
-                <span>{{ user.username }}</span>
-              </div>
-              <div class="flex justify-between border-b border-white/20 py-2">
-                <span class="font-semibold">First name:</span>
-                <span>{{ user.firstName }}</span>
-              </div>
-              <div class="flex justify-between border-b border-white/20 py-2">
-                <span class="font-semibold">Last name:</span>
-                <span>{{ user.lastName }}</span>
-              </div>
-              <div class="flex justify-between border-b border-white/20 py-2">
-                <span class="font-semibold">Date of Birth:</span>
-                <span>{{ formatDateToISO(user.dateOfBirth) }}</span>
-              </div>
-              <div class="flex justify-between border-b border-white/20 py-2">
-                <span class="font-semibold">Residence:</span>
-                <span>{{ user.residence }}</span>
-              </div>
-            </div>
+          
 
-            <div class="flex justify-end mt-6">
-              <button @click="editModal = true" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded transition">
-                Update
-              </button>
+            <div v-if="user" class="flex  flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-8 justify-center">
+              <!-- Panel 1: Personal Info -->
+              <div class="p-8 rounded-lg w-full max-w-xl mx-auto 2xl:mx-0 2xl:w-3/6 bg-stone-800/40 border border-stone-500/50">
+                <h2 class="text-2xl font-bold mb-6 text-center">Personal Info</h2>
+
+                <div class="text-lg space-y-2">
+                  <div class="flex justify-between border-b border-white/20 py-2">
+                    <span class="font-semibold">Username:</span>
+                    <span>{{ user.username }}</span>
+                  </div>
+                  <div class="flex justify-between border-b border-white/20 py-2">
+                    <span class="font-semibold">First name:</span>
+                    <span>{{ user.firstName }}</span>
+                  </div>
+                  <div class="flex justify-between border-b border-white/20 py-2">
+                    <span class="font-semibold">Last name:</span>
+                    <span>{{ user.lastName }}</span>
+                  </div>
+                  <div class="flex justify-between border-b border-white/20 py-2">
+                    <span class="font-semibold">Date of Birth:</span>
+                    <span>{{ formatDateToISO(user.dateOfBirth) }}</span>
+                  </div>
+                  <div class="flex justify-between border-b border-white/20 py-2">
+                    <span class="font-semibold">Residence:</span>
+                    <span>{{ user.residence }}</span>
+                  </div>
+                </div>
+
+                <div class="flex justify-end mt-6">
+                  <button
+                    @click="editModal = true"
+                    class="bg-stone-300 hover:bg-stone-400 text-stone-900 px-4 py-2 rounded transition focus:outline-none focus:ring-4 focus:ring-stone-300"
+                  >
+                    Update
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        
+          <!-- /header/panel container -->
         </div>
-        </div>
-        </div>
+
         <!-- Panel 4: Adopted Animals -->
-        <div class="shadow-2xl p-4 mt-8 rounded-lg 2xl:w-3/3">
+        <div class="shadow-2xl p-4 mt-8 rounded-lg 2xl:w-3/3 bg-stone-800/30 border border-stone-500/50">
           <h2 class="text-2xl font-bold mb-4">Adopted Animals</h2>
 
           <div class="grid md:grid-cols-5 sm:grid-cols-2 grid-cols-1 gap-2 lg:gap-4 rounded-md">
@@ -65,7 +71,7 @@
                 :src="'data:image/jpeg;base64,' + adoption.animal.picture"
                 :alt="adoption.animal.name"
               />
-              <div class="absolute bottom-0 w-full bg-black bg-opacity-90 text-white text-xl font-extrabold py-4 text-center rounded-b-xl">
+              <div class="absolute bottom-0 w-full bg-black bg-opacity-90 text-stone-200 text-xl font-extrabold py-4 text-center rounded-b-xl">
                 {{ adoption.animal.name }}
               </div>
             </router-link>
@@ -78,42 +84,70 @@
   </div>
 
   <!-- Modal: Edit Personal Info -->
-  <div v-if="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+  <div v-if="editModal" class="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
     <div class="relative p-4 w-full max-w-md max-h-full">
-      <div class="bg-white rounded-lg shadow dark:bg-gray-700">
-        <div class="flex items-center justify-between p-4 border-b dark:border-gray-600">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Edit Personal Info</h3>
-          <button @click="editModal = false"
-            class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+      <div class="bg-stone-900/90 rounded-lg shadow border border-stone-600">
+        <!-- modal header -->
+        <div class="flex items-center justify-between p-4 border-b border-stone-600">
+          <h3 class="text-lg font-semibold text-stone-200">Edit Personal Info</h3>
+          <button
+            @click="editModal = false"
+            class="text-stone-400 hover:bg-stone-200 hover:text-stone-900 rounded-lg text-base w-8 h-8 inline-flex items-center justify-center transition"
+          >
             ✕
           </button>
         </div>
 
+        <!-- modal form -->
         <form @submit.prevent="submitEditForm" class="p-4 space-y-4">
           <div>
-            <label for="firstName" class="block mb-1 text-sm font-medium text-gray-900">First name:</label>
-            <input v-model="editForm.firstName" class="w-full text-gray-900 p-2 border border-emerald-300 rounded-lg" type="text" id="firstName" required />
+            <label for="firstName" class="block mb-1 text-sm font-medium text-stone-200">First name:</label>
+            <input
+              v-model="editForm.firstName"
+              id="firstName"
+              type="text"
+              required
+              class="w-full text-stone-900 p-2 border border-stone-300 rounded-lg bg-stone-50 focus:ring-2 focus:ring-stone-300 focus:border-stone-300 outline-none"
+            />
           </div>
+
           <div>
-            <label for="lastName" class="block mb-1 text-sm font-medium text-gray-900">Last name:</label>
-            <input v-model="editForm.lastName" class="w-full text-gray-900 p-2 border border-emerald-300 rounded-lg" type="text" id="lastName" required />
+            <label for="lastName" class="block mb-1 text-sm font-medium text-stone-200">Last name:</label>
+            <input
+              v-model="editForm.lastName"
+              id="lastName"
+              type="text"
+              required
+              class="w-full text-stone-900 p-2 border border-stone-300 rounded-lg bg-stone-50 focus:ring-2 focus:ring-stone-300 focus:border-stone-300 outline-none"
+            />
           </div>
+
           <div>
-            <label for="residence" class="block mb-1 text-sm font-medium text-gray-900">Residence:</label>
-            <input v-model="editForm.residence" class="w-full text-gray-900 p-2 border border-emerald-300 rounded-lg" type="text" id="residence" required />
+            <label for="residence" class="block mb-1 text-sm font-medium text-stone-200">Residence:</label>
+            <input
+              v-model="editForm.residence"
+              id="residence"
+              type="text"
+              required
+              class="w-full text-stone-900 p-2 border border-stone-300 rounded-lg bg-stone-50 focus:ring-2 focus:ring-stone-300 focus:border-stone-300 outline-none"
+            />
           </div>
 
           <div class="flex justify-end">
-            <button type="submit"
-              class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2 px-4 rounded">
+            <button
+              type="submit"
+              class="bg-stone-300 hover:bg-stone-400 text-stone-900 font-bold py-2 px-4 rounded focus:outline-none focus:ring-4 focus:ring-stone-300 transition"
+            >
               Save Changes
             </button>
           </div>
         </form>
+        <!-- /modal form -->
       </div>
     </div>
   </div>
 </template>
+
 
 
 <script>
@@ -158,6 +192,14 @@ export default {
       returnDescription: '',
     };
   },
+  watch: {
+  userId(newId, oldId) {
+
+      this.fetchUserDetails();
+      this.fetchAdoptionDetails();
+    
+  }
+},
   computed: {
     formattedDate() {
       const today = new Date();
@@ -168,8 +210,18 @@ export default {
     },
   },
   mounted() {
-    this.fetchUserDetails();
-    this.fetchAdoptionDetails();
+     this.fetchUserDetails();
+  this.fetchAdoptionDetails();
+
+  // Periodično proveravaj localStorage userId (ako nema globalnog stanja)
+  setInterval(() => {
+    const storedUserId = localStorage.getItem('userId');
+    if(storedUserId !== this.userId) {
+      this.userId = storedUserId;
+      this.adopterId = localStorage.getItem('adopterid');
+      this.token = localStorage.getItem('token');
+    }
+  }, 1000);
   },
   watch: {
     selectedAnimal: 'updateAdoptionCode',
@@ -185,7 +237,10 @@ export default {
 
     refreshPageOnce() {
       if (!this.editForm.refreshed) {
-        location.reload();
+      
+        setTimeout(() => {
+                location.reload();
+                }, 100)
         this.editForm.refreshed = true;
       }
     },
@@ -206,6 +261,11 @@ export default {
                 }, 1000)
                 }
         localStorage.setItem('adopterid', this.user.id);
+          if(this.adopterId!=this.user.id) {
+         localStorage.setItem('adopterid', this.user.id);
+         this.fetchAdoptionDetails();
+          this.$router.push(`/profile`);
+        }
         this.editForm.firstName = this.user.firstName;
         this.editForm.lastName = this.user.lastName;
         this.editForm.residence = this.user.residence;
@@ -221,6 +281,7 @@ export default {
 
     async fetchAdoptionDetails() {
       try {
+    
         this.loadingError = true;
         const response = await instance.get(`animal/adopted/${this.adopterId}`, {
           headers: {
@@ -233,6 +294,7 @@ export default {
                 setTimeout(() => {
                 this.loadingError = false; 
                 }, 1000)
+                
                 }
       } catch (error) {
         setTimeout(() => {
@@ -269,7 +331,13 @@ export default {
     
         this.fetchUserDetails(); // Refresh user details after update
       } catch (error) {
-        alert("Animal not reaturnd");
+       
+        Swal.fire({
+          icon: 'error',
+          title: 'Animal not reaturnd!',
+          timer: 2000,
+          showConfirmButton: false,
+        });
         console.error('Error updating adopter details:', error);
       }
     },
@@ -312,7 +380,7 @@ export default {
               Authorization: `Bearer ${this.token}`,
             },
           });*/
-          alert("updateAnimalRecord"+this.itemsSingle.animal.idAnimal);
+         
           await instance.put(`animal/updateAnimalRecord/`,  { 
                             animalId:parseInt(this.itemsSingle.animal.idAnimal),
                             recordId:9

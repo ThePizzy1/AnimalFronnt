@@ -15,8 +15,8 @@
     </div>
     <!-- Podaci o životinji sa desne strane -->
     <div class="md:w-2/3 md:ml-4 mt-4 md:mt-0">
-      <h1 class="text-2xl font-bold mb-4 text-white">{{ animal.name }}</h1>
-      <div class="grid grid-cols-2 gap-4 text-white">
+      <h1 class="text-2xl font-bold mb-4 text-stone-200">{{ animal.name }}</h1>
+      <div class="grid grid-cols-2 gap-4 text-stone-200">
         <div><strong>Family:</strong> {{ animal.family }}</div>
         <div><strong>Species:</strong> {{ animal.species }}</div>
         <div><strong>Subspecies:</strong> {{ animal.subspecies }}</div>
@@ -31,54 +31,54 @@
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="animal.neutered" class="sr-only peer" disabled>
             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-            <span class="ms-3 text-base font-medium text-white">Neutered</span>
+            <span class="ms-3 text-base font-medium text-stone-200">Neutered</span>
           </label>
         </div>
         <div class="flex items-center">
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="animal.vaccinated" class="sr-only peer" disabled>
             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-            <span class="ms-3 text-base font-medium text-white">Vaccinated</span>
+            <span class="ms-3 text-base font-medium text-stone-200">Vaccinated</span>
           </label>
         </div>
         <div class="flex items-center">
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="animal.microchipped" class="sr-only peer" disabled>
             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-            <span class="ms-3 text-base font-medium text-white">Microchipped</span>
+            <span class="ms-3 text-base font-medium text-stone-200">Microchipped</span>
           </label>
         </div>
         <div class="flex items-center">
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="animal.trained" class="sr-only peer" disabled>
             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-            <span class="ms-3 text-base font-medium text-white">Trained</span>
+            <span class="ms-3 text-base font-medium text-stone-200">Trained</span>
           </label>
         </div>
         <div class="flex items-center">
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="animal.socialized" class="sr-only peer" disabled>
             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-            <span class="ms-3 text-base font-medium text-white">Socialized</span>
+            <span class="ms-3 text-base font-medium text-stone-200">Socialized</span>
           </label>
         </div>
       </div>
 
-      <div class="mt-4 text-white">
+      <div class="mt-4 text-stone-200">
         <div><strong>Health Issues:</strong> {{ animal.healthIssues }}</div>
         <div><strong>Personality Description:</strong> {{ animal.personalityDescription }}</div>
       </div>
 
    <!-- Additional Fields based on selected family -->
 <template v-if="animal.family === 'Mammal'">
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-white">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
     <div v-if="additionalDetails.coatType"><strong>Coat Type:</strong> {{ additionalDetails.coatType }}</div>
     <div v-if="additionalDetails.groomingProducts"><strong>Grooming Products:</strong> {{ additionalDetails.groomingProducts }}</div>
   </div>
 </template>
 
 <template v-else-if="animal.family === 'Bird'">
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-white">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
     <div v-if="additionalDetails.cageSize"><strong>Cage Size:</strong> {{ additionalDetails.cageSize }}</div>
     <div v-if="additionalDetails.recommendedToys"><strong>Recommended Toys:</strong> {{ additionalDetails.recommendedToys }}</div>
     <div v-if="additionalDetails.sociability"><strong>Sociability:</strong> {{ additionalDetails.sociability }}</div>
@@ -86,7 +86,7 @@
 </template>
 
 <template v-else-if="animal.family === 'Fish'">
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-white">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
     <div v-if="additionalDetails.tankSize"><strong>Tank Size:</strong> {{ additionalDetails.tankSize }}</div>
     <div v-if="additionalDetails.compatibleSpecies"><strong>Compatible Species:</strong> {{ additionalDetails.compatibleSpecies }}</div>
     <div v-if="additionalDetails.recommendedItems"><strong>Recommended Items:</strong> {{ additionalDetails.recommendedItems }}</div>
@@ -94,7 +94,7 @@
 </template>
 
 <template v-else-if="animal.family === 'Reptile'">
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-white">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
     <div v-if="additionalDetails.tankSize"><strong>Tank Size:</strong> {{ additionalDetails.tankSize }}</div>
     <div v-if="additionalDetails.sociability"><strong>Sociability:</strong> {{ additionalDetails.sociability }}</div>
     <div v-if="additionalDetails.compatibleSpecies"><strong>Compatible Species:</strong> {{ additionalDetails.compatibleSpecies }}</div>
@@ -102,7 +102,7 @@
 </template>
 
 <template v-else-if="animal.family === 'Amphibian'">
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-white">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
     <div v-if="additionalDetails.humidity"><strong>Humidity:</strong> {{ additionalDetails.humidity }}<strong> %</strong></div>
     <div v-if="additionalDetails.temperature"><strong>Temperature:</strong> {{ additionalDetails.temperature }}<strong> C°</strong></div>
   </div>
@@ -114,7 +114,7 @@
  
             <button
               @click="isEditing = !isEditing"
-              class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4">
+              class="bg-green-500 hover:bg-green-700 text-stone-200 font-bold py-2 px-4 rounded ml-4">
               Edit
             </button>
            <!-- Modal for remove confirmation -->
@@ -128,11 +128,11 @@
             <span class="ml-2 text-green-800">{{ animalEdit.name }}</span>
           </label>
           <div class="flex mb-4 justify-center">
-            <button @click="removeAnimal" class="px-6 py-3 rounded bg-green-500 text-white">Agree</button>
+            <button @click="removeAnimal" class="px-6 py-3 rounded bg-green-500 text-stone-200">Agree</button>
           </div>
           <!-- Add cancel button or close modal functionality -->
           <div class="flex mb-4 justify-center">
-            <button @click="showRemuve = false" class="px-6 py-3 rounded bg-red-500 text-white">Cancel</button>
+            <button @click="showRemuve = false" class="px-6 py-3 rounded bg-red-500 text-stone-200">Cancel</button>
           </div>
         </div>
       </div>
@@ -151,13 +151,13 @@
        <div v-if="isEditing" class="flex flex-col md:flex-row mx-4 shadow-2xl px-10 py-10 overflow-hidden">
           
         <div class="md:w-2/3 md:ml-4 mt-4 md:mt-0">
-          <h1 class="text-2xl font-bold mb-4 text-white">Edit {{ animalEdit.name }}</h1>
+          <h1 class="text-2xl font-bold mb-4 text-stone-200">Edit {{ animalEdit.name }}</h1>
   
 
 
   <div class="md:w-2/3 md:ml-4 mt-4 md:mt-0">
 
-  <div class="grid grid-cols-2 gap-4 text-white">
+  <div class="grid grid-cols-2 gap-4 text-stone-200">
     <div class="flex items-center "><strong>Family:</strong> <span class="ml-2 text-wrap" id="family">{{ animalEdit.family }}</span></div>
     <div class="flex items-center"><strong>Species:</strong> <span class="ml-2 text-wrap" id="species">{{ animalEdit.species }}</span></div>
     <div class="flex items-center"><strong>Subspecies:</strong> <span class="ml-2 text-wrap" id="subspecies">{{ animalEdit.subspecies }}</span></div>
@@ -172,80 +172,80 @@
       <label class="inline-flex items-center cursor-pointer" for="neutered">
         <input type="checkbox" v-model="animalEdit.neutered" id="neutered" class="sr-only peer" :disabled="animalEdit.neutered">
         <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-        <span class="ms-3 text-base font-medium text-white">Neutered</span>
+        <span class="ms-3 text-base font-medium text-stone-200">Neutered</span>
       </label>
     </div>
     <div class="flex items-center">
       <label class="inline-flex items-center cursor-pointer" for="vaccinated">
         <input type="checkbox" v-model="animalEdit.vaccinated" id="vaccinated" class="sr-only peer" :disabled="animalEdit.vaccinated">
         <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-        <span class="ms-3 text-base font-medium text-white">Vaccinated</span>
+        <span class="ms-3 text-base font-medium text-stone-200">Vaccinated</span>
       </label>
     </div>
     <div class="flex items-center">
       <label class="inline-flex items-center cursor-pointer" for="microchipped">
         <input type="checkbox" v-model="animalEdit.microchipped" id="microchipped" class="sr-only peer" :disabled="animalEdit.microchipped">
         <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-        <span class="ms-3 text-base font-medium text-white">Microchipped</span>
+        <span class="ms-3 text-base font-medium text-stone-200">Microchipped</span>
       </label>
     </div>
     <div class="flex items-center">
       <label class="inline-flex items-center cursor-pointer" for="trained">
         <input type="checkbox" v-model="animalEdit.trained" id="trained" class="sr-only peer" :disabled="animalEdit.trained">
         <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-        <span class="ms-3 text-base font-medium text-white">Trained</span>
+        <span class="ms-3 text-base font-medium text-stone-200">Trained</span>
       </label>
     </div>
     <div class="flex items-center">
       <label class="inline-flex items-center cursor-pointer" for="socialized">
         <input type="checkbox" v-model="animalEdit.socialized" id="socialized" class="sr-only peer" :disabled="animalEdit.socialized">
         <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-        <span class="ms-3 text-base font-medium text-white">Socialized</span>
+        <span class="ms-3 text-base font-medium text-stone-200">Socialized</span>
       </label>
     </div>
   </div>
 
-  <div class="mt-4 text-white">
+  <div class="mt-4 text-stone-200">
     <div class="flex items-center"><strong>Health Issues:</strong> <textarea v-model="animalEdit.healthIssues" id="healthIssues" class="form-textarea text-gray-500 w-full rounded-md p-2 ml-2"></textarea></div>
     <div class="flex items-center mt-4"><strong>Personality Description:</strong> <textarea v-model="animalEdit.personalityDescription" id="personalityDescription" class="form-textarea text-gray-500 w-full rounded-md p-2 ml-2"></textarea></div>
   </div>
 
   <!-- Additional Fields based on selected family -->
   <template v-if="animal.family === 'Mammal'">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-white">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
       <div class="flex items-center"><strong>Coat Type:</strong> <input v-model="additionalDetailsEdit.coatType" id="coatType" class="form-input text-gray-500 rounded-md p-2 ml-2" /></div>
       <div class="flex items-center"><strong>Grooming Products:</strong> <input v-model="additionalDetailsEdit.groomingProducts" id="groomingProducts" class="form-input text-gray-500 rounded-md p-2 ml-2" /></div>
     </div>
   </template>
   <template v-else-if="animal.family === 'Bird'">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4 text-white">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4 text-stone-200">
       <div class="flex items-center"><strong>Cage Size:</strong> <input v-model="additionalDetailsEdit.cageSize" id="cageSize" class="form-input text-gray-500 rounded-md p-2 ml-2" /></div>
       <div class="flex items-center"><strong>Recommended Toys:</strong> <input v-model="additionalDetailsEdit.recommendedToys" id="recommendedToys" class="form-input text-gray-500 rounded-md p-2 ml-2" /></div>
       <div class="flex items-center"><strong>Sociability:</strong> <input v-model="additionalDetailsEdit.sociability" id="sociability" class="form-input text-gray-500 rounded-md p-2 ml-2" /></div>
     </div>
   </template>
   <template v-else-if="animal.family === 'Fish'">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-white">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
       <div class="flex items-center"><strong>Tank Size:</strong> <input v-model="additionalDetailsEdit.tankSize" id="tankSize" class="form-input text-gray-500 rounded-md p-2 ml-2" /></div>
       <div class="flex items-center"><strong>Compatible Species:</strong> <input v-model="additionalDetailsEdit.compatibleSpecies" id="compatibleSpecies" class="form-input text-gray-500 rounded-md p-2 ml-2" /></div>
       <div class="flex items-center"><strong>Recommended Items:</strong> <input v-model="additionalDetailsEdit.recommendedItems" id="recommendedItems" class="form-input text-gray-500 rounded-md p-2 ml-2" /></div>
     </div>
   </template>
   <template v-else-if="animal.family === 'Reptile'">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-white">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
       <div class="flex items-center"><strong>Tank Size:</strong> <input v-model="additionalDetailsEdit.tankSize" id="reptileTankSize" class="form-input text-gray-500 rounded-md p-2 ml-2" /></div>
       <div class="flex items-center"><strong>Sociability:</strong> <input v-model="additionalDetailsEdit.sociability" id="reptileSociability" class="form-input text-gray-500 rounded-md p-2 ml-2" /></div>
       <div class="flex items-center"><strong>Compatible Species:</strong> <input v-model="additionalDetailsEdit.compatibleSpecies" id="reptileCompatibleSpecies" class="form-input text-gray-500 rounded-md p-2 ml-2" /></div>
     </div>
   </template>
   <template v-else-if="animal.family === 'Amphibian'">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-white">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
       <div class="flex items-center "><strong>Humidity:</strong> <input v-model="additionalDetailsEdit.humidity" id="humidity" class="form-input text-gray-500 rounded-full p-2 ml-2" /><strong class="ml-2">%</strong></div>
       <div class="flex items-center ml-5"><strong>Temperature:</strong> <input v-model="additionalDetailsEdit.temperature" id="temperature" class="form-input text-gray-500 rounded-full p-2 ml-2" /><strong class="ml-2">C°</strong></div>
     </div>
   </template>
   <div class="flex justify-center mt-20">
-    <button @click="editAnimal" class="bg-green-500 text-white px-4 py-2 rounded-md">Edit</button>
+    <button @click="editAnimal" class="bg-green-500 text-stone-200 px-4 py-2 rounded-md">Edit</button>
   </div>
 </div>
 </div>

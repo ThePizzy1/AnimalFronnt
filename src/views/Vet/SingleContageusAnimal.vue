@@ -1,9 +1,9 @@
 <template>
     <div class="flex">
-        <div class="w-1/4 text-white p-4 rounded-l-lg">
+        <div class="w-1/4 text-stone-200 p-4 rounded-l-lg">
             <VetNavigation />
         </div>
-        <div class="w-3/4 text-white p-4 rounded-r-lg mr-8">
+        <div class="w-3/4 text-stone-200 p-4 rounded-r-lg mr-8">
 
                 
        <div class="w-3/3 flex  flex-col space-y-10 ">
@@ -16,8 +16,8 @@
     </div>    <div  v-if="item">         
                        
             <div class="md:w-3/3 md:ml-4 mt-4 md:mt-0">
-       <h1 class="text-2xl font-bold mb-4 text-white">{{ itemA.name }}</h1>
-                <div class="grid grid-cols-2 gap-4 text-white">
+       <h1 class="text-2xl font-bold mb-4 text-stone-200">{{ itemA.name }}</h1>
+                <div class="grid grid-cols-2 gap-4 text-stone-200">
                     <div><strong>Name:</strong> {{ item.desisseName }}</div>
                     <div><strong>Aage:</strong> {{ itemA.age }}<strong>years</strong></div>
 

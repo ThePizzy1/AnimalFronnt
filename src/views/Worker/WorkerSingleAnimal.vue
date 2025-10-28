@@ -14,8 +14,8 @@
   </div>
   <!-- Podaci o životinji sa desne strane -->
   <div class="md:w-2/3 md:ml-4 mt-4 md:mt-0">
-    <h1 class="text-2xl font-bold mb-4 text-white">{{ animal.name }}</h1>
-    <div class="grid grid-cols-2 gap-4 text-white">
+    <h1 class="text-2xl font-bold mb-4 text-stone-200">{{ animal.name }}</h1>
+    <div class="grid grid-cols-2 gap-4 text-stone-200">
       <div><strong>Family:</strong> {{ animal.family }}</div>
       <div><strong>Species:</strong> {{ animal.species }}</div>
       <div><strong>Subspecies:</strong> {{ animal.subspecies }}</div>
@@ -30,54 +30,54 @@
         <label class="inline-flex items-center cursor-pointer">
           <input type="checkbox" v-model="animal.neutered" class="sr-only peer" disabled>
           <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-          <span class="ms-3 text-base font-medium text-white">Neutered</span>
+          <span class="ms-3 text-base font-medium text-stone-200">Neutered</span>
         </label>
       </div>
       <div class="flex items-center">
         <label class="inline-flex items-center cursor-pointer">
           <input type="checkbox" v-model="animal.vaccinated" class="sr-only peer" disabled>
           <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-          <span class="ms-3 text-base font-medium text-white">Vaccinated</span>
+          <span class="ms-3 text-base font-medium text-stone-200">Vaccinated</span>
         </label>
       </div>
       <div class="flex items-center">
         <label class="inline-flex items-center cursor-pointer">
           <input type="checkbox" v-model="animal.microchipped" class="sr-only peer" disabled>
           <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-          <span class="ms-3 text-base font-medium text-white">Microchipped</span>
+          <span class="ms-3 text-base font-medium text-stone-200">Microchipped</span>
         </label>
       </div>
       <div class="flex items-center">
         <label class="inline-flex items-center cursor-pointer">
           <input type="checkbox" v-model="animal.trained" class="sr-only peer" disabled>
           <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-          <span class="ms-3 text-base font-medium text-white">Trained</span>
+          <span class="ms-3 text-base font-medium text-stone-200">Trained</span>
         </label>
       </div>
       <div class="flex items-center">
         <label class="inline-flex items-center cursor-pointer">
           <input type="checkbox" v-model="animal.socialized" class="sr-only peer" disabled>
           <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-          <span class="ms-3 text-base font-medium text-white">Socialized</span>
+          <span class="ms-3 text-base font-medium text-stone-200">Socialized</span>
         </label>
       </div>
     </div>
 
-    <div class="mt-4 text-white">
+    <div class="mt-4 text-stone-200">
       <div><strong>Health Issues:</strong> {{ animal.healthIssues }}</div>
       <div><strong>Personality Description:</strong> {{ animal.personalityDescription }}</div>
     </div>
 
  <!-- Additional Fields based on selected family -->
 <template v-if="animal.family === 'Mammal'">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-white">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
   <div v-if="additionalDetails.coatType"><strong>Coat Type:</strong> {{ additionalDetails.coatType }}</div>
   <div v-if="additionalDetails.groomingProducts"><strong>Grooming Products:</strong> {{ additionalDetails.groomingProducts }}</div>
 </div>
 </template>
 
 <template v-else-if="animal.family === 'Bird'">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-white">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
   <div v-if="additionalDetails.cageSize"><strong>Cage Size:</strong> {{ additionalDetails.cageSize }}</div>
   <div v-if="additionalDetails.recommendedToys"><strong>Recommended Toys:</strong> {{ additionalDetails.recommendedToys }}</div>
   <div v-if="additionalDetails.sociability"><strong>Sociability:</strong> {{ additionalDetails.sociability }}</div>
@@ -85,7 +85,7 @@
 </template>
 
 <template v-else-if="animal.family === 'Fish'">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-white">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
   <div v-if="additionalDetails.tankSize"><strong>Tank Size:</strong> {{ additionalDetails.tankSize }}</div>
   <div v-if="additionalDetails.compatibleSpecies"><strong>Compatible Species:</strong> {{ additionalDetails.compatibleSpecies }}</div>
   <div v-if="additionalDetails.recommendedItems"><strong>Recommended Items:</strong> {{ additionalDetails.recommendedItems }}</div>
@@ -93,7 +93,7 @@
 </template>
 
 <template v-else-if="animal.family === 'Reptile'">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-white">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
   <div v-if="additionalDetails.tankSize"><strong>Tank Size:</strong> {{ additionalDetails.tankSize }}</div>
   <div v-if="additionalDetails.sociability"><strong>Sociability:</strong> {{ additionalDetails.sociability }}</div>
   <div v-if="additionalDetails.compatibleSpecies"><strong>Compatible Species:</strong> {{ additionalDetails.compatibleSpecies }}</div>
@@ -101,7 +101,7 @@
 </template>
 
 <template v-else-if="animal.family === 'Amphibian'">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-white">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
   <div v-if="additionalDetails.humidity"><strong>Humidity:</strong> {{ additionalDetails.humidity }}<strong> %</strong></div>
   <div v-if="additionalDetails.temperature"><strong>Temperature:</strong> {{ additionalDetails.temperature }}<strong> C°</strong></div>
 </div>

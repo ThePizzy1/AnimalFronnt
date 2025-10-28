@@ -7,7 +7,7 @@
       <img class="paw3" :src="pawSrc" alt="Paw Animation">
     </div>
     <div class="design-loadnig max-h-fit ">
-      <h2  class=" text-white ">Loading...</h2>     
+      <h2  class=" text-stone-200 "></h2>     
     </div>
    
   <div class="flex justify-center items-center mt-[50vh]">

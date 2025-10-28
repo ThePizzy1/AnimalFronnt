@@ -6,13 +6,14 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        friendly: ['Poppins', 'sans-serif'], // dodajemo alias
+       modern: ['Inter', 'sans-serif'],
       },
       colors: {
-        customGreen: '#FFFFFF',
-        customGreen2: '#72E859',
+        customGreen: 'rgb(255, 255, 255)',
+        customGreen2: 'rgb(13, 241, 82)',
         customBlack: 'rgba(255, 255, 255, 0.41)',
-        customBlack2: 'rgba(1, 12, 1, 0.62)',
+        customBlack2: 'rgba(229, 229, 229, 0.62)',
+        customRGB: 'rgb(33, 222, 89)',
       },
     },
   },

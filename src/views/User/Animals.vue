@@ -1,166 +1,150 @@
 <template>
-       <Loading v-if="loadingError" /> 
+  <Loading v-if="loadingError" />
 
   <Navigation />
 
+  <!-- GLAVNI KONTEJNER -->
+  <div class="bg-opacity-20 py-2 mt-10">
 
-   <div class=" bg-opacity-20 py-2 mt-10"> 
-  <div class=" flex justify-center my-4 space-x-4  ">
-    <!-- Icon Filters -->
-    <div class="hover:scale-110 w-20 h-20 rounded-full overflow-hidden cursor-pointer border-4 border-white" @click="setFamilyFilter('All')">
-      <img class="w-full h-full object-cover" src="/icon1.png" alt="All Filter" />
-    </div>
-    <div class="hover:scale-110 w-20 h-20 rounded-full overflow-hidden cursor-pointer border-4 border-white" @click="setFamilyFilter('Mammal')">
-      <img class="w-full h-full object-cover" src="/icon2.png" alt="Mammal Filter" />
-    </div>
-    <div class="hover:scale-110 w-20 h-20 rounded-full overflow-hidden cursor-pointer border-4 border-white" @click="setFamilyFilter('Fish')">
-      <img class="w-full h-full object-cover" src="/icon3.png" alt="Fish Filter" />
-    </div>
-    <div class="hover:scale-110 w-20 h-20 rounded-full overflow-hidden cursor-pointer border-4 border-white" @click="setFamilyFilter('Reptile')">
-      <img class="w-full h-full object-cover" src="/icon4.png" alt="Reptile Filter" />
-    </div>
-    <div class="hover:scale-110 w-20 h-20 rounded-full overflow-hidden cursor-pointer border-4 border-white" @click="setFamilyFilter('Amphibian')">
-      <img class="w-full h-full object-cover" src="/icon5.png" alt="Amphibian Filter" />
-    </div>
-    <div class="hover:scale-110 w-20 h-20 rounded-full overflow-hidden cursor-pointer border-4 border-white" @click="setFamilyFilter('Bird')">
-      <img class="w-full h-full object-cover" src="/icon6.png" alt="Bird Filter" />
-    </div>
-    
-  </div>
+    <!-- FILTER SEKCIJA -->
+    <div class="bg-stone-700/40 backdrop-blur-md rounded-2xl mx-auto my-8 py-6 px-4 shadow-xl border border-stone-500/50 max-w-6xl">
 
-  <!-- Dropdown Filters -->
-  <div class="flex justify-center my-4 space-x-4 text-white">
-    <div class="flex flex-col">
-      <label for="family" class="font-semibold">Family</label>
-      <select v-model="filters.family" @change="applyFilters" class="text-gray-300 border rounded px-3 py-2">
-        <option value="">All</option>
-        <option v-for="family in uniqueFamilies" :key="family" :value="family">{{ family }}</option>
-      </select>
-    </div>
-    <div class="flex flex-col">
-      <label for="species" class="font-semibold">Species</label>
-      <select v-model="filters.species" @change="applyFilters" class="text-gray-400 border rounded px-3 py-2">
-        <option value="">All</option>
-        <option v-for="species in uniqueSpecies" :key="species" :value="species">{{ species }}</option>
-      </select>
-    </div>
-    <div class="flex flex-col">
-      <label for="subspecies" class="font-semibold">Subspecies</label>
-      <select v-model="filters.subspecies" @change="applyFilters" class="text-gray-400 border rounded px-3 py-2">
-        <option value="">All</option>
-        <option v-for="subspecies in uniqueSubspecies" :key="subspecies" :value="subspecies">{{ subspecies }}</option>
-      </select>
-    </div>
-    <div class="flex flex-col">
-      <label for="age" class="font-semibold">Age</label>
-      <select v-model="filters.age" @change="applyFilters" class="text-gray-400 border rounded px-3 py-2">
-        <option value="">All</option>
-        <option v-for="age in uniqueAges" :key="age" :value="age">{{ age }}</option>
-      </select>
-    </div>
-    <div class="flex flex-col">
-      <label for="gender" class="font-semibold">Gender</label>
-      <select v-model="filters.gender" @change="applyFilters" class="text-gray-400 border rounded px-3 py-2">
-        <option value="">All</option>
-        <option value="Female">Female</option>
-        <option value="Male">Male</option>
-      </select>
-    </div>
-
-  </div>
-
-  <!-- True False Filters -->
-  <div class="flex justify-center my-4 space-x-4 text-white">
-   
-    <div class="hover:scale-110 flex flex-col">
-      <label class="inline-flex items-center cursor-pointer">
-        <input type="checkbox" v-model="filters.neutered" @change="applyFilters" class="sr-only peer">
-        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-        <span class="ms-3 text-base font-medium">Neutered</span>
-      </label>
-    </div>
-    <div class="hover:scale-110 flex flex-col">
-      <label class="inline-flex items-center cursor-pointer">
-        <input type="checkbox" v-model="filters.vaccinated" @change="applyFilters" class="sr-only peer">
-        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-        <span class="ms-3 text-base font-medium">Vaccinated</span>
-      </label>
-    </div>
-    <div class="hover:scale-110 flex flex-col">
-      <label class="inline-flex items-center cursor-pointer">
-        <input type="checkbox" v-model="filters.microchipped" @change="applyFilters" class="sr-only peer">
-        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-        <span class="ms-3 text-base font-medium">Microchipped</span>
-      </label>
-    </div>
-    <div class="hover:scale-110 flex flex-col">
-      <label class="inline-flex items-center cursor-pointer">
-        <input type="checkbox" v-model="filters.trained" @change="applyFilters" class="sr-only peer">
-        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none
-        peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-        <span class="ms-3 text-base font-medium">Trained</span>
-      </label>
-    </div>
-    <div class="hover:scale-110 flex flex-col">
-      <label class="inline-flex items-center cursor-pointer">
-        <input type="checkbox" v-model="filters.socialized" @change="applyFilters" class="sr-only peer">
-        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-        <span class="ms-3 text-base font-medium">Socialized</span>
-      </label>
-    </div>
-   
-  </div>
-  <div class="flex items-center justify-center ">
-    <div class="relative w-2/5">
-      <input v-model="searchQuery" @keydown.enter="submitSearch" class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-base focus:outline-none w-full" type="search" name="search" placeholder="Search" />
-      <button type="submit" @click="submitSearch" class="absolute right-0 top-0 mt-2.5 mr-4">
-        <svg
-          class="text-gray-600 h-4 w-4 fill-current"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          version="1.1"
-          id="Capa_1"
-          x="0px"
-          y="0px"
-          viewBox="0 0 56.966 56.966"
-          style="enable-background:new 0 0 56.966 56.966;"
-          xml:space="preserve"
-          width="512px"
-          height="512px"
+      <!-- ICON FILTERS -->
+      <div class="flex flex-wrap justify-center gap-6 mb-8">
+        <div
+          v-for="(icon, family) in {
+            All: '/icon1.png',
+            Mammal: '/icon2.png',
+            Fish: '/icon3.png',
+            Reptile: '/icon4.png',
+            Amphibian: '/icon5.png',
+            Bird: '/icon6.png'
+          }"
+          :key="family"
+          @click="setFamilyFilter(family)"
+          class="hover:scale-110 transition transform w-20 h-20 rounded-full overflow-hidden cursor-pointer border-4 border-stone-300 hover:border-stone-400 shadow-md"
         >
-          <path
-            d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z"
+          <img :src="icon" :alt="family + ' Filter'" class="w-full h-full object-cover" />
+        </div>
+      </div>
+
+      <!-- DROPDOWN FILTERS -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 text-stone-100 mb-6">
+        <div v-for="(options, label) in {
+          Family: uniqueFamilies,
+          Species: uniqueSpecies,
+          Subspecies: uniqueSubspecies,
+          Age: uniqueAges
+        }" :key="label" class="flex flex-col text-left">
+          <label class="mb-1 font-semibold text-stone-300">{{ label }}</label>
+          <select
+            v-model="filters[label.toLowerCase()]"
+            @change="applyFilters"
+            class="bg-stone-800/60 border border-stone-300/40 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-stone-400 focus:outline-none text-stone-200"
+          >
+            <option value="">All</option>
+            <option v-for="option in options" :key="option" :value="option">{{ option }}</option>
+          </select>
+        </div>
+
+        <!-- GENDER -->
+        <div class="flex flex-col text-left">
+          <label class="mb-1 font-semibold text-stone-300">Gender</label>
+          <select
+            v-model="filters.gender"
+            @change="applyFilters"
+            class="bg-stone-800/60 border border-stone-300/40 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-stone-300 focus:outline-none text-stone-200"
+          >
+            <option value="">All</option>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- TRUE/FALSE FILTERS -->
+      <div class="flex flex-wrap justify-center gap-6 text-stone-100">
+        <div
+          v-for="(label, key) in {
+            neutered: 'Neutered',
+            vaccinated: 'Vaccinated',
+            microchipped: 'Microchipped',
+            trained: 'Trained',
+            socialized: 'Socialized'
+          }"
+          :key="key"
+          class="flex items-center space-x-3"
+        >
+          <label class="inline-flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              v-model="filters[key]"
+              @change="applyFilters"
+              class="sr-only peer"
+            />
+            <div
+              class="relative w-12 h-7 bg-stone-500 peer-focus:ring-4 peer-focus:ring-emerald-400 rounded-full peer peer-checked:bg-emerald-500 transition-all after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:w-6 after:h-6 after:bg-white after:rounded-full after:transition-transform peer-checked:after:translate-x-5"
+            ></div>
+            <span class="ml-3 text-sm font-medium">{{ label }}</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- SEARCH -->
+      <div class="flex items-center justify-center mt-8">
+        <div class="relative w-full max-w-md">
+          <input
+            v-model="searchQuery"
+            @keydown.enter="submitSearch"
+            class="w-full h-12 px-5 pr-12 rounded-lg bg-stone-800/70 text-stone-100 placeholder-stone-400 border border-emerald-400/40 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+            type="search"
+            placeholder="Search for an animal..."
           />
-        </svg>
-      </button>
+          <button
+            type="submit"
+            @click="submitSearch"
+            class="absolute right-3 top-3 text-emerald-400 hover:text-emerald-300 transition"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.387a1 1 0 01-1.414 1.414l-4.387-4.387zM14 8a6 6 0 11-12 0 6 6 0 0112 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-  <!-- Content Section -->
+
+  <!-- CONTENT SECTION -->
   <div class="container px-4 mt-25 py-4 mx-auto lg:pt-8 min-h-80 shadow-2xl">
-    
     <div class="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-2 lg:gap-4 rounded-md">
       <router-link
-    v-for="item in filteredItems"
-    :key="item.id"
-    :to="'/animal/' + item.idAnimal" 
-    
-    class="hover:scale-110 mt-4 relative  flex justify-center flex-col items-center rounded-lg shadow-lg"
-  >
-    <img v-if="item.picture" class="w-full h-90  rounded-xl" :src="'data:image/jpeg;base64,' + item.picture" :alt="item.name" />
-    <div class="absolute bottom-0 w-full mx-2 bg-black mx-1 bg-opacity-90 text-white text-xl font-extrabold py-4 text-center rounded-b-xl">
-      {{ item.name }}
+        v-for="item in filteredItems"
+        :key="item.id"
+        :to="'/animal/' + item.idAnimal"
+        class="hover:scale-110 mt-4 relative flex justify-center flex-col items-center rounded-lg shadow-lg transition transform"
+      >
+        <img
+          v-if="item.picture"
+          class="w-full h-90 rounded-xl"
+          :src="'data:image/jpeg;base64,' + item.picture"
+          :alt="item.name"
+        />
+        <div class="absolute bottom-0 w-full mx-2 bg-black bg-opacity-80 text-stone-200 text-xl font-extrabold py-4 text-center rounded-b-xl">
+          {{ item.name }}
+        </div>
+      </router-link>
     </div>
-  </router-link>
-        
-      
-      
-    </div>
-    <hr
-    class="my-12 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-white to-transparent opacity-40 dark:via-white" />
+
+    <hr class="my-12 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-emerald-300 to-transparent opacity-40" />
   </div>
-  <Footer/>
+
+  <Footer />
 </template>
+
 
 <script>
 import instance from '@/axiosBase';

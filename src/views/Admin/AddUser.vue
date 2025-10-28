@@ -2,50 +2,50 @@
      <div class="flex">
 
     <!-- Navigation -->
-    <div class="w-1/6 text-white p-4 rounded-l-lg">
+    <div class="w-1/6 text-stone-200 p-4 rounded-l-lg">
       <AdminNavigation />
     </div>
     <!-- Form -->
-    <div class="w-5/6 text-white p-4 rounded-r-lg">
+    <div class="w-5/6 text-stone-200 p-4 rounded-r-lg">
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div class="w-1/6 text-white p-4 rounded-l-lg">
+        <div class="w-1/6 text-stone-200 p-4 rounded-l-lg">
 
 </div>
 
-<div class="w-5/6 text-white m-6 p-4 rounded-r-lg  p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105">
+<div class="w-5/6 text-stone-200 m-6 p-4 rounded-r-lg  p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105">
   <h1 class="text-xl font-bold mb-4">Add User</h1>
   <div class="grid gap-4 mb-4 grid-cols-2">
    
                  <div class="col-span-2 sm:col-span-1">
-                  <label  for="firstname" class="block mb-2 text-base font-medium text-customGreen dark:text-white">First Name</label>
-              <input v-model="registerData.firstname" name="firstname" id="firstname" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Pero" required>
+                  <label  for="firstname" class="block mb-2 text-base font-medium text-customGreen dark:text-stone-200">First Name</label>
+              <input v-model="registerData.firstname" name="firstname" id="firstname" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Pero" required>
               <div v-if="firstname" class="text-red-500 text-base mt-2">{{ v }}</div>
                  </div>
                  <div class="col-span-2 sm:col-span-1">
-              <label  for="lastname" class="block mb-2 text-base font-medium text-customGreen dark:text-white">Last Name</label>
-              <input v-model="registerData.lastname" name="lastname" id="lastname" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Perić" required>
+              <label  for="lastname" class="block mb-2 text-base font-medium text-customGreen dark:text-stone-200">Last Name</label>
+              <input v-model="registerData.lastname" name="lastname" id="lastname" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Perić" required>
               <div v-if="lastname" class="text-red-500 text-base mt-2">{{ lastname }}</div>
                  </div>
     
               <div class="col-span-2">
-              <label  for="username" class="block mb-2 text-base font-medium text-customGreen dark:text-white">Username</label>
-              <input v-model="registerData.username" name="username" id="username" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username" required>
+              <label  for="username" class="block mb-2 text-base font-medium text-customGreen dark:text-stone-200">Username</label>
+              <input v-model="registerData.username" name="username" id="username" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username" required>
               <div v-if="usernameError" class="text-red-500 text-base mt-2">{{ usernameError }}</div>
                </div>
                <div class="col-span-2 ">
-              <label  for="email" class="block mb-2 text-base font-medium text-customGreen dark:text-white">Email</label>
-              <input v-model="registerData.email" name="email" id="email" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="perica@gmail.com" required>
+              <label  for="email" class="block mb-2 text-base font-medium text-customGreen dark:text-stone-200">Email</label>
+              <input v-model="registerData.email" name="email" id="email" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="perica@gmail.com" required>
               <div v-if="email" class="text-red-500 text-base mt-2">{{ email }}</div>
                </div>
                <div class="col-span-2 ">
-              <label  for="phoneNumber" class="block mb-2 text-base font-medium text-customGreen dark:text-white">Phone Number</label>
-              <input v-model="registerData.phoneNumber" name="phoneNumber" id="phoneNumber" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="023 654 4521" required>
+              <label  for="phoneNumber" class="block mb-2 text-base font-medium text-customGreen dark:text-stone-200">Phone Number</label>
+              <input v-model="registerData.phoneNumber" name="phoneNumber" id="phoneNumber" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="023 654 4521" required>
               <div v-if="phoneNumber" class="text-red-500 text-base mt-2">{{ phoneNumber }}</div>
                </div>
                <div class="col-span-2 ">
-              <label for="password" class="block mb-2 text-base font-medium text-customGreen dark:text-white">Password</label>
-              <input v-model="registerData.password"  type="password" name="password" id="password" placeholder="••••••••" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" required>
+              <label for="password" class="block mb-2 text-base font-medium text-customGreen dark:text-stone-200">Password</label>
+              <input v-model="registerData.password"  type="password" name="password" id="password" placeholder="••••••••" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-green-500 dark:focus:border-green-500" required>
               <div v-if="passwordError" class="text-red-500 text-base mt-2">{{ passwordError }}</div>
               <div v-if="passwordTooShortError" class="text-red-500 text-base mt-2">{{ passwordTooShortError }}</div>
               <div v-if="passwordRequiresNonAlphanumericError" class="text-red-500 text-base mt-2">{{ passwordRequiresNonAlphanumericError }}</div>
@@ -55,8 +55,8 @@
           
                </div>
                <div class="col-span-2 ">
-              <label for="confirmPassword" class="block mb-2 text-base font-medium text-customGreen dark:text-white">Confirm Password</label>
-              <input v-model="registerData.confirmPassword" type="password" name="confirmPassword" id="confirmPassword" placeholder="••••••••" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" required>
+              <label for="confirmPassword" class="block mb-2 text-base font-medium text-customGreen dark:text-stone-200">Confirm Password</label>
+              <input v-model="registerData.confirmPassword" type="password" name="confirmPassword" id="confirmPassword" placeholder="••••••••" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-green-500 dark:focus:border-green-500" required>
               <div  v-if="confirmPasswordError" class="text-red-500 text-base mt-2">{{ confirmPasswordError }}</div>
                </div>
        
@@ -75,7 +75,7 @@
     </div>
                </div>
     <div class="m-auto col-span-2 ">
-        <button @click="register" class="w-full hover:scale-105 mt-5 text-white bg-green-700 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+        <button @click="register" class="w-full hover:scale-105 mt-5 text-stone-200 bg-green-700 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
           Add User
         </button>
     </div>

@@ -43,7 +43,7 @@
         <p><strong>Adoption Date:</strong> {{ formatDate(adoption.adoptionDate) }}</p>
       </div>
       
-      <button @click="closeModal" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md">Close</button>
+      <button @click="closeModal" class="mt-4 px-4 py-2 bg-blue-500 text-stone-200 rounded-md">Close</button>
     </div>
   </div>
 </template>

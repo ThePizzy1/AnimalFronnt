@@ -1,27 +1,27 @@
 <template>
   <section>
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-      <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-customGreen dark:text-white">
+      <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-customGreen ">
         <img class="rounded-lg h-20 w-auto" src="/luna1.png" alt="logo" /> LUNA
       </a>
-      <div class="w-full rounded-lg shadow-2xl dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+      <div class="w-full rounded-lg bg-stone-600/75 shadow-2xl  md:mt-0 sm:max-w-md xl:p-0 ">
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <h1 class="text-xl font-bold leading-tight tracking-tight text-customGreen md:text-2xl dark:text-white">
+          <h1 class="text-xl font-bold leading-tight tracking-tight text-customGreen md:text-2xl ">
             Sign in to your account
           </h1>
           <form class="space-y-4 md:space-y-6" @submit.prevent="login">
             <div>
-              <label for="username" class="block mb-2 text-base font-medium text-customGreen dark:text-white">Your username</label>
-              <input v-model="username" type="username" name="username" id="username" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username" required>
+              <label for="username" class="block mb-2 text-base font-medium text-customGreen ">Your username</label>
+              <input v-model="username" type="username" name="username" id="username" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="username" required>
             </div>
             <div>
-              <label for="password" class="block mb-2 text-base font-medium text-customGreen dark:text-white">Password</label>
-              <input v-model="password" type="password" name="password" id="password" placeholder="••••••••" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" required>
+              <label for="password" class="block mb-2 text-base font-medium text-customGreen ">Password</label>
+              <input v-model="password" type="password" name="password" id="password" placeholder="••••••••" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 " required>
             </div>
-            <button type="submit" class="w-full text-white bg-green-700 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
-            <p class="text-base font-light text-customGreen dark:text-green-700">
+            <button type="submit" class="w-full text-white bg-green-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-base px-5 py-2.5 text-center ">Sign in</button>
+            <p class="text-base font-light text-customGreen ">
               Don’t have an account yet? 
-              <RouterLink to="/signup" class="font-medium text-customGreen hover:underline dark:text-primary-500">Sign up</RouterLink>
+              <RouterLink to="/signup" class="font-medium text-customGreen hover:underline ">Sign up</RouterLink>
             </p>
           </form>
           <div v-if="loginError" class="text-red-500 text-base mt-2">{{ loginError }}</div>
@@ -117,6 +117,12 @@ if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
       localStorage.setItem('vet_token', token.value);
       const userToken = localStorage.getItem('vet_token');
       localStorage.setItem('userRole','Vet' );
+    }
+        if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'HeadVet') {
+      router.push({ path: '/vetHome' });
+      localStorage.setItem('vet_token', token.value);
+      const userToken = localStorage.getItem('vet_token');
+      localStorage.setItem('userRole','HeadVet' );
     }
     if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Surenderer' || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'AnimalWelffereOfficer' || decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Association') {
       router.push({ path: '/surenderersHome' });

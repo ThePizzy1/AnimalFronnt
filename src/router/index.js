@@ -309,7 +309,7 @@ const router = createRouter({
       path: '/user/:id',
       name: 'User',
       props: true,
-      component: () => import('../views/Admin/AdminUser.vue')
+      component: () => import('../views/Admin/AdminUser.vue')//C:\Users\Korisnik\Documents\AnimalRescue\src\views\Admin\AdminUser.vue
     },
     {
       path: '/adminAnimals/:id',

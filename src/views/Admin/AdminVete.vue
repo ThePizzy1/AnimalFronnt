@@ -1,21 +1,27 @@
 <template>
   <div class="flex">
      <Loading v-if="loadingError" /> 
-    <div class="w-1/6 text-white p-4 rounded-l-lg">
+    <div class="w-1/6 text-stone-200 p-4 rounded-l-lg">
       <AdminNavigation />
     </div>
-    <div class="w-5/6 text-white p-4 rounded-r-lg mr-8">
+    <div class="w-5/6 text-stone-200 p-4 rounded-r-lg mr-8">
       <h1 class="text-xl font-bold mb-4">Veterinarinans</h1>
+         <!-- General Search -->
+        <div class="ml-5 mb-4">
+          <input type="text" id="generalSearch"placeholder="Search..."
+            class="w-full px-5 py-2 pr-12 text-stone-200 placeholder-gray-100 bg-transparent border-2 border-transparent rounded-full shadow-2xl focus:outline-none focus:border-turquoise-400 hover:border-turquoise-400 transition duration-300"
+          />
+        </div>
       <div class="overflow-x-auto shadow-2lx sm:rounded-lg">
         <table class="min-w-full leading-normal">
           <thead>
             <tr>
 
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Name</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Last Name</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Username</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Email</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Phone NUMBER</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Name</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Last Name</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Username</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Email</th>
+              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Phone NUMBER</th>
             </tr>
           </thead>
           <tbody>
@@ -49,6 +55,7 @@ export default {
   },
   data() {
     return {
+      generalSearchQuery: '',
       loadingError:false,
       items: [],
       filters: {
@@ -65,13 +72,20 @@ export default {
     };
   },
   computed: {
-    filteredItems() {
-      return this.items.filter(item => {
-        return (!this.filters.firstname || item.firstname.includes(this.filters.firstname)) &&
-               (!this.filters.lastname || item.lastname.includes(this.filters.lastname)) &&
-               (!this.filters.username || item.typeusernameOfVisit === this.filters.username);
-      });
-    },
+   filteredItems() {
+    const generalQuery = this.generalSearchQuery?.toLowerCase().trim() || '';
+
+    return this.items.filter(item => {
+      const matchesGeneralQuery =
+        item.firstName?.toLowerCase().includes(generalQuery) ||
+        item.lastName?.toLowerCase().includes(generalQuery) ||
+        item.userName?.toLowerCase().includes(generalQuery) ||
+        item.email?.toLowerCase().includes(generalQuery) ||
+        item.phoneNumber?.toLowerCase().includes(generalQuery);
+
+      return matchesGeneralQuery;
+    });
+  },
   },
   mounted() {
     this.fetchData();

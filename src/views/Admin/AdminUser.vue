@@ -1,5 +1,5 @@
 <template>
-  <div class="my-6 text-white items-center justify-center flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
+  <div class="my-6 text-stone-200 items-center justify-center flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
     <!-- Adopter Details Panels -->
     <div class="w-full flex flex-col 2xl:w-5/6 space-y-4">
       <div class="flex-1 rounded-lg p-8">
@@ -60,35 +60,35 @@
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentAnimal.neutered" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-base font-medium text-white">Neutered</span>
+                            <span class="ms-3 text-base font-medium text-stone-200">Neutered</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentAnimal.vaccinated" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-base font-medium text-white">Vaccinated</span>
+                            <span class="ms-3 text-base font-medium text-stone-200">Vaccinated</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentAnimal.microchipped" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-base font-medium text-white">Microchipped</span>
+                            <span class="ms-3 text-base font-medium text-stone-200">Microchipped</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentAnimal.trained" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-base font-medium text-white">Trained</span>
+                            <span class="ms-3 text-base font-medium text-stone-200">Trained</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentAnimal.socialized" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-base font-medium text-white">Socialized</span>
+                            <span class="ms-3 text-base font-medium text-stone-200">Socialized</span>
                           </label>
                         </div>
                       </div>
@@ -96,8 +96,8 @@
                   </div>
                 </div>
                 <div class="flex justify-between mt-4">
-                  <button @click="prevAnimal" :disabled="currentIndex === 0" class="px-4 shadow-2xl py-2  text-white rounded-lg">Previous</button>
-                  <button @click="nextAnimal" :disabled="currentIndex === adoption.length - 1" class="px-4 py-2 shadow-2xl text-white rounded-lg">Next</button>
+                  <button @click="prevAnimal" :disabled="currentIndex === 0" class="px-4 shadow-2xl py-2  text-stone-200 rounded-lg">Previous</button>
+                  <button @click="nextAnimal" :disabled="currentIndex === adoption.length - 1" class="px-4 py-2 shadow-2xl text-stone-200 rounded-lg">Next</button>
                 </div>
               </div>
               <div v-else>
@@ -141,35 +141,35 @@
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentReturnedAnimal.neutered" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-base font-medium text-white">Neutered</span>
+                            <span class="ms-3 text-base font-medium text-stone-200">Neutered</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentReturnedAnimal.vaccinated" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-base font-medium text-white">Vaccinated</span>
+                            <span class="ms-3 text-base font-medium text-stone-200">Vaccinated</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentReturnedAnimal.microchipped" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-base font-medium text-white">Microchipped</span>
+                            <span class="ms-3 text-base font-medium text-stone-200">Microchipped</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentReturnedAnimal.trained" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-base font-medium text-white">Trained</span>
+                            <span class="ms-3 text-base font-medium text-stone-200">Trained</span>
                           </label>
                         </div>
                         <div class="flex items-center">
                           <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="currentReturnedAnimal.socialized" class="sr-only peer" :disabled="true">
                             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 rounded-full peer dark:bg-gray-900 peer-checked:bg-green-800"></div>
-                            <span class="ms-3 text-base font-medium text-white">Socialized</span>
+                            <span class="ms-3 text-base font-medium text-stone-200">Socialized</span>
                           </label>
                         </div>
                       </div>
@@ -177,8 +177,8 @@
                   </div>
                 </div>
                 <div class="flex justify-between mt-4">
-                  <button @click="prevReturnedAnimal" :disabled="currentReturnedIndex === 0" class="px-4 shadow-2xl py-2 text-white rounded-lg">Previous</button>
-                  <button @click="nextReturnedAnimal" :disabled="currentReturnedIndex === returned.length - 1" class="px-4 py-2 shadow-2xl text-white rounded-lg">Next</button>
+                  <button @click="prevReturnedAnimal" :disabled="currentReturnedIndex === 0" class="px-4 shadow-2xl py-2 text-stone-200 rounded-lg">Previous</button>
+                  <button @click="nextReturnedAnimal" :disabled="currentReturnedIndex === returned.length - 1" class="px-4 py-2 shadow-2xl text-stone-200 rounded-lg">Next</button>
                 </div>
               </div>
               <div v-else>
@@ -187,6 +187,11 @@
             </div>
           </div>
         </div>
+          <div v-else class="flex items-center justify-center min-h-screen bg-transparent">
+    <div class="bg-transparent shadow-2xl rounded-2xl p-8 max-w-xl text-center text-2xl text-stone-200 text-lg leading-relaxed">
+      This user has not adopted or returned any animals, and access to their information is not allowed.
+    </div>
+  </div>
       </div>
     </div>
   </div>
@@ -202,7 +207,7 @@ const token = ref(localStorage.getItem('token'));
 export default {
   components: {
     Navigation,
-    Footer,
+ 
     Loading, // Register the Loading component
   },
   data() {

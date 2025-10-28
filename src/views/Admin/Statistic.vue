@@ -8,12 +8,12 @@
       <!-- Statistics on the right side -->
       <div class="w-3/4 p-4">
         <!-- Loading state while data is loading -->
-        <div v-if="loading" class="text-center text-white">Loading...</div>
+        <div v-if="loading" class="text-center text-stone-200">Loading...</div>
   
         <!-- When data is available -->
         <div v-if="!loading && chartDataReady">
             <div class="mb-10">
-          <h1 class="text-2xl text-white font-bold mb-4">Animal Statistics</h1>
+          <h1 class="text-2xl text-stone-200 font-bold mb-4">Animal Statistics</h1>
             </div>
           <div class="mb-8">
             <!-- Check if datasets are defined before displaying the chart -->

@@ -1,51 +1,99 @@
 <template>
   <section>
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-      <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-customGreen dark:text-white">
+      <!-- LOGO -->
+      <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-customGreen">
         <img class="rounded-lg h-20 w-auto" src="/luna1.png" alt="logo" />
         LUNA
       </a>
-      <div class="w-full rounded-lg shadow-2xl dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+
+      <!-- REGISTER BOX -->
+      <div class="w-full rounded-lg bg-stone-600/75 shadow-2xl md:mt-0 sm:max-w-md xl:p-0">
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <h1 class="text-xl font-bold leading-tight tracking-tight text-customGreen md:text-2xl dark:text-white">
+          <h1 class="text-xl font-bold leading-tight tracking-tight text-customGreen md:text-2xl">
             Create an account
           </h1>
+
+          <!-- FORM -->
           <form class="space-y-4 md:space-y-6" @submit.prevent="register">
+            <!-- USERNAME -->
             <div>
-              <label for="username" class="block mb-2 text-base font-medium text-customGreen dark:text-white">Username</label>
-              <input v-model="registerData.username" type="username" name="username" id="username" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username" required>
-              <div v-if="usernameError" class="text-red-800 text-base mt-2">{{ usernameError }}</div>
+              <label for="username" class="block mb-2 text-base font-medium text-customGreen">
+                Username
+              </label>
+              <input
+                v-model="registerData.username"
+                type="text"
+                name="username"
+                id="username"
+                class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+                placeholder="username"
+                required
+              />
+              <div v-if="usernameError" class="text-red-500 text-base mt-2">{{ usernameError }}</div>
             </div>
+
+            <!-- PASSWORD -->
             <div>
-              <label for="password" class="block mb-2 text-base font-medium text-customGreen dark:text-white">Password</label>
-              <input v-model="registerData.password" type="password" name="password" id="password" placeholder="••••••••" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" required>
-              <div v-if="passwordError" class="text-red-800 text-base mt-2">{{ passwordError }}</div>
-              <div v-if="passwordTooShortError" class="text-red-800 text-base mt-2">{{ passwordTooShortError }}</div>
-              <div v-if="passwordRequiresNonAlphanumericError" class="text-red-800 text-base mt-2">{{ passwordRequiresNonAlphanumericError }}</div>
-              <div v-if="passwordRequiresDigitError" class="text-red-800 text-base mt-2">{{ passwordRequiresDigitError }}</div>
-              <div v-if="passwordRequiresUpperError" class="text-red-800 text-base mt-2">{{ passwordRequiresUpperError }}</div>
-              <div v-if="passwordRequiresLowerError" class="text-red-800 text-base mt-2">{{ passwordRequiresLowerError }}</div>
+              <label for="password" class="block mb-2 text-base font-medium text-customGreen">
+                Password
+              </label>
+              <input
+                v-model="registerData.password"
+                type="password"
+                name="password"
+                id="password"
+                placeholder="••••••••"
+                class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+                required
+              />
+              <div v-if="passwordError" class="text-red-500 text-base mt-2">{{ passwordError }}</div>
+              <div v-if="passwordTooShortError" class="text-red-500 text-base mt-2">{{ passwordTooShortError }}</div>
+              <div v-if="passwordRequiresNonAlphanumericError" class="text-red-500 text-base mt-2">{{ passwordRequiresNonAlphanumericError }}</div>
+              <div v-if="passwordRequiresDigitError" class="text-red-500 text-base mt-2">{{ passwordRequiresDigitError }}</div>
+              <div v-if="passwordRequiresUpperError" class="text-red-500 text-base mt-2">{{ passwordRequiresUpperError }}</div>
+              <div v-if="passwordRequiresLowerError" class="text-red-500 text-base mt-2">{{ passwordRequiresLowerError }}</div>
             </div>
+
+            <!-- CONFIRM PASSWORD -->
             <div>
-              <label for="confirmPassword" class="block mb-2 text-base font-medium text-customGreen dark:text-white">Confirm Password</label>
-              <input v-model="registerData.confirmPassword" type="password" name="confirmPassword" id="confirmPassword" placeholder="••••••••" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" required>
-              <div v-if="confirmPasswordError" class="text-red-800 text-base mt-2">{{ confirmPasswordError }}</div>
+              <label for="confirmPassword" class="block mb-2 text-base font-medium text-customGreen">
+                Confirm Password
+              </label>
+              <input
+                v-model="registerData.confirmPassword"
+                type="password"
+                name="confirmPassword"
+                id="confirmPassword"
+                placeholder="••••••••"
+                class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+                required
+              />
+              <div v-if="confirmPasswordError" class="text-red-500 text-base mt-2">{{ confirmPasswordError }}</div>
             </div>
+
+            <!-- BUTTON -->
             <div class="mt-10">
-            <button @click="register"  
-  class="w-full mt-5 text-white bg-green-700 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-  Next
-</button></div>
-            </form>
-            <p class="text-base font-light text-customGreen dark:text-green-700">
-           Already have an account? 
-              <RouterLink to="/" class="font-medium text-customGreen hover:underline dark:text-primary-500">Login</RouterLink>
-</p>
-</div>
-</div>
-</div>
-</section>
+              <button
+                @click="register"
+                class="w-full mt-5 text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-5 py-2.5 text-center transition"
+              >
+                Next
+              </button>
+            </div>
+          </form>
+
+          <!-- LOGIN LINK -->
+          <p class="text-base font-light text-customGreen">
+            Already have an account?
+            <RouterLink to="/" class="font-medium text-customGreen hover:underline">Login</RouterLink>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
+
 
 <script setup>
 import { useRouter } from 'vue-router';

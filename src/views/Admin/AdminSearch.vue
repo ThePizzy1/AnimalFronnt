@@ -1,160 +1,150 @@
 <template>
- 
-  <div class="container mx-auto px-4">
-  
-     <Loading v-if="loadingError" /> 
+  <div class="container mx-auto px-4 mt-6">
+    <Loading v-if="loadingError" />
+
     <div class="flex">
       <AdminNavigation class="w-1/6" />
-      <div class="w-5/6  rounded-lg overflow-hidden text-white ml-auto">
-        <h1 class="ml-5 text-2xl font-bold mb-4 text-white">Animal List</h1>
-        <div class="mb-4 mx-5">
-          <form @submit.prevent="searchAnimals">
-            <div class="grid grid-cols-4 gap-4 ">
+
+      <div class="w-5/6 ml-auto">
+        <!-- FILTERI -->
+        <div class="bg-[#0e0e0e] rounded-xl p-6 shadow-lg border border-white/10">
+          <form @submit.prevent>
+            <!-- Dropdowns -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               <div>
-                <label for="family" class="block text-base font-bold mb-2">Family:</label>
-                <select v-model="filters.family" id="family" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                <label for="family" class="block text-gray-300 font-bold mb-2">Family:</label>
+                <select
+                  v-model="filters.family"
+                  id="family"
+                  class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+                >
                   <option value="">All</option>
                   <option v-for="family in families" :key="family" :value="family">{{ family }}</option>
                 </select>
               </div>
+
               <div>
-                <label for="species" class="block text-base font-bold mb-2">Species:</label>
-                <select v-model="filters.species" id="species" class= "text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                <label for="species" class="block text-gray-300 font-bold mb-2">Species:</label>
+                <select
+                  v-model="filters.species"
+                  id="species"
+                  class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+                >
                   <option value="">All</option>
                   <option v-for="species in speciesList" :key="species" :value="species">{{ species }}</option>
                 </select>
               </div>
+
               <div>
-                <label for="subspecies" class="block text-base font-bold mb-2">Subspecies:</label>
-                <select v-model="filters.subspecies" id="subspecies" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                <label for="subspecies" class="block text-gray-300 font-bold mb-2">Subspecies:</label>
+                <select
+                  v-model="filters.subspecies"
+                  id="subspecies"
+                  class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+                >
                   <option value="">All</option>
                   <option v-for="subspecies in subspeciesList" :key="subspecies" :value="subspecies">{{ subspecies }}</option>
                 </select>
               </div>
+
               <div>
-                <label for="gender" class="block text-base font-bold mb-2">Gender:</label>
-                <select v-model="filters.gender" id="gender" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                <label for="gender" class="block text-gray-300 font-bold mb-2">Gender:</label>
+                <select
+                  v-model="filters.gender"
+                  id="gender"
+                  class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+                >
                   <option value="">All</option>
                   <option value="Female">Female</option>
                   <option value="Male">Male</option>
                 </select>
               </div>
-              <div>
-                <label class="inline-flex items-center cursor-pointer">
-                  <input type="checkbox" v-model="filters.neutered" class="sr-only peer">
-                  <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                  <span class="ms-3 text-base font-medium text-white dark:text-gray-300">Neutered</span>
-                </label>
-              </div>
-              <div>
-                <label class="inline-flex items-center cursor-pointer">
-                  <input type="checkbox" v-model="filters.vaccinated" class="sr-only peer">
-                  <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                  <span class="ms-3 text-base font-medium text-white  dark:text-gray-300">Vaccinated</span>
-                </label>
-              </div>
-              <div>
-                <label class="inline-flex items-center cursor-pointer">
-                  <input type="checkbox" v-model="filters.microchipped" class="sr-only peer">
-                  <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                  <span class="ms-3 text-base font-medium text-whitedark:text-gray-300">Microchipped</span>
-                </label>
-              </div>
-              <div>
-                <label class="inline-flex items-center cursor-pointer">
-                  <input type="checkbox" v-model="filters.trained" class="sr-only peer">
-                  <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                  <span class="ms-3 text-base font-medium text-white  d">Trained</span>
-                </label>
-              </div>
-              <div>
-                <label class="inline-flex items-center cursor-pointer">
-                  <input type="checkbox" v-model="filters.socialized" class="sr-only peer">
-                  <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                  <span class="ms-3 text-base font-medium text-white">Socialized</span>
-                </label>
-              </div>
-              <div>
-                <label class="inline-flex items-center cursor-pointer">
-                  <input type="checkbox" v-model="filters.adopted" class="sr-only peer">
-                  <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                  <span class="ms-3 text-base font-medium text-white" >Adopted</span>
-                </label>
-              </div>
             </div>
-           
+
+            <!-- Toggles (bool) -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 mt-6">
+              <label
+                v-for="(label, key) in toggleLabels"
+                :key="key"
+                class="inline-flex items-center cursor-pointer select-none"
+              >
+                <input type="checkbox" v-model="filters[key]" class="sr-only peer" />
+                <div
+                  class="relative w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-500/30 rounded-full
+                         after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:h-5 after:w-5 after:rounded-full
+                         after:bg-emerald-400 after:border after:border-gray-400 after:transition-all
+                         peer-checked:bg-green-600 peer-checked:after:translate-x-full"
+                ></div>
+                <span class="ms-3 text-sm font-medium text-gray-300">{{ label }}</span>
+              </label>
+            </div>
+
+            <!-- Veliki search -->
+            <div class="mt-6">
+              <label for="search" class="block text-gray-300 font-bold mb-2">Search (any field):</label>
+              <input
+                id="search"
+                type="text"
+                v-model="filters.search"
+                placeholder="Type to filter by name, family, species, subspecies, age, gender, etc."
+                class="w-full py-3 px-4 text-base rounded-xl bg-[#1a1a1a] text-gray-200 placeholder-gray-500 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+              />
+            </div>
           </form>
-      
-       
-  <table class="min-w-full leading-normal">
-    <thead>
-      <tr>
-     
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Name</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Family</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Species</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Subspecies</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Age</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Gender</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Weight</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Height</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Length</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Neutered</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Vaccinated</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Microchipped</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Trained</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Socialized</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Health Issues</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Personality Description</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Adopted</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="item in filteredItems" :key="item.idAnimal" class="border-b border-customBlack cursor-pointer"@click="navigateToDetails(item.idAnimal)">
-      
-        <td class="px-5 py-5 text-base font-bold">{{ item.name }}</td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.family }}</td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.species }}</td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.subspecies }}</td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.age }}<strong> y</strong></td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.gender }}</td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.weight }}<strong> kg</strong></td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.height }}<strong> cm</strong></td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.length }}<strong> cm</strong></td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.neutered }}</td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.vaccinated }}</td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.microchipped }}</td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.trained }}</td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.socialized }}</td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.healthIssues }}</td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.personalityDescription }}</td>
-        <td class="px-5 py-5 text-base font-bold">{{ item.adopted }}</td>
-      </tr>
-    </tbody>
-  </table>
-  
-</div>
+        </div>
 
-
+        <!-- TABLICA -->
+        <div class="mt-5 overflow-x-auto custom-scrollbar">
+          <table class="w-full border-separate border-spacing-y-4 bg-[#0e0e0e] rounded-xl p-4 md:p-6">
+            <thead>
+              <tr class="text-left text-gray-400 text-xs md:text-sm uppercase tracking-wider">
+                <th class="px-6 py-3">Name</th>
+                <th class="px-6 py-3">Family</th>
+                <th class="px-6 py-3">Species</th>
+                <th class="px-6 py-3">Subspecies</th>
+                <th class="px-6 py-3">Age</th>
+                <th class="px-6 py-3">Gender</th>
+                <th class="px-6 py-3">Neutered</th>
+                <th class="px-6 py-3">Adopted</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="item in filteredItems"
+                :key="item.idAnimal"
+                @click="navigateToDetails(item.idAnimal)"
+                class="bg-[#1a1a1a] hover:bg-[#242424] border border-gray-700/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
+              >
+                <td class="px-6 py-6 text-white font-semibold">{{ item.name }}</td>
+                <td class="px-6 py-6 text-gray-300">{{ item.family }}</td>
+                <td class="px-6 py-6 text-gray-300">{{ item.species }}</td>
+                <td class="px-6 py-6 text-gray-300">{{ item.subspecies }}</td>
+                <td class="px-6 py-6 text-gray-300">{{ item.age }}<strong> y</strong></td>
+                <td class="px-6 py-6 text-gray-300">{{ item.gender }}</td>
+                <td class="px-6 py-6 text-gray-300">{{ item.neutered ? 'Yes' : 'No' }}</td>
+                <td class="px-6 py-6 text-gray-300">{{ item.adopted ? 'Yes' : 'No' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
- 
 </template>
+
 <script>
 import instance from '@/axiosBase';
 import AdminNavigation from '../Admin/AdminNavigation.vue';
-import Loading  from '../Loading.vue';
+import Loading from '../Loading.vue';
+
 export default {
   components: {
     AdminNavigation,
     Loading,
-   
   },
   data() {
     return {
-     
-      loadingError:true,
+      loadingError: true,
       items: [],
       families: [],
       speciesList: [],
@@ -169,131 +159,94 @@ export default {
         microchipped: false,
         trained: false,
         socialized: false,
-        adopted: false,    
-      data: [] // Podaci koji će se prikazati kada dođu
-   
+        adopted: false,
+        search: '', // global search input
+      },
+      toggleLabels: {
+        neutered: 'Neutered',
+        vaccinated: 'Vaccinated',
+        microchipped: 'Microchipped',
+        trained: 'Trained',
+        socialized: 'Socialized',
+        adopted: 'Adopted',
       },
     };
   },
   computed: {
     filteredItems() {
-      return this.items.filter(item => {
-        return (!this.filters.family || item.family === this.filters.family) &&
-               (!this.filters.species || item.species === this.filters.species) &&
-               (!this.filters.subspecies || item.subspecies === this.filters.subspecies) &&
-               (!this.filters.gender || item.gender === this.filters.gender) &&
-               (!this.filters.neutered || item.neutered === this.filters.neutered) &&
-               (!this.filters.vaccinated || item.vaccinated === this.filters.vaccinated) &&
-               (!this.filters.microchipped || item.microchipped === this.filters.microchipped) &&
-               (!this.filters.trained || item.trained === this.filters.trained) &&
-               (!this.filters.socialized || item.socialized === this.filters.socialized) &&
-               (!this.filters.adopted || item.adopted === this.filters.adopted);
+      const search = this.filters.search.toLowerCase();
+
+      return this.items.filter((item) => {
+        const matchesSearch =
+          !search ||
+          Object.values(item)
+            .join(' ')
+            .toLowerCase()
+            .includes(search);
+
+        return (
+          matchesSearch &&
+          (!this.filters.family || item.family === this.filters.family) &&
+          (!this.filters.species || item.species === this.filters.species) &&
+          (!this.filters.subspecies || item.subspecies === this.filters.subspecies) &&
+          (!this.filters.gender || item.gender === this.filters.gender) &&
+          (!this.filters.neutered || item.neutered) &&
+          (!this.filters.vaccinated || item.vaccinated) &&
+          (!this.filters.microchipped || item.microchipped) &&
+          (!this.filters.trained || item.trained) &&
+          (!this.filters.socialized || item.socialized) &&
+          (!this.filters.adopted || item.adopted)
+        );
       });
     },
   },
   mounted() {
-   
-    console.log("loading"+this.loadingError)
-    this.loadingError = true; 
-    instance.get('animal/animal_pc')
-      .then(response => {
-          this.items = response.data;
-          if(this.items != null) {
-            setTimeout(() => {
-            this.loadingError = false; 
-          }, 1000)
-          } 
-        this.populateFilters();
-      })
-      .catch(error => {
-        this.loadingError = true; 
-        console.error('There was an error!', error);
-      });
-      
+    this.fetchAnimals();
   },
- 
- 
-
   methods: {
     navigateToDetails(idAnimal) {
-    this.$router.push(`/adminAnimals/${idAnimal}`);
-  },
-    populateFilters() {
-      this.families = [...new Set(this.items.map(item => item.family))];
-      this.speciesList = [...new Set(this.items.map(item => item.species))];
-      this.subspeciesList = [...new Set(this.items.map(item => item.subspecies))];
+      this.$router.push(`/adminAnimals/${idAnimal}`);
     },
-    searchAnimals() {
-      this.loadingError = true; 
-      instance.get('animal/animal_pc', {
-        params: this.filters
-      })
-      .then(response => {
-        this.items = response.data;
-        if(this.items!=null){
-          this.loadingError = false;
-        }
-      })
-      .catch(error => {
-        this.loadingError = true; 
-        console.error('There was an error!', error);
-      });
+    fetchAnimals() {
+      this.loadingError = true;
+      instance
+        .get('animal/animal_pc')
+        .then((response) => {
+          this.items = response.data;
+          if (this.items) {
+            this.populateFilters();
+            setTimeout(() => (this.loadingError = false), 1000);
+          }
+        })
+        .catch((error) => {
+          console.error('There was an error!', error);
+          this.loadingError = true;
+        });
+    },
+    populateFilters() {
+      this.families = [...new Set(this.items.map((item) => item.family))];
+      this.speciesList = [...new Set(this.items.map((item) => item.species))];
+      this.subspeciesList = [...new Set(this.items.map((item) => item.subspecies))];
     },
   },
 };
 </script>
-  <style scoped>
 
-
-
-
-  .container {
-    color: white;
-    font-family: 'Poppins', sans-serif;
-    margin-top: 15px;
-  }
-  
-  .table {
-    width: 100%;
-  
-    border-collapse: collapse;
-   }
-
-.td {
-  padding: 12px 15px;
-  font-size: 1rem;
+<style scoped>
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px;
 }
-
-  .shadow-lg {
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Custom scrollbar */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 12px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 6px;
-    border: 3px solid transparent;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(255, 255, 255, 0.5);
-  }
-
-  /* Fix scrollbar on Firefox */
-  .custom-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-  }
-
-  .custom-scrollbar:hover {
-    scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
-  }
-</style>  
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+tbody tr {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+tbody tr:hover {
+  transform: translateY(-3px);
+}
+</style>

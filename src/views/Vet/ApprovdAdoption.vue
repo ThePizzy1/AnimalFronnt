@@ -5,35 +5,35 @@
        <Loading v-if="loadingError" /> 
 
       <VetNavigation class="w-1/6" />
-      <div class="w-5/6  rounded-lg overflow-hidden text-white ml-auto">
-        <h1 class="ml-5 text-2xl font-bold mb-4 text-white">Animal List</h1>
+      <div class="w-5/6  rounded-lg overflow-hidden text-stone-200 ml-auto">
+        <h1 class="ml-5 text-2xl font-bold mb-4 text-stone-200">Animal List</h1>
         <div class="mb-4 mx-5">
           <form @submit.prevent="searchAnimals">
             <div class="grid grid-cols-4 gap-4 ">
               <div>
                 <label for="family" class="block text-base font-bold mb-2">Family:</label>
-                <select v-model="filters.family" id="family" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                <select v-model="filters.family" id="family" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                   <option value="">All</option>
                   <option v-for="family in families" :key="family" :value="family">{{ family }}</option>
                 </select>
               </div>
               <div>
                 <label for="species" class="block text-base font-bold mb-2">Species:</label>
-                <select v-model="filters.species" id="species" class= "text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                <select v-model="filters.species" id="species" class= "text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                   <option value="">All</option>
                   <option v-for="species in speciesList" :key="species" :value="species">{{ species }}</option>
                 </select>
               </div>
               <div>
                 <label for="subspecies" class="block text-base font-bold mb-2">Subspecies:</label>
-                <select v-model="filters.subspecies" id="subspecies" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                <select v-model="filters.subspecies" id="subspecies" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                   <option value="">All</option>
                   <option v-for="subspecies in subspeciesList" :key="subspecies" :value="subspecies">{{ subspecies }}</option>
                 </select>
               </div>
               <div>
                 <label for="gender" class="block text-base font-bold mb-2">Gender:</label>
-                <select v-model="filters.gender" id="gender" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                <select v-model="filters.gender" id="gender" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                   <option value="">All</option>
                   <option value="Female">Female</option>
                   <option value="Male">Male</option>
@@ -42,67 +42,79 @@
               <div>
                 <label class="inline-flex items-center cursor-pointer">
                   <input type="checkbox" v-model="filters.neutered" class="sr-only peer">
-                  <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                  <span class="ms-3 text-base font-medium text-white dark:text-gray-300">Neutered</span>
+                  <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                  <span class="ms-3 text-base font-medium text-stone-200 dark:text-gray-300">Neutered</span>
                 </label>
               </div>
               <div>
                 <label class="inline-flex items-center cursor-pointer">
                   <input type="checkbox" v-model="filters.vaccinated" class="sr-only peer">
-                  <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                  <span class="ms-3 text-base font-medium text-white  dark:text-gray-300">Vaccinated</span>
+                  <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                  <span class="ms-3 text-base font-medium text-stone-200  dark:text-gray-300">Vaccinated</span>
                 </label>
               </div>
               <div>
                 <label class="inline-flex items-center cursor-pointer">
                   <input type="checkbox" v-model="filters.microchipped" class="sr-only peer">
-                  <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                  <span class="ms-3 text-base font-medium text-whitedark:text-gray-300">Microchipped</span>
+                  <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                  <span class="ms-3 text-base font-medium text-stone-200dark:text-gray-300">Microchipped</span>
                 </label>
               </div>
               <div>
                 <label class="inline-flex items-center cursor-pointer">
                   <input type="checkbox" v-model="filters.trained" class="sr-only peer">
-                  <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                  <span class="ms-3 text-base font-medium text-white  d">Trained</span>
+                  <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                  <span class="ms-3 text-base font-medium text-stone-200  d">Trained</span>
                 </label>
               </div>
               <div>
                 <label class="inline-flex items-center cursor-pointer">
                   <input type="checkbox" v-model="filters.socialized" class="sr-only peer">
-                  <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                  <span class="ms-3 text-base font-medium text-white">Socialized</span>
+                  <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                  <span class="ms-3 text-base font-medium text-stone-200">Socialized</span>
                 </label>
               </div>
               <div>
                 <label class="inline-flex items-center cursor-pointer">
                   <input type="checkbox" v-model="filters.adopted" class="sr-only peer">
-                  <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                  <span class="ms-3 text-base font-medium text-white" >Adopted</span>
+                  <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                  <span class="ms-3 text-base font-medium text-stone-200" >Adopted</span>
                 </label>
               </div>
             </div>
            
           </form>
-        
+                <div class="relative w-full mb-4">
+          <input
+            v-model="generalSearchQuery"
+            type="text"
+            placeholder="Search..."
+            class="w-full px-5 py-2 pr-12 text-stone-200 placeholder-gray-100 bg-transparent border-2 border-transparent rounded-full shadow-2xl focus:outline-none focus:border-turquoise-400 hover:border-turquoise-400 transition duration-300"
+          />
+          <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+            <svg class="w-6 h-6 text-turquoise-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+            </svg>
+          </div>
+        </div>
   <table class="min-w-full leading-normal">
     <thead>
       <tr>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider"></th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Name</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Family</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Species</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Subspecies</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Age</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Gender</th>
-        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-white uppercase tracking-wider">Adoption</th>
+        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider"></th>
+        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Name</th>
+        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Family</th>
+        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Species</th>
+        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Subspecies</th>
+        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Age</th>
+        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Gender</th>
+        <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Adoption</th>
        
       </tr>
     </thead>
     <tbody>
       <tr v-for="item in filteredItems" :key="item.idAnimal" class="border-b border-customBlack cursor-pointer">
         <td class="px-5 py-5 text-base font-bold text-left">
-                    <svg @click="openSinglModal(item)" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <svg @click="openSinglModal(item)" class="w-6 h-6 text-gray-800 dark:text-stone-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                 </td>
@@ -113,7 +125,10 @@
         <td class="px-5 py-5 text-base font-bold">{{ item.age }}<strong> y</strong></td>
         <td class="px-5 py-5 text-base font-bold">{{ item.gender }}</td>
         <td class="px-5 py-5 text-base font-bold text-left">
-                <button @click="approveAdoption(item.idAnimal)" type="button" class="mb-4 p-2 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-base p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
+                <button @click="approveAdoption(item.idAnimal)" :disabled="userRole !== 'HeadVet'"
+        type="button"
+        class="mb-4 text-stone-200 bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-base p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed"
+     >
                   <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 
                           <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -141,13 +156,13 @@
  <div v-if="single" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center overflow-x-auto custom-scrollbar">
     <div class="relative p-4 w-full max-w-md max-h-full">
       <!-- Modal content -->
-      <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+      <div class="relative bg-black rounded-lg shadow-sm dark:bg-gray-700">
         <!-- Modal header -->
         <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-stone-200">
             Animal Details
           </h3>
-          <button @click="single = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+          <button @click="single = false" type="button" class="text-gray-400 bg-transparent hover:bg-white hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-stone-200" data-modal-toggle="crud-modal">
             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
             </svg>
@@ -158,60 +173,60 @@
         <form class="p-4 md:p-5">
           <div class="grid gap-4 mb-4 grid-cols-2  sm:col-span-1">
             <div class="col-span-2 ">
-              <label for="singleCode" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Animal Name</label>
-              <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleCode" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Animal Name</label>
+              <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
               {{ this.itemsSingle.name }}
             </span>
             </div>
             <div class="col-span-2 sm:col-span-1">
-              <label for="animalName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Family</label>
-              <span type="text" id="animalName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="animalName" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Family</label>
+              <span type="text" id="animalName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ itemsSingle.family }}
             </span>
             </div>
             <div class="col-span-2 sm:col-span-1">
-              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Species</label>
-              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Species</label>
+              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.itemsSingle.species }}
             </span>
             </div>
             <div class="col-span-2 sm:col-span-1">
-              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Subspecies</label>
-              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Subspecies</label>
+              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.itemsSingle.subspecies }}
             </span>
             </div>
             <div class="col-span-2 sm:col-span-1">
-              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Age</label>
-              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Age</label>
+              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.itemsSingle.age }}
             </span>
             </div>
 
             <div class="col-span-2 sm:col-span-1">
-              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Gender</label>
-              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Gender</label>
+              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.itemsSingle.gender }}
             </span>
             </div>
 
             <div class="col-span-2 sm:col-span-1">
-              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Weight</label>
-              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Weight</label>
+              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.itemsSingle.weight }}
             </span>
             </div>
             
             <div class="col-span-2 sm:col-span-1">
-              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Hight</label>
-              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Hight</label>
+              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.itemsSingle.height }}
             </span>
             </div>
             
             <div class="col-span-2 sm:col-span-1">
-              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Lenght</label>
-              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Lenght</label>
+              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
                 {{ this.itemsSingle.length }}
             </span>
             </div>
@@ -219,35 +234,35 @@
               <label class="inline-flex items-center cursor-pointer">
                 <input type="checkbox" v-model="this.itemsSingle.neutered" class="sr-only peer" disabled>
                 <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-                <span class="ms-3 text-base font-medium text-gray-900  dark:text-white">Neutered</span>
+                <span class="ms-3 text-base font-medium text-gray-900  dark:text-stone-200">Neutered</span>
               </label>
             </div>
             <div class="col-span-2 sm:col-span-1">
               <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="this.itemsSingle.vaccinated" class="sr-only peer" disabled>
             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-            <span class="ms-3 text-base font-medium text-gray-900  dark:text-white">Vaccinated</span>
+            <span class="ms-3 text-base font-medium text-gray-900  dark:text-stone-200">Vaccinated</span>
           </label>
         </div>
         <div class="col-span-2 sm:col-span-1">
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="this.itemsSingle.microchipped" class="sr-only peer" disabled>
             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-            <span class="ms-3 text-base font-medium text-gray-900  dark:text-white">Microchipped</span>
+            <span class="ms-3 text-base font-medium text-gray-900  dark:text-stone-200">Microchipped</span>
           </label>
         </div>
         <div class="col-span-2 sm:col-span-1">
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="this.itemsSingle.trained" class="sr-only peer" disabled>
             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-            <span class="ms-3 text-base font-medium text-gray-900  dark:text-white">Trained</span>
+            <span class="ms-3 text-base font-medium text-gray-900  dark:text-stone-200">Trained</span>
           </label>
         </div>
         <div class="col-span-2 sm:col-span-1">
           <label class="inline-flex items-center cursor-pointer">
             <input type="checkbox" v-model="this.itemsSingle.socialized" class="sr-only peer" disabled>
             <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-            <span class="ms-3 text-base font-medium text-gray-900  dark:text-white">Socialized</span>
+            <span class="ms-3 text-base font-medium text-gray-900  dark:text-stone-200">Socialized</span>
           </label>
         </div>
 
@@ -280,6 +295,8 @@ export default {
   },
   data() {
     return {
+       userRole: localStorage.getItem('userRole'),  
+       generalSearchQuery: '',
       loadingError:false,
       items: [],
       families: [],
@@ -305,20 +322,47 @@ export default {
     };
   },
   computed: {
-    filteredItems() {
-      return this.items.filter(item => {
-        return (!this.filters.family || item.family === this.filters.family) &&
-               (!this.filters.species || item.species === this.filters.species) &&
-               (!this.filters.subspecies || item.subspecies === this.filters.subspecies) &&
-               (!this.filters.gender || item.gender === this.filters.gender) &&
-               (!this.filters.neutered || item.neutered === this.filters.neutered) &&
-               (!this.filters.vaccinated || item.vaccinated === this.filters.vaccinated) &&
-               (!this.filters.microchipped || item.microchipped === this.filters.microchipped) &&
-               (!this.filters.trained || item.trained === this.filters.trained) &&
-               (!this.filters.socialized || item.socialized === this.filters.socialized) &&
-               (!this.filters.adopted || item.adopted === this.filters.adopted);
-      });
-    },
+ filteredItems() {
+    const query = this.generalSearchQuery?.toLowerCase().trim() || '';
+
+    return this.items.filter(item => {
+      const matchesGeneralQuery =
+      item.width?.toString().includes(query) ||
+      item.weight?.toString().includes(query) ||
+      item.height?.toString().includes(query) ||
+      item.age?.toString().includes(query) ||
+       item.name?.toLowerCase().includes(query) ||
+        item.family?.toLowerCase().includes(query) ||
+        item.species?.toLowerCase().includes(query) ||
+        item.subspecies?.toLowerCase().includes(query) ||
+        item.gender?.toLowerCase().includes(query) ||
+        item.neutered?.toString().toLowerCase().includes(query) ||
+        item.vaccinated?.toString().toLowerCase().includes(query) ||
+        item.microchipped?.toString().toLowerCase().includes(query) ||
+        item.trained?.toString().toLowerCase().includes(query) ||
+        item.socialized?.toString().toLowerCase().includes(query) ||
+        item.adopted?.toString().toLowerCase().includes(query);
+
+      const matchesFilters =
+      (!this.filters.width || item.width === this.filters.width) &&
+      (!this.filters.weight || item.weight === this.filters.weight) &&
+      (!this.filters.height || item.height === this.filters.height) &&
+      (!this.filters.age || item.age === this.filters.age) &&
+       (!this.filters.name || item.name === this.filters.name) &&
+        (!this.filters.family || item.family === this.filters.family) &&
+        (!this.filters.species || item.species === this.filters.species) &&
+        (!this.filters.subspecies || item.subspecies === this.filters.subspecies) &&
+        (!this.filters.gender || item.gender === this.filters.gender) &&
+        (!this.filters.neutered || item.neutered === this.filters.neutered) &&
+        (!this.filters.vaccinated || item.vaccinated === this.filters.vaccinated) &&
+        (!this.filters.microchipped || item.microchipped === this.filters.microchipped) &&
+        (!this.filters.trained || item.trained === this.filters.trained) &&
+        (!this.filters.socialized || item.socialized === this.filters.socialized) &&
+        (!this.filters.adopted || item.adopted === this.filters.adopted);
+
+      return matchesGeneralQuery && matchesFilters;
+    });
+  },
   },
   mounted() {
 
@@ -373,6 +417,7 @@ export default {
                     draggable: true,
                     icon: "success"
                   });
+                  window.location.reload();
             }
             else{
               

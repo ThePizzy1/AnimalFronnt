@@ -1,5 +1,5 @@
 <template>
-    <div class="my-6 text-white items-center justify-center flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
+    <div class="my-6 text-stone-200 items-center justify-center flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
       <!-- Adopter Details Panels -->
       <div class="w-full flex flex-col 2xl:w-5/6 space-y-4">
         <div class="flex-1 rounded-lg p-8">
@@ -25,7 +25,7 @@
               </div>
               <!-- Save Changes button -->
               <div class="flex justify-end mt-4">
-                <button type="submit" class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded whitespace-normal">
+                <button type="submit" class="bg-green-700 hover:bg-green-900 text-stone-200 font-bold py-2 px-4 rounded whitespace-normal">
                   Save Changes
                 </button>
               </div>

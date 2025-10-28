@@ -1,11 +1,11 @@
 <template>
   <div class="flex p-6">
-    <div class="w-1/6 text-white p-4 rounded-l-lg">
+    <div class="w-1/6 text-stone-200 p-4 rounded-l-lg">
      <WorkerNavigation />
     </div>
     <!-- READ-ONLY user data -->
-   <div class="w-3/6 text-white p-4 rounded-r-lg  mx-auto">
-    <div class="bg-white/10 rounded-lg p-6 text-white mb-6">
+   <div class="w-3/6 text-stone-200 p-4 rounded-r-lg  mx-auto">
+    <div class="bg-black/10 rounded-lg p-6 text-stone-200 mb-6">
       <h2 class="text-2xl font-bold mb-4">User Info</h2>
       <div class="space-y-2 text-xl ">
         <div><strong>ID:</strong> {{ user?.id }}</div>
@@ -17,7 +17,7 @@
       </div>
 
       <button @click="openUpdateModal"
-        class="mt-6 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded transition">
+        class="mt-6 bg-emerald-600 hover:bg-emerald-700 text-stone-200 px-4 py-2 rounded transition">
         Edit Profile
       </button>
     </div>
@@ -25,11 +25,11 @@
     <!-- UPDATE MODAL -->
     <div v-if="updateModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div class="relative p-4 w-full max-w-md max-h-full">
-        <div class="bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="bg-black rounded-lg shadow dark:bg-gray-700">
           <div class="flex items-center justify-between p-4 border-b dark:border-gray-600">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Update Profile</h3>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-stone-200">Update Profile</h3>
             <button @click="updateModal = false"
-              class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+              class="text-gray-400 hover:bg-white hover:text-gray-900 rounded-lg text-base w-8 h-8 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-stone-200">
               ✕
             </button>
           </div>
@@ -60,7 +60,7 @@
             </div>
 
             <button type="submit"
-              class="text-white inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
+              class="text-stone-200 inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
               Update
             </button>
 
