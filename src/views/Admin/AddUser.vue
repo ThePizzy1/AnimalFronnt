@@ -1,95 +1,154 @@
 <template>
-     <div class="flex">
-
+  <div class="flex  min-h-screen text-stone-200">
     <!-- Navigation -->
-    <div class="w-1/6 text-stone-200 p-4 rounded-l-lg">
+    <div class="w-1/6 p-4 bg-black border-r border-stone-600 backdrop-blur-md rounded-l-xl shadow-inner">
       <AdminNavigation />
     </div>
+
     <!-- Form -->
-    <div class="w-5/6 text-stone-200 p-4 rounded-r-lg">
+    <div class="w-5/6 p-8 rounded-r-xl">
+      <div class="max-w-5xl mx-auto bg-stone-800/90 border border-stone-400/40 rounded-2xl p-8 shadow-inner backdrop-blur-md hover:scale-[1.01] transition-all duration-300">
+        <h1 class="text-2xl font-bold mb-6 text-stone-100">Add User</h1>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div class="w-1/6 text-stone-200 p-4 rounded-l-lg">
+        <div class="grid gap-6 grid-cols-1 md:grid-cols-2">
+          <!-- First Name -->
+          <div>
+            <label for="firstname" class="block mb-2 text-base font-semibold text-stone-300">First Name</label>
+            <input
+              v-model="registerData.firstname"
+              id="firstname"
+              name="firstname"
+              placeholder="Pero"
+              required
+              class="w-full py-2 px-4 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300 transition-all"
+            />
+            <div v-if="firstname" class="text-red-400 text-sm mt-2">{{ v }}</div>
+          </div>
 
-</div>
+          <!-- Last Name -->
+          <div>
+            <label for="lastname" class="block mb-2 text-base font-semibold text-stone-300">Last Name</label>
+            <input
+              v-model="registerData.lastname"
+              id="lastname"
+              name="lastname"
+              placeholder="Perić"
+              required
+              class="w-full py-2 px-4 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300 transition-all"
+            />
+            <div v-if="lastname" class="text-red-400 text-sm mt-2">{{ lastname }}</div>
+          </div>
 
-<div class="w-5/6 text-stone-200 m-6 p-4 rounded-r-lg  p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105">
-  <h1 class="text-xl font-bold mb-4">Add User</h1>
-  <div class="grid gap-4 mb-4 grid-cols-2">
-   
-                 <div class="col-span-2 sm:col-span-1">
-                  <label  for="firstname" class="block mb-2 text-base font-medium text-customGreen dark:text-stone-200">First Name</label>
-              <input v-model="registerData.firstname" name="firstname" id="firstname" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Pero" required>
-              <div v-if="firstname" class="text-red-500 text-base mt-2">{{ v }}</div>
-                 </div>
-                 <div class="col-span-2 sm:col-span-1">
-              <label  for="lastname" class="block mb-2 text-base font-medium text-customGreen dark:text-stone-200">Last Name</label>
-              <input v-model="registerData.lastname" name="lastname" id="lastname" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Perić" required>
-              <div v-if="lastname" class="text-red-500 text-base mt-2">{{ lastname }}</div>
-                 </div>
-    
-              <div class="col-span-2">
-              <label  for="username" class="block mb-2 text-base font-medium text-customGreen dark:text-stone-200">Username</label>
-              <input v-model="registerData.username" name="username" id="username" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username" required>
-              <div v-if="usernameError" class="text-red-500 text-base mt-2">{{ usernameError }}</div>
-               </div>
-               <div class="col-span-2 ">
-              <label  for="email" class="block mb-2 text-base font-medium text-customGreen dark:text-stone-200">Email</label>
-              <input v-model="registerData.email" name="email" id="email" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="perica@gmail.com" required>
-              <div v-if="email" class="text-red-500 text-base mt-2">{{ email }}</div>
-               </div>
-               <div class="col-span-2 ">
-              <label  for="phoneNumber" class="block mb-2 text-base font-medium text-customGreen dark:text-stone-200">Phone Number</label>
-              <input v-model="registerData.phoneNumber" name="phoneNumber" id="phoneNumber" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="023 654 4521" required>
-              <div v-if="phoneNumber" class="text-red-500 text-base mt-2">{{ phoneNumber }}</div>
-               </div>
-               <div class="col-span-2 ">
-              <label for="password" class="block mb-2 text-base font-medium text-customGreen dark:text-stone-200">Password</label>
-              <input v-model="registerData.password"  type="password" name="password" id="password" placeholder="••••••••" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-green-500 dark:focus:border-green-500" required>
-              <div v-if="passwordError" class="text-red-500 text-base mt-2">{{ passwordError }}</div>
-              <div v-if="passwordTooShortError" class="text-red-500 text-base mt-2">{{ passwordTooShortError }}</div>
-              <div v-if="passwordRequiresNonAlphanumericError" class="text-red-500 text-base mt-2">{{ passwordRequiresNonAlphanumericError }}</div>
-              <div v-if="passwordRequiresDigitError" class="text-red-500 text-base mt-2">{{ passwordRequiresDigitError }}</div>
-              <div v-if="passwordRequiresUpperError" class="text-red-500 text-base mt-2">{{ passwordRequiresUpperError }}</div>
-              <div v-if="passwordRequiresLowerError" class="text-red-500 text-base mt-2">{{ passwordRequiresLowerError }}</div>
-          
-               </div>
-               <div class="col-span-2 ">
-              <label for="confirmPassword" class="block mb-2 text-base font-medium text-customGreen dark:text-stone-200">Confirm Password</label>
-              <input v-model="registerData.confirmPassword" type="password" name="confirmPassword" id="confirmPassword" placeholder="••••••••" class="border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-green-500 dark:focus:border-green-500" required>
-              <div  v-if="confirmPasswordError" class="text-red-500 text-base mt-2">{{ confirmPasswordError }}</div>
-               </div>
-       
-               <div class="col-span-2 ">
-    <div class="flex flex-col">
-      <label for="role">Role</label>
-      <select v-model="registerData.role" id="role" class="p-2 rounded-lg text-gray-900">
-        <option value="Vet">Veterinarinans</option>
-        <option value="HeadVet">Head Veterinarinans</option>
-        <option value="Surenderer">Surenderer</option>
-        <option value="AnimalWelffereOfficer">Animal Welffere Officer</option>
-        <option value="Association">Association</option>
-        <option value="Worker">Worker</option>
-        <option value="Menager">Menager</option>
-      </select>
-    </div>
-               </div>
-    <div class="m-auto col-span-2 ">
-        <button @click="register" class="w-full hover:scale-105 mt-5 text-stone-200 bg-green-700 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-          Add User
-        </button>
-    </div>
-   
-    
-  </div>
-</div>
-     
+          <!-- Username -->
+          <div class="col-span-2">
+            <label for="username" class="block mb-2 text-base font-semibold text-stone-300">Username</label>
+            <input
+              v-model="registerData.username"
+              id="username"
+              name="username"
+              placeholder="username"
+              required
+              class="w-full py-2 px-4 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300"
+            />
+            <div v-if="usernameError" class="text-red-400 text-sm mt-2">{{ usernameError }}</div>
+          </div>
+
+          <!-- Email -->
+          <div class="col-span-2">
+            <label for="email" class="block mb-2 text-base font-semibold text-stone-300">Email</label>
+            <input
+              v-model="registerData.email"
+              id="email"
+              name="email"
+              placeholder="perica@gmail.com"
+              required
+              class="w-full py-2 px-4 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300"
+            />
+            <div v-if="email" class="text-red-400 text-sm mt-2">{{ email }}</div>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="col-span-2">
+            <label for="phoneNumber" class="block mb-2 text-base font-semibold text-stone-300">Phone Number</label>
+            <input
+              v-model="registerData.phoneNumber"
+              id="phoneNumber"
+              name="phoneNumber"
+              placeholder="023 654 4521"
+              required
+              class="w-full py-2 px-4 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300"
+            />
+            <div v-if="phoneNumber" class="text-red-400 text-sm mt-2">{{ phoneNumber }}</div>
+          </div>
+
+          <!-- Password -->
+          <div class="col-span-2">
+            <label for="password" class="block mb-2 text-base font-semibold text-stone-300">Password</label>
+            <input
+              v-model="registerData.password"
+              type="password"
+              id="password"
+              name="password"
+              placeholder="••••••••"
+              required
+              class="w-full py-2 px-4 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300"
+            />
+            <div v-if="passwordError" class="text-red-400 text-sm mt-2">{{ passwordError }}</div>
+            <div v-if="passwordTooShortError" class="text-red-400 text-sm mt-2">{{ passwordTooShortError }}</div>
+            <div v-if="passwordRequiresNonAlphanumericError" class="text-red-400 text-sm mt-2">{{ passwordRequiresNonAlphanumericError }}</div>
+            <div v-if="passwordRequiresDigitError" class="text-red-400 text-sm mt-2">{{ passwordRequiresDigitError }}</div>
+            <div v-if="passwordRequiresUpperError" class="text-red-400 text-sm mt-2">{{ passwordRequiresUpperError }}</div>
+            <div v-if="passwordRequiresLowerError" class="text-red-400 text-sm mt-2">{{ passwordRequiresLowerError }}</div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="col-span-2">
+            <label for="confirmPassword" class="block mb-2 text-base font-semibold text-stone-300">Confirm Password</label>
+            <input
+              v-model="registerData.confirmPassword"
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="••••••••"
+              required
+              class="w-full py-2 px-4 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300"
+            />
+            <div v-if="confirmPasswordError" class="text-red-400 text-sm mt-2">{{ confirmPasswordError }}</div>
+          </div>
+
+          <!-- Role -->
+          <div class="col-span-2">
+            <label for="role" class="block mb-2 text-base font-semibold text-stone-300">Role</label>
+            <select
+              v-model="registerData.role"
+              id="role"
+              class="w-full py-2 px-4 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300"
+            >
+              <option value="Vet">Veterinarian</option>
+              <option value="HeadVet">Head Veterinarian</option>
+              <option value="Surrenderer">Surrenderer</option>
+              <option value="AnimalWelfareOfficer">Animal Welfare Officer</option>
+              <option value="Association">Association</option>
+              <option value="Worker">Worker</option>
+              <option value="Manager">Manager</option>
+            </select>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="col-span-2 mt-6">
+            <button
+              @click="register"
+              class="w-full py-3 px-6 rounded-full bg-emerald-700 hover:bg-emerald-600 text-stone-100 font-semibold text-lg focus:outline-none focus:ring-2 focus:ring-stone-300 transition-all hover:scale-[1.02]"
+            >
+              Add User
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-     </div>
-    
-  </template>
-  
+  </div>
+</template>
+
 <script setup>
 
 

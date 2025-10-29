@@ -1,408 +1,283 @@
 <template>
-  <div class="flex">
-    <div class="w-1/6 text-stone-200 p-4 rounded-l-lg">
+  <div class="flex  min-h-screen text-stone-200">
+    <!-- Sidebar -->
+    <div class="w-1/6 p-4 bg-black border-r border-stone-600 backdrop-blur-md rounded-l-xl shadow-inner">
       <AdminNavigation/>
     </div>
-    <!-- Form -->
-    <div class="w-3/6 text-stone-200 p-8 rounded-r-lg mb-2 mx-auto overflow-hidden ">
-      <div class="mt-4 mb-4  p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105"> 
-              <h2 class="text-xl mt-2 font-bold mb-4">Animal info</h2>        
-     
-      <div class="grid grid-cols-1 md:grid-cols-2 mb-5 lg:grid-cols-3 gap-4 mb-auto">
-       
-        <!-- Common Animal Fields -->
-        <div>
-          <label for="name" class="block text-base font-bold mb-2">Name:</label>
-          <input type="text" id="name" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="name" />
+
+    <!-- Form Section -->
+    <div class="w-3/6 mx-auto bg-stone-800/90 mt-5 rounded-2xl  p-8 rounded-r-xl">
+      <!-- Animal Info -->
+      <div class="mt-4 mb-4 p-6 bg-stone-800/60 border border-stone-500/40 rounded-2xl backdrop-blur-md shadow-inner hover:scale-[1.01] transition-all duration-200">
+        <h2 class="text-2xl font-bold mb-6 text-stone-100">Animal Info</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Common Animal Fields -->
+          <div v-for="field in [
+            {id:'name', label:'Name', type:'text', model:'name'},
+            {id:'species', label:'Species', type:'text', model:'species'},
+            {id:'subspecies', label:'Subspecies', type:'text', model:'subspecies'},
+            {id:'age', label:'Age', type:'number', model:'age'},
+            {id:'weight', label:'Weight', type:'number', model:'weight'},
+            {id:'height', label:'Height', type:'number', model:'height'},
+            {id:'length', label:'Length', type:'number', model:'length'},
+          ]" :key="field.id">
+            <label :for="field.id" class="block font-semibold mb-2 text-stone-300">{{ field.label }}:</label>
+            <input :type="field.type" :id="field.id" v-model="field.model"
+              class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300" />
+          </div>
+
+          <!-- Family -->
+          <div>
+            <label for="family" class="block font-semibold mb-2 text-stone-300">Family:</label>
+            <select id="family" v-model="selectedFamily"
+              class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none">
+              <option>Mammal</option>
+              <option>Bird</option>
+              <option>Fish</option>
+              <option>Reptile</option>
+              <option>Amphibian</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <!-- Gender -->
+          <div>
+            <label for="gender" class="block font-semibold mb-2 text-stone-300">Gender:</label>
+            <select id="gender" v-model="gender"
+              class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+
+          <!-- Checkboxes -->
+          <div v-for="check in [
+            {label:'Neutered', model:'neutered'},
+            {label:'Vaccinated', model:'vaccinated'},
+            {label:'Microchipped', model:'microchipped'},
+            {label:'Trained', model:'trained'},
+            {label:'Socialized', model:'socialized'},
+            {label:'Adopted', model:'adopted'}
+          ]" :key="check.label">
+            <label class="inline-flex items-center cursor-pointer">
+              <input type="checkbox" v-model="check.model" class="sr-only peer">
+              <div class="w-11 h-6 bg-stone-600/60 peer-focus:ring-2 peer-focus:ring-stone-300 rounded-full relative after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:w-5 after:h-5 after:bg-stone-300 after:rounded-full after:transition-all peer-checked:bg-emerald-600 peer-checked:after:translate-x-full"></div>
+              <span class="ml-3 text-stone-200 font-medium">{{ check.label }}</span>
+            </label>
+          </div>
         </div>
-        <div>
-          <label for="family" class="block text-base font-bold mb-2">Family:</label>
-          <select id="family" v-model="selectedFamily" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500">
-            <option value="Mammal">Mammal</option>
-            <option value="Bird">Bird</option>
-            <option value="Fish">Fish</option>
-            <option value="Reptile">Reptile</option>
-            <option value="Amphibian">Amphibian</option>
-             <option value="Other">Other</option>
-          </select>
+
+        <!-- Textareas -->
+        <div class="mt-6">
+          <label for="healthIssues" class="block font-semibold mb-2 text-stone-300">Health Issues:</label>
+          <textarea id="healthIssues" v-model="healthIssues"
+            class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-xl shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300"></textarea>
         </div>
-        <div>
-          <label for="species" class="block text-base font-bold mb-2">Species:</label>
-          <input type="text" id="species" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="species" />
-        </div>
-        <div>
-          <label for="subspecies" class="block text-base font-bold mb-2">Subspecies:</label>
-          <input type="text" id="subspecies" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="subspecies" />
-        </div>
-        <div>
-          <label for="age" class="block text-base font-bold mb-2">Age:</label>
-          <input    type="number" min="0" id="age" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="age" />
-        </div>
-        <div>
-          <label for="gender" class="block text-base font-bold mb-2">Gender:</label>
-          <select id="gender" v-model="gender" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
-        <div>
-          <label for="weight" class="block text-base font-bold mb-2">Weight:</label>
-          <input    type="number" min="0" id="weight" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="weight" />
-        </div>
-        <div>
-          <label for="height" class="block text-base font-bold mb-2">Height:</label>
-          <input    type="number" min="0" id="height" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="height" />
-        </div>
-        <div>
-          <label for="length" class="block text-base font-bold mb-2">Length:</label>
-          <input    type="number" min="0" id="length" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="length" />
-        </div>
-        
-        <div>
-          <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" v-model="neutered" class="sr-only peer">
-            <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-            <span class="ms-3 text-base font-medium">Neutered</span>
-          </label>
-        </div>
-        <div>
-          <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" v-model="vaccinated" class="sr-only peer">
-            <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-            <span class="ms-3 text-base font-medium">Vaccinated</span>
-          </label>
-        </div>
-        <div>
-          <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" v-model="microchipped" class="sr-only peer">
-            <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-            <span class="ms-3 text-base font-medium overflow-hidden break-before-all">Microchipped</span>
-          </label>
-        </div>
-        <div>
-          <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" v-model="trained" class="sr-only peer">
-            <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-            <span class="ms-3 text-base font-medium">Trained</span>
-          </label>
-        </div>
-        <div>
-          <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" v-model="socialized" class="sr-only peer">
-            <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-            <span class="ms-3 text-base font-medium">Socialized</span>
-          </label>
-        </div>
-        <div>
-          <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" v-model="adopted" class="sr-only peer">
-            <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focused:ring-4 peer-focused:ring-green-300 dark:peer-focused:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-            <span class="ms-3 text-base font-medium">Adopted</span>
-          </label>
+
+        <div class="mt-4">
+          <label for="personalityDescription" class="block font-semibold mb-2 text-stone-300">Personality Description:</label>
+          <textarea id="personalityDescription" v-model="personalityDescription"
+            class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-xl shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300"></textarea>
         </div>
       </div>
-      <div class="w-full px-2 mb-4">
-        <label for="healthIssues" class="block text-base font-bold mb-2">Health Issues:</label>
-        <textarea id="healthIssues" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="healthIssues"></textarea>
-      </div>
-      <div class="w-full px-2 mb-4">
-        <label for="personalityDescription" class="block text-base font-bold mb-2">Personality Description:</label>
-        <textarea id="personalityDescription" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="personalityDescription"></textarea>
-      </div></div>
-      <div class="mt-2 mb-2"></div>
-      <!-- Additional Fields based on selected family -->
+
+      <!-- Conditional Info Blocks -->
       <template v-if="selectedFamily === 'Mammal'">
-
-        <div class="mt-auto p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden"> 
-            <h2 class="text-xl mt-2 font-bold mb-4">Mammal info</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div>
-            <label for="coatType" class="block text-base font-bold mb-2">Coat Type:</label>
-            <input type="text" id="coatType" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="coatType" />
-          </div>
-          <div>
-            <label for="groomingProducts" class="block text-base font-bold mb-2">Grooming Products:</label>
-            <input type="text" id="groomingProducts" class="text-gray-500 w-v py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="groomingProducts" />
-          </div>
-        </div></div>
-      </template>
-      <template v-else-if="selectedFamily === 'Bird'">
-        <div class="mt-5 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden"> 
-           <h2 class="text-xl mt-2 font-bold mb-4">Bird info</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div>
-            <label for="cageSize" class="block text-base font-bold mb-2">Cage Size:</label>
-            <input type="text" id="cageSize" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="cageSize" />
-          </div>
-          <div>
-            <label for="recommendedToys" class="block text-base font-bold mb-2">Recommended Toys:</label>
-            <input type="text" id="recommendedToys" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="recommendedToys" />
-          </div>
-          <div>
-            <label for="sociability" class="block text-base font-bold mb-2">Sociability:</label>
-            <input type="text" id="sociability" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="sociability" />
-          </div>
-        </div></div>
-      </template>
-      <template v-else-if="selectedFamily === 'Fish'">
-        <div class="mt-5 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden"> 
-            <h2 class="text-xl mt-2 font-bold mb-4">Fish info</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div>
-            <label for="tankSize" class="block text-base font-bold mb-2">Tank Size:</label>
-            <input type="text" id="tankSize" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="tankSize" />
-          </div>
-          <div>
-            <label for="compatibleSpecies" class="block text-base font-bold mb-2">Compatible Species:</label>
-            <input type="text" id="compatibleSpecies" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="compatibleSpecies" />
-          </div>
-          <div>
-            <label for="recommendedItems" class="block text-base font-bold mb-2">Recommended Items:</label>
-            <input type="text" id="recommendedItems" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="recommendedItems" />
-          </div>
-        </div></div>
-      </template>
-
-      <template v-else-if="selectedFamily === 'Reptile'">
-        <div class="mt-5 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden"> 
-            <h2 class="text-xl mt-2 font-bold mb-4">Reptile info</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div>
-            <label for="tankSize" class="block text-base font-bold mb-2">Tank Size:</label>
-            <input type="text" id="tankSize" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="tankSize" />
-          </div>
-          <div>
-            <label for="sociability" class="block text-base font-bold mb-2">Sociability:</label>
-            <input type="text" id="sociability" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="sociability" />
-          </div>
-          <div>
-            <label for="compatibleSpecies" class="block text-base font-bold mb-2">Compatible Species:</label>
-            <input type="text" id="compatibleSpecies" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="compatibleSpecies" />
-          </div>
-          <div>
-            <label for="recommendedItems" class="block text-base font-bold mb-2">Recommended Items:</label>
-            <input type="text" id="recommendedItems" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="recommendedItems" />
-          </div>
-        </div></div>
-      </template>
-      <template v-else-if="selectedFamily === 'Amphibian'">
-        <div class="mt-5 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden"> 
-          <h2 class="text-xl mt-2 font-bold mb-4">Amphibian info</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div>
-            <label for="humidity" class="block text-base font-bold mb-2">Humidity:</label>
-            <input type="text" id="humidity" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="humidity" />
-          </div>
-          <div>
-            <label for="temperature" class="block text-base font-bold mb-2">Temperature:</label>
-            <input type="text" id="temperature" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="temperature" />
-          </div>
-        </div></div>
-      </template>
-  <template v-else-if="selectedFamily === 'Other'">
-        <div class="mt-5 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden"> 
-          <h2 class="text-xl mt-2 font-bold mb-4">Enter the animal's family</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="p-6 mt-4 bg-stone-800/60 border border-stone-500/40 rounded-2xl shadow-inner backdrop-blur-md hover:scale-[1.01] transition-all">
+          <h2 class="text-xl font-bold mb-4 text-stone-100">Mammal Info</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-            <input type="text" id="otherFamily" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="other" />
+              <label class="block font-semibold mb-2">Coat Type:</label>
+              <input type="text" v-model="coatType"
+                class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+            </div>
+            <div>
+              <label class="block font-semibold mb-2">Grooming Products:</label>
+              <input type="text" v-model="groomingProducts"
+                class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+            </div>
           </div>
-        </div></div>
+        </div>
       </template>
-  
 
+      <!-- Add other family templates (Bird, Fish, etc.) in same dark-stone style... -->
 
-      <!-- Surenderer info -->
-      <div class="mt-4 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden">
-    <h2 class="text-xl mt-2 font-bold mb-4">Surenderer info</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2  gap-4 mb-4">
-      <div>
-      <label for="username" class="block text-base font-bold mb-2">Username Surenderer:</label>
+<!-- Surrenderer info -->
+<div class="mt-6 p-6 bg-stone-800/60 border border-stone-500/40 rounded-2xl shadow-inner backdrop-blur-md hover:scale-[1.01] transition-all duration-200 overflow-hidden">
+  <h2 class="text-2xl font-bold mb-6 text-stone-100">Surrenderer Info</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Username -->
+    <div>
+      <label for="username" class="block text-base font-semibold mb-2 text-stone-300">Username Surrenderer:</label>
       <div class="flex items-center">
-        
-        <input type="text" id="username" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" v-model="username"/>
-      <div class="ml-2">
-        <svg v-if="this.userExists && this.userExists!=null && this.username" class="w-5 h-5 fill-[#FFFD00]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-          <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
-        </svg>
-        <svg v-if="!this.userExists  && this.userExists!=null && this.username" class="w-5 h-5 fill-[#e00000]" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
-          <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
-        </svg>
+        <input
+          type="text"
+          id="username"
+          v-model="username"
+          class="w-full py-2 px-4 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300 transition-all"
+        />
+        <div class="ml-3 flex items-center">
+          <!-- User Exists -->
+          <svg
+            v-if="this.userExists && this.userExists != null && this.username"
+            class="w-6 h-6 fill-yellow-400 drop-shadow-md"
+            viewBox="0 0 448 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 
+              0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 
+              105.4c12.5-12.5 32.8-12.5 45.3 0z"
+            />
+          </svg>
+          <!-- User Not Found -->
+          <svg
+            v-if="!this.userExists && this.userExists != null && this.username"
+            class="w-6 h-6 fill-red-500 drop-shadow-md"
+            viewBox="0 0 384 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M342.6 150.6c12.5-12.5 12.5-32.8 
+              0-45.3s-32.8-12.5-45.3 0L192 210.7 
+              86.6 105.4c-12.5-12.5-32.8-12.5-45.3 
+              0s-12.5 32.8 0 45.3L146.7 256 41.4 
+              361.4c-12.5 12.5-12.5 32.8 0 
+              45.3s32.8 12.5 45.3 0L192 301.3 
+              297.4 406.6c12.5 12.5 32.8 
+              12.5 45.3 0s12.5-32.8 
+              0-45.3L237.3 256 
+              342.6 150.6z"
+            />
+          </svg>
         </div>
       </div>
     </div>
-      <div>
-      <label for="checkUser" class="block text-base font-bold mb-2">Check User</label>
-     
-       
-        
-        <svg @click="checkUser" class="w-10 h-10 text-stone-200 dark:text-stone-200 cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-          <path fill-rule="evenodd" d="M17 10v1.126c.367.095.714.24 1.032.428l.796-.797 1.415 1.415-.797.796c.188.318.333.665.428 1.032H21v2h-1.126c-.095.367-.24.714-.428 1.032l.797.796-1.415 1.415-.796-.797a3.979 3.979 0 0 1-1.032.428V20h-2v-1.126a3.977 3.977 0 0 1-1.032-.428l-.796.797-1.415-1.415.797-.796A3.975 3.975 0 0 1 12.126 16H11v-2h1.126c.095-.367.24-.714.428-1.032l-.797-.796 1.415-1.415.796.797A3.977 3.977 0 0 1 15 11.126V10h2Zm.406 3.578.016.016c.354.358.574.85.578 1.392v.028a2 2 0 0 1-3.409 1.406l-.01-.012a2 2 0 0 1 2.826-2.83ZM5 8a4 4 0 1 1 7.938.703 7.029 7.029 0 0 0-3.235 3.235A4 4 0 0 1 5 8Zm4.29 5H7a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h6.101A6.979 6.979 0 0 1 9 15c0-.695.101-1.366.29-2Z" clip-rule="evenodd"/>
+
+    <!-- Check User Button -->
+    <div>
+      <label for="checkUser" class="block text-base font-semibold mb-2 text-stone-300">Check User:</label>
+      <div class="flex items-center justify-start">
+        <svg
+          @click="checkUser"
+          class="w-12 h-12 text-stone-200 hover:text-emerald-400 cursor-pointer transition-all duration-200 drop-shadow-md hover:scale-110"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M17 10v1.126c.367.095.714.24 1.032.428l.796-.797 
+            1.415 1.415-.797.796c.188.318.333.665.428 
+            1.032H21v2h-1.126c-.095.367-.24.714-.428 
+            1.032l.797.796-1.415 1.415-.796-.797a3.979 
+            3.979 0 0 1-1.032.428V20h-2v-1.126a3.977 
+            3.977 0 0 1-1.032-.428l-.796.797-1.415-1.415.797-.796A3.975 
+            3.975 0 0 1 12.126 16H11v-2h1.126c.095-.367.24-.714.428-1.032l-.797-.796 
+            1.415-1.415.796.797A3.977 3.977 0 0 1 
+            15 11.126V10h2Zm.406 3.578.016.016c.354.358.574.85.578 
+            1.392v.028a2 2 0 0 1-3.409 1.406l-.01-.012a2 
+            2 0 0 1 2.826-2.83ZM5 8a4 4 0 1 1 
+            7.938.703 7.029 7.029 0 0 0-3.235 
+            3.235A4 4 0 0 1 5 8Zm4.29 
+            5H7a4 4 0 0 0-4 4v1a2 
+            2 0 0 0 2 2h6.101A6.979 
+            6.979 0 0 1 9 15c0-.695.101-1.366.29-2Z"
+            clip-rule="evenodd"
+          />
         </svg>
-      
-       
       </div>
-    </div>
-  </div>
-
-
-<!-- Owner info -->
-<div class="mt-4 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden">
-  <h2 class="text-xl mt-2 font-bold mb-4">Owner info</h2>
-
-<!-- Switch -->
-<label class="inline-flex items-center cursor-pointer mb-4">
-  <input type="checkbox" v-model="isEditable" class="sr-only peer" />
-  <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-  <span class="ms-3 text-base font-medium">Omogući uređivanje</span>
-</label>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-    <div>
-      <label for="name" class="block text-base font-bold mb-2">Name:</label>
-      <input
-        type="text"
-        id="ownerName"
-        v-model="ownerName"
-        :disabled="!isEditable"
-        :class="[
-          'w-full py-2 px-3 border rounded-md shadow-sm focus:outline-none',
-          isEditable
-            ? 'bg-black text-gray-700 border-gray-300 focus:ring-primary-500 focus:border-primary-500'
-            : 'bg-white text-gray-400 border-gray-300 cursor-not-allowed'
-        ]"
-      />
-    </div>
-    <div>
-      <label for="surname" class="block text-base font-bold mb-2">Surname:</label>
-      <input
-        type="text"
-        id="ownerSurname"
-        v-model="ownerSurname"
-        :disabled="!isEditable"
-        :class="[
-          'w-full py-2 px-3 border rounded-md shadow-sm focus:outline-none',
-          isEditable
-            ? 'bg-black text-gray-700 border-gray-300 focus:ring-primary-500 focus:border-primary-500'
-            : 'bg-white text-gray-400 border-gray-300 cursor-not-allowed'
-        ]"
-      />
-    </div>
-    <div>
-      <label for="oib" class="block text-base font-bold mb-2">OIB:</label>
-      <input
-        type="text"
-        id="oib"
-        v-model="ownerOIB"
-        :disabled="!isEditable"
-        :class="[
-          'w-full py-2 px-3 border rounded-md shadow-sm focus:outline-none',
-          isEditable
-            ? 'bg-black text-gray-700 border-gray-300 focus:ring-primary-500 focus:border-primary-500'
-            : 'bg-white text-gray-400 border-gray-300 cursor-not-allowed'
-        ]"
-      />
-    </div>
-    <div>
-      <label for="phoneNumber" class="block text-base font-bold mb-2">Phone Number:</label>
-      <input
-        type="text"
-        id="phoneNumber"
-        v-model="ownerPhoneNumber"
-        :disabled="!isEditable"
-        :class="[
-          'w-full py-2 px-3 border rounded-md shadow-sm focus:outline-none',
-          isEditable
-            ? 'bg-black text-gray-700 border-gray-300 focus:ring-primary-500 focus:border-primary-500'
-            : 'bg-white text-gray-400 border-gray-300 cursor-not-allowed'
-        ]"
-      />
     </div>
   </div>
 </div>
 
 
+      <!-- Owner Info -->
+      <div class="mt-6 p-6 bg-stone-800/60 border border-stone-500/40 rounded-2xl shadow-inner backdrop-blur-md">
+        <h2 class="text-xl font-bold mb-4 text-stone-100">Owner Info</h2>
 
-  <!-- Found info -->
+        <label class="inline-flex items-center cursor-pointer mb-4">
+          <input type="checkbox" v-model="isEditable" class="sr-only peer" />
+          <div
+            class="relative w-11 h-6 bg-stone-600/60 peer-focus:ring-2 peer-focus:ring-stone-300 rounded-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:w-5 after:h-5 after:bg-stone-300 after:rounded-full after:transition-all peer-checked:bg-emerald-600 peer-checked:after:translate-x-full">
+          </div>
+          <span class="ml-3 text-stone-200 font-medium">Enable Editing</span>
+        </label>
 
-
-  <div class="mt-4 p-2 border-2 border-natural-400 rounded-md shadow-sm hover:scale-105 overflow-hidden">
-      <h2 class="text-xl mt-2 font-bold mb-4">Found info</h2>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-   
-      <div>
-        <label for="adress" class="block text-base font-bold mb-2">Adress:</label>
-        <input type="text" id="adress" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="adress" />
-      </div>
-      <div>
-        <label for="date" class="block text-base font-bold mb-2">Date:</label>
-        <input type="date" id="date" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="date" />
-      </div> 
-                      
-                      <div>
-                        <label for="time" class="block text-base font-bold mb-2">Time:</label>
-                        <div class="relative">
-                        <div class="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
-                          <svg class="w-2 h-2 fill-[#8e8e8e]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-
-                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                <path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"></path>
-
-                                </svg>
-                        </div>
-                        <input type="time" id="time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-base rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-emerald-500 dark:focus:border-emerald-500"v-model="time" min="09:00" max="18:00" value="00:00" required />
-                    </div>  
-                  </div> 
-
-      
-          <div class="w-full px-2 mb-4 ">
-        <label for="description" class="block text-base font-bold mb-2"> Description:</label>
-        <textarea id="description" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" v-model="description"></textarea>
-      </div>
-
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <div class="mt-2 p-2">
-        <label for="image" class="mt-2 block text-base font-bold mb-2 text-stone-200">Image:</label>
-        <div class="flex items-center justify-center w-full ">
-          <label :key="fileName" for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:scale-105">
-            <div v-if="!fileName" class="flex flex-col items-center justify-center pt-5 pb-6">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-              </svg>
-              <p class="mb-2 text-base text-stone-200"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-            </div>
-            <div v-else class="flex flex-col items-center justify-center pt-5 pb-6">
-              <p class="mb-2 text-base text-stone-200">{{ fileName }}</p>
-            </div>
-            <input id="dropzone-file" type="file" class="hidden" @change="onFileChange" />
-          </label>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div v-for="field in [
+            {id:'ownerName', label:'Name', model:'ownerName'},
+            {id:'ownerSurname', label:'Surname', model:'ownerSurname'},
+            {id:'ownerOIB', label:'OIB', model:'ownerOIB'},
+            {id:'ownerPhoneNumber', label:'Phone Number', model:'ownerPhoneNumber'}
+          ]" :key="field.id">
+            <label :for="field.id" class="block font-semibold mb-2 text-stone-300">{{ field.label }}:</label>
+            <input :id="field.id" v-model="field.model" :disabled="!isEditable"
+              class="w-full py-2 px-3 border border-stone-400/40 rounded-full shadow-inner"
+              :class="isEditable ? 'bg-stone-700/50 text-stone-100 focus:ring-2 focus:ring-stone-300 focus:outline-none' : 'bg-stone-600/40 text-stone-400 cursor-not-allowed'" />
+          </div>
         </div>
       </div>
-      <!-- Submit Button -->
-      <div class="mt-4">
-        <button @click="handleSubmit" class="text-stone-200 bg-green-700 hover:bg-emerald-700 py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">Submit</button>
+
+      <!-- Found Info -->
+      <div class="mt-6 p-6 bg-stone-800/60 border border-stone-500/40 rounded-2xl shadow-inner backdrop-blur-md">
+        <h2 class="text-xl font-bold mb-4 text-stone-100">Found Info</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div>
+            <label class="block mb-2 text-stone-300">Address:</label>
+            <input type="text" v-model="adress"
+              class="w-full py-2 px-3 bg-stone-700/50 border border-stone-400/40 text-stone-100 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block mb-2 text-stone-300">Date:</label>
+            <input type="date" v-model="date"
+              class="w-full py-2 px-3 bg-stone-700/50 border border-stone-400/40 text-stone-100 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block mb-2 text-stone-300">Time:</label>
+            <input type="time" v-model="time"
+              class="w-full py-2 px-3 bg-stone-700/50 border border-stone-400/40 text-stone-100 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+          </div>
+        </div>
+        <div class="mt-4">
+          <label for="description" class="block font-semibold mb-2 text-stone-300">Description:</label>
+          <textarea id="description" v-model="description"
+            class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-xl shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none"></textarea>
+        </div>
+      </div>
+
+      <!-- Image Upload -->
+      <div class="mt-6">
+        <label for="image" class="block font-semibold mb-2 text-stone-300">Image:</label>
+        <label for="dropzone-file"
+          class="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-stone-400/40 rounded-2xl cursor-pointer bg-stone-800/60 hover:bg-stone-700/60 transition-all">
+          <div v-if="!fileName" class="flex flex-col items-center justify-center text-stone-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-3" fill="none" viewBox="0 0 24 24" stroke="white">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+            </svg>
+            <p><span class="font-semibold">Click to upload</span> or drag and drop</p>
+          </div>
+          <div v-else>
+            <p class="text-stone-200">{{ fileName }}</p>
+          </div>
+          <input id="dropzone-file" type="file" class="hidden" @change="onFileChange" />
+        </label>
+      </div>
+
+      <!-- Submit -->
+      <div class="mt-8 text-center">
+        <button @click="handleSubmit"
+          class="px-6 py-3 rounded-full bg-emerald-700 hover:bg-emerald-600 text-stone-100 font-semibold transition-all focus:ring-2 focus:ring-stone-300 focus:outline-none">
+          Submit
+        </button>
       </div>
     </div>
   </div>
-
 </template>
-
-
 
 <script>
 //zapis životinje, rekorda, gdje je životinja pronađena, napravi nešto da se može upisat id osobe koja je donjela životinju

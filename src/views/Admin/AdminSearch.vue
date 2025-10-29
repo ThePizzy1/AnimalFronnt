@@ -61,7 +61,7 @@
               </div>
             </div>
 
-            <!-- Toggles (bool) -->
+            <!-- Toggles -->
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 mt-6">
               <label
                 v-for="(label, key) in toggleLabels"
@@ -79,7 +79,7 @@
               </label>
             </div>
 
-            <!-- Veliki search -->
+            <!-- Search -->
             <div class="mt-6">
               <label for="search" class="block text-gray-300 font-bold mb-2">Search (any field):</label>
               <input
@@ -110,7 +110,7 @@
             </thead>
             <tbody>
               <tr
-                v-for="item in filteredItems"
+                v-for="item in paginatedItems"
                 :key="item.idAnimal"
                 @click="navigateToDetails(item.idAnimal)"
                 class="bg-[#1a1a1a] hover:bg-[#242424] border border-gray-700/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
@@ -126,6 +126,39 @@
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <!-- PAGINACIJA -->
+        <div class="flex justify-center items-center mt-10 space-x-2">
+          <button
+            @click="prevPage"
+            :disabled="currentPage === 1"
+            class="px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 hover:bg-emerald-600 transition disabled:opacity-50"
+          >
+            Prev
+          </button>
+
+          <button
+            v-for="page in totalPages"
+            :key="page"
+            @click="goToPage(page)"
+            :class="[
+              'px-3 py-1 rounded-lg border text-sm font-medium',
+              page === currentPage
+                ? 'bg-emerald-500 border-emerald-400 text-white'
+                : 'bg-[#1a1a1a] border-gray-700 text-gray-300 hover:bg-[#242424]'
+            ]"
+          >
+            {{ page }}
+          </button>
+
+          <button
+            @click="nextPage"
+            :disabled="currentPage === totalPages"
+            class="px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 hover:bg-emerald-600 transition disabled:opacity-50"
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
@@ -160,7 +193,7 @@ export default {
         trained: false,
         socialized: false,
         adopted: false,
-        search: '', // global search input
+        search: '',
       },
       toggleLabels: {
         neutered: 'Neutered',
@@ -170,20 +203,18 @@ export default {
         socialized: 'Socialized',
         adopted: 'Adopted',
       },
+      // 🔹 PAGINACIJA
+      currentPage: 1,
+      itemsPerPage: 20,
     };
   },
   computed: {
     filteredItems() {
       const search = this.filters.search.toLowerCase();
-
       return this.items.filter((item) => {
         const matchesSearch =
           !search ||
-          Object.values(item)
-            .join(' ')
-            .toLowerCase()
-            .includes(search);
-
+          Object.values(item).join(' ').toLowerCase().includes(search);
         return (
           matchesSearch &&
           (!this.filters.family || item.family === this.filters.family) &&
@@ -198,6 +229,19 @@ export default {
           (!this.filters.adopted || item.adopted)
         );
       });
+    },
+    paginatedItems() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      return this.filteredItems.slice(start, start + this.itemsPerPage);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredItems.length / this.itemsPerPage);
+    },
+  },
+  watch: {
+    filteredItems() {
+      // Reset na prvu stranicu kad se filter promijeni
+      this.currentPage = 1;
     },
   },
   mounted() {
@@ -227,6 +271,16 @@ export default {
       this.families = [...new Set(this.items.map((item) => item.family))];
       this.speciesList = [...new Set(this.items.map((item) => item.species))];
       this.subspeciesList = [...new Set(this.items.map((item) => item.subspecies))];
+    },
+    // 🔹 PAGINATION METODE
+    nextPage() {
+      if (this.currentPage < this.totalPages) this.currentPage++;
+    },
+    prevPage() {
+      if (this.currentPage > 1) this.currentPage--;
+    },
+    goToPage(page) {
+      this.currentPage = page;
     },
   },
 };

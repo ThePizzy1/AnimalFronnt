@@ -1,271 +1,435 @@
 <template>
-    <div class="flex justify-start items-start mt-8 py-20 mx-25 ml-25">
-      <!-- Navigation on the left side -->
-      <div class="w-1/4">
-        <AdminNavigation/>
+  <div class="flex bg-[#0f0f0f] min-h-screen overflow-hidden">
+    <!-- Navigacija -->
+    <aside class="w-1/5 bg-[#151515] p-4 border-r border-gray-800 overflow-y-auto">
+      <AdminNavigation />
+    </aside>
+
+    <!-- Glavni sadržaj -->
+    <main class="flex-1 p-8 text-gray-100 overflow-y-auto">
+      <h1 class="text-3xl font-bold mb-8">📊 Admin Analytics Dashboard</h1>
+
+      <div v-if="loading" class="text-center text-gray-400 text-lg py-10">
+        ⏳ Učitavanje podataka...
       </div>
-  
-      <!-- Statistics on the right side -->
-      <div class="w-3/4 p-4">
-        <!-- Loading state while data is loading -->
-        <div v-if="loading" class="text-center text-stone-200">Loading...</div>
-  
-        <!-- When data is available -->
-        <div v-if="!loading && chartDataReady">
-            <div class="mb-10">
-          <h1 class="text-2xl text-stone-200 font-bold mb-4">Animal Statistics</h1>
-            </div>
-          <div class="mb-8">
-            <!-- Check if datasets are defined before displaying the chart -->
-            <Bar 
-              v-if="chartData && chartData.datasets && chartData.datasets.length > 0"
-              :chart-options="chartOptions"
-              :chart-data="chartData"
-              :chart-id="chartId"
-              :dataset-id-key="datasetIdKey"
-              :plugins="plugins"
-              :css-classes="cssClasses"
-              :styles="styles"
-              :width="width"
-              :height="height"
-            />
-          </div>
-  
-          <div class="mb-8 mt-8">
-            <!-- Check if datasets are defined before displaying the chart -->
-            <Bar 
-              v-if="familyChartData && familyChartData.datasets && familyChartData.datasets.length > 0"
-              :chart-options="chartOptions"
-              :chart-data="familyChartData"
-              :chart-id="chartId"
-              :dataset-id-key="datasetIdKey"
-              :plugins="plugins"
-              :css-classes="cssClasses"
-              :styles="styles"
-              :width="width"
-              :height="height"
-            />
-          </div>
+
+      <div
+        v-else-if="chartsReady"
+        class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 auto-rows-[500px]"
+      >
+        <!-- PRVI RED -->
+        <div class="chart-card">
+          <h2 class="chart-title">👥 Users by Role</h2>
+          <Doughnut
+            v-if="roleChart"
+            :chart-data="roleChart"
+            :chart-options="pieOptions"
+          />
+        </div>
+
+        <div class="chart-card">
+          <h2 class="chart-title">🧑‍⚕️ Vet vs HeadVet</h2>
+          <Pie
+            v-if="vetChart"
+            :chart-data="vetChart"
+            :chart-options="pieOptions"
+          />
+        </div>
+
+        <div class="chart-card">
+          <h2 class="chart-title">💼 Manager vs Worker</h2>
+          <Pie
+            v-if="managerWorkerChart"
+            :chart-data="managerWorkerChart"
+            :chart-options="pieOptions"
+          />
+        </div>
+
+        <!-- DRUGI RED -->
+        <div class="chart-card">
+          <h2 class="chart-title">🏢 Associations / Surrenderers / Welfare Officers</h2>
+          <Pie
+            v-if="otherRolesChart"
+            :chart-data="otherRolesChart"
+            :chart-options="pieOptions"
+          />
+        </div>
+
+        <div class="chart-card">
+          <h2 class="chart-title">🥇 Top 3 Submitters</h2>
+          <Pie
+            v-if="submitterChart"
+            :chart-data="submitterChart"
+            :chart-options="pieOptions"
+          />
+        </div>
+
+        <div class="chart-card">
+          <h2 class="chart-title">🐾 Animals by Family</h2>
+          <Bar
+            v-if="familyChart"
+            :chart-data="familyChart"
+            :chart-options="barOptions"
+          />
+        </div>
+
+        <!-- TREĆI RED -->
+        <div class="chart-card col-span-1 md:col-span-2 xl:col-span-3 h-[500px]">
+          <h2 class="chart-title">🔄 Animal Process States</h2>
+          <Bar
+            v-if="animalProcessChart"
+            :chart-data="animalProcessChart"
+            :chart-options="barOptions"
+          />
+        </div>
+
+        <!-- ČETVRTI RED -->
+        <div class="chart-card col-span-1 md:col-span-2 xl:col-span-3 h-[500px]">
+          <h2 class="chart-title">💰 Funds per Account</h2>
+          <Line
+            v-if="fundsChart"
+            :chart-data="fundsChart"
+            :chart-options="lineOptions"
+          />
         </div>
       </div>
-    </div>
-  </template>
-  
-  <script>
-//dodaj statistiku radnika, mjesečnu statistiku primanja, probaj i u koje vrijeme i kojeg datuma se najviše životinja pronalazi, koji surender najviše vraća životija
 
+      <div v-else class="text-gray-400 text-center py-10">
+        📉 Nema dostupnih podataka.
+      </div>
+    </main>
+  </div>
+</template>
 
-import AdminNavigation from '../Admin/AdminNavigation.vue';
-  import { defineComponent, ref, onMounted } from 'vue';
-  import instance from '@/axiosBase';
-  import { Bar } from 'vue-chartjs';
-  import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
-  
-  ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
-  
-  export default defineComponent({
-    components: {
-      Bar,
-      AdminNavigation,
-    },
-    setup() {
-      const loading = ref(true);
-      const allAnimals = ref([]);
-      const adoptedAnimals = ref([]);
-      const returnedAnimals = ref([]);
-      const totalAnimals = ref(0);
-      const adoptedPercentage = ref(0);
-      const returnedPercentage = ref(0);
-      const chartDataReady = ref(false); 
-      const differencePercentage = ref(0); 
-      const remainingAnimals = ref(0); 
-      const familyGroups = ref({});
-    const familyPercentages = ref({});
-    const familyChartData = ref(null); // Nova varijabla za podatke grafa
-   // Opcije za novi graf
-      const chartData = ref(null); // Initially null to prevent errors until data loads
-  
-      // Chart.js options
-      // Chart.js options
-// Chart.js options
-const chartOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    tooltip: {
-      callbacks: {
-        label: function(tooltipItem) {
-          return tooltipItem.raw + '%';
-        }
-      }
-    },
-    legend: {
-      labels: {
-        color: '#FFFFFF' // Promjena boje legendi na bijelu
-      }
-    }
+<script>
+import AdminNavigation from "../Admin/AdminNavigation.vue";
+import instance from "@/axiosBase";
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  BarElement,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
+import { Bar, Pie, Line, Doughnut } from "vue-chartjs";
+
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  BarElement,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale
+);
+
+export default {
+  components: { AdminNavigation, Bar, Pie, Line, Doughnut },
+  data() {
+    return {
+      loading: true,
+      chartsReady: false,
+      users: [],
+      animals: [],
+      balances: [],
+      animalRecords: [],
+      systemRecords: [],
+      foundRecords: [],
+      roleChart: null,
+      vetChart: null,
+      managerWorkerChart: null,
+      otherRolesChart: null,
+      submitterChart: null,
+      animalProcessChart: null,
+      familyChart: null,
+      fundsChart: null,
+    };
   },
-  scales: {
-    x: {
-      ticks: {
-        color: '#FFFFFF', // Promjena boje oznaka na X-osi na bijelu
+
+  async mounted() {
+    await this.fetchData();
+    await this.prepareCharts();
+    this.loading = false;
+    this.chartsReady = true;
+  },
+
+  methods: {
+    async fetchData() {
+      try {
+        const [usersRes, animalsRes, balancesRes, sysRes, animalRecRes, foundRes] =
+          await Promise.all([
+            instance.get("auth/getAll"),
+            instance.get("animal/animal_pc"),
+            instance.get("animal/balans_db"),
+            instance.get("animal/systemrecord_db"),
+            instance.get("animal/animalrecord_db"),
+            instance.get("animal/foundrecord_db"),
+          ]);
+
+        this.users = usersRes.data || [];
+        this.animals = animalsRes.data || [];
+        this.balances = balancesRes.data || [];
+        this.systemRecords = sysRes.data || [];
+  
+        this.foundRecords = foundRes.data || [];
+          this.animalRecords = (animalRecRes.data || []).map((r) => {
+          let recordId = r.RecordId ?? r.recordId;
+          let animalId = r.AnimalId ?? r.animalId;
+          // ako su zamijenjeni
+          if (recordId > 9 && animalId <= 9) {
+            const tmp = recordId;
+            recordId = animalId;
+            animalId = tmp;
+          }
+          return { animalId, recordId };
+        });
+        this.systemRecords = systemRecRes.data || [];
+        this.foundRecords = foundRecRes.data || [];
+      } catch (err) {
+        console.error("❌ Greška pri dohvaćanju:", err);
       }
     },
-    y: {
-      beginAtZero: true,
-      ticks: {
-        color: '#FFFFFF', // Promjena boje oznaka na Y-osi na bijelu
-        callback: function(value) {
-          return value + '%'; // Dodaj znak "%" nakon vrijednosti
-        }
+
+    async getUserNameById(id) {
+      try {
+        const res = await instance.get(`auth/getUserById/${id}`);
+        return `${res.data.name} ${res.data.surname}`;
+      } catch {
+        return "Nepoznat";
       }
-    }
-  }
+    },
+
+    async prepareCharts() {
+      const countRole = (r) => this.users.filter((u) => u.roles?.includes(r)).length;
+
+      // 👥 Roles
+      const roles = [
+        "User",
+        "Vet",
+        "HeadVet",
+        "Surenderer",
+        "AnimalWelffereOfficer",
+        "Association",
+        "Worker",
+        "Menager",
+      ];
+      this.roleChart = {
+        labels: roles,
+        datasets: [
+          {
+            data: roles.map(countRole),
+            backgroundColor: [
+              "#3B82F6",
+              "#10B981",
+              "#F59E0B",
+              "#EF4444",
+              "#8B5CF6",
+              "#14B8A6",
+              "#EAB308",
+              "#6366F1",
+            ],
+          },
+        ],
+      };
+
+      // Vets
+      this.vetChart = {
+        labels: ["Vet", "HeadVet"],
+        datasets: [
+          { data: [countRole("Vet"), countRole("HeadVet")], backgroundColor: ["#3B82F6", "#10B981"] },
+        ],
+      };
+
+      // Managers vs Workers
+      this.managerWorkerChart = {
+        labels: ["Manager", "Worker"],
+        datasets: [
+          { data: [countRole("Menager"), countRole("Worker")], backgroundColor: ["#F59E0B", "#6366F1"] },
+        ],
+      };
+
+      // Other roles
+      this.otherRolesChart = {
+        labels: ["Association", "Surrenderer", "Welfare Officer"],
+        datasets: [
+          {
+            data: [
+              countRole("Association"),
+              countRole("Surenderer"),
+              countRole("AnimalWelffereOfficer"),
+            ],
+            backgroundColor: ["#EF4444", "#F59E0B", "#10B981"],
+          },
+        ],
+      };
+
+      // 🥇 Top submitters
+      const submitCounts = {};
+      for (const f of this.foundRecords)
+        submitCounts[f.registerId] = (submitCounts[f.registerId] || 0) + 1;
+
+      const sorted = Object.entries(submitCounts).sort((a, b) => b[1] - a[1]);
+      const top3 = sorted.slice(0, 3);
+      const rest = sorted.slice(3).reduce((s, [, v]) => s + v, 0);
+      const labels = [];
+      for (const [id] of top3) labels.push(await this.getUserNameById(id));
+      labels.push("Others");
+
+      this.submitterChart = {
+        labels,
+        datasets: [
+          {
+            data: [...top3.map(([, v]) => v), rest],
+            backgroundColor: ["#3B82F6", "#10B981", "#F59E0B", "#6B7280"],
+          },
+        ],
+      };
+
+        // === ANIMAL PROCESS STATES ===
+ // --- Animal Process States ---
+      
+
+     // 🔄 ANIMAL PROCESS STATES
+const countsByRecord = Array(9).fill(0);
+
+// Broji koliko životinja ima svaki RecordId (1-9)
+this.animalRecords.forEach((r) => {
+  const recordId = r.RecordId ?? r.recordId;
+  if (recordId >= 1 && recordId <= 9) countsByRecord[recordId - 1]++;
+});
+
+// Mapiraj SystemRecord u redoslijedu 1-9
+const sysMap = {
+  1: "Arrival",
+  2: "First Vet Visit",
+  3: "Quarantine",
+  4: "Shelter",
+  5: "Socialized",
+  6: "Approve for Adoption",
+  7: "Adopted",
+  8: "Euthanasia",
+  9: "Return",
 };
 
-const familyChartOptions = { // Opcije za novi graf
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        tooltip: {
-          callbacks: {
-            label: function(tooltipItem) {
-              return tooltipItem.raw + '%';
-            }
-          }
-        },
-        legend: {
-          labels: {
-            color: '#FFFFFF' // Promjena boje legendi na bijelu
-          }
-        }
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: '#FFFFFF', // Promjena boje oznaka na X-osi na bijelu
-          }
-        },
-        y: {
-          beginAtZero: true,
-          ticks: {
-            color: '#FFFFFF', // Promjena boje oznaka na Y-osi na bijelu
-            callback: function(value) {
-              return value + '%'; // Dodaj znak "%" nakon vrijednosti
-            }
-          }
-        }
-      }
-    };
+// Kreiraj chart
+this.animalProcessChart = {
+  labels: Object.values(sysMap),
+  datasets: [
+    {
+      label: "Animals",
+      data: countsByRecord,
+      backgroundColor: "#3B82F6",
+    },
+  ],
+};
 
-  
-      const fetchData = async () => {
-        try {
-          const token = 'your-token-here'; // Replace with your token
-  
-          const allAnimalsResponse = await instance.get('animal/animal_pc', {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          allAnimals.value = allAnimalsResponse.data || [];
-  
-          const adoptedResponse = await instance.get('animal/adopted_db', {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          adoptedAnimals.value = adoptedResponse.data || [];
-  
-          const returnedResponse = await instance.get('animal/reaturned_db', {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          returnedAnimals.value = returnedResponse.data || [];
-  
-          calculateStatistics();
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        } finally {
-          loading.value = false;
-        }
-      };
-  
-      const calculateStatistics = () => {
-        totalAnimals.value = allAnimals.value.length;
-        const adoptedCount = adoptedAnimals.value.length;
-        const returnedCount = returnedAnimals.value.length;
-  
-        adoptedPercentage.value = totalAnimals.value > 0 ? ((adoptedCount / totalAnimals.value) * 100).toFixed(2) : 0;
-        returnedPercentage.value = totalAnimals.value > 0 ? ((returnedCount / totalAnimals.value) * 100).toFixed(2) : 0;
-        differencePercentage.value = (adoptedPercentage.value - returnedPercentage.value).toFixed(2);
-        const remainingAnimalsForAdoption = totalAnimals.value - adoptedCount;
-        remainingAnimals.value =100-adoptedPercentage.value;
-            // Izračun postotaka za svaki family
-  const families = ['Mammal', 'Bird', 'Fish', 'Reptile', 'Amphibian'];
-  const familyCounts = families.reduce((acc, family) => {
-    acc[family] = allAnimals.value.filter(animal => animal.family === family).length;
-    return acc;
-  }, {});
+              // 🐾 Families
+          const familyCounts = {};
 
-  const familyPercentages = families.reduce((acc, family) => {
-    const count = familyCounts[family];
-    acc[family] = totalAnimals.value > 0 ? ((count / totalAnimals.value) * 100).toFixed(2) : 0;
-    return acc;
-  }, {});
-        // Check if there are any animals to make the chart meaningful
-        if (totalAnimals.value > 0) {
-            familyChartData.value = {
-    labels: Object.keys(familyPercentages),
-    datasets: [
-      {
-        label: 'Percentage of Animal Families',
-        backgroundColor: '#3FFF00',
-        data: Object.values(familyPercentages).map(value => parseFloat(value))
-      }
-    ]
-  };
+          // Broji koliko ima svaka životinjska obitelj
+          this.animals.forEach((a) => {
+            const fam = a.family || "Unknown";
+            familyCounts[fam] = (familyCounts[fam] || 0) + 1;
+          });
 
-          chartData.value = {
-            labels: ['Adopted', 'Returned', 'Difference', 'Available'],
+          // Sortiraj abecedno po imenu obitelji
+          const fams = Object.keys(familyCounts).sort();
+
+          // Napravi chart
+          this.familyChart = {
+            labels: fams,
             datasets: [
               {
-                label: 'Animals',
-                backgroundColor: '#42A5F5',
-                data: [adoptedPercentage.value, returnedPercentage.value, differencePercentage.value, remainingAnimals.value]
-              }
-            ]
+                label: "Count",
+                data: fams.map((f) => familyCounts[f]),
+                backgroundColor: "#F59E0B",
+                borderRadius: 6,
+              },
+            ],
           };
-  
-          chartDataReady.value = true; // Data is now ready
-        }
+
+
+      // 💰 Balances
+      const labelsBal = this.balances.map((b) => b.iban);
+      const dataBal = this.balances.map((b) => b.balance || 0);
+      this.fundsChart = {
+        labels: labelsBal,
+        datasets: [
+          {
+            label: "Account Balance",
+            data: dataBal,
+            borderColor: "#10B981",
+            backgroundColor: "rgba(16,185,129,0.4)",
+            fill: false,
+            tension: 0.3,
+          },
+        ],
       };
-  
-      onMounted(() => {
-        fetchData();
-      });
-  
+    },
+  },
+
+  computed: {
+    pieOptions() {
       return {
-        loading,
-      totalAnimals,
-      adoptedPercentage,
-      returnedPercentage,
-      chartData,
-      chartDataReady,
-      chartOptions,
-      familyChartData,
-      familyChartOptions,
-      chartId: 'animalChart',
-      datasetIdKey: 'id', // Optional unique identifier for dataset
-      plugins: [],
-      cssClasses: 'chart-container',
-      styles: { position: 'relative', height: '600px', width: '1000px' }, // Customize styles
-      width: 1200,
-      height: 500
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: "bottom", labels: { color: "#ddd" } },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => {
+                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                const val = ctx.parsed;
+                const pct = ((val / total) * 100).toFixed(1);
+                return `${ctx.label}: ${val} (${pct}%)`;
+              },
+            },
+          },
+        },
       };
-    }
-  });
-  </script>
-  
-  <style scoped>
-  .chart-container {
-    width: 100%;
-    height: 100%;
-  }
-  </style>
-  
+    },
+    barOptions() {
+      return {
+        maintainAspectRatio: false,
+        plugins: { legend: { labels: { color: "#ddd" } } },
+        scales: {
+          x: { ticks: { color: "#ddd" } },
+          y: { beginAtZero: true, ticks: { color: "#ddd" } },
+        },
+      };
+    },
+    lineOptions() {
+      return {
+        maintainAspectRatio: false,
+        plugins: { legend: { labels: { color: "#ddd" } } },
+        scales: {
+          x: { ticks: { color: "#ddd" } },
+          y: { beginAtZero: true, ticks: { color: "#ddd" } },
+        },
+      };
+    },
+  },
+};
+</script>
+
+<style scoped>
+.chart-card {
+  background-color: #111;
+  border: 1px solid #222;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  overflow: hidden;
+}
+.chart-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #e5e7eb;
+}
+</style>

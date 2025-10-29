@@ -38,7 +38,6 @@
                 placeholder="Search any field (name, username, date, code...)"
                 class="w-full px-5 py-3 rounded-lg bg-[#1a1a1a] text-gray-200 placeholder-gray-500 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
               />
-             
             </div>
           </form>
         </div>
@@ -58,7 +57,7 @@
 
             <tbody>
               <tr
-                v-for="adoption in filteredAdoptions"
+                v-for="adoption in paginatedAdoptions"
                 :key="adoption.code"
                 class="bg-[#1a1a1a] hover:bg-[#242424] border border-gray-700/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
               >
@@ -79,8 +78,42 @@
           </table>
         </div>
 
-        <p class="text-gray-400 text-sm mt-3">
-          Showing {{ filteredAdoptions.length }} of {{ adoptions.length }} results
+        <!-- PAGINACIJA -->
+        <div class="flex justify-center items-center mt-10 space-x-2">
+          <button
+            @click="prevPage"
+            :disabled="currentPage === 1"
+            class="px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 hover:bg-emerald-600 transition disabled:opacity-50"
+          >
+            Prev
+          </button>
+
+          <button
+            v-for="page in totalPages"
+            :key="page"
+            @click="goToPage(page)"
+            :class="[
+              'px-3 py-1 rounded-lg border text-sm font-medium',
+              page === currentPage
+                ? 'bg-emerald-500 border-emerald-400 text-white'
+                : 'bg-[#1a1a1a] border-gray-700 text-gray-300 hover:bg-[#242424]'
+            ]"
+          >
+            {{ page }}
+          </button>
+
+          <button
+            @click="nextPage"
+            :disabled="currentPage === totalPages"
+            class="px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 hover:bg-emerald-600 transition disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+
+        <p class="text-gray-400 text-sm mt-5 text-center">
+          Showing {{ paginatedAdoptions.length }} of {{ filteredAdoptions.length }} filtered results
+          (Total: {{ adoptions.length }})
         </p>
       </div>
     </div>
@@ -103,6 +136,9 @@ export default {
         adopterId: '',
       },
       globalSearch: '',
+      // 🔹 PAGINATION
+      currentPage: 1,
+      itemsPerPage: 20,
     };
   },
   mounted() {
@@ -114,8 +150,42 @@ export default {
       },
       (error) => Promise.reject(error)
     );
-
     this.fetchAdoptions();
+  },
+  computed: {
+    filteredAdoptions() {
+      const search = this.globalSearch.toLowerCase();
+      return this.adoptions.filter((adoption) => {
+        const adopter = this.getAdopterById(adoption.adopterId);
+        const matchesSpecific =
+          (!this.filter.code || adoption.code.toString().includes(this.filter.code)) &&
+          (!this.filter.animalId || adoption.animalId.toString().includes(this.filter.animalId)) &&
+          (!this.filter.adopterId || adoption.adopterId.toString().includes(this.filter.adopterId));
+        const matchesGlobal =
+          !search ||
+          adoption.code.toString().toLowerCase().includes(search) ||
+          adoption.animalId.toString().toLowerCase().includes(search) ||
+          adopter.firstName?.toLowerCase().includes(search) ||
+          adopter.lastName?.toLowerCase().includes(search) ||
+          adopter.username?.toLowerCase().includes(search) ||
+          this.formatDate(adoption.adoptionDate).includes(search);
+        return matchesSpecific && matchesGlobal;
+      });
+    },
+    // 🔹 Paginirani podaci
+    paginatedAdoptions() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      return this.filteredAdoptions.slice(start, start + this.itemsPerPage);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredAdoptions.length / this.itemsPerPage);
+    },
+  },
+  watch: {
+    filteredAdoptions() {
+      // Reset paginacije kad se filter promijeni
+      this.currentPage = 1;
+    },
   },
   methods: {
     fetchAdoptions() {
@@ -123,14 +193,13 @@ export default {
         .get('animal/adopted_db')
         .then((response) => {
           this.adoptions = response.data;
-
           const adopterIds = [...new Set(this.adoptions.map((a) => a.adopterId))];
           Promise.all(
             adopterIds.map((id) =>
               instance
                 .get(`animal/adopterInt/${id}`)
                 .then((res) => ({
-                  id: id,
+                  id,
                   firstName: res.data.firstName,
                   lastName: res.data.lastName,
                   username: res.data.username,
@@ -153,30 +222,15 @@ export default {
     getAdopterById(adopterId) {
       return this.adopterDetails.find((a) => a.id === adopterId) || {};
     },
-  },
-  computed: {
-    filteredAdoptions() {
-      const search = this.globalSearch.toLowerCase();
-
-      return this.adoptions.filter((adoption) => {
-        const adopter = this.getAdopterById(adoption.adopterId);
-
-        const matchesSpecific =
-          (!this.filter.code || adoption.code.toString().includes(this.filter.code)) &&
-          (!this.filter.animalId || adoption.animalId.toString().includes(this.filter.animalId)) &&
-          (!this.filter.adopterId || adoption.adopterId.toString().includes(this.filter.adopterId));
-
-        const matchesGlobal =
-          !search ||
-          adoption.code.toString().toLowerCase().includes(search) ||
-          adoption.animalId.toString().toLowerCase().includes(search) ||
-          adopter.firstName?.toLowerCase().includes(search) ||
-          adopter.lastName?.toLowerCase().includes(search) ||
-          adopter.username?.toLowerCase().includes(search) ||
-          this.formatDate(adoption.adoptionDate).includes(search);
-
-        return matchesSpecific && matchesGlobal;
-      });
+    // 🔹 PAGINATION METODE
+    nextPage() {
+      if (this.currentPage < this.totalPages) this.currentPage++;
+    },
+    prevPage() {
+      if (this.currentPage > 1) this.currentPage--;
+    },
+    goToPage(page) {
+      this.currentPage = page;
     },
   },
 };
@@ -188,7 +242,6 @@ export default {
   font-family: 'Poppins', sans-serif;
   margin-top: 25px;
 }
-
 .custom-scrollbar::-webkit-scrollbar {
   height: 8px;
 }

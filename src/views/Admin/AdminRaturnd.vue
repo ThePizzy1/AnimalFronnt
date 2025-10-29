@@ -38,7 +38,6 @@
                 placeholder="Search any field (code, animal, adopter, date, reason...)"
                 class="w-full px-5 py-3 rounded-lg bg-[#1a1a1a] text-gray-200 placeholder-gray-500 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
               />
-            
             </div>
           </form>
         </div>
@@ -59,7 +58,7 @@
 
             <tbody>
               <tr
-                v-for="returnData in filteredReturnedAnimals"
+                v-for="returnData in paginatedReturnedAnimals"
                 :key="returnData.returnCode"
                 @click="navigateToDetails(returnData.animalId)"
                 class="bg-[#1a1a1a] hover:bg-[#242424] border border-gray-700/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
@@ -75,9 +74,43 @@
           </table>
         </div>
 
-        <!-- Rezultati -->
-        <p class="text-gray-400 text-sm mt-3">
-          Showing {{ filteredReturnedAnimals.length }} of {{ returnedAnimals.length }} results
+        <!-- PAGINACIJA -->
+        <div class="flex justify-center items-center mt-10 space-x-2">
+          <button
+            @click="prevPage"
+            :disabled="currentPage === 1"
+            class="px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 hover:bg-emerald-600 transition disabled:opacity-50"
+          >
+            Prev
+          </button>
+
+          <button
+            v-for="page in totalPages"
+            :key="page"
+            @click="goToPage(page)"
+            :class="[
+              'px-3 py-1 rounded-lg border text-sm font-medium',
+              page === currentPage
+                ? 'bg-emerald-500 border-emerald-400 text-white'
+                : 'bg-[#1a1a1a] border-gray-700 text-gray-300 hover:bg-[#242424]'
+            ]"
+          >
+            {{ page }}
+          </button>
+
+          <button
+            @click="nextPage"
+            :disabled="currentPage === totalPages"
+            class="px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 hover:bg-emerald-600 transition disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+
+        <!-- Info o rezultatima -->
+        <p class="text-gray-400 text-sm mt-5 text-center">
+          Showing {{ paginatedReturnedAnimals.length }} of {{ filteredReturnedAnimals.length }} filtered results
+          (Total: {{ returnedAnimals.length }})
         </p>
       </div>
     </div>
@@ -99,6 +132,9 @@ export default {
       searchAnimalId: '',
       searchAdopterId: '',
       globalSearch: '',
+      // 🔹 PAGINATION
+      currentPage: 1,
+      itemsPerPage: 20,
     };
   },
   mounted() {
@@ -114,6 +150,44 @@ export default {
     this.fetchReturnedAnimals();
     this.loadAdoptions();
   },
+  computed: {
+    filteredReturnedAnimals() {
+      const query = this.globalSearch.toLowerCase();
+      return this.returnedAnimals.filter((returnData) => {
+        const adopter = this.adopterDetails.find((a) => a.id === returnData.adopterId);
+        const matchesFieldSearch =
+          (!this.searchCode || returnData.returnCode.toString().includes(this.searchCode)) &&
+          (!this.searchAnimalId || returnData.animalId.toString().includes(this.searchAnimalId)) &&
+          (!this.searchAdopterId || returnData.adopterId.toString().includes(this.searchAdopterId));
+
+        const matchesGlobal =
+          !query ||
+          returnData.returnCode.toString().toLowerCase().includes(query) ||
+          returnData.animalId.toString().toLowerCase().includes(query) ||
+          returnData.returnReason?.toLowerCase().includes(query) ||
+          this.getReturnDate(returnData.returnDate).toLowerCase().includes(query) ||
+          adopter?.firstName?.toLowerCase().includes(query) ||
+          adopter?.lastName?.toLowerCase().includes(query) ||
+          adopter?.username?.toLowerCase().includes(query);
+
+        return matchesFieldSearch && matchesGlobal;
+      });
+    },
+    // 🔹 PAGINIRANI PODACI
+    paginatedReturnedAnimals() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      return this.filteredReturnedAnimals.slice(start, start + this.itemsPerPage);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredReturnedAnimals.length / this.itemsPerPage);
+    },
+  },
+  watch: {
+    filteredReturnedAnimals() {
+      // Reset paginacije kad se promijeni filter ili pretraga
+      this.currentPage = 1;
+    },
+  },
   methods: {
     fetchReturnedAnimals() {
       instance
@@ -121,7 +195,6 @@ export default {
         .then((response) => {
           this.returnedAnimals = response.data;
           const adopterIds = [...new Set(this.returnedAnimals.map((a) => a.adopterId))];
-
           Promise.all(
             adopterIds.map((id) =>
               instance.get(`animal/adopterInt/${id}`).then((res) => res.data).catch(() => null)
@@ -156,30 +229,15 @@ export default {
     navigateToDetails(id) {
       this.$router.push(`/adminAnimals/${id}`);
     },
-  },
-  computed: {
-    filteredReturnedAnimals() {
-      const query = this.globalSearch.toLowerCase();
-      return this.returnedAnimals.filter((returnData) => {
-        const adopter = this.adopterDetails.find((a) => a.id === returnData.adopterId);
-
-        const matchesFieldSearch =
-          returnData.returnCode.toString().includes(this.searchCode) &&
-          returnData.animalId.toString().includes(this.searchAnimalId) &&
-          returnData.adopterId.toString().includes(this.searchAdopterId);
-
-        const matchesGlobal =
-          !query ||
-          returnData.returnCode.toString().toLowerCase().includes(query) ||
-          returnData.animalId.toString().toLowerCase().includes(query) ||
-          returnData.returnReason?.toLowerCase().includes(query) ||
-          this.getReturnDate(returnData.returnDate).toLowerCase().includes(query) ||
-          adopter?.firstName?.toLowerCase().includes(query) ||
-          adopter?.lastName?.toLowerCase().includes(query) ||
-          adopter?.username?.toLowerCase().includes(query);
-
-        return matchesFieldSearch && matchesGlobal;
-      });
+    // 🔹 PAGINATION METODE
+    nextPage() {
+      if (this.currentPage < this.totalPages) this.currentPage++;
+    },
+    prevPage() {
+      if (this.currentPage > 1) this.currentPage--;
+    },
+    goToPage(page) {
+      this.currentPage = page;
     },
   },
 };
@@ -200,5 +258,11 @@ export default {
 }
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
+}
+tbody tr {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+tbody tr:hover {
+  transform: translateY(-3px);
 }
 </style>

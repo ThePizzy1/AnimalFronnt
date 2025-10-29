@@ -2,11 +2,11 @@
   <Navigation/>
 
   <!-- PAGE BACKGROUND -->
-  <div class="flex justify-center items-center min-h-screen  text-stone-200">
+  <div class="flex justify-center items-center min-h-screen text-stone-200">
     <!-- MAIN CONTAINER -->
-    <div class="h-[1000px] my-10 w-96 md:w-4/5 shadow-2xl rounded-lg md:rounded-lg bg-stone-800/60 backdrop-blur-sm border border-stone-600">
+    <div class="h-[1000px] my-10 w-96 md:w-4/5 shadow-2xl rounded-lg bg-stone-800/60 backdrop-blur-sm border border-stone-600">
       <div class="flex h-full w-full">
-
+        
         <!-- LEFT COLUMN -->
         <div class="ml-2 h-full p-6 rounded-lg w-full">
           
@@ -120,22 +120,11 @@
                 placeholder="HR1235412548452125481"
                 required
               />
-              <div class="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
-                <svg fill="none" class="h-6 text-stone-400" viewBox="0 0 36 21">
-                  <path fill="currentColor"
-                    d="M23.315 4.773c-2.542 0-4.813 1.3-4.813 3.705 0 2.756 4.028 2.947 4.028 4.332 0 .583-.676 1.105-1.832 1.105-1.64 0-2.866-.73-2.866-.73l-.524 2.426s1.412.616 3.286.616c2.78 0 4.966-1.365 4.966-3.81 0-2.913-4.045-3.097-4.045-4.383 0-.457.555-.957 1.708-.957 1.3 0 2.36.53 2.36.53l.514-2.343s-1.154-.491-2.782-.491z"/>
-                </svg>
-              </div>
             </div>
 
             <div class="grid grid-cols-3 gap-4 my-4">
               <!-- Expiry -->
               <div class="relative max-w-sm col-span-2">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                  <svg class="w-4 h-4 text-stone-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                  </svg>
-                </div>
                 <input
                   id="card-expiration-input"
                   type="text"
@@ -160,7 +149,7 @@
 
             <button
               @click="handleSubmit"
-              type="submit"
+              type="button"
               class="text-stone-900 bg-stone-300 hover:bg-stone-400 focus:ring-4 focus:ring-stone-300 font-medium rounded-lg text-base px-5 py-2.5 me-2 mb-2 focus:outline-none transition"
             >
               Pay now
@@ -169,10 +158,9 @@
         </div>
 
         <!-- RIGHT COLUMN (IMAGE) -->
-        <div class="h-full hidden md:block relative md:rounded-lg overflow-hidden w-full">
-          <div class="absolute inset-0 bg-[url('https://imgur.com/2hR32WP.jpg')] bg-cover bg-center opacity-20"></div>
+        <div class="h-full hidden md:block relative overflow-hidden w-full">
           <img
-            class="h-full w-full object-cover"
+            class="h-full w-full object-cover opacity-30"
             src="https://firebasestorage.googleapis.com/v0/b/animalrescue-fa5f9.appspot.com/o/DONATE.png?alt=media&token=c78dd20b-3abb-4221-a565-4d836b56e522"
             alt="Donate"
           />
@@ -184,86 +172,95 @@
   <Footer/>
 </template>
 
-
 <script>
 import Navigation from '../User/Navigation.vue';
 import Footer from '../User/Footer.vue';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import instance from '@/axiosBase';
 import moment from 'moment';
+
 export default {
-    components: {
-        Navigation,
-        Footer,
-    },
-    data() {
-        return {
-            adopterId: localStorage.getItem('adopterid'),        
-            amount: '',
-            picked: '',
-            iban: '',
-       
-           
+  components: { Navigation, Footer },
+  data() {
+    return {
+      adopterId: localStorage.getItem('adopterid'),
+      amount: '',
+      picked: '',
+      iban: '',
+      token: localStorage.getItem('token'),
+    };
+  },
+  methods: {
+    async handleSubmit() {
+      try {
+        if (!this.picked || !this.amount || !this.iban) {
+          await Swal.fire({ title: "Please fill all fields!", icon: "warning" });
+          return;
+        }
+
+        const donationAccounts = {
+          "Food": { id: 1, iban: "HR1424300091111111111" },
+          "Toys for animals": { id: 2, iban: "HR9823600012222222222" },
+          "Shelter upgrades": { id: 3, iban: "HR4424840081333333333" },
+          "Where it's needed": { id: 4, iban: "HR6823900123444444444" },
         };
-    },
-    methods: {
-       
-        async handleSubmit(){
-             console.log( moment().format());
-        try{
-            const response = await instance.post('animal/addFunds',{
-            amount:parseFloat( this.amount),
-            purpose: this.picked, 
-            adopterId: parseInt(this.adopterId),
-            iban: this.iban,
-           },{ headers: { Authorization: `Bearer ${this.token}`, },  }  );
-            await  Swal.fire({
-              title: "Donation sent!",
-              draggable: true,
-              icon: "success"
-            });
 
-              const responseUpdate=await instance.put('animal/updateBalansDomain',{
-              id:2,
-              balance:parseFloat( this.amount)
-            },
-            {  headers: { Authorization: `Bearer ${this.token}`, },
-             });
-            console.log("Update "+responseUpdate.status);
-            const responseTaransaction=await instance.put('animal/addTransactions',{
-                iban:"HR1234567891234567891",
-                ibanAnimalShelter:this.iban,
-                type:"payment",
-                cost:parseFloat( this.amount),
-                purpose: this.picked,
-            },
-            {  headers: { Authorization: `Bearer ${this.token}`, },
-             });
-             console.log("Update "+responseTaransaction.status);
+        const selected = donationAccounts[this.picked];
+        if (!selected) {
+          await Swal.fire({ title: "Invalid donation type!", icon: "error" });
+          return;
+        }
 
-            window.location.reload();
-            }
-        catch(error){
-             console.log("Amount: ", this.amount);
-             console.log("Purpose: ", this.picked);
-                          console.log("AdopterId: ", this.adopterId);
-             console.error('There was an error!', error);
-            await  Swal.fire({
-             title: "Ooops!",
-             text: "There was an error!",
-             draggable: true,
-             icon: "error"
-         });
+        console.log("💰 Starting donation...");
+        console.log("Purpose:", this.picked);
+        console.log("From:", this.iban, "To:", selected.iban);
 
+        // ADD FUNDS
+        const addFunds = await instance.post("animal/addFunds", {
+          AdopterId: parseInt(this.adopterId),
+          Amount: parseFloat(this.amount),
+          Purpose: this.picked,
+          Iban: this.iban,
+        });
+
+        console.log("✅ Funds Added:", addFunds.status);
+
+        // UPDATE BALANCE
+        const updateBal = await instance.put("animal/updateBalansDomain", {
+          id: selected.id,
+          balance: parseFloat(this.amount),
+        });
+
+        console.log("💹 Balance Updated:", updateBal.status);
+
+        // ADD TRANSACTION
+        const addTransaction = await instance.post("animal/addTransactions", {
+          Iban: this.iban,
+          IbanAnimalShelter: selected.iban,
+          Type: "payment",
+          Cost: parseFloat(this.amount),
+          Purpose: this.picked,
+        });
+
+        console.log("📒 Transaction Added:", addTransaction.status);
+
+        await Swal.fire({
+          title: "Donation Successful!",
+          text: `Your ${this.picked.toLowerCase()} donation has been processed.`,
+          icon: "success",
+        });
+
+        window.location.reload();
+
+      } catch (error) {
+        console.error("❌ Donation error:", error.response?.data || error.message);
+        await Swal.fire({
+          title: "Error",
+          text: "Something went wrong while processing your donation.",
+          icon: "error",
+        });
       }
-                                            
- },
-
-
-}
+    },
+  },
 };
 </script>
-
-<style>
-
-</style>
