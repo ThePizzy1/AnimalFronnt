@@ -1,120 +1,154 @@
 <template>
-  <div class="flex justify-center items-start mt-8 py-20 mx-25 ml-25">
-    <!-- Navigation on the left side -->
+  <div class="flex justify-center items-start mt-8 py-20  text-gray-200">
+    <!-- Lijevi navigacijski panel -->
     <div class="w-1/4">
-    <WorkerNavigation/>
+      <WorkerNavigation />
     </div>
 
-    <div class="w-3/4 flex flex-col space-y-10 ">
-<!-- Display animal details panel -->
-<div class="flex flex-col md:flex-row mx-4 shadow-2xl px-10 py-10 relative" v-if="animal">
-  <!-- Slika sa lijeve strane -->
-  <div class="md:w-1/3">
-    <img :src="'data:image/jpeg;base64,' + animal.picture" :alt="animal.name" class="w-full h-auto rounded-lg">
+    <!-- Glavni prikaz -->
+    <div class="w-3/4 flex flex-col space-y-10">
+
+      <!-- PANEL S DETALJIMA -->
+      <div
+        v-if="animal"
+        class="flex flex-col md:flex-row mx-6 p-10 rounded-xl bg-[#1a1a1a] border border-gray-700/40 shadow-lg hover:shadow-emerald-700/20 transition-all duration-300"
+      >
+        <!-- 🖼️ Slika životinje -->
+        <div class="md:w-1/3">
+          <img
+            :src="'data:image/jpeg;base64,' + animal.picture"
+            :alt="animal.name"
+            class="w-full h-auto rounded-lg border border-gray-700/40 shadow-md"
+          />
+        </div>
+
+        <!-- 📋 Detalji -->
+        <div class="md:w-2/3 md:ml-8 mt-6 md:mt-0">
+          <h1 class="text-3xl font-semibold mb-6 text-white">
+            {{ animal.name }}
+          </h1>
+
+          <!-- Osnovni podaci -->
+          <div class="grid grid-cols-2 gap-4 text-gray-300">
+            <div><strong class="text-emerald-400">Family:</strong> {{ animal.family }}</div>
+            <div><strong class="text-emerald-400">Species:</strong> {{ animal.species }}</div>
+            <div><strong class="text-emerald-400">Subspecies:</strong> {{ animal.subspecies }}</div>
+            <div><strong class="text-emerald-400">Age:</strong> {{ animal.age }} years</div>
+            <div><strong class="text-emerald-400">Gender:</strong> {{ animal.gender }}</div>
+            <div><strong class="text-emerald-400">Weight:</strong> {{ animal.weight }} kg</div>
+            <div><strong class="text-emerald-400">Height:</strong> {{ animal.height }} cm</div>
+            <div><strong class="text-emerald-400">Length:</strong> {{ animal.length }} cm</div>
+          </div>
+
+          <!-- Checkbox sekcija -->
+          <div class="mt-6 grid grid-cols-2 gap-4">
+            <div v-for="(label, key) in {
+              neutered: 'Neutered',
+              vaccinated: 'Vaccinated',
+              microchipped: 'Microchipped',
+              trained: 'Trained',
+              socialized: 'Socialized'
+            }" :key="key" class="flex items-center">
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="checkbox" v-model="animal[key]" class="sr-only peer" disabled>
+                <div
+                  class="relative w-11 h-6 bg-gray-600 peer-focus:ring-emerald-500/60 rounded-full peer-checked:bg-emerald-600 transition-all"
+                ></div>
+                <span class="ml-3 text-base font-medium text-gray-200">{{ label }}</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Opis -->
+          <div class="mt-6 space-y-2 text-gray-300">
+            <div><strong class="text-emerald-400">Health Issues:</strong> {{ animal.healthIssues }}</div>
+            <div><strong class="text-emerald-400">Personality:</strong> {{ animal.personalityDescription }}</div>
+          </div>
+
+          <!-- Dodatni podaci po familiji -->
+          <div v-if="animal.family" class="mt-8 border-t border-gray-700/40 pt-6">
+            <h2 class="text-xl font-semibold mb-4 text-white/90">Additional Details</h2>
+
+            <div
+              v-if="animal.family === 'Mammal'"
+              class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300"
+            >
+              <div v-if="additionalDetails.coatType">
+                <strong class="text-emerald-400">Coat Type:</strong> {{ additionalDetails.coatType }}
+              </div>
+              <div v-if="additionalDetails.groomingProducts">
+                <strong class="text-emerald-400">Grooming Products:</strong> {{ additionalDetails.groomingProducts }}
+              </div>
+            </div>
+
+            <div
+              v-else-if="animal.family === 'Bird'"
+              class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300"
+            >
+              <div v-if="additionalDetails.cageSize">
+                <strong class="text-emerald-400">Cage Size:</strong> {{ additionalDetails.cageSize }}
+              </div>
+              <div v-if="additionalDetails.recommendedToys">
+                <strong class="text-emerald-400">Recommended Toys:</strong> {{ additionalDetails.recommendedToys }}
+              </div>
+              <div v-if="additionalDetails.sociability">
+                <strong class="text-emerald-400">Sociability:</strong> {{ additionalDetails.sociability }}
+              </div>
+            </div>
+
+            <div
+              v-else-if="animal.family === 'Fish'"
+              class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300"
+            >
+              <div v-if="additionalDetails.tankSize">
+                <strong class="text-emerald-400">Tank Size:</strong> {{ additionalDetails.tankSize }}
+              </div>
+              <div v-if="additionalDetails.compatibleSpecies">
+                <strong class="text-emerald-400">Compatible Species:</strong> {{ additionalDetails.compatibleSpecies }}
+              </div>
+              <div v-if="additionalDetails.recommendedItems">
+                <strong class="text-emerald-400">Recommended Items:</strong> {{ additionalDetails.recommendedItems }}
+              </div>
+            </div>
+
+            <div
+              v-else-if="animal.family === 'Reptile'"
+              class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300"
+            >
+              <div v-if="additionalDetails.tankSize">
+                <strong class="text-emerald-400">Tank Size:</strong> {{ additionalDetails.tankSize }}
+              </div>
+              <div v-if="additionalDetails.sociability">
+                <strong class="text-emerald-400">Sociability:</strong> {{ additionalDetails.sociability }}
+              </div>
+              <div v-if="additionalDetails.compatibleSpecies">
+                <strong class="text-emerald-400">Compatible Species:</strong> {{ additionalDetails.compatibleSpecies }}
+              </div>
+            </div>
+
+            <div
+              v-else-if="animal.family === 'Amphibian'"
+              class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300"
+            >
+              <div v-if="additionalDetails.humidity">
+                <strong class="text-emerald-400">Humidity:</strong> {{ additionalDetails.humidity }} %
+              </div>
+              <div v-if="additionalDetails.temperature">
+                <strong class="text-emerald-400">Temperature:</strong> {{ additionalDetails.temperature }} °C
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ako se ne učita -->
+      <div v-else class="text-center text-gray-400 mt-20">
+        <p>Loading animal details...</p>
+      </div>
+    </div>
   </div>
-  <!-- Podaci o životinji sa desne strane -->
-  <div class="md:w-2/3 md:ml-4 mt-4 md:mt-0">
-    <h1 class="text-2xl font-bold mb-4 text-stone-200">{{ animal.name }}</h1>
-    <div class="grid grid-cols-2 gap-4 text-stone-200">
-      <div><strong>Family:</strong> {{ animal.family }}</div>
-      <div><strong>Species:</strong> {{ animal.species }}</div>
-      <div><strong>Subspecies:</strong> {{ animal.subspecies }}</div>
-      <div><strong>Age:</strong> {{ animal.age }}<strong> years</strong></div>
-      <div><strong>Gender:</strong> {{ animal.gender }}</div>
-      <div><strong>Weight:</strong> {{ animal.weight }}<strong> kg</strong></div>
-      <div><strong>Height:</strong> {{ animal.height }}<strong> cm</strong></div>
-      <div><strong>Length:</strong> {{ animal.length }}<strong> cm</strong></div>
-    </div>
-    <div class="mt-4 grid grid-cols-2 gap-4">
-      <div class="flex items-center">
-        <label class="inline-flex items-center cursor-pointer">
-          <input type="checkbox" v-model="animal.neutered" class="sr-only peer" disabled>
-          <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-          <span class="ms-3 text-base font-medium text-stone-200">Neutered</span>
-        </label>
-      </div>
-      <div class="flex items-center">
-        <label class="inline-flex items-center cursor-pointer">
-          <input type="checkbox" v-model="animal.vaccinated" class="sr-only peer" disabled>
-          <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-          <span class="ms-3 text-base font-medium text-stone-200">Vaccinated</span>
-        </label>
-      </div>
-      <div class="flex items-center">
-        <label class="inline-flex items-center cursor-pointer">
-          <input type="checkbox" v-model="animal.microchipped" class="sr-only peer" disabled>
-          <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-          <span class="ms-3 text-base font-medium text-stone-200">Microchipped</span>
-        </label>
-      </div>
-      <div class="flex items-center">
-        <label class="inline-flex items-center cursor-pointer">
-          <input type="checkbox" v-model="animal.trained" class="sr-only peer" disabled>
-          <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-          <span class="ms-3 text-base font-medium text-stone-200">Trained</span>
-        </label>
-      </div>
-      <div class="flex items-center">
-        <label class="inline-flex items-center cursor-pointer">
-          <input type="checkbox" v-model="animal.socialized" class="sr-only peer" disabled>
-          <div class="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-700 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-500 after:border-gray-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-700 peer-checked:bg-green-800"></div>
-          <span class="ms-3 text-base font-medium text-stone-200">Socialized</span>
-        </label>
-      </div>
-    </div>
-
-    <div class="mt-4 text-stone-200">
-      <div><strong>Health Issues:</strong> {{ animal.healthIssues }}</div>
-      <div><strong>Personality Description:</strong> {{ animal.personalityDescription }}</div>
-    </div>
-
- <!-- Additional Fields based on selected family -->
-<template v-if="animal.family === 'Mammal'">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
-  <div v-if="additionalDetails.coatType"><strong>Coat Type:</strong> {{ additionalDetails.coatType }}</div>
-  <div v-if="additionalDetails.groomingProducts"><strong>Grooming Products:</strong> {{ additionalDetails.groomingProducts }}</div>
-</div>
 </template>
 
-<template v-else-if="animal.family === 'Bird'">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
-  <div v-if="additionalDetails.cageSize"><strong>Cage Size:</strong> {{ additionalDetails.cageSize }}</div>
-  <div v-if="additionalDetails.recommendedToys"><strong>Recommended Toys:</strong> {{ additionalDetails.recommendedToys }}</div>
-  <div v-if="additionalDetails.sociability"><strong>Sociability:</strong> {{ additionalDetails.sociability }}</div>
-</div>
-</template>
-
-<template v-else-if="animal.family === 'Fish'">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
-  <div v-if="additionalDetails.tankSize"><strong>Tank Size:</strong> {{ additionalDetails.tankSize }}</div>
-  <div v-if="additionalDetails.compatibleSpecies"><strong>Compatible Species:</strong> {{ additionalDetails.compatibleSpecies }}</div>
-  <div v-if="additionalDetails.recommendedItems"><strong>Recommended Items:</strong> {{ additionalDetails.recommendedItems }}</div>
-</div>
-</template>
-
-<template v-else-if="animal.family === 'Reptile'">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
-  <div v-if="additionalDetails.tankSize"><strong>Tank Size:</strong> {{ additionalDetails.tankSize }}</div>
-  <div v-if="additionalDetails.sociability"><strong>Sociability:</strong> {{ additionalDetails.sociability }}</div>
-  <div v-if="additionalDetails.compatibleSpecies"><strong>Compatible Species:</strong> {{ additionalDetails.compatibleSpecies }}</div>
-</div>
-</template>
-
-<template v-else-if="animal.family === 'Amphibian'">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 text-stone-200">
-  <div v-if="additionalDetails.humidity"><strong>Humidity:</strong> {{ additionalDetails.humidity }}<strong> %</strong></div>
-  <div v-if="additionalDetails.temperature"><strong>Temperature:</strong> {{ additionalDetails.temperature }}<strong> C°</strong></div>
-</div>
-</template>
-
-
-  </div>
-</div>
-    </div>
-  </div>
-  
-      
-  </template>
 <script>
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';

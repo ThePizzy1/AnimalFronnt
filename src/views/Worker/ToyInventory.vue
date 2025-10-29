@@ -1,287 +1,541 @@
 <template>
-  <div class="flex">
-    <div class="w-1/6 text-stone-200 p-4 rounded-l-lg">
-       <Loading v-if="loadingError" /> 
+ <div class="flex">
+  <!-- 🧭 Sidebar -->
+  <div class="w-1/6 text-gray-200 p-4 bg-[#0e0e0e] rounded-l-lg">
+    <Loading v-if="loadingError" />
+    <WorkerNavigation />
+  </div>
 
-      <WorkerNavigation />
-    </div>
-    <div class="w-5/6 text-stone-200 p-4 rounded-r-lg mr-8">
-      <h1 class="text-xl font-bold mb-4">Animal Toy Database</h1>
-      <button @click="add = true" :disabled="userRole !== 'Menager'" type="button"   class="mb-4 text-stone-200 bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-base p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed"
+  <!-- 📄 Glavni sadržaj -->
+  <div class="w-5/6 text-gray-200 p-6 rounded-r-lg shadow-lg">
+    <!-- NASLOV -->
+    <h1 class="text-2xl font-semibold text-white/90 mb-6">
+      Animal Toy Database
+    </h1>
+
+    <!-- ➕ ADD TOYS GUMB -->
+    <button
+      @click="add = true"
+      :disabled="userRole !== 'Menager'"
+      type="button"
+      class="flex items-center gap-2 px-4 py-2 mb-6 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+    >
+      <svg
+        class="w-5 h-5"
+        fill="currentColor"
+        viewBox="0 0 512 512"
+        xmlns="http://www.w3.org/2000/svg"
       >
-          <svg class="w-8 h-8 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 
+          0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 
+          10.7-24 24-24s24 10.7 24 24v64h64c13.3 
+          0 24 10.7 24 24s-10.7 24-24 24H280v64c0 
+          13.3-10.7 24-24 24s-24-10.7-24-24z"
+        />
+      </svg>
+      Add Toy
+    </button>
 
-              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-              <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
-
-              </svg>
-        <span class="block text-base font-bold mx-2 ">Add toys</span>
-        </button>
-      <div class="grid grid-cols-4 gap-4 mb-4">
+    <!-- 🎯 FILTERI -->
+    <div class="bg-[#1a1a1a] rounded-xl p-6 shadow-lg border border-white/10 mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
         <div>
-          <label for="brandName" class="block text-base font-bold mb-2">Brand Name:</label>
-          <select v-model="filters.brandName" id="brandName" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+          <label class="block text-gray-300 mb-1 font-medium">Brand Name</label>
+          <select
+            v-model="filters.brandName"
+            id="brandName"
+            class="w-full px-4 py-2 rounded-lg bg-[#0e0e0e] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+          >
             <option value="">All</option>
             <option v-for="brand in brands" :key="brand" :value="brand">{{ brand }}</option>
           </select>
         </div>
+
         <div>
-          <label for="toyType" class="block text-base font-bold mb-2">Toy Type:</label>
-          <select v-model="filters.toyType" id="toyType" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+          <label class="block text-gray-300 mb-1 font-medium">Toy Type</label>
+          <select
+            v-model="filters.toyType"
+            id="toyType"
+            class="w-full px-4 py-2 rounded-lg bg-[#0e0e0e] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+          >
             <option value="">All</option>
             <option v-for="type in toyTypes" :key="type" :value="type">{{ type }}</option>
           </select>
         </div>
+
         <div>
-          <label for="animalType" class="block text-base font-bold mb-2">Animal Type:</label>
-          <select v-model="filters.animalType" id="animalType" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+          <label class="block text-gray-300 mb-1 font-medium">Animal Type</label>
+          <select
+            v-model="filters.animalType"
+            id="animalType"
+            class="w-full px-4 py-2 rounded-lg bg-[#0e0e0e] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+          >
             <option value="">All</option>
             <option v-for="animal in animalTypes" :key="animal" :value="animal">{{ animal }}</option>
           </select>
         </div>
+
         <div>
-          <label for="ageGroup" class="block text-base font-bold mb-2">Age Group:</label>
-          <select v-model="filters.ageGroup" id="ageGroup" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+          <label class="block text-gray-300 mb-1 font-medium">Age Group</label>
+          <select
+            v-model="filters.ageGroup"
+            id="ageGroup"
+            class="w-full px-4 py-2 rounded-lg bg-[#0e0e0e] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+          >
             <option value="">All</option>
             <option v-for="age in ageGroups" :key="age" :value="age">{{ age }}</option>
           </select>
         </div>
       </div>
-          <div class="relative w-full mb-4">
-          <input
-            v-model="generalSearchQuery"
-            type="text"
-            placeholder="Search..."
-            class="w-full px-5 py-2 pr-12 text-stone-200 placeholder-gray-100 bg-transparent border-2 border-transparent rounded-full shadow-2xl focus:outline-none focus:border-turquoise-400 hover:border-turquoise-400 transition duration-300"
-          />
-          <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-            <svg class="w-6 h-6 text-turquoise-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
-            </svg>
-          </div>
+       <div class="bg-[#1a1a1a] rounded-xl p-5 shadow-lg border border-white/10 mb-6">
+      <div class="relative">
+        <input
+          v-model="generalSearchQuery"
+          type="text"
+          placeholder="Search toys..."
+          class="w-full px-5 py-3 rounded-lg bg-[#0e0e0e] text-gray-200 placeholder-gray-500 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+        />
+        <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+          <svg
+            class="w-6 h-6 text-emerald-400"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-width="2"
+              d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 
+              0 7 7 0 0 1 14 0Z"
+            />
+          </svg>
         </div>
-      <div class="overflow-x-auto shadow-2lx sm:rounded-lg">
-        <table class="min-w-full leading-normal">
-          <thead>
-            <tr>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-base font-bold text-stone-200 uppercase tracking-wider"></th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-base font-bold text-stone-200 uppercase tracking-wider">Brand Name</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-base font-bold text-stone-200 uppercase tracking-wider">Name</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-base font-bold text-stone-200 uppercase tracking-wider">Toy Type</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-base font-bold text-stone-200 uppercase tracking-wider">Animal Type</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-base font-bold text-stone-200 uppercase tracking-wider">Age Group</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-base font-bold text-stone-200 uppercase tracking-wider">Quantity</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-base font-bold text-stone-200 uppercase tracking-wider">Price</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-base font-bold text-stone-200 uppercase tracking-wider"></th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-center text-base font-bold text-stone-200 uppercase tracking-wider"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in filteredItems" :key="item.id" class="border-b border-customBlack cursor-pointer" >
-              <td class="px-5 py-5 text-base font-bold text-left">
-                  <svg @click="openSinglModal(item)" class="w-6 h-6 text-gray-800 dark:text-stone-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                  </svg>
-             </td>  
-              <td class="px-5 py-5 text-base font-bold text-center">{{ item.brandName }}</td>
-              <td class="px-5 py-5 text-base font-bold text-center">{{ item.name }}</td>
-              <td class="px-5 py-5 text-base font-bold text-center">{{ item.toyType }}</td>
-              <td class="px-5 py-5 text-base font-bold text-center">{{ item.animalType }}</td>
-              <td class="px-5 py-5 text-base font-bold text-center">{{ item.ageGroup }} years</td>  
-              <td class="px-5 py-5 text-base font-bold text-center">{{ item.quantity }}</td>
-              <td class="px-5 py-5 text-base font-bold text-left">{{ item.price+" €" }}</td>
-              <td class="px-5 py-5 text-base font-bold text-left">
-                <button @click="increment(item.id)" type="button" class="mb-4  text-stone-200 bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-base p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
-               <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-              <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
-              </svg>
-              <span class="block text-base font-bold mx-2 ">Add</span>
-              </button>
-              </td>
-              <td class="px-5 py-5 text-base font-bold text-left">
-                <button @click="decrement(item.id)" type="button" class="mb-4  text-stone-200 bg-red-400 hover:bg-red-500 focus:ring-3 focus:outline-none focus:ring-red-300 font-medium rounded-full text-base p-1.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-                  <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                  <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                  <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM184 232H328c13.3 0 24 10.7 24 24s-10.7 24-24 24H184c-13.3 0-24-10.7-24-24s10.7-24 24-24z"></path>
-                  </svg>
-              <span class="block text-base font-bold mx-2 ">Remove</span>
-              </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </div>
-  </div>
-
-
-
-
-
-
-
-
-  
-   <!-- Main modal -->
-<div  v-if="add" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-        <!-- Modal content -->
-        <div class="relative bg-black rounded-lg shadow-sm dark:bg-gray-700">
-            <!-- Modal header -->
-            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-stone-200">
-                    Add Toys
-                </h3>
-                <button @click="add = false" type="button" class="text-gray-400 bg-transparent hover:bg-white hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-stone-200" data-modal-toggle="crud-modal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
-            </div>
-            <!-- Modal body -->
-            <form @submit.prevent="handleSubmit" class="p-4 md:p-5">
-                <div class="grid gap-4 mb-4 grid-cols-2">
-                  <div class="col-span-2 sm:col-span-1">
-                        <label for="name" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Brand Name</label>
-                        <input type="text" name="name" id="name" v-model="brandNameAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Cuwex" required="">
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <label for="name" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Name</label>
-                        <input type="text" name="name" id="name" v-model="nameAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Bone123" required="">
-                    </div>
-                  
-              
-                    <div class="col-span-2 sm:col-span-2">
-                        <label for="intake" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Toy Type</label>
-                        <input type="text" name="intake" id="intake" v-model="toyTypeAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Bone" required="">
-                    </div>
-                    <div class="col-span-2 sm:col-span-2">
-                        <label for="intake" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Animal Type</label>
-                        <input type="text" name="intake" id="intake" v-model="animalTypeAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Dog"required="" >
-                    </div>
-                    <div class="col-span-2 sm:col-span-2">
-                        <label for="intake" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Age Group</label>
-                        <input type="text" name="intake" id="intake"  v-model="ageGroupAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="2-5"required="" >
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <label for="intake" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Width</label>
-                        <input    type="number" min="0" name="intake" id="intake" step="0.01"  v-model="widthAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="5.50"required="" >
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <label for="intake" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Heigh</label>
-                        <input    type="number" min="0"  name="intake" id="intake" step="0.01" v-model="heightAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="5.50"required="">
-                    </div>
-                    <div class="col-span-2">
-                        <label for="description" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Notes</label>
-                        <textarea id="description" rows="4"  v-model="notesAdd" class="block p-2.5 w-full text-base text-gray-900 bg-gray-50 rounded-lg border border-emerald-300 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-emerald-500 dark:focus:border-emerald-500" placeholder="Write description here" required="" ></textarea>                    
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <label for="quantity" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Quantity</label>
-                        <input    type="number" min="0" id="quantity" step="1.0" rows="4"  v-model="quantityAdd" class="block p-2.5 w-full text-base text-gray-900 bg-gray-50 rounded-lg border border-emerald-300 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-emerald-500 dark:focus:border-emerald-500" placeholder="10" required="" >                    
-                    </div>
-                     <div class="col-span-2 sm:col-span-1">
-                        <label for="quantity" step="0.01" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Price</label>
-                        <input    type="number" min="0" id="price" rows="4"  v-model="priceAdd" class="block p-2.5 w-full text-base text-gray-900 bg-gray-50 rounded-lg border border-emerald-300 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-emerald-500 dark:focus:border-emerald-500" placeholder="10€/pc" required="" >                    
-                    </div>
-                </div>
-                <button  type="submit" class="text-stone-200 inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
-                    <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                    Add 
-                </button>
-              
-            </form>
-        </div>
     </div>
-</div> 
+
+    <!-- 🔍 SEARCH -->
+   
+
+    <div class="overflow-x-auto mt-6 custom-scrollbar">
+  <table class="w-full border-separate border-spacing-y-3 bg-[#0e0e0e] rounded-xl shadow-lg">
+    <thead>
+      <tr class="text-gray-400 text-xs md:text-sm uppercase tracking-wider">
+        <th class="px-6 py-3"></th>
+        <th class="px-6 py-3 text-center">Brand Name</th>
+        <th class="px-6 py-3 text-center">Name</th>
+        <th class="px-6 py-3 text-center">Toy Type</th>
+        <th class="px-6 py-3 text-center">Animal Type</th>
+        <th class="px-6 py-3 text-center">Age Group</th>
+        <th class="px-6 py-3 text-center">Quantity</th>
+        <th class="px-6 py-3 text-center">Price</th>
+        <th class="px-6 py-3 text-center">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr
+        v-for="item in paginatedItems"
+
+        :key="item.id"
+        class="bg-[#1a1a1a] hover:bg-[#242424] border border-gray-700/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-300"
+      >
+        <!-- 👁 Info ikona -->
+        <td class="px-6 py-5 text-center">
+          <svg
+            @click="openSinglModal(item)"
+            class="w-6 h-6 text-emerald-400 hover:text-emerald-300 cursor-pointer transition"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 
+              12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+        </td>
+
+        <!-- 🔤 Podaci -->
+        <td class="px-6 py-5 text-white text-center font-semibold">{{ item.brandName }}</td>
+        <td class="px-6 py-5 text-white text-center font-semibold">{{ item.name }}</td>
+        <td class="px-6 py-5 text-gray-300 text-center">{{ item.toyType }}</td>
+        <td class="px-6 py-5 text-gray-300 text-center">{{ item.animalType }}</td>
+        <td class="px-6 py-5 text-gray-300 text-center">{{ item.ageGroup }}</td>
+        <td class="px-6 py-5 text-gray-300 text-center">{{ item.quantity }}</td>
+        <td class="px-6 py-5 text-gray-300 text-center">{{ item.price }} €</td>
+
+        <!-- 🟢 Add i 🔴 Remove -->
+        <td class="px-6 py-5 flex justify-center gap-3">
+          <button
+            @click="increment(item.id)"
+            type="button"
+            class="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition shadow-md"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="currentColor"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 
+                0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 
+                10.7-24 24-24s24 10.7 24 24v64h64c13.3 
+                0 24 10.7 24 24s-10.7 24-24 24H280v64c0 
+                13.3-10.7 24-24 24s-24-10.7-24-24z"
+              />
+            </svg>
+            Add
+          </button>
+
+          <button
+            @click="decrement(item.id)"
+            type="button"
+            class="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition shadow-md"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="currentColor"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM184 232H328c13.3 
+                0 24 10.7 24 24s-10.7 24-24 24H184c-13.3 
+                0-24-10.7-24-24s10.7-24 24-24z"
+              />
+            </svg>
+            Remove
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+   <!-- PAGINACIJA -->
+        <div class="flex justify-center items-center mt-10 space-x-2">
+          <button
+            @click="prevPage"
+            :disabled="currentPage === 1"
+            class="px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 hover:bg-emerald-600 transition disabled:opacity-50"
+          >
+            Prev
+          </button>
+
+          <button
+            v-for="page in totalPages"
+            :key="page"
+            @click="goToPage(page)"
+            :class="[
+              'px-3 py-1 rounded-lg border text-sm font-medium',
+              page === currentPage
+                ? 'bg-emerald-500 border-emerald-400 text-white'
+                : 'bg-[#1a1a1a] border-gray-700 text-gray-300 hover:bg-[#242424]',
+            ]"
+          >
+            {{ page }}
+          </button>
+
+          <button
+            @click="nextPage"
+            :disabled="currentPage === totalPages"
+            class="px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 hover:bg-emerald-600 transition disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+
+        <!-- INFO -->
+        <p class="text-gray-700 text-sm mt-5 text-center">
+          Showing {{ filteredItems.length }} filtered results
+        </p>
+</div>
+  </div>
+</div>
+
+<!-- 🟢 ADD TOY MODAL -->
+<div v-if="add" class="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
+  <div class="bg-[#0e0e0e] rounded-xl shadow-xl border border-gray-700/50 w-full max-w-md p-6">
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-semibold text-white">Add Toy</h3>
+      <button
+        @click="add = false"
+        class="text-gray-400 hover:text-emerald-400 transition"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- FORMA -->
+    <form @submit.prevent="handleSubmit" class="space-y-4">
+      <!-- BRAND -->
+      <div>
+        <label class="block text-gray-300 mb-1 font-medium">Brand Name</label>
+        <input
+          v-model="brandNameAdd"
+          type="text"
+          placeholder="Cuwex"
+          class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200
+                 border border-gray-700/40 focus:outline-none focus:ring-2
+                 focus:ring-emerald-500/60"
+          required
+        />
+      </div>
+
+      <!-- NAME -->
+      <div>
+        <label class="block text-gray-300 mb-1 font-medium">Name</label>
+        <input
+          v-model="nameAdd"
+          type="text"
+          placeholder="Bone123"
+          class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200
+                 border border-gray-700/40 focus:outline-none focus:ring-2
+                 focus:ring-emerald-500/60"
+          required
+        />
+      </div>
+
+      <!-- TOY TYPE -->
+      <div>
+        <label class="block text-gray-300 mb-1 font-medium">Toy Type</label>
+        <input
+          v-model="toyTypeAdd"
+          type="text"
+          placeholder="Bone"
+          class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200
+                 border border-gray-700/40 focus:outline-none focus:ring-2
+                 focus:ring-emerald-500/60"
+          required
+        />
+      </div>
+
+      <!-- ANIMAL TYPE -->
+      <div>
+        <label class="block text-gray-300 mb-1 font-medium">Animal Type</label>
+        <input
+          v-model="animalTypeAdd"
+          type="text"
+          placeholder="Dog"
+          class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200
+                 border border-gray-700/40 focus:outline-none focus:ring-2
+                 focus:ring-emerald-500/60"
+          required
+        />
+      </div>
+
+      <!-- AGE GROUP -->
+      <div>
+        <label class="block text-gray-300 mb-1 font-medium">Age Group</label>
+        <input
+          v-model="ageGroupAdd"
+          type="text"
+          placeholder="2-5"
+          class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200
+                 border border-gray-700/40 focus:outline-none focus:ring-2
+                 focus:ring-emerald-500/60"
+          required
+        />
+      </div>
+
+      <!-- DIMENZIJE -->
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-gray-300 mb-1 font-medium">Width (cm)</label>
+          <input
+            v-model="widthAdd"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="5.50"
+            class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200
+                   border border-gray-700/40 focus:outline-none focus:ring-2
+                   focus:ring-emerald-500/60"
+            required
+          />
+        </div>
+        <div>
+          <label class="block text-gray-300 mb-1 font-medium">Height (cm)</label>
+          <input
+            v-model="heightAdd"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="5.50"
+            class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200
+                   border border-gray-700/40 focus:outline-none focus:ring-2
+                   focus:ring-emerald-500/60"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- NOTES -->
+      <div>
+        <label class="block text-gray-300 mb-1 font-medium">Notes</label>
+        <textarea
+          v-model="notesAdd"
+          rows="3"
+          placeholder="Write description here..."
+          class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200
+                 border border-gray-700/40 focus:outline-none focus:ring-2
+                 focus:ring-emerald-500/60"
+        ></textarea>
+      </div>
+
+      <!-- QUANTITY / PRICE -->
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-gray-300 mb-1 font-medium">Quantity</label>
+          <input
+            v-model="quantityAdd"
+            type="number"
+            min="0"
+            step="1"
+            placeholder="10"
+            class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200
+                   border border-gray-700/40 focus:outline-none focus:ring-2
+                   focus:ring-emerald-500/60"
+            required
+          />
+        </div>
+        <div>
+          <label class="block text-gray-300 mb-1 font-medium">Price (€)</label>
+          <input
+            v-model="priceAdd"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="10.00"
+            class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200
+                   border border-gray-700/40 focus:outline-none focus:ring-2
+                   focus:ring-emerald-500/60"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- SUBMIT GUMB -->
+      <button
+        type="submit"
+        class="w-full py-2 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition shadow-md"
+      >
+        Add Toy
+      </button>
+    </form>
+    
+  </div>
+</div>
 
 
 
       
-    
- <!-- Single item modal -->
- <div v-if="single" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center overflow-x-auto custom-scrollbar">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-      <!-- Modal content -->
-      <div class="relative bg-black rounded-lg shadow-sm dark:bg-gray-700">
-        <!-- Modal header -->
-        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-stone-200">
-            Animal Details
-          </h3>
-          <button @click="single = false" type="button" class="text-gray-400 bg-transparent hover:bg-white hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-stone-200" data-modal-toggle="crud-modal">
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-            </svg>
-            <span class="sr-only">Close modal</span>
-          </button>
+    <!-- 🟩 INFO (SINGLE ITEM) MODAL -->
+<div v-if="single" class="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
+  <div class="bg-[#0e0e0e] rounded-xl shadow-xl border border-gray-700/50 w-full max-w-md p-6">
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-semibold text-white">Toy Details</h3>
+      <button
+        @click="single = false"
+        class="text-gray-400 hover:text-emerald-400 transition"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- BODY -->
+    <div class="space-y-4 max-h-[70vh] overflow-y-auto custom-scrollbar pr-2">
+      <!-- NAME -->
+      <div>
+        <label class="block text-gray-400 text-sm mb-1">Name</label>
+        <div class="bg-[#1a1a1a] px-4 py-2 rounded-lg text-gray-200 border border-gray-700/40">
+          {{ singleItem.name }}
         </div>
-        <!-- Modal body -->
-        <form class="p-4 md:p-5">
-          <div class="grid gap-4 mb-4 grid-cols-2">
-            <div class="col-span-2 sm:col-span-1">
-              <label for="singleCode" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Name</label>
-              <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-              {{ this.singleItem.name }}
-            </span>
-            </div>
-            <div class="col-span-2 sm:col-span-1">
-              <label for="animalName" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Barand Name</label>
-              <span type="text" id="animalName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                {{ this.singleItem.brandName }}
-            </span>
-            </div>
-            <div class="col-span-2 sm:col-span-1">
-              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Toy Type</label>
-              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                {{ this.singleItem.toyType }}
-            </span>
-            </div>
-            <div class="col-span-2 sm:col-span-1">
-              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Animal Type</label>
-              <span type="text" id="singleName"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                {{ this.singleItem.animalType }}
-            </span>
-            </div>
-            <div class="col-span-2  ">
-              <label for="singleDate" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Age Group</label>
-              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                {{ this.singleItem.ageGroup }}
-            </span>
-            </div>
-            <div class="col-span-2  sm:col-span-1">
-              <label for="singleDate" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Width</label>
-              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                {{ this.singleItem.width }} cm
-            </span>
-            </div>
-          
-            <div class="col-span-2  sm:col-span-1">
-              <label for="singleDate" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Hight</label>
-              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                {{ this.singleItem.hight }} cm
-            </span>
-            </div>
-         
-          
-            <div class="col-span-2  ">
-              <label for="singleDate" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Quantity</label>
-              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                {{ this.singleItem.quantity }}
-            </span>
-            </div>
-            <div class="col-span-2  ">
-              <label for="singleDate" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Notes</label>
-              <span type="date" id="singleDate"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                {{ this.singleItem.notes }}
-            </span>
-            </div>
+      </div>
+
+      <!-- BRAND -->
+      <div>
+        <label class="block text-gray-400 text-sm mb-1">Brand Name</label>
+        <div class="bg-[#1a1a1a] px-4 py-2 rounded-lg text-gray-200 border border-gray-700/40">
+          {{ singleItem.brandName }}
+        </div>
+      </div>
+
+      <!-- TOY TYPE -->
+      <div>
+        <label class="block text-gray-400 text-sm mb-1">Toy Type</label>
+        <div class="bg-[#1a1a1a] px-4 py-2 rounded-lg text-gray-200 border border-gray-700/40">
+          {{ singleItem.toyType }}
+        </div>
+      </div>
+
+      <!-- ANIMAL TYPE -->
+      <div>
+        <label class="block text-gray-400 text-sm mb-1">Animal Type</label>
+        <div class="bg-[#1a1a1a] px-4 py-2 rounded-lg text-gray-200 border border-gray-700/40">
+          {{ singleItem.animalType }}
+        </div>
+      </div>
+
+      <!-- AGE GROUP -->
+      <div>
+        <label class="block text-gray-400 text-sm mb-1">Age Group</label>
+        <div class="bg-[#1a1a1a] px-4 py-2 rounded-lg text-gray-200 border border-gray-700/40">
+          {{ singleItem.ageGroup }}
+        </div>
+      </div>
+
+      <!-- DIMENSIONS -->
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-gray-400 text-sm mb-1">Width</label>
+          <div class="bg-[#1a1a1a] px-4 py-2 rounded-lg text-gray-200 border border-gray-700/40">
+            {{ singleItem.width }} cm
           </div>
-        </form>
+        </div>
+        <div>
+          <label class="block text-gray-400 text-sm mb-1">Height</label>
+          <div class="bg-[#1a1a1a] px-4 py-2 rounded-lg text-gray-200 border border-gray-700/40">
+            {{ singleItem.hight }} cm
+          </div>
+        </div>
+      </div>
+
+      <!-- QUANTITY -->
+      <div>
+        <label class="block text-gray-400 text-sm mb-1">Quantity</label>
+        <div class="bg-[#1a1a1a] px-4 py-2 rounded-lg text-gray-200 border border-gray-700/40">
+          {{ singleItem.quantity }}
+        </div>
+      </div>
+
+      <!-- PRICE -->
+      <div>
+        <label class="block text-gray-400 text-sm mb-1">Price</label>
+        <div class="bg-[#1a1a1a] px-4 py-2 rounded-lg text-gray-200 border border-gray-700/40">
+          {{ singleItem.price }} €
+        </div>
+      </div>
+
+      <!-- NOTES -->
+      <div>
+        <label class="block text-gray-400 text-sm mb-1">Notes</label>
+        <div class="bg-[#1a1a1a] px-4 py-2 rounded-lg text-gray-200 border border-gray-700/40 min-h-[80px] max-h-[150px] overflow-y-auto">
+          {{ singleItem.notes || '—' }}
+        </div>
       </div>
     </div>
   </div>
+</div>
+
 
 
 </template>
@@ -330,6 +584,10 @@ export default {
         animalType: '',
         ageGroup: '',
       },
+      pagination: {
+  currentPage: 1,
+  itemsPerPage: 15, 
+},
       // Početno stanje učitavanja
     };
   },
@@ -358,13 +616,37 @@ export default {
       );
     });
   
-}
+},
+paginatedItems() {
+  const start = (this.pagination.currentPage - 1) * this.pagination.itemsPerPage;
+  const end = start + this.pagination.itemsPerPage;
+  return this.filteredItems.slice(start, end);
+},
+
+totalPages() {
+  return Math.ceil(this.filteredItems.length / this.pagination.itemsPerPage) || 1;
+},
+
 
   },
   mounted() {
     this.fetchData();
   },
   methods: { 
+    nextPage() {
+  if (this.pagination.currentPage < this.totalPages) {
+    this.pagination.currentPage++;
+  }
+},
+prevPage() {
+  if (this.pagination.currentPage > 1) {
+    this.pagination.currentPage--;
+  }
+},
+goToPage(page) {
+  this.pagination.currentPage = page;
+},
+
     async openSinglModal(item) {
       this.single = true;
       this.singleItem = item;

@@ -1,332 +1,318 @@
 <template>
-<div class="container mx-auto px-4">
-      <div class="flex">
-         <Loading v-if="loadingError" /> 
+  <div class="container mx-auto px-4 mt-6">
+    <Loading v-if="loadingError" />
 
-        <WorkerNavigation class="w-1/6" />
-        <div class="w-5/6  rounded-lg overflow-hidden text-stone-200 ml-auto">
-          <h1 class="ml-5 text-2xl font-bold mb-4 text-stone-200">Animal List</h1>
-          <div class="mb-4 mx-5">
-            <form @submit="searchAnimals">
-              <div class="grid grid-cols-4 gap-4 ">
-                <div>
-                  <label for="family" class="block text-base font-bold mb-2">Family:</label>
-                  <select v-model="filters.family" id="family" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                    <option value="">All</option>
-                    <option v-for="family in families" :key="family" :value="family">{{ family }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="species" class="block text-base font-bold mb-2">Species:</label>
-                  <select v-model="filters.species" id="species" class= "text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                    <option value="">All</option>
-                    <option v-for="species in speciesList" :key="species" :value="species">{{ species }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="subspecies" class="block text-base font-bold mb-2">Subspecies:</label>
-                  <select v-model="filters.subspecies" id="subspecies" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                    <option value="">All</option>
-                    <option v-for="subspecies in subspeciesList" :key="subspecies" :value="subspecies">{{ subspecies }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="gender" class="block text-base font-bold mb-2">Gender:</label>
-                  <select v-model="filters.gender" id="gender" class="text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black rounded-full shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                    <option value="">All</option>
-                    <option value="Female">Female</option>
-                    <option value="Male">Male</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" v-model="filters.neutered" class="sr-only peer">
-                    <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                    <span class="ms-3 text-base font-medium text-stone-200 dark:text-gray-300">Neutered</span>
-                  </label>
-                </div>
-                <div>
-                  <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" v-model="filters.vaccinated" class="sr-only peer">
-                    <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                    <span class="ms-3 text-base font-medium text-stone-200  dark:text-gray-300">Vaccinated</span>
-                  </label>
-                </div>
-                <div>
-                  <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" v-model="filters.microchipped" class="sr-only peer">
-                    <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                    <span class="ms-3 text-base font-medium text-stone-200dark:text-gray-300">Microchipped</span>
-                  </label>
-                </div>
-                <div>
-                  <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" v-model="filters.trained" class="sr-only peer">
-                    <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                    <span class="ms-3 text-base font-medium text-stone-200  d">Trained</span>
-                  </label>
-                </div>
-                <div>
-                  <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" v-model="filters.socialized" class="sr-only peer">
-                    <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                    <span class="ms-3 text-base font-medium text-stone-200">Socialized</span>
-                  </label>
-                </div>
-                <div>
-                  <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" v-model="filters.adopted" class="sr-only peer">
-                    <div class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                    <span class="ms-3 text-base font-medium text-stone-200" >Adopted</span>
-                  </label>
-                </div>
+    <div class="flex">
+      <WorkerNavigation class="w-1/6" />
+
+      <div class="w-5/6 ml-auto">
+        <!-- FILTERI -->
+        <div class="bg-[#0e0e0e] rounded-xl p-6 shadow-lg border border-white/10">
+          <form @submit.prevent>
+            <!-- Dropdowns -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              <div>
+                <label class="block text-gray-300 font-bold mb-2">Family:</label>
+                <select
+                  v-model="filters.family"
+                  class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+                >
+                  <option value="">All</option>
+                  <option v-for="family in families" :key="family" :value="family">{{ family }}</option>
+                </select>
               </div>
-             
-            </form>
-          
-    <table class="min-w-full leading-normal">
-      <thead>
-        <tr>
-         <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Code</th>
-          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Name</th>
-          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Family</th>
-          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Species</th>
-          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Subspecies</th>
-          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Age</th>
-          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Gender</th>
-          <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider"></th>
-  
-         
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in filteredItems" :key="item.idAnimal" class="border-b border-customBlack cursor-pointer">
-         <td class="px-5 py-5 text-base font-bold" @click="navigateToDetails(item.idAnimal)">{{ item.animalId }}</td>
-          <td class="px-5 py-5 text-base font-bold" @click="navigateToDetails(item.idAnimal)">{{ item.name }}</td>
-          <td class="px-5 py-5 text-base font-bold"@click="navigateToDetails(item.idAnimal)">{{ item.family }}</td>
-          <td class="px-5 py-5 text-base font-bold"@click="navigateToDetails(item.idAnimal)">{{ item.species }}</td>
-          <td class="px-5 py-5 text-base font-bold"@click="navigateToDetails(item.idAnimal)">{{ item.subspecies }}</td>
-          <td class="px-5 py-5 text-base font-bold"@click="navigateToDetails(item.idAnimal)">{{ item.age }}<strong> y</strong></td>
-          <td class="px-5 py-5 text-base font-bold"@click="navigateToDetails(item.idAnimal)">{{ item.gender }}</td>
-          <td class="px-5 py-5 text-base font-bold">
-          <button @click="done(item.idAnimal)" type="button" class="mb-4 p-2 text-stone-200 bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-base p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
-            <svg class="w-6 h-6 text-stone-200 text-stone-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M16.8879 7.11205c.1788-.77492-.1192-1.66905-.7153-2.26515-1.0133-1.01335-2.5632-1.01335-3.5765 0-1.0134 1.01336-1.0134 2.5632 0 3.57655L8.42342 12.5961c-1.01336-1.0134-2.5632-1.0134-3.57655 0-1.01336 1.0133-1.01336 2.5632 0 3.5765.59609.5961 1.49023.8942 2.26515.7154-.17883.7749.11921 1.669.71531 2.2651 1.01335 1.0134 2.56317 1.0134 3.57657 0 1.0133-1.0134 1.0133-2.5632 0-3.5765l4.1726-4.1727c1.0134 1.0134 2.5632 1.0134 3.5766 0 1.0133-1.0133 1.0133-2.56318 0-3.57654-.5961-.59609-1.4903-.89414-2.2652-.71531Z"/>
-            </svg>
-            <span class="block text-base font-bold mx-2 ">Socialized</span>
-             </button>
-          </td>
-       
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
-  
+
+              <div>
+                <label class="block text-gray-300 font-bold mb-2">Species:</label>
+                <select
+                  v-model="filters.species"
+                  class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+                >
+                  <option value="">All</option>
+                  <option v-for="species in speciesList" :key="species" :value="species">{{ species }}</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-gray-300 font-bold mb-2">Subspecies:</label>
+                <select
+                  v-model="filters.subspecies"
+                  class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+                >
+                  <option value="">All</option>
+                  <option v-for="sub in subspeciesList" :key="sub" :value="sub">{{ sub }}</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-gray-300 font-bold mb-2">Gender:</label>
+                <select
+                  v-model="filters.gender"
+                  class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+                >
+                  <option value="">All</option>
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Toggles -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 mt-6">
+              <label
+                v-for="(label, key) in toggleLabels"
+                :key="key"
+                class="inline-flex items-center cursor-pointer select-none"
+              >
+                <input type="checkbox" v-model="filters[key]" class="sr-only peer" />
+                <div
+                  class="relative w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-500/30 rounded-full
+                         after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:h-5 after:w-5 after:rounded-full
+                         after:bg-emerald-400 after:border after:border-gray-400 after:transition-all
+                         peer-checked:bg-green-600 peer-checked:after:translate-x-full"
+                ></div>
+                <span class="ms-3 text-sm font-medium text-gray-300">{{ label }}</span>
+              </label>
+            </div>
+
+            <!-- Search -->
+            <div class="mt-6">
+              <label class="block text-gray-300 font-bold mb-2">Search (any field):</label>
+              <input
+                type="text"
+                v-model="filters.search"
+                placeholder="Type to filter by name, family, species, subspecies, age, gender..."
+                class="w-full py-3 px-4 text-base rounded-xl bg-[#1a1a1a] text-gray-200 placeholder-gray-500 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+              />
+            </div>
+          </form>
+        </div>
+
+        <!-- TABLICA -->
+        <div class="mt-5 overflow-x-auto custom-scrollbar">
+          <table class="w-full border-separate border-spacing-y-4 bg-[#0e0e0e] rounded-xl">
+            <thead>
+              <tr class="text-left text-gray-400 text-xs md:text-sm uppercase tracking-wider">
+                <th class="px-6 py-3">Name</th>
+                <th class="px-6 py-3">Family</th>
+                <th class="px-6 py-3">Species</th>
+                <th class="px-6 py-3">Subspecies</th>
+                <th class="px-6 py-3">Age</th>
+                <th class="px-6 py-3">Gender</th>
+                <th class="px-6 py-3">Adopted</th>
+                <th class="px-6 py-3 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="item in paginatedItems"
+                :key="item.idAnimal"
+                class="bg-[#1a1a1a] hover:bg-[#242424] border border-gray-700/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
+                @click="navigateToDetails(item.idAnimal)"
+              >
+                <td class="px-6 py-6 text-white font-semibold">{{ item.name }}</td>
+                <td class="px-6 py-6 text-gray-300">{{ item.family }}</td>
+                <td class="px-6 py-6 text-gray-300">{{ item.species }}</td>
+                <td class="px-6 py-6 text-gray-300">{{ item.subspecies }}</td>
+                <td class="px-6 py-6 text-gray-300">{{ item.age }}<strong> y</strong></td>
+                <td class="px-6 py-6 text-gray-300">{{ item.gender }}</td>
+                <td class="px-6 py-6 text-gray-300">{{ item.adopted ? 'Yes' : 'No' }}</td>
+                <td class="px-6 py-6 text-center">
+                  <button
+                    @click.stop="done(item.idAnimal)"
+                    class="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full px-4 py-1.5 font-semibold text-sm shadow-md hover:shadow-emerald-500/40 transition"
+                  >
+                    ✅ Socialized
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- PAGINACIJA -->
+        <div class="flex justify-center items-center mt-10 space-x-2">
+          <button
+            @click="prevPage"
+            :disabled="currentPage === 1"
+            class="px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 hover:bg-emerald-600 transition disabled:opacity-50"
+          >
+            Prev
+          </button>
+
+          <button
+            v-for="page in totalPages"
+            :key="page"
+            @click="goToPage(page)"
+            :class="[
+              'px-3 py-1 rounded-lg border text-sm font-medium',
+              page === currentPage
+                ? 'bg-emerald-500 border-emerald-400 text-white'
+                : 'bg-[#1a1a1a] border-gray-700 text-gray-300 hover:bg-[#242424]'
+            ]"
+          >
+            {{ page }}
+          </button>
+
+          <button
+            @click="nextPage"
+            :disabled="currentPage === totalPages"
+            class="px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 hover:bg-emerald-600 transition disabled:opacity-50"
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  import WorkerNavigation from './WorkerNavigation.vue';
-  import instance from '@/axiosBase';
-  import Loading from '../Loading.vue';
+  </div>
+</template>
+
+<script>
+import WorkerNavigation from './WorkerNavigation.vue'
+import instance from '@/axiosBase'
+import Loading from '../Loading.vue'
 import Swal from 'sweetalert2'
-  export default {
-    components: {
-      WorkerNavigation,
-      Loading,
 
-
-    },
-    data() {
-      return {
-        loadingError:false,
-        items: [],
-        families: [],
-        speciesList: [],
-        subspeciesList: [],
-        filters: {
-          family: '',
-          species: '',
-          subspecies: '',
-          gender: '',
-          neutered: false,
-          vaccinated: false,
-          microchipped: false,
-          trained: false,
-          socialized: false,
-          adopted: false,
-         
-        // Početno stanje učitavanja
-        data: [] // Podaci koji će se prikazati kada dođu
-     
-        },
-      };
-    },
-    computed: {
-      filteredItems() {
-        return this.items.filter(item => {
-          return (!this.filters.family || item.family === this.filters.family) &&
-                 (!this.filters.species || item.species === this.filters.species) &&
-                 (!this.filters.subspecies || item.subspecies === this.filters.subspecies) &&
-                 (!this.filters.gender || item.gender === this.filters.gender) &&
-                 (!this.filters.neutered || item.neutered === this.filters.neutered) &&
-                 (!this.filters.vaccinated || item.vaccinated === this.filters.vaccinated) &&
-                 (!this.filters.microchipped || item.microchipped === this.filters.microchipped) &&
-                 (!this.filters.trained || item.trained === this.filters.trained) &&
-                 (!this.filters.socialized || item.socialized === this.filters.socialized) &&
-                 (!this.filters.adopted || item.adopted === this.filters.adopted);
-        });
+export default {
+  components: { WorkerNavigation, Loading },
+  data() {
+    return {
+      loadingError: true,
+      items: [],
+      families: [],
+      speciesList: [],
+      subspeciesList: [],
+      filters: {
+        family: '',
+        species: '',
+        subspecies: '',
+        gender: '',
+        neutered: false,
+        vaccinated: false,
+        microchipped: false,
+        trained: false,
+        socialized: false,
+        adopted: false,
+        search: '',
       },
-    },
-    mounted() {
-      
-      instance.interceptors.request.use(
-        config => {
-          const token = localStorage.getItem('token');
-          if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-          }
-          return config;
-        },
-        error => {
-          return Promise.reject(error);
-        }
-      );
-  
-      this.loadingError=true;
-      instance.get('animal/animal_social')
-        .then(response => {
-          this.items = response.data;
-          if(this.items!=null) {
-                setTimeout(() => {
-                this.loadingError = false; 
-                }, 1000)
-                }
-          this.populateFilters();
-        })
-        .catch(error => {
-          setTimeout(() => {
-                this.loadingError = true; 
-                }, 5000)
-                this.$router.push(`/workerHome`);
-          console.error('There was an error!', error);
-        });
-    },
-   
-  
-    methods: {
-      async done(id) {
-      var responser=  await instance.put(`animal/updateAnimalRecord/`,  { 
-                            animalId:parseInt(id),
-                            recordId:parseInt(5)
-                           },
-     { headers: {Authorization: `Bearer ${this.token}`,   },
-    });
-
-          console.log("response:" +responser.data);
-          if(responser.status===200){
-        await  Swal.fire({
-              icon: 'success',
-              title: 'Success',
-              text: 'Animal has been successfully socialized.',
-            });
-         window.location.reload();
-          }
-          else{
-         await   Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'Something went wrong, please try again later.',
-            });
-          }
-          },
-      navigateToDetails(idAnimal) {
-      this.$router.push(`/workerSingleAnimal/${idAnimal}`);
-    },
-      populateFilters() {
-        this.families = [...new Set(this.items.map(item => item.family))];
-        this.speciesList = [...new Set(this.items.map(item => item.species))];
-        this.subspeciesList = [...new Set(this.items.map(item => item.subspecies))];
+      toggleLabels: {
+        neutered: 'Neutered',
+        vaccinated: 'Vaccinated',
+        microchipped: 'Microchipped',
+        trained: 'Trained',
+        socialized: 'Socialized',
+        adopted: 'Adopted',
       },
-      searchAnimals() {
-        this.loadingError=true;
-        instance.get('animal/animal_pc', {
-          params: this.filters
-        })
-        .then(response => {
-          this.items = response.data;
-          if(this.items!=null) {
-                setTimeout(() => {
-                this.loadingError = false; 
-                }, 1000)
-                }
-        })
-        .catch(error => {
-          setTimeout(() => {
-                this.loadingError = true; 
-                }, 5000)
-                this.$router.push(`/workerHome`);
-          console.error('There was an error!', error);
-        });
-      },
-    },
-  };
-  </script>
-    <style scoped>
-  
-  
-  
-  
-    .container {
-      color: white;
-      font-family: 'Poppins', sans-serif;
-      margin-top: 15px;
+      currentPage: 1,
+      itemsPerPage: 20,
     }
-    
-    .table {
-      width: 100%;
-    
-      border-collapse: collapse;
-     }
-  
-  .td {
-    padding: 12px 15px;
-    font-size: 1rem;
-  }
-  
-  .shadow-lg {
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Custom scrollbar */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 12px;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 6px;
-    border: 3px solid transparent;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(255, 255, 255, 0.5);
-  }
-  
-  /* Fix scrollbar on Firefox */
-  .custom-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-  }
-  
-  .custom-scrollbar:hover {
-    scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
-  }
-  </style>  
+  },
+  computed: {
+    filteredItems() {
+      const search = this.filters.search.toLowerCase()
+      return this.items.filter((item) => {
+        const matchesSearch = !search || Object.values(item).join(' ').toLowerCase().includes(search)
+        return (
+          matchesSearch &&
+          (!this.filters.family || item.family === this.filters.family) &&
+          (!this.filters.species || item.species === this.filters.species) &&
+          (!this.filters.subspecies || item.subspecies === this.filters.subspecies) &&
+          (!this.filters.gender || item.gender === this.filters.gender) &&
+          (!this.filters.neutered || item.neutered) &&
+          (!this.filters.vaccinated || item.vaccinated) &&
+          (!this.filters.microchipped || item.microchipped) &&
+          (!this.filters.trained || item.trained) &&
+          (!this.filters.socialized || item.socialized) &&
+          (!this.filters.adopted || item.adopted)
+        )
+      })
+    },
+    paginatedItems() {
+      const start = (this.currentPage - 1) * this.itemsPerPage
+      return this.filteredItems.slice(start, start + this.itemsPerPage)
+    },
+    totalPages() {
+      return Math.ceil(this.filteredItems.length / this.itemsPerPage)
+    },
+  },
+  mounted() {
+    this.fetchAnimals()
+  },
+  methods: {
+    navigateToDetails(idAnimal) {
+      this.$router.push(`/workerSingleAnimal/${idAnimal}`)
+    },
+    async fetchAnimals() {
+      this.loadingError = true
+      try {
+        const response = await instance.get('animal/animal_social')
+        this.items = response.data
+        if (this.items) {
+          this.populateFilters()
+          setTimeout(() => (this.loadingError = false), 800)
+        }
+      } catch (error) {
+        console.error('Error fetching animals:', error)
+        this.loadingError = true
+      }
+    },
+    async done(id) {
+      try {
+        const response = await instance.put(`animal/updateAnimalRecord/`, {
+          animalId: parseInt(id),
+          recordId: 5,
+        })
+        if (response.status === 200) {
+          await Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Animal has been successfully socialized.',
+            timer: 2000,
+            showConfirmButton: false,
+          })
+          this.fetchAnimals()
+        }
+      } catch {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Something went wrong. Please try again later.',
+        })
+      }
+    },
+    populateFilters() {
+      this.families = [...new Set(this.items.map((item) => item.family))]
+      this.speciesList = [...new Set(this.items.map((item) => item.species))]
+      this.subspeciesList = [...new Set(this.items.map((item) => item.subspecies))]
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) this.currentPage++
+    },
+    prevPage() {
+      if (this.currentPage > 1) this.currentPage--
+    },
+    goToPage(page) {
+      this.currentPage = page
+    },
+  },
+}
+</script>
+
+<style scoped>
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+tbody tr {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+tbody tr:hover {
+  transform: translateY(-3px);
+}
+</style>

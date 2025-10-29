@@ -1,242 +1,324 @@
 <template>
-  <div class="flex">
-    <div class="w-1/6 text-stone-200 p-4 rounded-l-lg">
-      <WorkerNavigation />
-    </div>
-    <div class="w-5/6 text-stone-200 p-4 rounded-r-lg mr-8">
-      <h1 class="text-xl font-bold mb-4">News</h1>
+  <div class="container mx-auto px-4 mt-6">
+    <div class="flex">
+      <!-- 🧭 Navigation -->
+      <WorkerNavigation class="w-1/6" />
 
-      <button @click="add = true" :disabled="userRole !== 'Menager'" type="button"    class="mb-4 text-stone-200 bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-base p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        <svg class="w-8 h-8 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-          <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-          <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
-        </svg>
-        <span class="block text-base font-bold mx-2">Add News</span>
-      </button>
+      <!-- 📄 Glavni sadržaj -->
+      <div class="w-5/6 ml-auto">
+        <!-- NASLOV -->
+        <h1 class="ml-1 md:ml-2 text-2xl font-semibold text-white/90 mb-5">
+          News
+        </h1>
 
-      <div class="grid grid-cols-4 gap-4 mb-4">
-        <div>
-          <label for="name" class="block text-base font-bold mb-2">Name:</label>
-          <input v-model="filters.name" id="name" type="text" placeholder="Pero" class="rounded-full text-gray-500 w-full py-2 px-3 bg-black  shadow-xl focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"  />
-        </div>
-        <div>
-          <label for="description" class="block text-base font-bold mb-2">Description:</label>
-          <input v-model="filters.description" id="description" type="text" class="rounded-full text-gray-500 w-full py-2 px-3 border border-gray-300 bg-black shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" />
-        </div>
-        <div>
-          <label for="dateTime" class="block text-base font-bold mb-2">Date:</label>
-          <input v-model="filters.dateTime" id="dateTime" type="date" class="rounded-full text-gray-500 w-full py-2 px-3 bg-black  shadow-xl focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"  />
-        </div>
-      </div>
-    <div class="relative w-full mb-4">
-          <input
-            v-model="generalSearchQuery"
-            type="text"
-            placeholder="Search..."
-            class="w-full px-5 py-2 pr-12 text-stone-200 placeholder-gray-100 bg-transparent border-2 border-transparent rounded-full shadow-2xl focus:outline-none focus:border-turquoise-400 hover:border-turquoise-400 transition duration-300"
-          />
-          <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-            <svg class="w-6 h-6 text-turquoise-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+        <!-- 🔘 DODAJ NEWS -->
+        <div class="flex items-center mb-6">
+          <button
+            @click="add = true"
+            :disabled="userRole !== 'Menager'"
+            type="button"
+            class="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 
+                0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 
+                10.7-24 24-24s24 10.7 24 24v64h64c13.3 
+                0 24 10.7 24 24s-10.7 24-24 24H280v64c0 
+                13.3-10.7 24-24 24s-24-10.7-24-24z"
+              ></path>
             </svg>
-          </div>
-        </div>
-      <div class="overflow-x-auto shadow-2lx sm:rounded-lg">
-        <table class="min-w-full leading-normal">
-          <thead>
-            <tr>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider"></th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Name</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Date</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider"></th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in filteredItems" :key="item.id" class="border-b border-customBlack cursor-pointer" >
-              <td class="px-5 py-5 text-base font-bold text-left">
-                  <svg @click="openSinglModal(item)" class="w-6 h-6 text-gray-800 dark:text-stone-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                  </svg>
-             </td>  
-              <td class="px-5 py-5 text-base font-bold text-left"@click="navigateToDetails(item.id)">{{ item.name }}</td>
-              <td class="px-5 py-5 text-base font-bold text-left"@click="navigateToDetails(item.id)">{{ formatDate(item.dateTime) }}</td>
-              <td class="px-5 py-5 text-base font-bold text-left">
-                <button type="button"   @click="openUpdateModal(item)" class="mb-4  text-stone-200 bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-base p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
-                  <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
-
-                  <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                  <path d="M234.7 42.7L197 56.8c-3 1.1-5 4-5 7.2s2 6.1 5 7.2l37.7 14.1L248.8 123c1.1 3 4 5 7.2 5s6.1-2 7.2-5l14.1-37.7L315 71.2c3-1.1 5-4 5-7.2s-2-6.1-5-7.2L277.3 42.7 263.2 5c-1.1-3-4-5-7.2-5s-6.1 2-7.2 5L234.7 42.7zM46.1 395.4c-18.7 18.7-18.7 49.1 0 67.9l34.6 34.6c18.7 18.7 49.1 18.7 67.9 0L529.9 116.5c18.7-18.7 18.7-49.1 0-67.9L495.3 14.1c-18.7-18.7-49.1-18.7-67.9 0L46.1 395.4zM484.6 82.6l-105 105-23.3-23.3 105-105 23.3 23.3zM7.5 117.2C3 118.9 0 123.2 0 128s3 9.1 7.5 10.8L64 160l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L128 160l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L128 96 106.8 39.5C105.1 35 100.8 32 96 32s-9.1 3-10.8 7.5L64 96 7.5 117.2zm352 256c-4.5 1.7-7.5 6-7.5 10.8s3 9.1 7.5 10.8L416 416l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L480 416l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L480 352l-21.2-56.5c-1.7-4.5-6-7.5-10.8-7.5s-9.1 3-10.8 7.5L416 352l-56.5 21.2z"></path>
-
-                  </svg>
-                 <span class="block text-base font-bold mx-2 ">Update</span>
-              </button>
-              </td>
-             
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-
-  
-   <!-- Main modal -->
-<div  v-if="add" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-        <!-- Modal content -->
-        <div class="relative bg-black rounded-lg shadow-sm dark:bg-gray-700">
-            <!-- Modal header -->
-            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-stone-200">
-                    Add News
-                </h3>
-                <button @click="add = false" type="button" class="text-gray-400 bg-transparent hover:bg-white hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-stone-200" data-modal-toggle="crud-modal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
-            </div>
-               <!-- Modal body -->
-               <form @submit.prevent="handleSubmit" class="p-4 md:p-5">
-                <div class="grid gap-4 mb-4 grid-cols-2">
-                    <div class="col-span-2">
-                        <label for="name" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Name</label>
-                        <input type="text" name="name" v-model="nameAdd" id="name" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="News" required="">
-                    </div>
-                  
-              
-                    <div class="col-span-2 sm:col-span-2">
-                        <label for="intake" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Date</label>
-                        <input type="date" v-model="dateAdd" name="intake" id="intake" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="0.25" required="">
-                    </div>
-              
-                    <div class="col-span-2">
-                        <label for="description" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Description</label>
-                        <textarea id="description" rows="4" v-model="descriptionAdd" class="block p-2.5 w-full text-base text-gray-900 bg-gray-50 rounded-lg border border-emerald-300 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-emerald-500 dark:focus:border-emerald-500" placeholder="Write description here"></textarea>                    
-                    </div>
-                </div>
-                <button  type="submit" class="text-stone-200 inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
-                    <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                    Add 
-                </button>
-              
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Update modal -->
-<div v-if="update" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-      <!-- Modal content -->
-      <div class="relative bg-black rounded-lg shadow-sm dark:bg-gray-700">
-        <!-- Modal header -->
-        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-stone-200">Update News</h3>
-          <button @click="update = false" type="button" class="text-gray-400 bg-transparent hover:bg-white hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-stone-200" data-modal-toggle="crud-modal">
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-            </svg>
-            <span class="sr-only">Close modal</span>
+            Add News
           </button>
         </div>
-        <!-- Modal body -->
-        <form @submit.prevent="handleUpdate(this.idUpdate)" class="p-4 md:p-5">
-          <div class="grid gap-4 mb-4 grid-cols-2">
-          
-            <div class="col-span-2">
-              <label for="name" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Name</label>
-              <input type="text" name="name" v-model="nameUpdate" id="name" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="News" required="">
+
+        <!-- 🔍 FILTERI -->
+        <div class="bg-[#0e0e0e] rounded-xl p-6 shadow-lg border border-white/10 mb-5">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div>
+              <label class="block text-gray-300 mb-1 font-medium">Name</label>
+              <input
+                v-model="filters.name"
+                type="text"
+                placeholder="Search by name..."
+                class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 placeholder-gray-500 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+              />
             </div>
-            <div class="col-span-2 sm:col-span-2">
-              <label for="date" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Date</label>
-              <input type="date" v-model="dateUpdate" name="date" id="date" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+
+            <div>
+              <label class="block text-gray-300 mb-1 font-medium">Description</label>
+              <input
+                v-model="filters.description"
+                type="text"
+                placeholder="Search by description..."
+                class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 placeholder-gray-500 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+              />
             </div>
-            <div class="col-span-2">
-              <label for="description" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Description</label>
-              <textarea id="description" rows="4" v-model="descriptionUpdate" class="block p-2.5 w-full text-base text-gray-900 bg-gray-50 rounded-lg border border-emerald-300 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-emerald-500 dark:focus:border-emerald-500" placeholder="Write description here"></textarea>
+
+            <div>
+              <label class="block text-gray-300 mb-1 font-medium">Date</label>
+              <input
+                v-model="filters.dateTime"
+                type="date"
+                class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+              />
             </div>
           </div>
-          <button  type="submit" class="text-stone-200 inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
-            <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+        
+
+        <!-- 🔎 OPĆA PRETRAGA -->
+        <div class="bg-[#0e0e0e] rounded-xl p-5 shadow-lg border border-white/10 mb-8">
+          <div class="relative">
+            <input
+              v-model="generalSearchQuery"
+              type="text"
+              placeholder="Search news..."
+              class="w-full px-5 py-3 rounded-lg bg-[#1a1a1a] text-gray-200 placeholder-gray-500 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+            />
+            <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+              <svg
+                class="w-6 h-6 text-emerald-400"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-width="2"
+                  d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 
+                  0 7 7 0 0 1 14 0Z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+</div>
+        <!-- 📋 TABLICA -->
+        <div class="mt-5 overflow-x-auto custom-scrollbar">
+          <table class="w-full border-separate border-spacing-y-4 bg-[#0e0e0e] rounded-xl">
+            <thead>
+              <tr class="text-left text-gray-400 text-xs md:text-sm uppercase tracking-wider">
+                <th class="px-6 py-3"></th>
+                <th class="px-6 py-3">Name</th>
+                <th class="px-6 py-3">Date</th>
+                <th class="px-6 py-3 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="item in paginatedItems"
+                :key="item.id"
+                class="bg-[#1a1a1a] hover:bg-[#242424] border border-gray-700/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-300"
+              >
+                <td class="px-6 py-5 text-gray-200">
+                  <svg
+                    @click="openSinglModal(item)"
+                    class="w-6 h-6 text-emerald-400 hover:text-emerald-300 transition cursor-pointer"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 
+                      12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
+                  </svg>
+                </td>
+                <td class="px-6 py-5 text-white font-semibold cursor-pointer">
+                  {{ item.name }}
+                </td>
+                <td class="px-6 py-5 text-gray-300 cursor-pointer">
+                  {{ formatDate(item.dateTime) }}
+                </td>
+                <td class="px-6 py-5 flex gap-3 justify-center">
+                  <button
+                    type="button"
+                    @click="openUpdateModal(item)"
+                    class="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition shadow-md"
+                  >
+                    ✏️ Update
+                  </button>
+                 
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- PAGINACIJA -->
+        <div class="flex justify-center items-center mt-10 space-x-2">
+          <button
+            @click="prevPage"
+            :disabled="currentPage === 1"
+            class="px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 hover:bg-emerald-600 transition disabled:opacity-50"
+          >
+            Prev
+          </button>
+
+          <button
+            v-for="page in totalPages"
+            :key="page"
+            @click="goToPage(page)"
+            :class="[
+              'px-3 py-1 rounded-lg border text-sm font-medium',
+              page === currentPage
+                ? 'bg-emerald-500 border-emerald-400 text-white'
+                : 'bg-[#1a1a1a] border-gray-700 text-gray-300 hover:bg-[#242424]',
+            ]"
+          >
+            {{ page }}
+          </button>
+
+          <button
+            @click="nextPage"
+            :disabled="currentPage === totalPages"
+            class="px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 hover:bg-emerald-600 transition disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+
+        <!-- INFO -->
+        <p class="text-gray-400 text-sm mt-5 text-center">
+          Showing {{ filteredItems.length }} filtered results
+        </p>
+      </div>
+    </div>
+
+    <!-- 🟢 MODALI -->
+    <!-- Add Modal -->
+    <div v-if="add" class="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
+      <div class="bg-[#0e0e0e] rounded-xl shadow-xl border border-gray-700/50 w-full max-w-md p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-semibold text-white">Add News</h3>
+          <button @click="add = false" class="text-gray-400 hover:text-emerald-400 transition">✕</button>
+        </div>
+        <form @submit.prevent="handleSubmit" class="space-y-4">
+          <div>
+            <label class="block text-gray-300 mb-1 font-medium">Name</label>
+            <input
+              v-model="nameAdd"
+              type="text"
+              placeholder="News title"
+              class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+            />
+          </div>
+          <div>
+            <label class="block text-gray-300 mb-1 font-medium">Date</label>
+            <input
+              v-model="dateAdd"
+              type="date"
+              class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+            />
+          </div>
+          <div>
+            <label class="block text-gray-300 mb-1 font-medium">Description</label>
+            <textarea
+              v-model="descriptionAdd"
+              rows="4"
+              placeholder="Write description..."
+              class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+            ></textarea>
+          </div>
+          <button type="submit" class="w-full py-2 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition shadow-md">
+            Add
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Update Modal -->
+    <div v-if="update" class="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
+      <div class="bg-[#0e0e0e] rounded-xl shadow-xl border border-gray-700/50 w-full max-w-md p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-semibold text-white">Update News</h3>
+          <button @click="update = false" class="text-gray-400 hover:text-emerald-400 transition">✕</button>
+        </div>
+        <form @submit.prevent="handleUpdate(this.idUpdate)" class="space-y-4">
+          <div>
+            <label class="block text-gray-300 mb-1 font-medium">Name</label>
+            <input
+              v-model="nameUpdate"
+              type="text"
+              class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+            />
+          </div>
+          <div>
+            <label class="block text-gray-300 mb-1 font-medium">Date</label>
+            <input
+              v-model="dateUpdate"
+              type="date"
+              class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+            />
+          </div>
+          <div>
+            <label class="block text-gray-300 mb-1 font-medium">Description</label>
+            <textarea
+              v-model="descriptionUpdate"
+              rows="4"
+              class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+            ></textarea>
+          </div>
+          <button type="submit" class="w-full py-2 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition shadow-md">
             Update
           </button>
         </form>
       </div>
     </div>
-</div>
 
-
-
-          
- <!-- Single item modal -->
- <div v-if="single" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center overflow-x-auto custom-scrollbar">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-      <!-- Modal content -->
-      <div class="relative bg-black rounded-lg shadow-sm dark:bg-gray-700">
-        <!-- Modal header -->
-        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-stone-200">
-            Animal Details
-          </h3>
-          <button @click="single = false" type="button" class="text-gray-400 bg-transparent hover:bg-white hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-stone-200" data-modal-toggle="crud-modal">
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-            </svg>
-            <span class="sr-only">Close modal</span>
-          </button>
+    <!-- Single Modal -->
+    <div v-if="single" class="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
+      <div class="bg-[#0e0e0e] rounded-xl shadow-xl border border-gray-700/50 w-full max-w-md p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-semibold text-white">News Details</h3>
+          <button @click="single = false" class="text-gray-400 hover:text-emerald-400 transition">✕</button>
         </div>
-        <!-- Modal body -->
-        <form class="p-4 md:p-5">
-          <div class="grid gap-4 mb-4 grid-cols-2">
-            <div class="col-span-2 ">
-              <label for="singleCode" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Name</label>
-              <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-              {{ this.singleItem.name }}
-            </span>
+        <div class="space-y-3">
+          <div>
+            <label class="block text-gray-400 text-sm mb-1">Name</label>
+            <div class="bg-[#1a1a1a] px-4 py-2 rounded-lg text-gray-200 border border-gray-700/40">
+              {{ singleItem.name }}
             </div>
-            <div class="col-span-2 ">
-              <label for="animalName" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Date</label>
-              <span type="text" id="animalName" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                {{formatDate(this.singleItem.dateTime) }}
-            </span>
-            </div>
-            <div class="col-span-2">
-              <label for="singleName" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200"></label>
-              <span type="text" id="singleName"  class="overflow-x-auto custom-scrollbar bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
-                {{ this.singleItem.description }}
-            </span>
-            </div>
-         
           </div>
-        </form>
+          <div>
+            <label class="block text-gray-400 text-sm mb-1">Date</label>
+            <div class="bg-[#1a1a1a] px-4 py-2 rounded-lg text-gray-200 border border-gray-700/40">
+              {{ formatDate(singleItem.dateTime) }}
+            </div>
+          </div>
+          <div>
+            <label class="block text-gray-400 text-sm mb-1">Description</label>
+            <div class="bg-[#1a1a1a] px-4 py-2 rounded-lg text-gray-200 border border-gray-700/40 max-h-60 overflow-y-auto custom-scrollbar">
+              {{ singleItem.description }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
-//dodaj button remuve u tablici
-import WorkerNavigation from './WorkerNavigation.vue';
-import instance from '@/axiosBase';
-  import Swal from 'sweetalert2'
+import WorkerNavigation from './WorkerNavigation.vue'
+import instance from '@/axiosBase'
+import Swal from 'sweetalert2'
+
 export default {
-  components: {
-    WorkerNavigation,
-  },
+  components: { WorkerNavigation },
   data() {
     return {
       userRole: localStorage.getItem('userRole'),
-       generalSearchQuery: '',
+      generalSearchQuery: '',
       add: false,
       items: [],
       nameAdd: '',
@@ -247,190 +329,152 @@ export default {
       nameUpdate: '',
       dateUpdate: '',
       descriptionUpdate: '',
-
       single: false,
-      singleItem:[],
-
-      filters: {
-        name: '',
-        description: '',
-        dateTime: '',
-      },
-      // Početno stanje učitavanja
-    };
+      singleItem: [],
+      filters: { name: '', description: '', dateTime: '' },
+      currentPage: 1,
+      itemsPerPage: 10,
+    }
   },
   computed: {
- filteredItems() {
-  const query = this.generalSearchQuery?.toLowerCase().trim() || '';
-
-  return this.items.filter(item => {
-    const nameMatch = item.name?.toLowerCase().includes(query);
-    const dateMatch = this.formatDate(item.dateTime)?.toLowerCase().includes(query);
-    const descriptionMatch = item.description?.toLowerCase().includes(query);
-
-    return nameMatch || dateMatch || descriptionMatch;
-  });
-}
-
-    
+    filteredItems() {
+      const query = this.generalSearchQuery?.toLowerCase().trim() || ''
+      return this.items.filter((item) => {
+        const nameMatch = item.name?.toLowerCase().includes(query)
+        const dateMatch = this.formatDate(item.dateTime)?.toLowerCase().includes(query)
+        const descriptionMatch = item.description?.toLowerCase().includes(query)
+        return nameMatch || dateMatch || descriptionMatch
+      })
+    },
+    paginatedItems() {
+      const start = (this.currentPage - 1) * this.itemsPerPage
+      return this.filteredItems.slice(start, start + this.itemsPerPage)
+    },
+    totalPages() {
+      return Math.ceil(this.filteredItems.length / this.itemsPerPage)
+    },
   },
   mounted() {
-    this.fetchData();
+    this.fetchData()
   },
   methods: {
-    async remove(id){
-    await  Swal.fire({
-          title: "Do you want to save the changes?",
-          showDenyButton: true,
-        
-          confirmButtonText: "Save",
-          denyButtonText: `Don't save`
-        }).then((result) => {
-          /* Read more about isConfirmed, isDenied below */
-          if (result.isConfirmed) {
-            Swal.fire("Saved!", "", "success");
-          const newsResponse =  instance.delete(`animal/deleteNews/${id}`);
-           console.log(newsResponse);
-
-          } else if (result.isDenied) {
-            Swal.fire("Changes are not saved", "", "info");
-          }
-        });
-      
+    nextPage() {
+      if (this.currentPage < this.totalPages) this.currentPage++
+    },
+    prevPage() {
+      if (this.currentPage > 1) this.currentPage--
+    },
+    goToPage(page) {
+      this.currentPage = page
+    },
+    async remove(id) {
+      await Swal.fire({
+        title: 'Are you sure?',
+        text: 'This action cannot be undone!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#10b981',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await instance.delete(`animal/deleteNews/${id}`)
+          Swal.fire('Deleted!', 'The news has been removed.', 'success')
+          window.location.reload()
+        }
+      })
     },
     async openSinglModal(item) {
-      this.single = true;
-      this.singleItem = item;
-      
+      this.single = true
+      this.singleItem = item
     },
-
     openUpdateModal(item) {
-      this.update = true;
-      this.idUpdate = item.id;
-      this.nameUpdate = item.name;
-      this.dateUpdate = item.dateTime.split('T')[0]; // Extract date part
-      this.descriptionUpdate = item.description;
-      console.log('id:', this.idUpdate);
-      
-        console.log('Name:', this.nameUpdate);
-        console.log('Date:', this.dateUpdate);
-        console.log('Description:', this.descriptionUpdate);
+      this.update = true
+      this.idUpdate = item.id
+      this.nameUpdate = item.name
+      this.dateUpdate = item.dateTime.split('T')[0]
+      this.descriptionUpdate = item.description
     },
     async handleUpdate(id) {
       try {
-      
-        console.log('ID:', this.idUpdate);
-        console.log('Name:', this.nameUpdate);
-        console.log('Date:', this.dateUpdate);
-        console.log('Description:', this.descriptionUpdate);
-        const response = await instance.put("animal/updateNewsDomain", {
-          id: this.idUpdate,
-          name: this.nameUpdate,
-          description: this.descriptionUpdate,
-          dateTime: `${this.dateUpdate}T00:00:00.00`
-        
-        },
-    
-        {
-          headers: {
-            Authorization: `Bearer ${this.token}`,  // Authorization header
+        await instance.put(
+          'animal/updateNewsDomain',
+          {
+            id: this.idUpdate,
+            name: this.nameUpdate,
+            description: this.descriptionUpdate,
+            dateTime: `${this.dateUpdate}T00:00:00.00`,
           },
-        });
-
-      await  Swal.fire({
-            title: "Item added!",
-            draggable: true,
-            icon: "success"
-          });
-        window.location.reload();
+          {
+            headers: { Authorization: `Bearer ${this.token}` },
+          }
+        )
+        await Swal.fire({ title: 'Updated!', icon: 'success' })
+        window.location.reload()
       } catch (error) {
-   
         await Swal.fire({
-            title: "Oops!",
-            text: "Failed to add item. Try again.",
-            draggable: true,
-            icon: "warning"
-          });
+          title: 'Oops!',
+          text: 'Failed to update item. Try again.',
+          icon: 'error',
+        })
       }
     },
-
-
-
     async handleSubmit() {
-    try {
-      const response = await instance.post('animal/addNews', {
-        name: this.nameAdd,
-        dateTime: `${this.dateAdd}T00:00:00.00`,
-        description: this.descriptionAdd
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${this.token}`,  // Authorization header
-        },
-      });
-
-      Swal.fire({
-            title: "Item added!",
-            draggable: true,
-            icon: "success"
-          });
-      window.location.reload();
-    } catch (error) {
-      console.log('Name:', this.nameAdd);
-      console.log('Date:', `${this.dateAdd}T00:00:00.00`);
-      console.log('Description:', this.descriptionAdd);
-      console.error('There was an error!', error);
-      Swal.fire({
-            title: "Oops!",
-            text: "Failed to add item. Try again.",
-            draggable: true,
-            icon: "error"
-          });
-    }
-  },
+      try {
+        await instance.post(
+          'animal/addNews',
+          {
+            name: this.nameAdd,
+            dateTime: `${this.dateAdd}T00:00:00.00`,
+            description: this.descriptionAdd,
+          },
+          { headers: { Authorization: `Bearer ${this.token}` } }
+        )
+        Swal.fire({ title: 'Item added!', icon: 'success' })
+        window.location.reload()
+      } catch (error) {
+        Swal.fire({
+          title: 'Oops!',
+          text: 'Failed to add item. Try again.',
+          icon: 'error',
+        })
+      }
+    },
     async fetchData() {
       try {
-        const response = await instance.get('animal/news_db');
-        this.items = response.data;
-        console.log(this.items);
-        
+        const response = await instance.get('animal/news_db')
+        this.items = response.data
       } catch (error) {
-        console.error('There was an error!', error);
-        
+        console.error('There was an error!', error)
       }
     },
     formatDate(date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      return new Date(date).toLocaleDateString(undefined, options);
-    },
-  
-  },
-  watch: {
-    filters: {
-      handler() {
-        this.filteredItems = this.items.filter(item => {
-          return (
-            (!this.filters.name || item.name.includes(this.filters.name)) &&
-            (!this.filters.description || item.description.includes(this.filters.description)) &&
-            (!this.filters.dateTime || new Date(item.dateTime).toISOString().split('T')[0] === this.filters.dateTime)
-          );
-        });
-      },
-      deep: true,
+      const options = { year: 'numeric', month: 'long', day: 'numeric' }
+      return new Date(date).toLocaleDateString(undefined, options)
     },
   },
-};
+}
 </script>
 
-  
-  <style scoped>
-  .container {
-    color: white;
-    font-family: 'Poppins', sans-serif;
-  }
-  .sticky-content {
-      float: right;
-      margin-left: 20px;
-  }
-  </style>
-  
+<style scoped>
+.container {
+  color: white;
+  font-family: 'Poppins', sans-serif;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+tbody tr {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+tbody tr:hover {
+  transform: translateY(-3px);
+}
+</style>
