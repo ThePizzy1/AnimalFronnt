@@ -1,168 +1,197 @@
 <template>
-  <div class="flex p-6">
-    <div class="w-1/6 text-stone-200 p-4 rounded-l-lg">
-     <VetNavigation />
-    </div>
-    <!-- READ-ONLY user data -->
-     <div class="w-3/6 text-stone-200 p-4 rounded-r-lg  mx-auto">
-
-    <div class="bg-black/10 rounded-lg p-6 text-stone-200 mb-6">
-      <h2 class="text-2xl font-bold mb-4">User Info</h2>
-      <div class="space-y-2 text-xl ">
-        <div><strong>ID:</strong> {{ user?.id }}</div>
-        <div><strong>Username:</strong> {{ user?.username }}</div>
-        <div><strong>First Name:</strong> {{ user.name }}</div>
-        <div><strong>Last Name:</strong> {{ user.surname }}</div>
-        <div><strong>Phone:</strong> {{ user.phone }}</div>
-        <div><strong>Role:</strong> {{ userRole }}</div>
-      </div>
-
-      <button @click="openUpdateModal"
-        class="mt-6 bg-emerald-600 hover:bg-emerald-700 text-stone-200 px-4 py-2 rounded transition">
-        Edit Profile
-      </button>
+  <div class="flex min-h-screen bg-[#0e0e0e] text-gray-100">
+    <!-- Sidebar -->
+    <div class="w-1/6 p-4 border-r border-gray-800">
+      <VetNavigation />
     </div>
 
-    <!-- UPDATE MODAL -->
-    <div v-if="updateModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div class="relative p-4 w-full max-w-md max-h-full">
-        <div class="bg-black rounded-lg shadow dark:bg-gray-700">
-          <div class="flex items-center justify-between p-4 border-b dark:border-gray-600">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-stone-200">Update Profile</h3>
-            <button @click="updateModal = false"
-              class="text-gray-400 hover:bg-white hover:text-gray-900 rounded-lg text-base w-8 h-8 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-stone-200">
-              ✕
-            </button>
+    <!-- Main Content -->
+    <div class="flex-1 flex justify-center items-start p-10">
+      <div class="w-full max-w-3xl bg-[#151515]/90 backdrop-blur-xl border border-gray-800 rounded-2xl shadow-2xl p-10 space-y-6">
+        <h2 class="text-3xl font-bold text-emerald-400 mb-6">🩺 Vet Profile</h2>
+
+        <!-- 🧾 User Info -->
+        <div v-if="user" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-3">
+            <p><span class="text-gray-400 font-semibold">ID:</span> {{ user?.id }}</p>
+            <p><span class="text-gray-400 font-semibold">Username:</span> {{ user?.username }}</p>
+            <p><span class="text-gray-400 font-semibold">Role:</span> {{ userRole }}</p>
           </div>
+          <div class="space-y-3">
+            <p><span class="text-gray-400 font-semibold">First Name:</span> {{ user.name }}</p>
+            <p><span class="text-gray-400 font-semibold">Last Name:</span> {{ user.surname }}</p>
+            <p><span class="text-gray-400 font-semibold">Phone:</span> {{ user.phone }}</p>
+          </div>
+        </div>
 
-          <!-- Modal Body (Form) -->
-          <form @submit.prevent="updateUser" class="p-4 space-y-4">
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-900">Username</label>
-              <input v-model="editForm.username" class="w-full text-gray-900  p-2 border border-emerald-300 rounded-lg" />
-            </div>
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-900 ">First Name</label>
-              <input v-model="editForm.firstName" class="w-full text-gray-900  p-2 border border-emerald-300 rounded-lg" />
-            </div>
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-900 ">Last Name</label>
-              <input v-model="editForm.lastName" class="w-full text-gray-900  p-2 border border-emerald-300 rounded-lg" />
-            </div>
-            
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-900">Phone</label>
-              <input v-model="editForm.phoneNumber" class="w-full text-gray-900  p-2 border border-emerald-300 rounded-lg" />
-            </div>
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-900">New Password (optional)</label>
-              <input v-model="editForm.password" type="password"
-                class="w-full text-gray-900  p-2 border border-emerald-300 rounded-lg" />
+        <div class="flex justify-center mt-8">
+          <button
+            @click="openUpdateModal"
+            class="bg-emerald-600 hover:bg-emerald-700 transition-all duration-300 text-white px-6 py-2.5 rounded-lg font-semibold shadow-lg hover:shadow-emerald-500/40">
+            ✏️ Edit Profile
+          </button>
+        </div>
+
+        <!-- ⚙️ Update Modal -->
+        <div
+          v-if="updateModal"
+          class="fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-start z-50 transition pt-32">
+          <div
+            class="bg-[#151515] border border-gray-800 rounded-2xl shadow-2xl w-[90%] max-w-md p-6 relative animate-fade-in">
+            <div class="flex justify-between items-center border-b border-gray-700 pb-3 mb-4">
+              <h3 class="text-xl font-semibold text-emerald-400">Update Profile</h3>
+              <button
+                @click="updateModal = false"
+                class="text-gray-400 hover:text-red-500 transition text-lg">✕</button>
             </div>
 
-            <button type="submit"
-              class="text-stone-200 inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
-              Update
-            </button>
+            <form @submit.prevent="updateUser" class="space-y-5">
+              <div class="flex flex-col">
+                <label class="text-gray-400 mb-1">Username</label>
+                <input
+                  v-model="editForm.username"
+                  class="bg-transparent border border-emerald-700 text-gray-100 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500 outline-none transition" />
+              </div>
 
-            <p v-if="loadingError" class="text-red-600 mt-2">Error occurred. Please try again.</p>
-          </form>
+              <div class="flex flex-col">
+                <label class="text-gray-400 mb-1">First Name</label>
+                <input
+                  v-model="editForm.firstName"
+                  class="bg-transparent border border-emerald-700 text-gray-100 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500 outline-none transition" />
+              </div>
+
+              <div class="flex flex-col">
+                <label class="text-gray-400 mb-1">Last Name</label>
+                <input
+                  v-model="editForm.lastName"
+                  class="bg-transparent border border-emerald-700 text-gray-100 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500 outline-none transition" />
+              </div>
+
+              <div class="flex flex-col">
+                <label class="text-gray-400 mb-1">Phone</label>
+                <input
+                  v-model="editForm.phoneNumber"
+                  class="bg-transparent border border-emerald-700 text-gray-100 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500 outline-none transition" />
+              </div>
+
+              <div class="flex flex-col">
+                <label class="text-gray-400 mb-1">New Password (optional)</label>
+                <input
+                  type="password"
+                  v-model="editForm.password"
+                  class="bg-transparent border border-emerald-700 text-gray-100 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500 outline-none transition" />
+              </div>
+
+              <button
+                type="submit"
+                class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-lg mt-3 transition shadow-md hover:shadow-emerald-500/40">
+                💾 Save Changes
+              </button>
+
+              <p v-if="loadingError" class="text-red-500 text-center pt-2">❌ Error occurred. Try again.</p>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   </div>
 </template>
 
 <script>
-import instance from '@/axiosBase';
-import { jwtDecode } from 'jwt-decode';
-import Swal from 'sweetalert2';
-  import VetNavigation from '../Vet/VetNavigation.vue';
+import VetNavigation from "../Vet/VetNavigation.vue";
+import instance from "@/axiosBase";
+
 export default {
-     components: {
-    VetNavigation,
-  },
+  name: "VetProfile",
+  components: { VetNavigation },
   data() {
     return {
-      token: localStorage.getItem('vet_token'),
-      userId: null,
-      userRole: null,
       user: null,
+      userRole: "",
       updateModal: false,
       loadingError: false,
       editForm: {
-        username: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        phoneNumber: '',
-        password: '',
+        username: "",
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        password: "",
       },
     };
   },
-  created() {
-    this.fetchUserDetails();
+
+  async mounted() {
+    this.decodeToken();
+    await this.fetchUser();
   },
+
   methods: {
-    async fetchUserDetails() {
+    decodeToken() {
       try {
-        const decoded = jwtDecode(this.token);
+        const token = localStorage.getItem("token");
+        if (!token) return;
+        const decoded = JSON.parse(atob(token.split(".")[1]));
         this.userId = decoded.id_usera;
-        this.userRole =
-          decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-
-        const response = await instance.get(`auth/getUserById/${this.userId}`, {
-          headers: { Authorization: `Bearer ${this.token}` },
-        });
-
-        this.user = response.data;
-        console.log("User data fetched:", this.user);
-        this.loadingError = false;
-      } catch (error) {
-        console.error("Error fetching user:", error);
-        this.loadingError = true;
+        this.username = decoded.sub;
+        console.log("👨‍⚕️ Vet logged in:", this.username, "ID:", this.userId);
+      } catch (err) {
+        console.error("❌ Token decode error:", err);
       }
     },
-        openUpdateModal() {
-        if (this.user) {
-            this.editForm.username = this.user.username ;
-            this.editForm.firstName = this.user.name ;      
-            this.editForm.lastName = this.user.surname ;    
-            this.editForm.phoneNumber = this.user.phone ;   
-            this.editForm.password = '';                        
-            this.updateModal = true;
-        }
-        }
-        ,
+
+    async fetchUser() {
+      try {
+        const response = await instance.get(`auth/getUserById/${this.userId}`);
+        this.user = response.data;
+        this.userRole = "Vet";
+        this.editForm.username = this.user.username;
+        this.editForm.firstName = this.user.name;
+        this.editForm.lastName = this.user.surname;
+        this.editForm.phoneNumber = this.user.phone;
+      } catch (error) {
+        console.error("❌ Error fetching vet data:", error);
+      }
+    },
+
+    openUpdateModal() {
+      this.updateModal = true;
+    },
+
     async updateUser() {
       try {
-        const payload = { ...this.editForm };
-        if (!payload.password) delete payload.password;
+        const payload = {
+          Username: this.editForm.username,
+          FirstName: this.editForm.firstName,
+          LastName: this.editForm.lastName,
+          PhoneNumber: this.editForm.phoneNumber,
+          Password: this.editForm.password || null,
+        };
 
-        await instance.put(`auth/updateUserById/${this.userId}`, payload, {
-          headers: { Authorization: `Bearer ${this.token}` },
-        });
+        const response = await instance.put(
+          `auth/updateUserById/${this.userId}`,
+          payload
+        );
 
-        Swal.fire({
-          icon: 'success',
-          title: 'Profile updated!',
-          timer: 2000,
-          showConfirmButton: false,
-        });
-
-        this.updateModal = false;
-        this.fetchUserDetails();
+        if (response.status === 200) {
+          this.updateModal = false;
+          alert("✅ Profile updated successfully!");
+          await this.fetchUser();
+        }
       } catch (error) {
-        console.error("Error updating user:", error);
+        console.error("❌ Error updating vet profile:", error);
         this.loadingError = true;
-        Swal.fire({
-          icon: 'error',
-          title: 'Update failed',
-          text: 'Something went wrong.',
-        });
       }
     },
   },
 };
 </script>
+
+<style scoped>
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>

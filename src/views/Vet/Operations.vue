@@ -1,199 +1,421 @@
 <template>
-  <div class="flex">
-     <Loading v-if="loadingError" /> 
+  <div class="flex min-h-screen text-stone-200">
+    <Loading v-if="loadingError" />
 
-    <div class="w-1/6 text-stone-200 p-4 rounded-l-lg">
+    <!-- Sidebar -->
+    <div class="w-1/6 p-4">
       <WorkerNavigation />
     </div>
-    <div class="w-5/6 text-stone-200 p-4 rounded-r-lg mr-8">
-      <h1 class="text-xl font-bold mb-4">Operations</h1>
 
-      <button @click="add = true" :disabled="userRole !== 'HeadVet'"
-        type="button"
-        class="mb-4 text-stone-200 bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-base p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-        <svg class="w-8 h-8 fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-          <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-          <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
-        </svg>
-        <span class="block text-base font-bold mx-2">Add Operation</span>
-      </button>
-      <div class="grid grid-cols-4 gap-4 mb-5">
-      <div>
-          <label for="startTime" class="block text-base font-bold mb-2">Start Date:</label>
-          <input v-model="filters.startTime" id="startTime" type="date" class="rounded-full border border-gray-300 text-gray-400  w-full py-2 px-3 bg-black  shadow-xl focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"/>
+    <!-- Main content -->
+    <div class="w-5/6 mr-8 mt-6 p-6 bg-[#0e0e0e] rounded-xl border border-gray-800 shadow-2xl">
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-emerald-400">⚙️ Operations</h1>
+
+        <button
+          @click="add = true"
+          :disabled="userRole !== 'HeadVet'"
+          type="button"
+          class="flex items-center bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-full px-5 py-2 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+          </svg>
+          Add Operation
+        </button>
+      </div>
+
+      <!-- Filters -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <label class="block text-sm font-semibold text-emerald-300 mb-2">Start Date:</label>
+          <input
+            v-model="filters.startTime"
+            type="date"
+            class="w-full bg-[#1a1a1a] border border-gray-700 rounded-full px-4 py-2 text-gray-300 focus:ring-emerald-500 focus:border-emerald-500"
+          />
         </div>
         <div>
-          <label for="startTime" class="block text-base font-bold mb-2">End Date:</label>
-          <input v-model="filters.endTime" id="startTime" type="date" class="rounded-full border border-gray-300 text-gray-400  w-full py-2 px-3 bg-black  shadow-xl focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" />
-        </div>
-        </div>
-        
-
-              <div class="relative w-full mb-4">
+          <label class="block text-sm font-semibold text-emerald-300 mb-2">End Date:</label>
           <input
-            v-model="generalSearchQuery"
-            type="text"
-            placeholder="Search..."
-            class="w-full px-5 py-2 pr-12 text-stone-200 placeholder-gray-100 bg-transparent border-2 border-transparent rounded-full shadow-2xl focus:outline-none focus:border-turquoise-400 hover:border-turquoise-400 transition duration-300"
+            v-model="filters.endTime"
+            type="date"
+            class="w-full bg-[#1a1a1a] border border-gray-700 rounded-full px-4 py-2 text-gray-300 focus:ring-emerald-500 focus:border-emerald-500"
           />
-          <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-            <svg class="w-6 h-6 text-turquoise-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
-            </svg>
-          </div>
         </div>
-      <div class="overflow-x-auto shadow-2lx sm:rounded-lg">
-        <table class="min-w-full leading-normal">
-          <thead>
+      </div>
+
+      <!-- Search -->
+      <div class="relative mb-8">
+        <input
+          v-model="generalSearchQuery"
+          type="text"
+          placeholder="Search..."
+          class="w-full bg-[#1a1a1a] border border-gray-700 rounded-full px-5 py-2 text-gray-300 placeholder-gray-500 focus:ring-emerald-500 focus:border-emerald-500"
+        />
+        <div class="absolute right-4 top-2.5 text-emerald-400">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" d="m21 21-3.5-3.5M17 10a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="overflow-x-auto bg-[#1a1a1a]/80 rounded-2xl border border-gray-800 shadow-xl">
+        <table class="min-w-full divide-y divide-gray-800">
+          <thead class="bg-gray-900 text-emerald-300 uppercase text-sm">
             <tr>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider"></th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Start Time</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">End Time</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Type of Visit</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider">Notes</th>
-              <th class="px-5 py-3 border-b-2 border-customBlack text-left text-base font-bold text-stone-200 uppercase tracking-wider"></th>
+              <th class="px-5 py-3 text-left"></th>
+              <th class="px-5 py-3 text-left font-semibold">Start Time</th>
+              <th class="px-5 py-3 text-left font-semibold">End Time</th>
+              <th class="px-5 py-3 text-left font-semibold">Type of Visit</th>
+              <th class="px-5 py-3 text-left font-semibold">Notes</th>
+              <th class="px-5 py-3 text-right font-semibold">Actions</th>
             </tr>
           </thead>
+
           <tbody>
-            <tr v-for="item in filteredItems" :key="item.id" :class="{'cursor-not-allowed opacity-50': !getTodayDate( item.endTime) , 'cursor-allowed opacity-100': getTodayDate( item.endTime) }" class="border-b border-customBlack cursor-pointer" >
-              <td class="px-5 py-5 text-base font-bold text-left">
-                    <svg @click="openSinglModal(item)" class="w-6 h-6 text-gray-800 dark:text-stone-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                    </svg>
-                </td>
-              <td class="px-5 py-5 text-base font-bold text-left">{{ formatDate(item.startTime) }}</td>
-              <td class="px-5 py-5 text-base font-bold text-left">{{ formatDate(item.endTime) }}</td>
-              <td class="px-5 py-5 text-base font-bold text-left">{{ item.typeOfVisit }}</td>
-              <td class="px-5 py-5 text-base font-bold text-left">{{ item.notes }}</td>
-             <td class="px-5 py-5 text-base font-bold text-left">
-                <button type="button"   @click="openUpdateModal(item)" class="mb-4  text-stone-200 bg-emerald-400 hover:bg-emerald-500 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-base p-1.5 text-center inline-flex items-center me-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
-                  <svg class="w-5 h-5 fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
+            <tr
+              v-for="item in paginatedItems"
+              :key="item.id"
+              :class="{
+                'bg-gray-900/30 cursor-not-allowed': !getTodayDate(item.endTime),
+                'hover:bg-gray-800/30 cursor-pointer': getTodayDate(item.endTime)
+              }"
+              class="border-b border-gray-800 transition"
+            >
+              <!-- Icon -->
+              <td class="px-6 py-4 text-center">
+                <svg
+                  @click="openSinglModal(item)"
+                  class="w-6 h-6 transition"
+                  :class="getTodayDate(item.endTime)
+                    ? 'text-emerald-400 hover:text-emerald-300 cursor-pointer'
+                    : 'text-gray-500 opacity-70 cursor-not-allowed'"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 11h2v5m-2 0h4m-2.6-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              </td>
 
-                  <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                  <path d="M234.7 42.7L197 56.8c-3 1.1-5 4-5 7.2s2 6.1 5 7.2l37.7 14.1L248.8 123c1.1 3 4 5 7.2 5s6.1-2 7.2-5l14.1-37.7L315 71.2c3-1.1 5-4 5-7.2s-2-6.1-5-7.2L277.3 42.7 263.2 5c-1.1-3-4-5-7.2-5s-6.1 2-7.2 5L234.7 42.7zM46.1 395.4c-18.7 18.7-18.7 49.1 0 67.9l34.6 34.6c18.7 18.7 49.1 18.7 67.9 0L529.9 116.5c18.7-18.7 18.7-49.1 0-67.9L495.3 14.1c-18.7-18.7-49.1-18.7-67.9 0L46.1 395.4zM484.6 82.6l-105 105-23.3-23.3 105-105 23.3 23.3zM7.5 117.2C3 118.9 0 123.2 0 128s3 9.1 7.5 10.8L64 160l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L128 160l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L128 96 106.8 39.5C105.1 35 100.8 32 96 32s-9.1 3-10.8 7.5L64 96 7.5 117.2zm352 256c-4.5 1.7-7.5 6-7.5 10.8s3 9.1 7.5 10.8L416 416l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L480 416l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L480 352l-21.2-56.5c-1.7-4.5-6-7.5-10.8-7.5s-9.1 3-10.8 7.5L416 352l-56.5 21.2z"></path>
+              <!-- Start -->
+              <td
+                class="px-6 py-4 font-medium"
+                :class="getTodayDate(item.endTime)
+                  ? 'text-gray-200'
+                  : 'text-gray-500 opacity-70'"
+              >
+                {{ formatDate(item.startTime) }}
+              </td>
 
+              <!-- End -->
+              <td
+                class="px-6 py-4 font-medium"
+                :class="getTodayDate(item.endTime)
+                  ? 'text-gray-200'
+                  : 'text-gray-500 opacity-70'"
+              >
+                {{ formatDate(item.endTime) }}
+              </td>
+
+              <!-- Type -->
+              <td
+                class="px-6 py-4"
+                :class="getTodayDate(item.endTime)
+                  ? 'text-gray-300'
+                  : 'text-gray-500 italic opacity-70'"
+              >
+                {{ item.typeOfVisit }}
+              </td>
+
+              <!-- Notes -->
+              <td
+                class="px-6 py-4"
+                :class="getTodayDate(item.endTime)
+                  ? 'text-gray-300'
+                  : 'text-gray-500 italic opacity-70'"
+              >
+                {{ item.notes }}
+              </td>
+
+              <!-- Button -->
+              <td class="px-6 py-4 text-right">
+                <button
+                  @click="openUpdateModal(item)"
+                  :disabled="!getTodayDate(item.endTime)"
+                  class="flex items-center justify-center gap-1 rounded-full px-4 py-1.5 text-sm font-medium transition"
+                  :class="getTodayDate(item.endTime)
+                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                    : 'bg-gray-700 text-gray-400 cursor-not-allowed opacity-60'"
+                >
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 576 512">
+                    <path
+                      d="M234.7 42.7L197 56.8c-3 1.1-5 4-5 7.2s2 6.1 5 7.2l37.7 14.1L248.8 123c1.1 3 4 5 7.2 5s6.1-2 7.2-5l14.1-37.7L315 71.2c3-1.1 5-4 5-7.2s-2-6.1-5-7.2L277.3 42.7 263.2 5c-1.1-3-4-5-7.2-5s-6.1 2-7.2 5L234.7 42.7z"
+                    />
                   </svg>
-                 <span class="block text-base font-bold mx-2 ">Update</span>
-              </button>
+                  Update
+                </button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+
+      <!-- Pagination -->
+      <div class="flex justify-center items-center py-6 space-x-4">
+        <button
+          @click="prevPage"
+          :disabled="currentPage === 1"
+          class="px-4 py-2 rounded-lg border border-gray-700 text-gray-400 hover:text-emerald-400 hover:border-emerald-400 disabled:opacity-30 transition"
+        >
+          ‹ Prev
+        </button>
+
+        <span class="text-sm text-gray-400">
+          Page
+          <span class="text-emerald-400 font-semibold">{{ currentPage }}</span>
+          of
+          <span class="text-emerald-400 font-semibold">{{ totalPages }}</span>
+        </span>
+
+        <button
+          @click="nextPage"
+          :disabled="currentPage === totalPages"
+          class="px-4 py-2 rounded-lg border border-gray-700 text-gray-400 hover:text-emerald-400 hover:border-emerald-400 disabled:opacity-30 transition"
+        >
+          Next ›
+        </button>
+      </div>
     </div>
   </div>
-    <!-- Main modal -->
-<div  v-if="add" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-        <!-- Modal content -->
-        <div class="relative bg-black rounded-lg shadow-sm dark:bg-gray-700">
-            <!-- Modal header -->
-            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-stone-200">
-                    Add Animal for Operations
-                </h3>
-                <button @click="add = false" type="button" class="text-gray-400 bg-transparent hover:bg-white hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-stone-200" data-modal-toggle="crud-modal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
-            </div>
-            <!-- Modal body -->
-            <form @submit.prevent="handleSubmit" class="p-4 md:p-5">
-                <div class="grid gap-4 mb-4 grid-cols-2">
-                  <div class="col-span-2 sm:col-span-1">
-                            <label for="code" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Animal code:</label>
-                            <div class="flex items-center">
-                            <input type="text" id="code" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" v-model="code"/>
-                             <div class="ml-2">
-                            <svg v-if="this.animalExists && this.animalExists!=null && this.code" class="w-5 h-5 fill-[#FFFD00]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
-                            </svg>
-                            <svg v-if="!this.animalExists  && this.animalExists!=null && this.code" class="w-5 h-5 fill-[#e00000]" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
-                            </svg>
-                            </div>
-                            </div>
-                            </div>
-                            
-                            <div class="col-span-2 sm:col-span-1">
-                              <label for="checkAnimal" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Check</label>      
-                              <svg @click="checkAnimal" class="w-8 h-8 ml- text-gray-800 dark:text-stone-200 cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
-                              </svg>
-
-                            </div>
-
-                    <div class="col-span-2 sm:col-span-1">
-                        <label for="dateStartAdd" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Start Date</label>
-                        <input type="date" v-model="startTimeAdd" name="dateStartAdd" id="dateStartAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500"  required="">
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <label for="dateEndAdd" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">End Date</label>
-                        <input type="date" v-model="endTimeAdd" name="dateEndAdd" id="dateEndAdd" class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500"  required="">
-                    </div>
-              
-                    <div class="col-span-2">
-                        <label for="description" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Notes</label>
-                        <textarea id="description" v-model="notesAdd" rows="4" class="block p-2.5 w-full text-base text-gray-900 bg-gray-50 rounded-lg border border-emerald-300 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-emerald-500 dark:focus:border-emerald-500" placeholder="Write notes here"></textarea>                    
-                    </div>
-                </div>
-                <button type="submit" class="text-stone-200 inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
-                    <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                    Add 
-                </button>
-              
-            </form>
-        </div>
-    </div>
-</div> 
-
-<!-- Update Vet Visit Modal -->
-<div v-if="update" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-  <div class="relative p-4 w-full max-w-md max-h-full">
-    <div class="relative bg-black rounded-lg shadow-sm">
+<!-- Add Operation Modal -->
+<div
+  v-if="add"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm transition"
+>
+  <div class="relative w-full max-w-lg p-6">
+    <!-- Modal content -->
+    <div class="bg-[#111] border border-gray-800 rounded-2xl shadow-2xl text-stone-200 overflow-hidden">
       <!-- Header -->
-      <div class="flex items-center justify-between p-4 border-b border-gray-200 rounded-t">
-        <h3 class="text-lg font-semibold text-gray-900">Update Vet Visit</h3>
-        <button @click="update = false" type="button" class="text-gray-400 hover:bg-white rounded-lg w-8 h-8 flex justify-center items-center">
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7l-6 6"></path>
+      <div class="flex justify-between items-center px-6 py-4 border-b border-gray-800">
+        <h3 class="text-xl font-semibold text-emerald-400">➕ Add Animal for Operation</h3>
+        <button
+          @click="add = false"
+          type="button"
+          class="text-gray-400 hover:text-white hover:bg-gray-800 rounded-full p-2 transition"
+        >
+          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
           </svg>
-          <span class="sr-only">Close modal</span>
         </button>
       </div>
 
       <!-- Body -->
-      <form @submit.prevent="handleUpdate" class="p-4">
-        <div class="grid gap-4 mb-4 grid-cols-1">
-          <div>
-            <label for="startTime" class="block mb-2 font-medium text-gray-900">Start Time</label>
-            <input type="datetime-local" id="startTime" v-model="startTime" required class="w-full p-2.5 border border-emerald-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500" />
-          </div>
+      <form @submit.prevent="handleSubmit" class="px-6 py-5 space-y-5">
+        <!-- Animal code -->
+        <div>
+          <label for="code" class="block mb-2 text-sm font-semibold text-emerald-300">Animal Code:</label>
+          <div class="flex items-center gap-2">
+            <input
+              id="code"
+              v-model="code"
+              type="text"
+              placeholder="Enter animal ID..."
+              class="w-full rounded-full border border-gray-700 bg-[#1a1a1a] text-gray-200 px-4 py-2.5 text-sm focus:ring-emerald-500 focus:border-emerald-500"
+            />
+            <!-- Validation icons -->
+            <div class="flex-shrink-0">
+              <svg
+                v-if="animalExists && code"
+                class="w-5 h-5 text-yellow-300"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 448 512"
+              >
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+              </svg>
 
-          <div>
-            <label for="endTime" class="block mb-2 font-medium text-gray-900">End Time</label>
-            <input type="datetime-local" id="endTime" v-model="endTime" required class="w-full p-2.5 border border-emerald-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500" />
-          </div>
-
-          <div>
-            <label for="notes" class="block mb-2 font-medium text-gray-900">Notes</label>
-            <textarea id="notes" v-model="notes" rows="4" class="w-full p-2.5 border border-emerald-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500" placeholder="Enter notes..."></textarea>
+              <svg
+                v-else-if="!animalExists && code"
+                class="w-5 h-5 text-red-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 384 512"
+              >
+                <path
+                  d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+              </svg>
+            </div>
+            <svg
+              @click="checkAnimal"
+              class="w-6 h-6 text-emerald-400 cursor-pointer hover:text-emerald-300 transition"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-3.5-3.5M17 10a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
           </div>
         </div>
 
-        <button type="submit" class="bg-emerald-700 hover:bg-emerald-800 text-stone-200 font-medium rounded-lg px-5 py-2.5 inline-flex items-center">
-          <svg class="w-5 h-5 me-1 -ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
-          </svg>
-          Update
-        </button>
+        <!-- Dates -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label for="dateStartAdd" class="block mb-2 text-sm font-semibold text-emerald-300">Start Date</label>
+            <input
+              type="date"
+              v-model="startTimeAdd"
+              id="dateStartAdd"
+              required
+              class="w-full rounded-full border border-gray-700 bg-[#1a1a1a] text-gray-200 px-4 py-2.5 text-sm focus:ring-emerald-500 focus:border-emerald-500"
+            />
+          </div>
+
+          <div>
+            <label for="dateEndAdd" class="block mb-2 text-sm font-semibold text-emerald-300">End Date</label>
+            <input
+              type="date"
+              v-model="endTimeAdd"
+              id="dateEndAdd"
+              required
+              class="w-full rounded-full border border-gray-700 bg-[#1a1a1a] text-gray-200 px-4 py-2.5 text-sm focus:ring-emerald-500 focus:border-emerald-500"
+            />
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div>
+          <label for="description" class="block mb-2 text-sm font-semibold text-emerald-300">Notes</label>
+          <textarea
+            id="description"
+            v-model="notesAdd"
+            rows="3"
+            placeholder="Write notes here..."
+            class="w-full rounded-xl border border-gray-700 bg-[#1a1a1a] text-gray-200 px-4 py-2.5 text-sm resize-none focus:ring-emerald-500 focus:border-emerald-500"
+          ></textarea>
+        </div>
+
+        <!-- Submit -->
+        <div class="flex justify-end pt-3">
+          <button
+            type="submit"
+            class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-full px-6 py-2 transition"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+            Add Operation
+          </button>
+        </div>
       </form>
     </div>
   </div>
 </div>
+
+<!-- Update Vet Visit Modal -->
+<div
+  v-if="update"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm transition"
+>
+  <div class="relative w-full max-w-lg p-6">
+    <!-- Modal Content -->
+    <div class="bg-[#111] border border-gray-800 rounded-2xl shadow-2xl text-stone-200 overflow-hidden">
+      <!-- Header -->
+      <div class="flex justify-between items-center px-6 py-4 border-b border-gray-800">
+        <h3 class="text-xl font-semibold text-emerald-400">✏️ Update Vet Visit</h3>
+        <button
+          @click="update = false"
+          type="button"
+          class="text-gray-400 hover:text-white hover:bg-gray-800 rounded-full p-2 transition"
+        >
+          <svg
+            class="w-4 h-4"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <form @submit.prevent="handleUpdate" class="px-6 py-5 space-y-5">
+        <!-- Start Time -->
+        <div>
+          <label for="startTime" class="block mb-2 text-sm font-semibold text-emerald-300">Start Time</label>
+          <input
+            type="datetime-local"
+            id="startTime"
+            v-model="startTime"
+            required
+            class="w-full rounded-full border border-gray-700 bg-[#1a1a1a] text-gray-200 px-4 py-2.5 text-sm focus:ring-emerald-500 focus:border-emerald-500"
+          />
+        </div>
+
+        <!-- End Time -->
+        <div>
+          <label for="endTime" class="block mb-2 text-sm font-semibold text-emerald-300">End Time</label>
+          <input
+            type="datetime-local"
+            id="endTime"
+            v-model="endTime"
+            required
+            class="w-full rounded-full border border-gray-700 bg-[#1a1a1a] text-gray-200 px-4 py-2.5 text-sm focus:ring-emerald-500 focus:border-emerald-500"
+          />
+        </div>
+
+        <!-- Notes -->
+        <div>
+          <label for="notes" class="block mb-2 text-sm font-semibold text-emerald-300">Notes</label>
+          <textarea
+            id="notes"
+            v-model="notes"
+            rows="3"
+            placeholder="Enter notes..."
+            class="w-full rounded-xl border border-gray-700 bg-[#1a1a1a] text-gray-200 px-4 py-2.5 text-sm resize-none focus:ring-emerald-500 focus:border-emerald-500"
+          ></textarea>
+        </div>
+
+        <!-- Submit -->
+        <div class="flex justify-end pt-3">
+          <button
+            type="submit"
+            class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-full px-6 py-2 transition"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+            Update Visit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 
 
@@ -363,6 +585,8 @@ export default {
   },
   data() {
     return {
+      currentPage: 1,    // trenutna stranica
+      itemsPerPage: 15,
        userRole: localStorage.getItem('userRole'),  
        generalSearchQuery: '',
       loadingError:false,
@@ -393,6 +617,15 @@ export default {
     };
   },
   computed: {
+    totalPages() {
+  return Math.max(1, Math.ceil(this.filteredItems.length / this.itemsPerPage));
+},
+
+paginatedItems() {
+  const start = (this.currentPage - 1) * this.itemsPerPage;
+  return this.filteredItems.slice(start, start + this.itemsPerPage);
+},
+
    filteredItems() {
     const generalQuery = this.generalSearchQuery?.toLowerCase().trim() || '';
 
@@ -411,6 +644,17 @@ export default {
     this.fetchData();
   },
   methods: {
+    nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+  }
+},
+prevPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+  }
+},
+
     formatDate(date) {
     if (!date) return '';
     const d = new Date(date);
@@ -563,20 +807,18 @@ export default {
       return new Date(date).toLocaleDateString(undefined, options);
     },
   },
-  watch: {
-    filters: {
-      handler() {
-        this.filteredItems = this.items.filter(item => {
-          return (
-            (!this.filters.startTime || item.startTime.includes(this.filters.startTime)) &&
-            (!this.filters.endTime || item.endTime.includes(this.filters.endTime)) &&
-            (!this.filters.typeOfVisit || item.typeOfVisit === this.filters.typeOfVisit)
-          );
-        });
-      },
-      deep: true,
+ watch: {
+  filters: {
+    deep: true,
+    handler() {
+      this.currentPage = 1;
     },
   },
+  generalSearchQuery() {
+    this.currentPage = 1;
+  },
+},
+
 };
 </script>
 
