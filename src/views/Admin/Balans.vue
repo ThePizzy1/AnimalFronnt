@@ -6,41 +6,57 @@
     </div>
 
     <!-- Glavni dio -->
-    <div class="w-5/6 text-stone-200 p-4 rounded-r-lg mr-8">
-      <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-white/90">Balance Accounts</h1>
+    <div class="w-5/6 text-stone-200 p-4 rounded-r-lg mr-8 bg-[#0e0e0e] rounded-xl p-6 shadow-lg border border-white/10 mb-5 mt-5"> 
+   <div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold text-white/90">Balance Accounts</h1>
 
-        <button
-          @click="add = true"
-          :disabled="!checkMenager"
-          :class="[
-            'text-stone-200 bg-emerald-500 hover:bg-emerald-600 focus:ring-2 focus:outline-none font-medium rounded-full text-base px-4 py-2 inline-flex items-center',
-            checkMenager ? '' : 'opacity-50 cursor-not-allowed'
-          ]"
-        >
-          <svg
-            class="w-6 h-6 mr-2"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M12 5a1 1 0 011 1v5h5a1 1 0 010 2h-5v5a1 1 0 01-2 0v-5H6a1 1 0 010-2h5V6a1 1 0 011-1z"
-            />
-          </svg>
-          Add
-        </button>
-      </div>
-
-      <!-- Search bar -->
-      <div class="mb-5">
-        <input
-          v-model="generalSearchQuery"
-          type="text"
-          placeholder="Search by IBAN or Type..."
-          class="w-full px-5 py-3 rounded-lg bg-[#1a1a1a] text-gray-200 placeholder-gray-500 border border-gray-700 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+  <div class="flex space-x-3">
+    <!-- 🏦 Withdraw button -->
+    <button
+      @click="withdrawModal = true"
+      class="text-stone-200 bg-emerald-700 hover:bg-emerald-600 focus:ring-2 focus:outline-none focus:ring-emerald-500 font-medium rounded-full text-base px-4 py-2 inline-flex items-center transition"
+    >
+      <svg
+        class="w-6 h-6 mr-2"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 8v8m0 0-4-4m4 4 4-4M4 20h16"
         />
-      </div>
+      </svg>
+      Withdraw
+    </button>
+
+    <!-- ➕ Add button (već postoji) -->
+    <button
+      @click="add = true"
+      :disabled="!checkMenager"
+      :class="[
+        'text-stone-200 bg-emerald-500 hover:bg-emerald-600 focus:ring-2 focus:outline-none font-medium rounded-full text-base px-4 py-2 inline-flex items-center transition',
+        checkMenager ? '' : 'opacity-50 cursor-not-allowed'
+      ]"
+    >
+      <svg
+        class="w-6 h-6 mr-2"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M12 5a1 1 0 011 1v5h5a1 1 0 010 2h-5v5a1 1 0 01-2 0v-5H6a1 1 0 010-2h5V6a1 1 0 011-1z"
+        />
+      </svg>
+      Add
+    </button>
+  </div>
+</div>
+
 
       <!-- Tablica -->
       <div class="overflow-x-auto custom-scrollbar">
@@ -146,6 +162,83 @@
       </div>
     </div>
   </div>
+<!-- 💸 WITHDRAW MODAL -->
+<div
+  v-if="withdrawModal"
+  class="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50"
+>
+  <div class="bg-[#0e0e0e] p-6 rounded-xl shadow-xl border border-emerald-700 max-w-md w-full">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-semibold text-white">Withdraw Funds</h3>
+      <button @click="withdrawModal = false" class="text-gray-400 hover:text-emerald-400">✖</button>
+    </div>
+
+    <form @submit.prevent="handleWithdraw" class="space-y-4">
+      <!-- IBAN -->
+      <div>
+        <label for="ibanWithdraw" class="block text-sm font-semibold text-gray-300 mb-1">
+          Select IBAN
+        </label>
+        <select
+          v-model="selectedIban"
+          id="ibanWithdraw"
+          class="w-full px-3 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+        >
+          <option value="" disabled>Select an account...</option>
+          <option v-for="acc in items" :key="acc.id" :value="acc.iban">
+            {{ acc.iban }} — {{ acc.type }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Amount -->
+      <div>
+        <label for="amountWithdraw" class="block text-sm font-semibold text-gray-300 mb-1">
+          Amount to withdraw (€)
+        </label>
+        <input
+          v-model.number="withdrawAmount"
+          id="amountWithdraw"
+          type="number"
+          min="1"
+          placeholder="Enter amount"
+          class="w-full px-3 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+        />
+      </div>
+
+      <!-- Reason -->
+      <div>
+        <label for="reasonWithdraw" class="block text-sm font-semibold text-gray-300 mb-1">
+          Reason
+        </label>
+        <textarea
+          v-model="withdrawReason"
+          id="reasonWithdraw"
+          rows="3"
+          placeholder="e.g. vet expenses, food supply..."
+          class="w-full px-3 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+        ></textarea>
+      </div>
+
+      <!-- Gumbi -->
+      <div class="flex justify-center space-x-4 mt-6">
+        <button
+          type="submit"
+          class="bg-emerald-600 hover:bg-emerald-500 text-stone-100 font-semibold py-2 px-6 rounded-full shadow-md transition-all hover:scale-[1.03]"
+        >
+          Confirm
+        </button>
+        <button
+          type="button"
+          @click="withdrawModal = false"
+          class="bg-red-600 hover:bg-red-700 text-stone-100 font-semibold py-2 px-6 rounded-full shadow-md transition-all hover:scale-[1.03]"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 
   <!-- MODAL DODAVANJE -->
   <div v-if="add && role === 'Admin'" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -223,6 +316,11 @@ export default {
   components: { AdminNavigation, WorkerNavigation },
   data() {
     return {
+      withdrawModal: false,
+      selectedIban: '',
+      withdrawAmount: null,
+      withdrawReason: '',
+
       role: localStorage.getItem('userRole') || 'Admin',
       add: false,
       ibanAdd: '',
@@ -235,7 +333,7 @@ export default {
       singleItem: {},
       generalSearchQuery: '',
       currentPage: 1,
-      itemsPerPage: 15,
+      itemsPerPage: 8,
     };
   },
   computed: {
@@ -262,6 +360,52 @@ export default {
     this.fetchData();
   },
   methods: {
+    async handleWithdraw() {
+  if (!this.selectedIban) {
+    return Swal.fire('Error', 'Please select an account!', 'error');
+  }
+  if (!this.withdrawAmount || this.withdrawAmount <= 0) {
+    return Swal.fire('Error', 'Please enter a valid amount.', 'error');
+  }
+
+  try {
+    // 1️⃣ Dohvati odabrani IBAN objekt
+    const account = this.items.find(i => i.iban === this.selectedIban);
+    if (!account) throw new Error('Account not found');
+
+    const newBalance = account.balance - this.withdrawAmount;
+    if (newBalance < 0) {
+      return Swal.fire('Error', 'Insufficient funds on this account.', 'error');
+    }
+
+    // 2️⃣ Update balansa
+    await instance.put('animal/updateBalansDomain', {
+      id: account.id,
+      balance: newBalance
+    });
+
+    // 3️⃣ Dodaj transakciju
+    await instance.post('animal/addTransactions', {
+      Iban: account.iban,
+      IbanAnimalShelter: account.iban,
+      Type: 'Withdraw',
+      Cost: this.withdrawAmount,
+      Purpose: this.withdrawReason || 'General withdrawal'
+    });
+
+    // 4️⃣ Osvježi podatke
+    Swal.fire('Success', 'Funds withdrawn successfully!', 'success');
+    this.withdrawModal = false;
+    this.withdrawAmount = null;
+    this.withdrawReason = '';
+    this.selectedIban = '';
+    await this.fetchData();
+  } catch (error) {
+    console.error('Withdraw error:', error);
+    Swal.fire('Error', 'Something went wrong during withdrawal.', 'error');
+  }
+},
+
     async fetchData() {
       try {
         const response = await instance.get('animal/balans_db');

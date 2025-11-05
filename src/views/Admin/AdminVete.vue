@@ -7,12 +7,13 @@
 
       <div class="w-5/6 ml-auto">
         <!-- Naslov -->
-        <h1 class="ml-1 md:ml-2 text-2xl font-semibold text-white/90 mb-5">
-          Veterinarians
-        </h1>
+       
 
         <!-- 🔍 Search -->
-        <div class="bg-[#0e0e0e] rounded-xl p-6 shadow-lg border border-white/10 mb-5">
+        <div class="bg-[#0e0e0e] rounded-xl p-6 shadow-lg border border-white/10 mb-5"> 
+          <h1 class="ml-1 md:ml-2 text-2xl font-semibold text-white/90 mb-5">
+          Veterinarians
+        </h1>
           <form @submit.prevent>
             <div class="relative">
               <input
@@ -122,7 +123,7 @@ export default {
       generalSearchQuery: '',
       items: [],
       currentPage: 1,
-      itemsPerPage: 20,
+      itemsPerPage: 10,
     };
   },
   mounted() {

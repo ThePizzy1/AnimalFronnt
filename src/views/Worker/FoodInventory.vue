@@ -1,125 +1,135 @@
 <template>
   <div class="flex">
+    <!-- Navigacija -->
     <div class="w-1/6 text-stone-200 p-4 rounded-l-lg">
-       <Loading v-if="loadingError" /> 
-
+      <Loading v-if="loadingError" /> 
       <WorkerNavigation />
     </div>
-    <div class="w-5/6 text-gray-200 p-6 rounded-r-xl  shadow-lg">
-  <!-- NASLOV -->
-  <h1 class="text-2xl font-semibold text-white/90 mb-6">
-    Animal Food Database
-  </h1>
 
-  <!-- ADD GUMB -->
-  <button
-    @click="add = true"
-    :disabled="userRole !== 'Menager'"
-    type="button"
-    class="flex items-center gap-2 px-4 py-2 mb-6 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
-  >
-    <svg
-      class="w-5 h-5"
-      fill="currentColor"
-      viewBox="0 0 512 512"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 
-           344V280H168c-13.3 0-24-10.7-24-24s10.7-24 
-           24-24h64V168c0-13.3 10.7-24 
-           24-24s24 10.7 24 24v64h64c13.3 
-           0 24 10.7 24 24s-10.7 24-24 
-           24H280v64c0 13.3-10.7 24-24 
-           24s-24-10.7-24-24z"
-      />
-    </svg>
-    Add Food
-  </button>
+    <!-- Glavni sadržaj -->
+    <div class="w-5/6 text-gray-200 p-6 rounded-r-xl shadow-lg">
+      <!-- NASLOV + ADD GUMB -->
+     
 
-  <!-- FILTERI -->
-  <div class="bg-[#1a1a1a] rounded-xl p-6 shadow-md border border-gray-700/40 mb-6">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-      <!-- Brand -->
-      <div>
-        <label class="block text-gray-300 mb-1 font-medium">Brand Name</label>
-        <select
-          v-model="filters.brandName"
-          id="brandName"
-          class="w-full px-4 py-2 rounded-lg bg-[#0e0e0e] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+      <!-- FILTERI -->
+      <div class="bg-[#1a1a1a] rounded-xl p-6 shadow-md border border-gray-700/40 ">
+         <div class="flex justify-between items-center  mb-3">
+        <h1 class="text-2xl font-semibold text-white/90">
+          Animal Food Database
+        </h1>
+
+        <button
+          @click="add = true"
+          :disabled="userRole !== 'Menager'"
+          type="button"
+          class="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
         >
-          <option value="">All</option>
-          <option v-for="brand in brands" :key="brand" :value="brand">{{ brand }}</option>
-        </select>
+          <svg
+            class="w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 512 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 
+                 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 
+                 24-24h64V168c0-13.3 10.7-24 
+                 24-24s24 10.7 24 24v64h64c13.3 
+                 0 24 10.7 24 24s-10.7 24-24 
+                 24H280v64c0 13.3-10.7 24-24 
+                 24s-24-10.7-24-24z"
+            />
+          </svg>
+          Add Food
+        </button>
       </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+          <!-- Brand -->
+          <div>
+            <label class="block text-gray-300 mb-1 font-medium">Brand Name</label>
+            <select
+              v-model="filters.brandName"
+              id="brandName"
+              class="w-full px-4 py-2 rounded-lg bg-[#0e0e0e] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+            >
+              <option value="">All</option>
+              <option v-for="brand in brands" :key="brand" :value="brand">{{ brand }}</option>
+            </select>
+          </div>
 
-      <!-- Food Type -->
-      <div>
-        <label class="block text-gray-300 mb-1 font-medium">Food Type</label>
-        <select
-          v-model="filters.foodType"
-          id="foodType"
-          class="w-full px-4 py-2 rounded-lg bg-[#0e0e0e] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
-        >
-          <option value="">All</option>
-          <option v-for="type in foodTypes" :key="type" :value="type">{{ type }}</option>
-        </select>
-      </div>
+          <!-- Food Type -->
+          <div>
+            <label class="block text-gray-300 mb-1 font-medium">Food Type</label>
+            <select
+              v-model="filters.foodType"
+              id="foodType"
+              class="w-full px-4 py-2 rounded-lg bg-[#0e0e0e] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+            >
+              <option value="">All</option>
+              <option v-for="type in foodTypes" :key="type" :value="type">{{ type }}</option>
+            </select>
+          </div>
 
-      <!-- Animal Type -->
-      <div>
-        <label class="block text-gray-300 mb-1 font-medium">Animal Type</label>
-        <select
-          v-model="filters.animalType"
-          id="animalType"
-          class="w-full px-4 py-2 rounded-lg bg-[#0e0e0e] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
-        >
-          <option value="">All</option>
-          <option v-for="animal in animalTypes" :key="animal" :value="animal">{{ animal }}</option>
-        </select>
-      </div>
+          <!-- Animal Type -->
+          <div>
+            <label class="block text-gray-300 mb-1 font-medium">Animal Type</label>
+            <select
+              v-model="filters.animalType"
+              id="animalType"
+              class="w-full px-4 py-2 rounded-lg bg-[#0e0e0e] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+            >
+              <option value="">All</option>
+              <option v-for="animal in animalTypes" :key="animal" :value="animal">{{ animal }}</option>
+            </select>
+          </div>
 
-      <!-- Age Group -->
-      <div>
-        <label class="block text-gray-300 mb-1 font-medium">Age Group</label>
-        <select
-          v-model="filters.ageGroup"
-          id="ageGroup"
-          class="w-full px-4 py-2 rounded-lg bg-[#0e0e0e] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
-        >
-          <option value="">All</option>
-          <option v-for="age in ageGroups" :key="age" :value="age">{{ age }}</option>
-        </select>
-      </div>
-    </div>
-      <!-- SEARCH -->
-  <div class="bg-[#1a1a1a] rounded-xl p-5 shadow-md border border-gray-700/40 mb-6">
-    <div class="relative">
-      <input
-        v-model="generalSearchQuery"
-        type="text"
-        placeholder="Search food..."
-        class="w-full px-5 py-3 rounded-lg bg-[#0e0e0e] text-gray-200 placeholder-gray-500 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
-      />
-      <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-        <svg
-          class="w-6 h-6 text-emerald-400"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-width="2"
-            d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 
-              0 7 7 0 0 1 14 0Z"
+          <!-- Age Group -->
+          <div>
+            <label class="block text-gray-300 mb-1 font-medium">Age Group</label>
+            <select
+              v-model="filters.ageGroup"
+              id="ageGroup"
+              class="w-full px-4 py-2 rounded-lg bg-[#0e0e0e] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+            >
+              <option value="">All</option>
+              <option v-for="age in ageGroups" :key="age" :value="age">{{ age }}</option>
+            </select>
+          </div>
+        </div>
+
+
+<div class="relative mt-1">
+          <input
+            v-model="generalSearchQuery"
+            type="text"
+            placeholder="Search food..."
+            class="w-full px-5 py-3 rounded-lg bg-[#0e0e0e] text-gray-200 placeholder-gray-500 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
           />
-        </svg>
+          <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+            <svg
+              class="w-6 h-6 text-emerald-400"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-width="2"
+                d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 
+                  0 7 7 0 0 1 14 0Z"
+              />
+            </svg>
+          </div>
+        </div>
+
       </div>
-    </div>
-  </div>
-  </div>
+
+  
+
+ 
+
+
 
 
 

@@ -4,73 +4,80 @@
       <AdminNavigation class="w-1/6" />
 
       <div class="w-5/6 ml-auto">
-        <h1 class="ml-1 md:ml-2 text-2xl font-semibold text-white/90 mb-5">Funds Database</h1>
+       <div
+  class="bg-[#0e0e0e] rounded-xl p-6 shadow-lg border border-white/10 mb-6"
+>
+  <!-- HEADER: Title + Download -->
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-semibold text-white/90">Funds</h1>
 
-        <!-- 🧾 DOWNLOAD GUMB -->
-        <button
-          @click="funds"
-          class="block mx-5 mt-2 mb-4 text-stone-200 bg-stone-700 hover:bg-emerald-600 focus:ring-3 focus:outline-none focus:ring-teal-300 font-medium rounded-full text-base p-1.5 text-center inline-flex items-center"
-          type="button"
+    <div class="flex flex-col items-end">
+      <button
+        @click="funds"
+        class="flex items-center bg-stone-700 hover:bg-emerald-600 focus:ring-2 focus:ring-emerald-500 text-stone-200 font-medium rounded-full text-base px-4 py-2 shadow-md transition"
+        type="button"
+      >
+        <svg
+          class="w-6 h-6 mr-2 text-stone-200"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
         >
-          <svg
-            class="w-6 h-6 text-stone-200"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2m-8 1V4m0 12-4-4m4 4 4-4"
-            />
-          </svg>
-          <span class="block text-base font-bold mx-2">Download</span>
-        </button>
-        <p class="text-xs font-normal text-gray-300 mx-5 mb-4">
-          Download donations in the past month
-        </p>
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2m-8 1V4m0 12-4-4m4 4 4-4"
+          />
+        </svg>
+        <span class="font-semibold">Download</span>
+      </button>
+      <p class="text-xs text-gray-400 mt-1">
+        Download donations in the past month
+      </p>
+    </div>
+  </div>
 
-        <!-- FILTERI -->
-        <div
-          class="bg-[#0e0e0e] rounded-xl p-6 shadow-lg border border-white/10 mb-6 grid grid-cols-1 sm:grid-cols-3 gap-5"
-        >
-          <div>
-            <label for="amount" class="block text-sm font-semibold mb-2 text-gray-300">Amount:</label>
-            <select
-              v-model="filters.amount"
-              id="amount"
-              class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 focus:ring-2 focus:ring-emerald-500"
-            >
-              <option value="">All</option>
-              <option v-for="amount in amounts" :key="amount" :value="amount">{{ amount }}</option>
-            </select>
-          </div>
+  <!-- FILTERI -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+    <div>
+      <label for="amount" class="block text-sm font-semibold mb-2 text-gray-300">Amount:</label>
+      <select
+        v-model="filters.amount"
+        id="amount"
+        class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 focus:ring-2 focus:ring-emerald-500"
+      >
+        <option value="">All</option>
+        <option v-for="amount in amounts" :key="amount" :value="amount">{{ amount }}</option>
+      </select>
+    </div>
 
-          <div>
-            <label for="purpose" class="block text-sm font-semibold mb-2 text-gray-300">Purpose:</label>
-            <select
-              v-model="filters.purpose"
-              id="purpose"
-              class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 focus:ring-2 focus:ring-emerald-500"
-            >
-              <option value="">All</option>
-              <option v-for="purpose in purposes" :key="purpose" :value="purpose">{{ purpose }}</option>
-            </select>
-          </div>
+    <div>
+      <label for="purpose" class="block text-sm font-semibold mb-2 text-gray-300">Purpose:</label>
+      <select
+        v-model="filters.purpose"
+        id="purpose"
+        class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 focus:ring-2 focus:ring-emerald-500"
+      >
+        <option value="">All</option>
+        <option v-for="purpose in purposes" :key="purpose" :value="purpose">{{ purpose }}</option>
+      </select>
+    </div>
 
-          <div>
-            <label for="dateTime" class="block text-sm font-semibold mb-2 text-gray-300">Date:</label>
-            <input
-              v-model="filters.dateTime"
-              id="dateTime"
-              type="date"
-              class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 focus:ring-2 focus:ring-emerald-500"
-            />
-          </div>
-        </div>
+    <div>
+      <label for="dateTime" class="block text-sm font-semibold mb-2 text-gray-300">Date:</label>
+      <input
+        v-model="filters.dateTime"
+        id="dateTime"
+        type="date"
+        class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700 focus:ring-2 focus:ring-emerald-500"
+      />
+    </div>
+  </div>
+</div>
+
 
         <!-- TABLICA -->
         <div class="overflow-x-auto custom-scrollbar">
@@ -191,7 +198,7 @@ export default {
       purposes: [],
       filters: { amount: '', purpose: '', dateTime: '' },
       currentPage: 1,
-      itemsPerPage: 20,
+      itemsPerPage: 8,
       single: false,
       singleItem: {},
       sigleUser: {},

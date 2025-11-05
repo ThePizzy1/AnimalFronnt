@@ -113,103 +113,136 @@
             >
               Edit
             </button>
-
-            <button
-              @click="showRemuve = true"
-              class="bg-red-600 hover:bg-red-700 text-stone-100 font-semibold py-2 px-6 rounded-full shadow-md transition-all hover:scale-[1.03]"
-            >
-              Remove
-            </button>
           </div>
-
-          <!-- Modal -->
-          <div
-            v-if="showRemuve"
-            class="fixed inset-0 bg-black/70 flex justify-center items-center z-50 backdrop-blur-sm"
-          >
-            <div
-              class="bg-stone-900/90 p-8 rounded-2xl border border-stone-600/40 shadow-2xl flex flex-col items-center space-y-6 w-[400px]"
-            >
-              <h2 class="text-2xl font-semibold text-stone-100">Remove {{ animalEdit.name }}?</h2>
-              <div class="flex space-x-4">
-                <button
-                  @click="removeAnimal"
-                  class="bg-emerald-700 hover:bg-emerald-600 text-stone-100 px-5 py-2 rounded-full shadow-md"
-                >
-                  Confirm
-                </button>
-                <button
-                  @click="showRemuve = false"
-                  class="bg-red-600 hover:bg-red-700 text-stone-100 px-5 py-2 rounded-full shadow-md"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
           </div>
-        </div>
+           </div>
+    
+<!-- Edit section -->
+<div
+  v-if="isEditing"
+  class="mx-4 p-8 rounded-2xl bg-stone-800/90 backdrop-blur-md border border-stone-500/40 shadow-inner"
+>
+  <h2 class="text-2xl font-semibold mb-6 text-stone-100">Edit {{ animalEdit.name }}</h2>
+
+  <!-- Ako je životinja posvojena -->
+  <p v-if="animalEdit.adopted" class="text-red-500 text-center mb-6 font-semibold">
+    ⚠️ Ova životinja je već posvojena — izmjene nisu dopuštene.
+  </p>
+
+  <!-- Ako nije posvojena -->
+  <div v-else>
+    <div class="grid grid-cols-2 gap-6 mb-6">
+      <div>
+        <strong>Family:</strong>
+        <input
+          v-model="animalEdit.family"
+          class="ml-2 px-3 py-1 rounded-full bg-stone-700/40 border border-stone-400/40 text-stone-100 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+        />
       </div>
 
-      <!-- Edit section -->
-      <div
-        v-if="isEditing"
-        class="mx-4 p-8 rounded-2xl bg-stone-800/90 backdrop-blur-md border border-stone-500/40 shadow-inner"
-      >
-        <h2 class="text-2xl font-semibold mb-6 text-stone-100">Edit {{ animalEdit.name }}</h2>
+      <div>
+        <strong>Species:</strong>
+        <input
+          v-model="animalEdit.species"
+          class="ml-2 px-3 py-1 rounded-full bg-stone-700/40 border border-stone-400/40 text-stone-100 focus:ring-2 focus:ring-emerald-500"
+        />
+      </div>
 
-        <div class="grid grid-cols-2 gap-6">
-          <div><strong>Age:</strong>
-            <input
-              v-model="animalEdit.age"
-              class="ml-2 px-3 py-1 rounded-full bg-stone-700/40 border border-stone-400/40 text-stone-100 focus:ring-2 focus:ring-stone-300 focus:outline-none"
-            />
-          </div>
-          <div><strong>Weight:</strong>
-            <input
-              v-model="animalEdit.weight"
-              class="ml-2 px-3 py-1 rounded-full bg-stone-700/40 border border-stone-400/40 text-stone-100 focus:ring-2 focus:ring-stone-300"
-            />
-          </div>
-          <div><strong>Height:</strong>
-            <input
-              v-model="animalEdit.height"
-              class="ml-2 px-3 py-1 rounded-full bg-stone-700/40 border border-stone-400/40 text-stone-100 focus:ring-2 focus:ring-stone-300"
-            />
-          </div>
-          <div><strong>Length:</strong>
-            <input
-              v-model="animalEdit.length"
-              class="ml-2 px-3 py-1 rounded-full bg-stone-700/40 border border-stone-400/40 text-stone-100 focus:ring-2 focus:ring-stone-300"
-            />
-          </div>
-        </div>
+      <div>
+        <strong>Subspecies:</strong>
+        <input
+          v-model="animalEdit.subspecies"
+          class="ml-2 px-3 py-1 rounded-full bg-stone-700/40 border border-stone-400/40 text-stone-100 focus:ring-2 focus:ring-emerald-500"
+        />
+      </div>
 
-        <div class="mt-6 space-y-4">
-          <div><strong>Health Issues:</strong>
-            <textarea
-              v-model="animalEdit.healthIssues"
-              class="w-full mt-2 p-3 rounded-xl bg-stone-700/40 border border-stone-400/40 text-stone-100 focus:ring-2 focus:ring-stone-300 focus:outline-none"
-            ></textarea>
-          </div>
-          <div><strong>Personality Description:</strong>
-            <textarea
-              v-model="animalEdit.personalityDescription"
-              class="w-full mt-2 p-3 rounded-xl bg-stone-700/40 border border-stone-400/40 text-stone-100 focus:ring-2 focus:ring-stone-300 focus:outline-none"
-            ></textarea>
-          </div>
-        </div>
-
-        <div class="flex justify-center mt-10">
-          <button
-            @click="editAnimal"
-            class="bg-emerald-700 hover:bg-emerald-600 text-stone-100 font-semibold py-2 px-6 rounded-full shadow-md transition-all hover:scale-[1.03]"
-          >
-            Save Changes
-          </button>
-        </div>
+      <div>
+        <strong>Age:</strong>
+        <input
+          v-model="animalEdit.age"
+          class="ml-2 px-3 py-1 rounded-full bg-stone-700/40 border border-stone-400/40 text-stone-100 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+        />
+      </div>
+      <div>
+        <strong>Weight:</strong>
+        <input
+          v-model="animalEdit.weight"
+          class="ml-2 px-3 py-1 rounded-full bg-stone-700/40 border border-stone-400/40 text-stone-100 focus:ring-2 focus:ring-emerald-500"
+        />
+      </div>
+      <div>
+        <strong>Height:</strong>
+        <input
+          v-model="animalEdit.height"
+          class="ml-2 px-3 py-1 rounded-full bg-stone-700/40 border border-stone-400/40 text-stone-100 focus:ring-2 focus:ring-emerald-500"
+        />
+      </div>
+      <div>
+        <strong>Length:</strong>
+        <input
+          v-model="animalEdit.length"
+          class="ml-2 px-3 py-1 rounded-full bg-stone-700/40 border border-stone-400/40 text-stone-100 focus:ring-2 focus:ring-emerald-500"
+        />
       </div>
     </div>
+
+    <!-- True/false svojstva -->
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+      <div
+        v-for="trait in [
+          { key: 'neutered', label: 'Neutered' },
+          { key: 'vaccinated', label: 'Vaccinated' },
+          { key: 'microchipped', label: 'Microchipped' },
+          { key: 'trained', label: 'Trained' },
+          { key: 'socialized', label: 'Socialized' },
+        ]"
+        :key="trait.key"
+        class="flex items-center"
+      >
+        <label class="inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            :checked="animalEdit[trait.key]"
+            @change="toggleTrait(trait.key)"
+            class="sr-only peer"
+          />
+          <div
+            class="relative w-11 h-6 bg-stone-600 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-emerald-500 rounded-full peer peer-checked:bg-emerald-700 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-stone-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"
+          ></div>
+          <span class="ml-3 text-base">{{ trait.label }}</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Ostali opisi -->
+    <div class="mt-6 space-y-4">
+      <div><strong>Health Issues:</strong>
+        <textarea
+          v-model="animalEdit.healthIssues"
+          class="w-full mt-2 p-3 rounded-xl bg-stone-700/40 border border-stone-400/40 text-stone-100 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+        ></textarea>
+      </div>
+      <div><strong>Personality Description:</strong>
+        <textarea
+          v-model="animalEdit.personalityDescription"
+          class="w-full mt-2 p-3 rounded-xl bg-stone-700/40 border border-stone-400/40 text-stone-100 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="flex justify-center mt-10">
+      <button
+        @click="editAnimal"
+        class="bg-emerald-700 hover:bg-emerald-600 text-stone-100 font-semibold py-2 px-6 rounded-full shadow-md transition-all hover:scale-[1.03]"
+      >
+        Save Changes
+      </button>
+    </div>
   </div>
+</div>
+         
+            </div>
+    </div>
 </template>
 
 <script>
@@ -239,6 +272,12 @@ export default defineComponent({
     this.fetchAnimalDetails(id);
   },
   methods: {
+     toggleTrait(key) {
+    // Ako je trenutno true — ne dopušta promjenu
+    if (this.animalEdit[key] === true) return;
+    // Inače, promijeni vrijednost
+    this.animalEdit[key] = !this.animalEdit[key];
+  },
     async removeAnimal() {
       try {
         this.loadingError = true;

@@ -4,11 +4,12 @@
       <AdminNavigation class="w-1/6" />
 
       <div class="w-5/6 ml-auto">
-        <!-- Naslov -->
+      
+        <!-- Search -->
+        <div class="bg-[#0e0e0e] rounded-xl p-6 shadow-lg border border-white/10 mb-5"> 
+           <!-- Naslov -->
         <h1 class="ml-1 md:ml-2 text-2xl font-semibold text-white/90 mb-5">Transactions</h1>
 
-        <!-- Search -->
-        <div class="bg-[#0e0e0e] rounded-xl p-6 shadow-lg border border-white/10 mb-5">
           <input
             v-model="generalSearchQuery"
             type="text"
@@ -143,7 +144,7 @@ export default {
       single: false,
       singleItem: {},
       currentPage: 1,
-      itemsPerPage: 20,
+      itemsPerPage: 8,
     };
   },
   mounted() {

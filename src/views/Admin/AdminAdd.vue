@@ -7,101 +7,331 @@
 
     <!-- Form Section -->
     <div class="w-3/6 mx-auto bg-stone-800/90 mt-5 rounded-2xl  p-8 rounded-r-xl">
-      <!-- Animal Info -->
-      <div class="mt-4 mb-4 p-6 bg-stone-800/60 border border-stone-500/40 rounded-2xl backdrop-blur-md shadow-inner hover:scale-[1.01] transition-all duration-200">
-        <h2 class="text-2xl font-bold mb-6 text-stone-100">Animal Info</h2>
+     <!-- Animal Info -->
+<div class="mt-4 mb-4 p-6 bg-stone-800/60 border border-stone-500/40 rounded-2xl backdrop-blur-md shadow-inner hover:scale-[1.01] transition-all duration-200">
+  <h2 class="text-2xl font-bold mb-6 text-stone-100">Animal Info</h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <!-- Common Animal Fields -->
-          <div v-for="field in [
-            {id:'name', label:'Name', type:'text', model:'name'},
-            {id:'species', label:'Species', type:'text', model:'species'},
-            {id:'subspecies', label:'Subspecies', type:'text', model:'subspecies'},
-            {id:'age', label:'Age', type:'number', model:'age'},
-            {id:'weight', label:'Weight', type:'number', model:'weight'},
-            {id:'height', label:'Height', type:'number', model:'height'},
-            {id:'length', label:'Length', type:'number', model:'length'},
-          ]" :key="field.id">
-            <label :for="field.id" class="block font-semibold mb-2 text-stone-300">{{ field.label }}:</label>
-            <input :type="field.type" :id="field.id" v-model="field.model"
-              class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300" />
-          </div>
+  <!-- Animal ID -->
+  <div class="mb-6">
+    <div class="flex items-center justify-between mb-3">
+      <label class="font-semibold text-stone-300">Animal ID:</label>
 
-          <!-- Family -->
-          <div>
-            <label for="family" class="block font-semibold mb-2 text-stone-300">Family:</label>
-            <select id="family" v-model="selectedFamily"
-              class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none">
-              <option>Mammal</option>
-              <option>Bird</option>
-              <option>Fish</option>
-              <option>Reptile</option>
-              <option>Amphibian</option>
-              <option>Other</option>
-            </select>
-          </div>
+      <!-- Toggle Manual / Random -->
+      <label class="inline-flex items-center cursor-pointer">
+        <input type="checkbox" v-model="manualId" class="sr-only peer" />
+        <div
+          class="w-11 h-6 bg-stone-600/60 peer-focus:ring-2 peer-focus:ring-stone-300 rounded-full relative after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:w-5 after:h-5 after:bg-stone-300 after:rounded-full after:transition-all peer-checked:bg-emerald-600 peer-checked:after:translate-x-full"
+        ></div>
+        <span class="ml-3 text-stone-200 font-medium">Manual Entry</span>
+      </label>
+    </div>
 
-          <!-- Gender -->
-          <div>
-            <label for="gender" class="block font-semibold mb-2 text-stone-300">Gender:</label>
-            <select id="gender" v-model="gender"
-              class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none">
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
-
-          <!-- Checkboxes -->
-          <div v-for="check in [
-            {label:'Neutered', model:'neutered'},
-            {label:'Vaccinated', model:'vaccinated'},
-            {label:'Microchipped', model:'microchipped'},
-            {label:'Trained', model:'trained'},
-            {label:'Socialized', model:'socialized'},
-            {label:'Adopted', model:'adopted'}
-          ]" :key="check.label">
-            <label class="inline-flex items-center cursor-pointer">
-              <input type="checkbox" v-model="check.model" class="sr-only peer">
-              <div class="w-11 h-6 bg-stone-600/60 peer-focus:ring-2 peer-focus:ring-stone-300 rounded-full relative after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:w-5 after:h-5 after:bg-stone-300 after:rounded-full after:transition-all peer-checked:bg-emerald-600 peer-checked:after:translate-x-full"></div>
-              <span class="ml-3 text-stone-200 font-medium">{{ check.label }}</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- Textareas -->
-        <div class="mt-6">
-          <label for="healthIssues" class="block font-semibold mb-2 text-stone-300">Health Issues:</label>
-          <textarea id="healthIssues" v-model="healthIssues"
-            class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-xl shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300"></textarea>
-        </div>
-
-        <div class="mt-4">
-          <label for="personalityDescription" class="block font-semibold mb-2 text-stone-300">Personality Description:</label>
-          <textarea id="personalityDescription" v-model="personalityDescription"
-            class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-xl shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300"></textarea>
-        </div>
-      </div>
-
-      <!-- Conditional Info Blocks -->
-      <template v-if="selectedFamily === 'Mammal'">
-        <div class="p-6 mt-4 bg-stone-800/60 border border-stone-500/40 rounded-2xl shadow-inner backdrop-blur-md hover:scale-[1.01] transition-all">
-          <h2 class="text-xl font-bold mb-4 text-stone-100">Mammal Info</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block font-semibold mb-2">Coat Type:</label>
-              <input type="text" v-model="coatType"
-                class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
-            </div>
-            <div>
-              <label class="block font-semibold mb-2">Grooming Products:</label>
-              <input type="text" v-model="groomingProducts"
-                class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
-            </div>
-          </div>
-        </div>
+    <div class="flex items-center space-x-3">
+      <!-- Ako je Manual Entry uključen -->
+      <template v-if="manualId">
+        <input
+          type="number"
+          v-model="idAnimalInput"
+          placeholder="Enter Animal ID"
+          class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none"
+        />
       </template>
 
-      <!-- Add other family templates (Bird, Fish, etc.) in same dark-stone style... -->
+      <!-- Ako je Manual Entry isključen -->
+      <template v-else>
+        <input
+          type="number"
+          v-model="randomAnimalId"
+          placeholder="Click 'Random'"
+          readonly
+          class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-400 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none"
+        />
+        <button
+          @click="generateRandomId"
+          class="px-4 py-2 bg-stone-700 hover:bg-stone-600 text-stone-100 rounded-full font-semibold transition-all"
+        >
+          Random
+        </button>
+      </template>
+
+      <!-- Check button -->
+      <button
+        @click="checkAnimalId"
+        class="px-4 py-2 bg-emerald-700 hover:bg-emerald-600 rounded-full text-stone-100 font-semibold focus:ring-2 focus:ring-stone-300 focus:outline-none transition-all"
+      >
+        Check
+      </button>
+    </div>
+  </div>
+
+  <!-- Common Animal Fields -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <!-- Name -->
+    <div>
+      <label for="name" class="block font-semibold mb-2 text-stone-300">Name:</label>
+      <input type="text" id="name" v-model="name"
+        class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none"/>
+    </div>
+
+    <!-- Family -->
+    <div>
+      <label for="family" class="block font-semibold mb-2 text-stone-300">Family:</label>
+      <select id="family" v-model="selectedFamily"
+        class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none">
+        <option value="Mammal">Mammal</option>
+        <option value="Bird">Bird</option>
+        <option value="Fish">Fish</option>
+        <option value="Reptile">Reptile</option>
+        <option value="Amphibian">Amphibian</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <!-- Species -->
+    <div>
+      <label for="species" class="block font-semibold mb-2 text-stone-300">Species:</label>
+      <input type="text" id="species" v-model="species"
+        class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none"/>
+    </div>
+
+    <!-- Subspecies -->
+    <div>
+      <label for="subspecies" class="block font-semibold mb-2 text-stone-300">Subspecies:</label>
+      <input type="text" id="subspecies" v-model="subspecies"
+        class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none"/>
+    </div>
+
+    <!-- Age -->
+    <div>
+      <label for="age" class="block font-semibold mb-2 text-stone-300">Age:</label>
+      <input type="number" min="0" id="age" v-model="age"
+        class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none"/>
+    </div>
+
+    <!-- Gender -->
+    <div>
+      <label for="gender" class="block font-semibold mb-2 text-stone-300">Gender:</label>
+      <select id="gender" v-model="gender"
+        class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+    </div>
+
+    <!-- Weight -->
+    <div>
+      <label for="weight" class="block font-semibold mb-2 text-stone-300">Weight:</label>
+      <input type="number" min="0" id="weight" v-model="weight"
+        class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none"/>
+    </div>
+
+    <!-- Height -->
+    <div>
+      <label for="height" class="block font-semibold mb-2 text-stone-300">Height:</label>
+      <input type="number" min="0" id="height" v-model="height"
+        class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none"/>
+    </div>
+
+    <!-- Length -->
+    <div>
+      <label for="length" class="block font-semibold mb-2 text-stone-300">Length:</label>
+      <input type="number" min="0" id="length" v-model="length"
+        class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none"/>
+    </div>
+
+    <!-- CHECKBOXES (ručno razdvojeni) -->
+    <div>
+      <label class="inline-flex items-center cursor-pointer">
+        <input type="checkbox" v-model="neutered" class="sr-only peer">
+        <div class="w-11 h-6 bg-stone-600/60 peer-focus:ring-2 peer-focus:ring-stone-300 rounded-full relative after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:w-5 after:h-5 after:bg-stone-300 after:rounded-full after:transition-all peer-checked:bg-emerald-600 peer-checked:after:translate-x-full"></div>
+        <span class="ml-3 text-stone-200 font-medium">Neutered</span>
+      </label>
+    </div>
+
+    <div>
+      <label class="inline-flex items-center cursor-pointer">
+        <input type="checkbox" v-model="vaccinated" class="sr-only peer">
+        <div class="w-11 h-6 bg-stone-600/60 peer-focus:ring-2 peer-focus:ring-stone-300 rounded-full relative after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:w-5 after:h-5 after:bg-stone-300 after:rounded-full after:transition-all peer-checked:bg-emerald-600 peer-checked:after:translate-x-full"></div>
+        <span class="ml-3 text-stone-200 font-medium">Vaccinated</span>
+      </label>
+    </div>
+
+    <div>
+      <label class="inline-flex items-center cursor-pointer">
+        <input type="checkbox" v-model="microchipped" class="sr-only peer">
+        <div class="w-11 h-6 bg-stone-600/60 peer-focus:ring-2 peer-focus:ring-stone-300 rounded-full relative after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:w-5 after:h-5 after:bg-stone-300 after:rounded-full after:transition-all peer-checked:bg-emerald-600 peer-checked:after:translate-x-full"></div>
+        <span class="ml-3 text-stone-200 font-medium">Microchipped</span>
+      </label>
+    </div>
+
+    <div>
+      <label class="inline-flex items-center cursor-pointer">
+        <input type="checkbox" v-model="trained" class="sr-only peer">
+        <div class="w-11 h-6 bg-stone-600/60 peer-focus:ring-2 peer-focus:ring-stone-300 rounded-full relative after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:w-5 after:h-5 after:bg-stone-300 after:rounded-full after:transition-all peer-checked:bg-emerald-600 peer-checked:after:translate-x-full"></div>
+        <span class="ml-3 text-stone-200 font-medium">Trained</span>
+      </label>
+    </div>
+
+    <div>
+      <label class="inline-flex items-center cursor-pointer">
+        <input type="checkbox" v-model="socialized" class="sr-only peer">
+        <div class="w-11 h-6 bg-stone-600/60 peer-focus:ring-2 peer-focus:ring-stone-300 rounded-full relative after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:w-5 after:h-5 after:bg-stone-300 after:rounded-full after:transition-all peer-checked:bg-emerald-600 peer-checked:after:translate-x-full"></div>
+        <span class="ml-3 text-stone-200 font-medium">Socialized</span>
+      </label>
+    </div>
+
+    <div>
+      <label class="inline-flex items-center cursor-pointer">
+        <input type="checkbox" v-model="adopted" class="sr-only peer">
+        <div class="w-11 h-6 bg-stone-600/60 peer-focus:ring-2 peer-focus:ring-stone-300 rounded-full relative after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:w-5 after:h-5 after:bg-stone-300 after:rounded-full after:transition-all peer-checked:bg-emerald-600 peer-checked:after:translate-x-full"></div>
+        <span class="ml-3 text-stone-200 font-medium">Adopted</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Textareas -->
+  <div class="mt-6">
+    <label for="healthIssues" class="block font-semibold mb-2 text-stone-300">Health Issues:</label>
+    <textarea id="healthIssues" v-model="healthIssues"
+      class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-xl shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300"></textarea>
+  </div>
+
+  <div class="mt-4">
+    <label for="personalityDescription" class="block font-semibold mb-2 text-stone-300">Personality Description:</label>
+    <textarea id="personalityDescription" v-model="personalityDescription"
+      class="w-full py-2 px-3 border border-stone-400/40 bg-stone-700/50 text-stone-100 rounded-xl shadow-inner focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-300"></textarea>
+  </div>
+</div>
+
+<!-- Conditional Info Blocks -->
+<template v-if="selectedFamily === 'Mammal'">
+  <div class="p-6 mt-4 bg-stone-800/60 border border-stone-500/40 rounded-2xl shadow-inner backdrop-blur-md hover:scale-[1.01] transition-all">
+    <h2 class="text-xl font-bold mb-4 text-stone-100">Mammal Info</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block font-semibold mb-2 text-stone-300">Coat Type:</label>
+        <input type="text" v-model="coatType"
+          class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+      </div>
+      <div>
+        <label class="block font-semibold mb-2 text-stone-300">Grooming Products:</label>
+        <input type="text" v-model="groomingProducts"
+          class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- Bird -->
+<template v-else-if="selectedFamily === 'Bird'">
+  <div class="p-6 mt-4 bg-stone-800/60 border border-stone-500/40 rounded-2xl shadow-inner backdrop-blur-md hover:scale-[1.01] transition-all">
+    <h2 class="text-xl font-bold mb-4 text-stone-100">Bird Info</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div>
+        <label class="block font-semibold mb-2 text-stone-300">Cage Size:</label>
+        <input type="text" v-model="cageSize"
+          class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+      </div>
+      <div>
+        <label class="block font-semibold mb-2 text-stone-300">Recommended Toys:</label>
+        <input type="text" v-model="recommendedToys"
+          class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+      </div>
+      <div>
+        <label class="block font-semibold mb-2 text-stone-300">Sociability:</label>
+        <input type="text" v-model="sociability"
+          class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- Fish -->
+<template v-else-if="selectedFamily === 'Fish'">
+  <div class="p-6 mt-4 bg-stone-800/60 border border-stone-500/40 rounded-2xl shadow-inner backdrop-blur-md hover:scale-[1.01] transition-all">
+    <h2 class="text-xl font-bold mb-4 text-stone-100">Fish Info</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div>
+        <label class="block font-semibold mb-2 text-stone-300">Tank Size:</label>
+        <input type="text" v-model="tankSize"
+          class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+      </div>
+      <div>
+        <label class="block font-semibold mb-2 text-stone-300">Compatible Species:</label>
+        <input type="text" v-model="compatibleSpecies"
+          class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+      </div>
+      <div>
+        <label class="block font-semibold mb-2 text-stone-300">Recommended Items:</label>
+        <input type="text" v-model="recommendedItems"
+          class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- Reptile -->
+<template v-else-if="selectedFamily === 'Reptile'">
+  <div class="p-6 mt-4 bg-stone-800/60 border border-stone-500/40 rounded-2xl shadow-inner backdrop-blur-md hover:scale-[1.01] transition-all">
+    <h2 class="text-xl font-bold mb-4 text-stone-100">Reptile Info</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div>
+        <label class="block font-semibold mb-2 text-stone-300">Tank Size:</label>
+        <input type="text" v-model="tankSize"
+          class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+      </div>
+      <div>
+        <label class="block font-semibold mb-2 text-stone-300">Sociability:</label>
+        <input type="text" v-model="sociability"
+          class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+      </div>
+      <div>
+        <label class="block font-semibold mb-2 text-stone-300">Compatible Species:</label>
+        <input type="text" v-model="compatibleSpecies"
+          class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+      </div>
+      <div>
+        <label class="block font-semibold mb-2 text-stone-300">Recommended Items:</label>
+        <input type="text" v-model="recommendedItems"
+          class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- Amphibian -->
+<template v-else-if="selectedFamily === 'Amphibian'">
+  <div class="p-6 mt-4 bg-stone-800/60 border border-stone-500/40 rounded-2xl shadow-inner backdrop-blur-md hover:scale-[1.01] transition-all">
+    <h2 class="text-xl font-bold mb-4 text-stone-100">Amphibian Info</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block font-semibold mb-2 text-stone-300">Humidity:</label>
+        <input type="text" v-model="humidity"
+          class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+      </div>
+      <div>
+        <label class="block font-semibold mb-2 text-stone-300">Temperature:</label>
+        <input type="text" v-model="temperature"
+          class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- Other -->
+<template v-else-if="selectedFamily === 'Other'">
+  <div class="p-6 mt-4 bg-stone-800/60 border border-stone-500/40 rounded-2xl shadow-inner backdrop-blur-md hover:scale-[1.01] transition-all">
+    <h2 class="text-xl font-bold mb-4 text-stone-100">Other Family</h2>
+    <div class="grid grid-cols-1 gap-4">
+      <div>
+        <label class="block font-semibold mb-2 text-stone-300">Enter Family Name:</label>
+        <input type="text" v-model="other"
+          class="w-full py-2 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-full shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+      </div>
+    </div>
+  </div>
+</template>
+
 
 <!-- Surrenderer info -->
 <div class="mt-6 p-6 bg-stone-800/60 border border-stone-500/40 rounded-2xl shadow-inner backdrop-blur-md hover:scale-[1.01] transition-all duration-200 overflow-hidden">
@@ -296,6 +526,12 @@ export default {
   },
   data() {
     return {
+         manualId: false,          // toggle za manual/random
+          idAnimalInput: "",        // ID unesen ručno
+          randomAnimalId: null,     // generirani ID
+          animalIdExists: null,     // stanje (true/false)
+          animal: null, 
+
       token: localStorage.getItem('admin_token'),
       role: "", 
       name: '',
@@ -347,6 +583,77 @@ export default {
     };
   },
   methods: {
+    
+    // 🔹 Dohvaća podatke o životinji po ID-u (brza opcija)
+  async fetchAnimalDetails(id) {
+    try {
+      const response = await instance.get(`animal/animal/${id}`);
+      this.animal = response.data;
+
+      // Ako backend vrati null ili prazan objekt → nema životinje
+      if (!this.animal || Object.keys(this.animal).length === 0) {
+        return null;
+      }
+      return this.animal;
+    } catch (error) {
+      // Ako backend vrati 404 → nema životinje
+      if (error.response && error.response.status === 404) {
+        return null;
+      }
+      console.error("Error fetching animal:", error);
+      return null;
+    }
+  },
+
+  // 🔹 Generira random ID (min 4 znamenke) i odmah provjerava
+  async generateRandomId() {
+    this.randomAnimalId = Math.floor(1000 + Math.random() * 900000);
+    this.animalIdExists = null;
+    await this.checkAnimalId(); // automatski provjeri
+  },
+
+  // 🔹 Provjera postoji li ID u bazi
+  async checkAnimalId() {
+    try {
+      this.animalIdExists = null;
+
+      const idToCheck = this.manualId
+        ? parseInt(this.idAnimalInput)
+        : parseInt(this.randomAnimalId);
+
+      if (!idToCheck || isNaN(idToCheck)) {
+        await Swal.fire({
+          icon: "warning",
+          title: "Missing ID",
+          text: "Please enter or generate an ID first.",
+        });
+        return;
+      }
+
+      const existingAnimal = await this.fetchAnimalDetails(idToCheck);
+
+      if (existingAnimal === null) {
+        // ✅ ID slobodan
+        this.animalIdExists = false;
+        await Swal.fire({
+          icon: "success",
+          title: "ID available!",
+          text: `Animal ID ${idToCheck} is free to use.`,
+        });
+      } else {
+        // ❌ ID već postoji
+        this.animalIdExists = true;
+        await Swal.fire({
+          icon: "error",
+          title: "ID already exists!",
+          text: `Animal with ID ${idToCheck} already exists in the database.`,
+        });
+      }
+    } catch (error) {
+      console.error("Error checking animal ID:", error);
+      this.animalIdExists = null;
+    }
+  },
     async checkUser() {
    try{
         const userResponse = await instance.get(`auth/getUserByUsername/${this.username}`);
@@ -390,7 +697,11 @@ export default {
 
       try {
         // Prepare form data
+        const idToCheck = this.manualId
+        ? parseInt(this.idAnimalInput)
+        : parseInt(this.randomAnimalId);
         const formData = new FormData();
+        formData.append('idAnimal', idToCheck);
         formData.append('name', this.name);
         if (this.selectedFamily === 'Other') {
           formData.append('family', this.other);

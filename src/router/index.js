@@ -130,7 +130,6 @@ const router = createRouter({
 
 
 
-
     //SURENDERERS
     {
       path: '/surenderersHome',
@@ -190,11 +189,7 @@ const router = createRouter({
       name: 'Labs',
       component: () => import('../views/Vet/Labs.vue')
     },
-    {
-      path: '/notCurableAnimals',
-      name: 'NotCurableAnimals',
-      component: () => import('../views/Vet/NotCurableAnimals.vue')
-    },
+ 
     {
       path: '/operations',
       name: 'Operations',
@@ -203,7 +198,7 @@ const router = createRouter({
     {
       path: '/quarantine',
       name: 'Quarantine',
-      component: () => import('../views/Vet/Quarantine.vue')
+      component: () => import('../views/Vet/Quarantine.vue')//C:\Users\Korisnik\Documents\AnimalRescue\src\views\Vet\Quarantine.vue
     },
     {
       path: '/vacination',
@@ -237,6 +232,11 @@ const router = createRouter({
       component: () => import('../views/Vet/AddLab.vue')
     },
 
+   {
+      path:'/statistcVet',
+      name:'StatistcVet',
+      component: () => import('../views/Vet/StatistcVet.vue')//C:\Users\Korisnik\Documents\AnimalRescue\src\views\Vet\StatistcVet.vue
+    },
 
 
 

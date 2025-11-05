@@ -5,41 +5,41 @@
       <WorkerNavigation class="w-1/6" />
 
       <!-- 📄 Glavni sadržaj -->
-      <div class="w-5/6 ml-auto">
-        <!-- NASLOV -->
-        <h1 class="ml-1 md:ml-2 text-2xl font-semibold text-white/90 mb-5">
-          News
-        </h1>
-
-        <!-- 🔘 DODAJ NEWS -->
-        <div class="flex items-center mb-6">
-          <button
-            @click="add = true"
-            :disabled="userRole !== 'Menager'"
-            type="button"
-            class="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
-          >
-            <svg
-              class="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 512 512"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 
-                0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 
-                10.7-24 24-24s24 10.7 24 24v64h64c13.3 
-                0 24 10.7 24 24s-10.7 24-24 24H280v64c0 
-                13.3-10.7 24-24 24s-24-10.7-24-24z"
-              ></path>
-            </svg>
-            Add News
-          </button>
-        </div>
-
-        <!-- 🔍 FILTERI -->
+      <div class="w-5/6 ml-auto text-gray-200">
+        <!-- 🔲 BLOK ZA NASLOV, FILTERE I SEARCH -->
         <div class="bg-[#0e0e0e] rounded-xl p-6 shadow-lg border border-white/10 mb-5">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          
+          <!-- NASLOV + GUMB -->
+          <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-semibold text-white/90">News</h1>
+
+            <button
+              @click="add = true"
+              :disabled="userRole !== 'Menager'"
+              type="button"
+              class="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+            >
+              <svg
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 512 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 
+                  0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 
+                  10.7-24 24-24s24 10.7 24 24v64h64c13.3 
+                  0 24 10.7 24 24s-10.7 24-24 24H280v64c0 
+                  13.3-10.7 24-24 24s-24-10.7-24-24z"
+                />
+              </svg>
+              Add News
+            </button>
+          </div>
+
+          <!-- FILTERI -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+            <!-- Name -->
             <div>
               <label class="block text-gray-300 mb-1 font-medium">Name</label>
               <input
@@ -50,6 +50,7 @@
               />
             </div>
 
+            <!-- Description -->
             <div>
               <label class="block text-gray-300 mb-1 font-medium">Description</label>
               <input
@@ -60,6 +61,7 @@
               />
             </div>
 
+            <!-- Date -->
             <div>
               <label class="block text-gray-300 mb-1 font-medium">Date</label>
               <input
@@ -69,11 +71,9 @@
               />
             </div>
           </div>
-        
 
-        <!-- 🔎 OPĆA PRETRAGA -->
-        <div class="bg-[#0e0e0e] rounded-xl p-5 shadow-lg border border-white/10 mb-8">
-          <div class="relative">
+          <!-- SEARCH -->
+          <div class="relative mt-3">
             <input
               v-model="generalSearchQuery"
               type="text"
@@ -98,7 +98,14 @@
             </div>
           </div>
         </div>
-</div>
+
+        <!-- 📋 TABLICA / LISTA VIJESTI -->
+        <div>
+          <!-- ovdje ubaciš svoju tabelu s vijestima -->
+        </div>
+  
+  
+
         <!-- 📋 TABLICA -->
         <div class="mt-5 overflow-x-auto custom-scrollbar">
           <table class="w-full border-separate border-spacing-y-4 bg-[#0e0e0e] rounded-xl">
@@ -196,46 +203,97 @@
     </div>
 
     <!-- 🟢 MODALI -->
-    <!-- Add Modal -->
-    <div v-if="add" class="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
-      <div class="bg-[#0e0e0e] rounded-xl shadow-xl border border-gray-700/50 w-full max-w-md p-6">
-        <div class="flex justify-between items-center mb-4">
-          <h3 class="text-xl font-semibold text-white">Add News</h3>
-          <button @click="add = false" class="text-gray-400 hover:text-emerald-400 transition">✕</button>
-        </div>
-        <form @submit.prevent="handleSubmit" class="space-y-4">
-          <div>
-            <label class="block text-gray-300 mb-1 font-medium">Name</label>
-            <input
-              v-model="nameAdd"
-              type="text"
-              placeholder="News title"
-              class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
-            />
-          </div>
-          <div>
-            <label class="block text-gray-300 mb-1 font-medium">Date</label>
-            <input
-              v-model="dateAdd"
-              type="date"
-              class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
-            />
-          </div>
-          <div>
-            <label class="block text-gray-300 mb-1 font-medium">Description</label>
-            <textarea
-              v-model="descriptionAdd"
-              rows="4"
-              placeholder="Write description..."
-              class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
-            ></textarea>
-          </div>
-          <button type="submit" class="w-full py-2 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition shadow-md">
-            Add
-          </button>
-        </form>
-      </div>
+    <!-- 🟢 Add Modal -->
+<div
+  v-if="add"
+  class="fixed inset-0 bg-black/70 flex justify-center items-center z-50"
+>
+  <div
+    class="bg-[#0e0e0e] rounded-xl shadow-xl border border-gray-700/50 w-full max-w-md p-6 animate-fade-in"
+  >
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-semibold text-white">Add News</h3>
+      <button
+        @click="add = false"
+        class="text-gray-400 hover:text-emerald-400 transition"
+      >
+        ✕
+      </button>
     </div>
+
+    <!-- FORM -->
+    <form @submit.prevent="handleSubmit" class="space-y-4">
+      <!-- Name -->
+      <div>
+        <label class="block text-gray-300 mb-1 font-medium">Name</label>
+        <input
+          v-model="nameAdd"
+          type="text"
+          placeholder="News title"
+          class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 
+                 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+        />
+      </div>
+
+      <!-- Date -->
+      <div>
+        <label class="block text-gray-300 mb-1 font-medium">Date</label>
+        <input
+          v-model="dateAdd"
+          type="date"
+          class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 
+                 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+        />
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label class="block text-gray-300 mb-1 font-medium">Description</label>
+        <textarea
+          v-model="descriptionAdd"
+          rows="4"
+          placeholder="Write description..."
+          class="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 
+                 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+        ></textarea>
+      </div>
+
+      <!-- 🖼️ Image Upload -->
+      <div>
+        <label class="block text-gray-300 mb-2 font-medium">Image</label>
+        <input
+          type="file"
+          accept="image/*"
+          @change="onFileChange"
+          class="block w-full text-gray-300 text-sm bg-[#1a1a1a] border border-gray-700/40 
+                 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/60 
+                 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold 
+                 file:bg-emerald-600 file:text-white hover:file:bg-emerald-700 transition"
+        />
+
+        <!-- Preview -->
+        <div v-if="imagePreview" class="mt-3">
+          <p class="text-sm text-gray-400 mb-1">Preview:</p>
+          <img
+            :src="imagePreview"
+            alt="Selected image"
+            class="w-full h-48 object-cover rounded-lg border border-gray-700 shadow-md"
+          />
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="w-full py-2 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700 
+               transition shadow-md"
+      >
+        Add
+      </button>
+    </form>
+  </div>
+</div>
 
     <!-- Update Modal -->
     <div v-if="update" class="fixed inset-0 bg-black/70 flex justify-center items-center z-50">

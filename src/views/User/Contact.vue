@@ -120,13 +120,13 @@
             placeholder="Email"
           />
 
-          <input
-            ref="message"
-            type="text"
-            v-model="message"
-            class="w-full h-12 text-stone-200 placeholder-stone-400 bg-transparent text-lg font-normal leading-7 rounded-full border border-stone-300 focus:ring-2 focus:ring-stone-300 focus:outline-none pl-4 mb-10"
-            placeholder="Message"
-          />
+         <textarea
+          ref="message"
+          v-model="message"
+          rows="6"
+          class="w-full text-stone-200 placeholder-stone-400 bg-transparent text-lg font-normal leading-7 rounded-2xl border border-stone-300 focus:ring-2 focus:ring-stone-300 focus:outline-none p-4 mb-10 resize-none"
+          placeholder="Your message..."
+        ></textarea>
 
           <button
             @click="handleSubmit"

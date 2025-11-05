@@ -367,206 +367,211 @@
   </div>
 </div>
 
-</template>
-<script>
+</template><script>
 import instance from '@/axiosBase';
 import VetNavigation from '../Vet/VetNavigation.vue';
 import Loading from '../Loading.vue';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+
 export default {
   components: {
-      VetNavigation,
-      Loading,
-
-   
+    VetNavigation,
+    Loading,
   },
+
   data() {
     return {
       // PAGINACIJA
       currentPage: 1,
-      itemsPerPage: 15,
-       userRole: localStorage.getItem('userRole'),  
-       generalSearchQuery: '',
-      loadingError:false,
+      itemsPerPage: 8,
+
+      // KORISNIK
+      userRole: localStorage.getItem('userRole'),
+
+      // STANJE APLIKACIJE
+      generalSearchQuery: '',
+      loadingError: false,
       items: [],
       families: [],
       speciesList: [],
       subspeciesList: [],
-      itemsSingle: [],
+      itemsSingle: {},
       single: false,
+
+      // FILTERI
       filters: {
         family: '',
         species: '',
         subspecies: '',
         gender: '',
-        neutered: false,
-        vaccinated: false,
-        microchipped: false,
-        trained: false,
-        socialized: false,
         adopted: false,
-       
-      data: [] // Podaci koji će se prikazati kada dođu
-   
       },
     };
   },
+
   computed: {
-       totalPages() {
-  return Math.max(1, Math.ceil(this.filteredItems.length / this.itemsPerPage));
-},
-paginatedItems() {
-  const start = (this.currentPage - 1) * this.itemsPerPage;
-  return this.filteredItems.slice(start, start + this.itemsPerPage);
-},
- filteredItems() {
-    const query = this.generalSearchQuery?.toLowerCase().trim() || '';
+    totalPages() {
+      return Math.max(1, Math.ceil(this.filteredItems.length / this.itemsPerPage));
+    },
 
-    return this.items.filter(item => {
-      const matchesGeneralQuery =
-      item.width?.toString().includes(query) ||
-      item.weight?.toString().includes(query) ||
-      item.height?.toString().includes(query) ||
-      item.age?.toString().includes(query) ||
-       item.name?.toLowerCase().includes(query) ||
-        item.family?.toLowerCase().includes(query) ||
-        item.species?.toLowerCase().includes(query) ||
-        item.subspecies?.toLowerCase().includes(query) ||
-        item.gender?.toLowerCase().includes(query) ||
-        item.neutered?.toString().toLowerCase().includes(query) ||
-        item.vaccinated?.toString().toLowerCase().includes(query) ||
-        item.microchipped?.toString().toLowerCase().includes(query) ||
-        item.trained?.toString().toLowerCase().includes(query) ||
-        item.socialized?.toString().toLowerCase().includes(query) ||
-        item.adopted?.toString().toLowerCase().includes(query);
+    paginatedItems() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      return this.filteredItems.slice(start, start + this.itemsPerPage);
+    },
 
-      const matchesFilters =
-      (!this.filters.width || item.width === this.filters.width) &&
-      (!this.filters.weight || item.weight === this.filters.weight) &&
-      (!this.filters.height || item.height === this.filters.height) &&
-      (!this.filters.age || item.age === this.filters.age) &&
-       (!this.filters.name || item.name === this.filters.name) &&
-        (!this.filters.family || item.family === this.filters.family) &&
-        (!this.filters.species || item.species === this.filters.species) &&
-        (!this.filters.subspecies || item.subspecies === this.filters.subspecies) &&
-        (!this.filters.gender || item.gender === this.filters.gender) &&
-        (!this.filters.neutered || item.neutered === this.filters.neutered) &&
-        (!this.filters.vaccinated || item.vaccinated === this.filters.vaccinated) &&
-        (!this.filters.microchipped || item.microchipped === this.filters.microchipped) &&
-        (!this.filters.trained || item.trained === this.filters.trained) &&
-        (!this.filters.socialized || item.socialized === this.filters.socialized) &&
-        (!this.filters.adopted || item.adopted === this.filters.adopted);
+    filteredItems() {
+      const query = this.generalSearchQuery?.toLowerCase().trim() || '';
 
-      return matchesGeneralQuery && matchesFilters;
-    });
+      return this.items.filter((item) => {
+        // ✅ Pretraga
+        const matchesGeneralQuery =
+          item.name?.toLowerCase().includes(query) ||
+          item.family?.toLowerCase().includes(query) ||
+          item.species?.toLowerCase().includes(query) ||
+          item.subspecies?.toLowerCase().includes(query) ||
+          item.gender?.toLowerCase().includes(query) ||
+          item.age?.toString().includes(query) ||
+          item.weight?.toString().includes(query) ||
+          item.height?.toString().includes(query);
+
+        // ✅ Aktivni filteri (samo ako su odabrani)
+        const matchesFilters =
+          (!this.filters.family || item.family === this.filters.family) &&
+          (!this.filters.species || item.species === this.filters.species) &&
+          (!this.filters.subspecies || item.subspecies === this.filters.subspecies) &&
+          (!this.filters.gender || item.gender === this.filters.gender);
+
+        return matchesGeneralQuery && matchesFilters;
+      });
+    },
   },
-  },
+
   mounted() {
-
-   
-   
+    // 🔒 Postavljanje tokena
     instance.interceptors.request.use(
-      config => {
+      (config) => {
         const token = localStorage.getItem('token');
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
-        }
+        if (token) config.headers.Authorization = `Bearer ${token}`;
         return config;
       },
-      error => {
-        return Promise.reject(error);
-      }
+      (error) => Promise.reject(error)
     );
 
-    this.loadingError=true;
-    instance.get('animal/animalAVet_db')
-      .then(response => {
-        this.items = response.data;
-        if(this.items!=null) {
-                setTimeout(() => {
-                this.loadingError = false; 
-                }, 1000)
-                }
-        this.populateFilters();
+    // 🔄 Dohvati životinje
+    this.loadingError = true;
+    instance
+      .get('animal/animalAVet_db')
+      .then((response) => {
+        console.log('Fetched items:', response.data);
 
+        this.items = response.data || [];
+        if (this.items.length > 0) {
+          setTimeout(() => {
+            this.loadingError = false;
+          }, 1000);
+        }
+
+        this.populateFilters();
       })
-      .catch(error => {
-        this.loadingError=true;
-        console.error('There was an error!', error);
+      .catch((error) => {
+        this.loadingError = true;
+        console.error('There was an error fetching animals:', error);
       });
   },
- 
 
   methods: {
-      nextPage() {
-  if (this.currentPage < this.totalPages) this.currentPage++;
-},
-prevPage() {
-  if (this.currentPage > 1) this.currentPage--;
-},
-    async approveAdoption(id){
-    var response=  await instance.put(`animal/updateAnimalRecord/`,  { 
-                            animalId:parseInt(id),
-                            recordId:parseInt(6)
-                          },
-     { headers: {Authorization: `Bearer ${this.token}`,   },
-    });
+    // 📜 PAGINACIJA
+    nextPage() {
+      if (this.currentPage < this.totalPages) this.currentPage++;
+    },
+    prevPage() {
+      if (this.currentPage > 1) this.currentPage--;
+    },
 
-            console.log(" "+response.data);
-            if(response.status==200){
-              
+    // ✅ Odobravanje udomljavanja
+    async approveAdoption(id) {
+      try {
+        const response = await instance.put(
+          `animal/updateAnimalRecord/`,
+          {
+            animalId: parseInt(id),
+            recordId: 6,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        );
+
+        console.log('Response:', response.data);
+
+        if (response.status === 200) {
           await Swal.fire({
-                    title: "Animal approved!",
-                    draggable: true,
-                    icon: "success"
-                  });
-                  window.location.reload();
-            }
-            else{
-              
+            title: 'Animal approved!',
+            icon: 'success',
+            confirmButtonColor: '#10b981',
+          });
+          window.location.reload();
+        } else {
           await Swal.fire({
-                    title: "Opps!",
-                    draggable: true,
-                    icon: "alert"
-                  });
-            }
-  },
+            title: 'Oops!',
+            text: 'Something went wrong while approving.',
+            icon: 'error',
+          });
+        }
+      } catch (error) {
+        console.error('Error approving adoption:', error);
+        await Swal.fire({
+          title: 'Error!',
+          text: 'Server error, please try again later.',
+          icon: 'error',
+        });
+      }
+    },
+
+    // 🔍 Otvaranje modala s detaljima
     async openSinglModal(item) {
       this.single = true;
-      this.itemsSingle=item;
-
+      this.itemsSingle = item;
     },
 
+    // 🔗 Navigacija
     navigateToDetails(idAnimal) {
-
-    this.$router.push(`/vetSingleAnimal/${idAnimal}`);
-  },
-    populateFilters() {
-      this.families = [...new Set(this.items.map(item => item.family))];
-      this.speciesList = [...new Set(this.items.map(item => item.species))];
-      this.subspeciesList = [...new Set(this.items.map(item => item.subspecies))];
+      this.$router.push(`/vetSingleAnimal/${idAnimal}`);
     },
+
+    // 📊 Popunjavanje filter opcija
+    populateFilters() {
+      this.families = [...new Set(this.items.map((item) => item.family))];
+      this.speciesList = [...new Set(this.items.map((item) => item.species))];
+      this.subspeciesList = [...new Set(this.items.map((item) => item.subspecies))];
+    },
+
+    // 🔎 Traženje životinja (poseban API poziv)
     searchAnimals() {
-      this.loadingError=true;
-      instance.get('animal/animal_pc', {
-        params: this.filters
-      })
-      .then(response => {
-        this.items = response.data;
-        if(this.items!=null) {
-                setTimeout(() => {
-                this.loadingError = false; 
-                }, 1000)
-                }
-      })
-      .catch(error => {
-        thias.loadingError=true;
-        console.error('There was an error!', error);
-      });
+      this.loadingError = true;
+      instance
+        .get('animal/animal_pc', { params: this.filters })
+        .then((response) => {
+          console.log('Search response:', response.data);
+          this.items = response.data || [];
+
+          if (this.items.length > 0) {
+            setTimeout(() => {
+              this.loadingError = false;
+            }, 1000);
+          }
+        })
+        .catch((error) => {
+          this.loadingError = true;
+          console.error('There was an error searching animals:', error);
+        });
     },
   },
 };
 </script>
+
   <style scoped>
 
 

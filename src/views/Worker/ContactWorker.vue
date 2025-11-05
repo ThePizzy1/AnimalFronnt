@@ -3,41 +3,79 @@
     <Loading v-if="loadingError" />
 
     <div class="flex">
+      <!-- 🧭 Navigation -->
       <WorkerNavigation class="w-1/6" />
 
-      <div class="w-5/6 ml-auto">
-        <h1 class="text-2xl font-bold text-white mb-6">Funds Database</h1>
-
-        <!-- FILTERI -->
+      <!-- 📄 Main Content -->
+      <div class="w-5/6 ml-auto text-gray-200">
+        <!-- 🔲 Naslov + Filter blok -->
         <div class="bg-[#0e0e0e] rounded-xl p-6 shadow-lg border border-white/10 mb-6">
+          
+          <!-- NASLOV + (Opcionalni Add Button) -->
+          <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-white">Contact</h1>
+
+            <!-- Ako treba Add -->
+            <button
+              v-if="userRole === 'Menager'"
+              @click="add = true"
+              type="button"
+              class="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition shadow-md"
+            >
+              <svg
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 512 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 
+                     344V280H168c-13.3 0-24-10.7-24-24s10.7-24 
+                     24-24h64V168c0-13.3 10.7-24 
+                     24-24s24 10.7 24 24v64h64c13.3 
+                     0 24 10.7 24 24s-10.7 24-24 
+                     24H280v64c0 13.3-10.7 24-24 
+                     24s-24-10.7-24-24z"
+                />
+              </svg>
+              Add Fund
+            </button>
+          </div>
+
+          <!-- FILTERI -->
           <form @submit.prevent>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
+              <!-- Name -->
               <div>
-                <label for="name" class="block text-gray-300 font-bold mb-2">Name:</label>
+                <label for="name" class="block text-gray-300 font-medium mb-2">Name</label>
                 <select
                   v-model="filters.name"
                   id="name"
-                  class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+                  class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 
+                         focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
                 >
                   <option value="">All</option>
                   <option v-for="name in nameList" :key="name" :value="name">{{ name }}</option>
                 </select>
               </div>
 
+              <!-- Email -->
               <div>
-                <label for="email" class="block text-gray-300 font-bold mb-2">Email:</label>
+                <label for="email" class="block text-gray-300 font-medium mb-2">Email</label>
                 <select
                   v-model="filters.email"
                   id="email"
-                  class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+                  class="w-full py-2.5 px-3 rounded-lg bg-[#1a1a1a] text-gray-200 border border-gray-700/40 
+                         focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
                 >
                   <option value="">All</option>
                   <option v-for="n in emailList" :key="n" :value="n">{{ n }}</option>
                 </select>
               </div>
 
-              <div>
-                <label class="block text-gray-300 font-bold mb-2">Read:</label>
+              <!-- Read -->
+              <div class="flex flex-col justify-end">
+                <label class="block text-gray-300 font-medium mb-2">Read</label>
                 <label class="inline-flex items-center cursor-pointer select-none">
                   <input type="checkbox" v-model="filters.read" class="sr-only peer" />
                   <div
@@ -51,14 +89,15 @@
             </div>
 
             <!-- SEARCH -->
-            <div class="mt-6">
-              <label class="block text-gray-300 font-bold mb-2">Search:</label>
+            <div class="mt-2">
+              <label class="block text-gray-300 font-medium mb-2">Search</label>
               <div class="relative w-full">
                 <input
                   v-model="generalSearchQuery"
                   type="text"
                   placeholder="Search by name, email, or message..."
-                  class="w-full py-3 px-4 text-base rounded-xl bg-[#1a1a1a] text-gray-200 placeholder-gray-500 border border-gray-700/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+                  class="w-full py-3 px-4 text-base rounded-xl bg-[#1a1a1a] text-gray-200 placeholder-gray-500 border border-gray-700/40 
+                         focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
                 />
                 <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
                   <svg
@@ -71,7 +110,8 @@
                       stroke="currentColor"
                       stroke-linecap="round"
                       stroke-width="2"
-                      d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+                      d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 
+                      0 7 7 0 0 1 14 0Z"
                     />
                   </svg>
                 </div>
@@ -79,6 +119,12 @@
             </div>
           </form>
         </div>
+
+        <!-- 📊 Ovdje ide tablica ili kartice -->
+        <div>
+          <!-- TODO: funds table or list -->
+        </div>
+ 
 
         <!-- TABLICA -->
         <div class="mt-5 overflow-x-auto custom-scrollbar">
