@@ -375,6 +375,8 @@ export default {
   components: { WorkerNavigation },
   data() {
     return {
+         pictureAdd: null,
+    imagePreview: null,
       userRole: localStorage.getItem('userRole'),
       generalSearchQuery: '',
       add: false,
@@ -416,6 +418,14 @@ export default {
     this.fetchData()
   },
   methods: {
+    onFileChange(event) {
+  const file = event.target.files[0];
+  if (file) {
+    this.pictureAdd = file;
+    this.imagePreview = URL.createObjectURL(file); // za preview slike
+  }
+},
+
     nextPage() {
       if (this.currentPage < this.totalPages) this.currentPage++
     },
@@ -477,27 +487,54 @@ export default {
         })
       }
     },
-    async handleSubmit() {
-      try {
-        await instance.post(
-          'animal/addNews',
-          {
-            name: this.nameAdd,
-            dateTime: `${this.dateAdd}T00:00:00.00`,
-            description: this.descriptionAdd,
-          },
-          { headers: { Authorization: `Bearer ${this.token}` } }
-        )
-        Swal.fire({ title: 'Item added!', icon: 'success' })
-        window.location.reload()
-      } catch (error) {
-        Swal.fire({
-          title: 'Oops!',
-          text: 'Failed to add item. Try again.',
-          icon: 'error',
-        })
-      }
-    },
+   async handleSubmit() {
+  try {
+    // 1️⃣ Kreiraj FormData objekt
+    const formData = new FormData();
+    formData.append("name", this.nameAdd);
+    formData.append("description", this.descriptionAdd);
+    formData.append("dateTime", `${this.dateAdd}T00:00:00.00`);
+    
+    // 2️⃣ Dodaj sliku (pretpostavljam da ju imaš u this.pictureAdd)
+    if (this.pictureAdd) {
+      formData.append("picture", this.pictureAdd);
+    } else {
+      Swal.fire({
+        title: "Missing image!",
+        text: "Please select an image before submitting.",
+        icon: "warning",
+      });
+      return;
+    }
+
+    // 3️⃣ Pošalji formu kao multipart/form-data
+    await instance.post("animal/addNews", formData, {
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // 4️⃣ Poruka uspjeha
+    Swal.fire({
+      title: "News added!",
+      text: "The news item was added successfully.",
+      icon: "success",
+    });
+
+    // 5️⃣ Osvježi prikaz
+    window.location.reload();
+
+  } catch (error) {
+    console.error("Error adding news:", error);
+    Swal.fire({
+      title: "Oops!",
+      text: "Failed to add news. Please try again.",
+      icon: "error",
+    });
+  }
+},
+
     async fetchData() {
       try {
         const response = await instance.get('animal/news_db')

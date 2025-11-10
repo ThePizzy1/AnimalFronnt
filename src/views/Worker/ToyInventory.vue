@@ -668,82 +668,178 @@ goToPage(page) {
       this.singleItem = item;
     
     },
-    async handleSubmit() {
-    try {
-      const response = await instance.post('animal/addToy', {
+   async handleSubmit() {
+  try {
+    // 1️⃣ Izračun troška
+    const quantity = parseInt(this.quantityAdd);
+    const price = parseFloat(this.priceAdd);
+    const totalCost = parseFloat((quantity * price).toFixed(4));
+
+    // 2️⃣ Dohvati trenutni balans (ID = 2)
+    const balanceResponse = await instance.get("balans/2");
+    let currentBalance = parseFloat(balanceResponse.data.balance);
+
+    if (isNaN(currentBalance)) currentBalance = 0;
+    currentBalance = parseFloat(currentBalance.toFixed(4));
+
+    // 3️⃣ Provjera ima li dovoljno novca
+    if (currentBalance < totalCost) {
+      Swal.fire({
+        title: "Not enough funds!",
+        text: `You need ${totalCost.toFixed(2)} €, but only have ${currentBalance.toFixed(2)} € available.`,
+        icon: "error",
+      });
+      return;
+    }
+
+    // 4️⃣ Izračun novog balansa
+    const newBalance = parseFloat((currentBalance - totalCost).toFixed(4));
+
+    console.log(`Current balance: ${currentBalance}, total cost: ${totalCost}`);
+    console.log(`Updated balance: ${currentBalance} -> ${newBalance}`);
+
+    // 5️⃣ Ažuriraj balans u bazi
+    await instance.put("updateBalansDomain", {
+      id: 2,
+      balance: newBalance,
+    });
+
+    // 6️⃣ Dodaj transakciju
+    await instance.post("addTransactions", {
+      iban: null, // vanjski račun — nema IBAN-a za ovu transakciju
+      ibanAnimalShelter: balanceResponse.data.iban ? balanceResponse.data.iban.toString() : null,
+      type: "Toy Purchase",
+      cost: totalCost,
+      purpose: `Purchased ${quantity} toy(s) at ${price.toFixed(2)} € each`,
+    });
+
+    // 7️⃣ Dodaj igračku u bazu
+    await instance.post(
+      "animal/addToy",
+      {
         brandName: this.brandNameAdd,
         name: this.nameAdd,
         animalType: this.animalTypeAdd,
         toyType: this.toyTypeAdd,
         ageGroup: this.ageGroupAdd,
-        hight:parseFloat(this.heightAdd),
-        width:parseFloat( this.widthAdd),
-        quantity:parseInt( this.quantityAdd),
+        hight: parseFloat(this.heightAdd),
+        width: parseFloat(this.widthAdd),
+        quantity: quantity,
         notes: this.notesAdd,
-        price:parseFloat( this.priceAdd),
+        price: price,
       },
       {
         headers: {
-          Authorization: `Bearer ${this.token}`,  // Authorization header
+          Authorization: `Bearer ${this.token}`,
         },
-      });
-      Swal.fire({
-            title: "Item added!",
-            draggable: true,
-            icon: "success"
-          });
-      window.location.reload();
-    } catch (error) {
-      console.log('Name:', this.nameAdd);
-      console.log('Toy Type:', this.toyTypeAdd);
-      console.log('Animal Type:', this.animalTypeAdd);
-      console.log('Age Group:', this.ageGroupAdd);
-      console.log('Width:', this.widthAdd);
-      console.log('Height:', this.heightAdd);
-      console.log('Quantity:', this.quantityAdd);
-      console.log('Notes:', this.notesAdd);
-      console.error('There was an error!', error);
-      Swal.fire({
-            title: "Oops!",
-            text: "There was an error adding the item!",
-            draggable: true,
-            icon: "error"
-          });
-    }
-  },
-    
-    
-    
-    
-    
-    async increment(id){
+      }
+    );
 
-try {
-  const response = await instance.put("animal/updateToyDomainIncrement",{id:id});
-
-  console.log(this.items);
-  window.location.reload();
-} catch (error) {
-  console.error('There was an error!', error);
-}
-},
-async decrement(id){
-try {
-  if(this.items.find(item => item.id === id).quantity <= 0){
+    // 8️⃣ Potvrda uspjeha
     Swal.fire({
-      title: "Ooops!",
-      text: "You can't take more toys, there are none left!",
-      icon: "error"
+      title: "Toy Added!",
+      text: `Added successfully and ${totalCost.toFixed(2)} € deducted from balance.`,
+      icon: "success",
     });
-              return;
-  }else{
-  const response = await instance.put("animal/updateToysDomainDecrement",{id:id});
 
-  console.log(this.items);
-  window.location.reload();}
-} catch (error) {
-  console.error('There was an error!', error);
-}
+    // 9️⃣ Zatvori modal i osvježi tablicu
+    this.add = false;
+    await this.fetchData();
+
+  } catch (error) {
+    console.error("Error adding toy:", error);
+
+    Swal.fire({
+      title: "Error!",
+      text: "Something went wrong while adding the toy or updating the balance.",
+      icon: "error",
+    });
+  }
+},
+
+    
+    
+    
+    
+    
+  async increment(id) {
+  try {
+    // 1️⃣ Nađi igračku koja se povećava
+    const toy = this.items.find(item => item.id === id);
+    if (!toy) {
+      Swal.fire({
+        title: "Error!",
+        text: "Toy not found.",
+        icon: "error",
+      });
+      return;
+    }
+
+    const toyPrice = parseFloat(toy.price);
+
+    // 2️⃣ Dohvati balans (ID = 2)
+    const balanceResponse = await instance.get("balans/2");
+    let currentBalance = parseFloat(balanceResponse.data.balance);
+
+    if (isNaN(currentBalance)) currentBalance = 0;
+    currentBalance = parseFloat(currentBalance.toFixed(4));
+
+    // 3️⃣ Provjeri ima li dovoljno novca
+    if (currentBalance < toyPrice) {
+      Swal.fire({
+        title: "Not enough funds!",
+        text: `You need ${toyPrice.toFixed(2)} €, but only have ${currentBalance.toFixed(2)} € available.`,
+        icon: "error",
+      });
+      return;
+    }
+
+    // 4️⃣ Izračunaj novi balans (zaokružen na 4 decimale)
+    const newBalance = parseFloat((currentBalance - toyPrice).toFixed(4));
+
+    console.log(`Current balance: ${currentBalance}, Toy price: ${toyPrice}`);
+    console.log(`Updated balance: ${currentBalance} -> ${newBalance}`);
+
+    // 5️⃣ Ažuriraj balans u bazi
+    await instance.put("updateBalansDomain", {
+      id: 2,
+      balance: newBalance,
+    });
+
+    // 6️⃣ Dodaj transakciju
+    await instance.post("addTransactions", {
+      iban: null, // vanjski IBAN — nema
+      ibanAnimalShelter: balanceResponse.data.iban ? balanceResponse.data.iban.toString() : null,
+      type: "Toy Purchase",
+      cost: toyPrice,
+      purpose: `Purchased 1 toy (${toy.name})`,
+    });
+
+    // 7️⃣ Povećaj količinu igračke u bazi
+    await instance.put("animal/updateToyDomainIncrement", { id });
+
+    // 8️⃣ Poruka uspjeha
+    Swal.fire({
+      title: "Toy Added!",
+      text: `1 toy added and ${toyPrice.toFixed(2)} € deducted from balance.`,
+      icon: "success",
+    });
+
+    // 9️⃣ Osvježi tablicu
+    await this.fetchData();
+
+  } catch (error) {
+    console.error("Error in increment:", error);
+
+    Swal.fire({
+      title: "Error!",
+      text: "Something went wrong while updating balance or adding toy.",
+      icon: "error",
+    });
+  }
+},
+
+
 
 
 },
@@ -779,7 +875,8 @@ try {
       this.$router.push(`/singleToy/${id}`);
       console.log(`Navigate to details of item with ID: ${id}`);
     },
-  },
+  
+
   watch: {
     filters: {
       handler() {

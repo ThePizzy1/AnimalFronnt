@@ -804,16 +804,86 @@ export default {
       this.singleItem = item;
     },
 
-    // ➕/➖ QUANTITY
-    async increment(id) {
-      try {
-        await instance.put("animal/updateFoodDomainIncrement", { id });
-        window.location.reload();
-      } catch (error) {
-        console.error("There was an error!", error);
-      }
-    },
+// ➕/➖ QUANTITY
+async increment(id) {
+  try {
+    // 1️⃣ Pronađi hranu
+    const food = this.items.find(item => item.id === id);
+    if (!food) {
+      Swal.fire({
+        title: "Error!",
+        text: "Food item not found.",
+        icon: "error",
+      });
+      return;
+    }
 
+    const foodPrice = parseFloat(food.price);
+
+    // 2️⃣ Dohvati trenutni balans i IBAN
+    const balanceResponse = await instance.get("animal/balans/1");
+    let { balance, iban } = balanceResponse.data;
+
+    let currentBalance = parseFloat(balance);
+    console.log(`Current balance: ${currentBalance}, Food price: ${foodPrice}`);
+    if (isNaN(currentBalance)) currentBalance = 0;
+
+    // 3️⃣ Zaokruži na 4 decimale
+    currentBalance = parseFloat(currentBalance.toFixed(4));
+
+    // 4️⃣ Provjeri ima li dovoljno sredstava
+    if (currentBalance < foodPrice) {
+      Swal.fire({
+        title: "Not enough funds!",
+        text: `You need ${foodPrice.toFixed(2)} €, but only have ${currentBalance.toFixed(2)} € available.`,
+        icon: "error",
+      });
+      return;
+    }
+
+    // 5️⃣ Izračunaj novi balans (zaokružen na 4 decimale)
+    const newBalance = parseFloat((currentBalance - foodPrice).toFixed(4));
+
+    // 6️⃣ Ažuriraj balans u bazi
+    await instance.put("animal/updateBalansDomain", {
+      id: 1,
+      balance: newBalance,
+    });
+
+    console.log(`Updated balance: ${currentBalance} → ${newBalance}`);
+
+    // 7️⃣ Dodaj transakciju
+    await instance.post("animal/addTransactions", {
+      iban: null, // vanjski račun
+      ibanAnimalShelter: iban ? iban.toString() : null, // shelter račun
+      type: "Food Purchase",
+      cost: foodPrice,
+      purpose: `Purchased 1 food item (${food.name})`,
+    });
+
+    // 8️⃣ Ažuriraj količinu hrane u bazi
+    await instance.put("animal/updateFoodDomainIncrement", { id });
+
+    // 9️⃣ Potvrda
+    Swal.fire({
+      title: "Food Added!",
+      text: `1 food item added and ${foodPrice.toFixed(2)} € deducted from balance.`,
+      icon: "success",
+    });
+
+    // 🔁 Osvježi tablicu
+    await this.fetchData();
+
+  } catch (error) {
+    console.error("Error in increment:", error);
+
+    Swal.fire({
+      title: "Error!",
+      text: "Something went wrong while updating balance or adding food.",
+      icon: "error",
+    });
+  }
+},
     async decrement(id) {
       try {
         const target = this.items.find((item) => item.id === id);
@@ -833,49 +903,95 @@ export default {
     },
 
     // 🟩 DODAVANJE FOODA
-    async handleSubmit() {
-      try {
-        await instance.post(
-          "animal/addFood",
-          {
-            Name: this.nameAdd,
-            AgeGroup: this.ageGroupAdd,
-            AnimalType: this.animalTypeAdd,
-            BrandName: this.brandNameAdd,
-            CaloriesPerServing: this.caloriesPerServingAdd,
-            ExporationDate: `${this.exporationDateAdd}T00:00:00.00`,
-            FatContent: this.fatContentAdd,
-            FiberContent: this.fiberContentAdd,
-            FoodType: this.foodTypeAdd,
-            MeasurementPerServing: this.measurementPerServingAdd,
-            MeasurementWeight: this.measurementWeightAdd,
-            Notes: this.notesAdd,
-            Quantity: parseInt(this.quantityAdd),
-            Weight: parseFloat(this.weightAdd),
-            WeightPerServing: parseFloat(this.weightPerServingAdd),
-            Price: parseFloat(this.priceAdd),
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
-          }
-        );
+   async handleSubmit() {
+  try {
+    const quantity = parseInt(this.quantityAdd);
+    const price = parseFloat(this.priceAdd);
+    const totalCost = parseFloat((quantity * price).toFixed(4));
 
-        Swal.fire({
-          title: "Item added!",
-          icon: "success",
-        });
-        window.location.reload();
-      } catch (error) {
-        console.error("There was an error!", error);
-        Swal.fire({
-          title: "Ooops!",
-          text: "There was an error adding the item!",
-          icon: "error",
-        });
-      }
-    },
+    // 1️⃣ Dohvati trenutni balans (ID = 1)
+    const balanceResponse = await instance.get("animal/balans/1");
+    let currentBalance = parseFloat(balanceResponse.data.balance);
+
+    if (isNaN(currentBalance)) currentBalance = 0;
+    currentBalance = parseFloat(currentBalance.toFixed(4));
+
+    // 2️⃣ Provjeri ima li dovoljno novca
+    if (currentBalance < totalCost) {
+      Swal.fire({
+        title: "Not enough funds!",
+        text: `You need ${totalCost.toFixed(2)} €, but only have ${currentBalance.toFixed(2)} € available.`,
+        icon: "error",
+      });
+      return;
+    }
+
+    // 3️⃣ Izračunaj i zaokruži novi balans
+    const newBalance = parseFloat((currentBalance - totalCost).toFixed(4));
+
+    console.log(`Current balance: ${currentBalance}, totalCost: ${totalCost}`);
+    console.log(`Updated balance: ${currentBalance} -> ${newBalance}`);
+
+    // 4️⃣ Ažuriraj balans u bazi
+    await instance.put("animal/updateBalansDomain", {
+      id: 1,
+      balance: newBalance,
+    });
+
+    // 5️⃣ Dodaj transakciju
+    await instance.post("animal/addTransactions", {
+      iban: null, // vanjski IBAN (nema)
+      ibanAnimalShelter: balanceResponse.data.iban ? balanceResponse.data.iban.toString() : null,
+      type: "Food Purchase",
+      cost: totalCost,
+      purpose: `Purchased ${quantity} food items (${this.nameAdd})`,
+    });
+
+    // 6️⃣ Dodaj novu hranu u bazu
+    await instance.post("animal/addFood", {
+      Name: this.nameAdd,
+      AgeGroup: this.ageGroupAdd,
+      AnimalType: this.animalTypeAdd,
+      BrandName: this.brandNameAdd,
+      CaloriesPerServing: this.caloriesPerServingAdd,
+      ExporationDate: `${this.exporationDateAdd}T00:00:00.00`,
+      FatContent: this.fatContentAdd,
+      FiberContent: this.fiberContentAdd,
+      FoodType: this.foodTypeAdd,
+      MeasurementPerServing: this.measurementPerServingAdd,
+      MeasurementWeight: this.measurementWeightAdd,
+      Notes: this.notesAdd,
+      Quantity: quantity,
+      Weight: parseFloat(this.weightAdd),
+      WeightPerServing: parseFloat(this.weightPerServingAdd),
+      Price: price,
+    }, {
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    // 7️⃣ Uspjeh
+    Swal.fire({
+      title: "Food added!",
+      text: `Added successfully and ${totalCost.toFixed(2)} € deducted from balance.`,
+      icon: "success",
+    });
+
+    // 8️⃣ Zatvori modal i osvježi tablicu
+    this.add = false;
+    await this.fetchData();
+
+  } catch (error) {
+    console.error("Error adding food:", error);
+    Swal.fire({
+      title: "Error!",
+      text: "Something went wrong while adding the food or updating the balance.",
+      icon: "error",
+    });
+  }
+},
+
 
     // 📦 DOHVAT PODATAKA
     async fetchData() {

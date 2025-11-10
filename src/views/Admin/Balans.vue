@@ -33,27 +33,7 @@
       Withdraw
     </button>
 
-    <!-- ➕ Add button (već postoji) -->
-    <button
-      @click="add = true"
-      :disabled="!checkMenager"
-      :class="[
-        'text-stone-200 bg-emerald-500 hover:bg-emerald-600 focus:ring-2 focus:outline-none font-medium rounded-full text-base px-4 py-2 inline-flex items-center transition',
-        checkMenager ? '' : 'opacity-50 cursor-not-allowed'
-      ]"
-    >
-      <svg
-        class="w-6 h-6 mr-2"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M12 5a1 1 0 011 1v5h5a1 1 0 010 2h-5v5a1 1 0 01-2 0v-5H6a1 1 0 010-2h5V6a1 1 0 011-1z"
-        />
-      </svg>
-      Add
-    </button>
+    
   </div>
 </div>
 
@@ -360,41 +340,44 @@ export default {
     this.fetchData();
   },
   methods: {
-    async handleWithdraw() {
-  if (!this.selectedIban) {
-    return Swal.fire('Error', 'Please select an account!', 'error');
-  }
-  if (!this.withdrawAmount || this.withdrawAmount <= 0) {
-    return Swal.fire('Error', 'Please enter a valid amount.', 'error');
-  }
-
+  async handleWithdraw() {
   try {
-    // 1️⃣ Dohvati odabrani IBAN objekt
+    if (!this.selectedIban) {
+      return Swal.fire('Error', 'Please select an account!', 'error');
+    }
+    if (!this.withdrawAmount || this.withdrawAmount <= 0) {
+      return Swal.fire('Error', 'Please enter a valid amount.', 'error');
+    }
+
+    // 🔹 Pronađi račun
     const account = this.items.find(i => i.iban === this.selectedIban);
     if (!account) throw new Error('Account not found');
 
-    const newBalance = account.balance - this.withdrawAmount;
+    const currentBalance = parseFloat(account.balance);
+    const withdrawValue = parseFloat(this.withdrawAmount);
+    const newBalance = parseFloat((currentBalance - withdrawValue).toFixed(4));
+
     if (newBalance < 0) {
       return Swal.fire('Error', 'Insufficient funds on this account.', 'error');
     }
 
-    // 2️⃣ Update balansa
+    // 🔹 Ažuriraj balans direktno (kao kod food/toy)
     await instance.put('animal/updateBalansDomain', {
       id: account.id,
       balance: newBalance
     });
 
-    // 3️⃣ Dodaj transakciju
+    // 🔹 Dodaj transakciju – IBAN ne mora biti ispunjen
     await instance.post('animal/addTransactions', {
-      Iban: account.iban,
-      IbanAnimalShelter: account.iban,
-      Type: 'Withdraw',
-      Cost: this.withdrawAmount,
-      Purpose: this.withdrawReason || 'General withdrawal'
+      iban: null,
+      ibanAnimalShelter: account.iban,
+      type: 'Withdraw',
+      cost: withdrawValue,
+      purpose: this.withdrawReason || 'General withdrawal'
     });
 
-    // 4️⃣ Osvježi podatke
-    Swal.fire('Success', 'Funds withdrawn successfully!', 'success');
+    // 🔹 Refresh
+    await Swal.fire('Success!', `Withdrawn ${withdrawValue.toFixed(2)} € successfully.`, 'success');
     this.withdrawModal = false;
     this.withdrawAmount = null;
     this.withdrawReason = '';
@@ -405,6 +388,7 @@ export default {
     Swal.fire('Error', 'Something went wrong during withdrawal.', 'error');
   }
 },
+
 
     async fetchData() {
       try {

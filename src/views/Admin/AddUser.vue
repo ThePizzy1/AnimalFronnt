@@ -126,11 +126,11 @@
             >
               <option value="Vet">Veterinarian</option>
               <option value="HeadVet">Head Veterinarian</option>
-              <option value="Surrenderer">Surrenderer</option>
-              <option value="AnimalWelfareOfficer">Animal Welfare Officer</option>
+              <option value="Surenderer">Surrenderer</option>
+              <option value="AnimalWelffereOfficer">Animal Welfare Officer</option>
               <option value="Association">Association</option>
               <option value="Worker">Worker</option>
-              <option value="Manager">Manager</option>
+              <option value="Menager">Menager</option>
             </select>
           </div>
 

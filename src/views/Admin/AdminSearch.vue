@@ -98,6 +98,7 @@
           <table class="w-full border-separate border-spacing-y-4 bg-[#0e0e0e] rounded-xl p-4 md:p-6">
             <thead>
               <tr class="text-left text-gray-400 text-xs md:text-sm uppercase tracking-wider">
+                <th class="px-6 py-3">Code</th>
                 <th class="px-6 py-3">Name</th>
                 <th class="px-6 py-3">Family</th>
                 <th class="px-6 py-3">Species</th>
@@ -115,6 +116,7 @@
                 @click="navigateToDetails(item.idAnimal)"
                 class="bg-[#1a1a1a] hover:bg-[#242424] border border-gray-700/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
               >
+              <td class="px-6 py-6 text-white font-semibold">{{ item.idAnimal }}</td>
                 <td class="px-6 py-6 text-white font-semibold">{{ item.name }}</td>
                 <td class="px-6 py-6 text-gray-300">{{ item.family }}</td>
                 <td class="px-6 py-6 text-gray-300">{{ item.species }}</td>

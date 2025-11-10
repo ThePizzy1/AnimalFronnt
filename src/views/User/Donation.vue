@@ -117,7 +117,6 @@
 
   <Footer/>
 </template>
-
 <script>
 import Navigation from '../User/Navigation.vue';
 import Footer from '../User/Footer.vue';
@@ -128,13 +127,13 @@ export default {
   components: { Navigation, Footer },
   data() {
     return {
-      adopterId: localStorage.getItem('adopterid'),
+      userId: localStorage.getItem('userId'),
+      token: localStorage.getItem('token'),
       amount: '',
       picked: '',
       iban: '',
       expiry: '',
       cvv: '',
-      token: localStorage.getItem('token'),
       donationOptions: [
         { title: 'Where it\'s needed', desc: 'Let\'s allocate our donation to where it can make the greatest impact.' },
         { title: 'Shelter upgrades', desc: 'Enhancing shelter facilities for a better tomorrow.' },
@@ -150,90 +149,102 @@ export default {
     validateIBAN(iban) {
       return /^HR\d{19}$/.test(iban.trim());
     },
+
     async handleSubmit() {
       try {
+        // ✅ Validacija inputa
         if (!this.picked || !this.amount || !this.iban || !this.expiry || !this.cvv) {
-          await Swal.fire({ title: "Please fill all fields!", icon: "warning" });
-          return;
+          return Swal.fire({ title: "Please fill all fields!", icon: "warning" });
         }
 
         if (this.amount <= 0) {
-          await Swal.fire({ title: "Amount must be greater than 0!", icon: "warning" });
-          return;
+          return Swal.fire({ title: "Amount must be greater than 0!", icon: "warning" });
         }
 
         if (!this.validateIBAN(this.iban)) {
-          await Swal.fire({ title: "Invalid Croatian IBAN format!", icon: "error" });
-          return;
+          return Swal.fire({ title: "Invalid Croatian IBAN format!", icon: "error" });
         }
 
         if (!/^\d{2}\/\d{2}$/.test(this.expiry)) {
-          await Swal.fire({ title: "Expiry must be in MM/YY format!", icon: "error" });
-          return;
+          return Swal.fire({ title: "Expiry must be in MM/YY format!", icon: "error" });
         }
 
         if (!/^\d{3}$/.test(this.cvv)) {
-          await Swal.fire({ title: "CVV must be 3 digits!", icon: "error" });
-          return;
+          return Swal.fire({ title: "CVV must be 3 digits!", icon: "error" });
         }
 
-        const donationAccounts = {
-          "Food": { id: 1, iban: "HR1424300091111111111" },
-          "Toys for animals": { id: 2, iban: "HR9823600012222222222" },
-          "Shelter upgrades": { id: 3, iban: "HR4424840081333333333" },
-          "Where it's needed": { id: 4, iban: "HR6823900123444444444" },
+        // 🔹 Mapiranje tipa donacije na ID u bazi
+        const donationTypeToId = {
+          "Food": 1,
+          "Toys for animals": 2,
+          "Shelter upgrades": 3,
+          "Where it's needed": 4
         };
 
-        const selected = donationAccounts[this.picked];
-        if (!selected) {
-          await Swal.fire({ title: "Invalid donation type!", icon: "error" });
-          return;
+        const selectedId = donationTypeToId[this.picked];
+        if (!selectedId) {
+          return Swal.fire({ title: "Invalid donation type!", icon: "error" });
         }
 
-        console.log("💰 Donation Details:", {
-          purpose: this.picked,
-          from: this.iban,
-          to: selected.iban,
-          amount: this.amount,
+        // 1️⃣ DOHVATI PODATKE O PRIJAVLJENOM KORISNIKU
+        const userResponse = await instance.get(`animal/adopter/${this.userId}`, {
+          headers: { Authorization: `Bearer ${this.token}` },
         });
+        const adopter = userResponse.data;
+        if (!adopter || !adopter.id) {
+          return Swal.fire({
+            title: "User not found!",
+            text: "Please log in again.",
+            icon: "error",
+          });
+        }
 
-        // ADD FUNDS
-        await instance.post("animal/addFunds", {
-          AdopterId: parseInt(this.adopterId),
-          Amount: parseFloat(this.amount),
-          Purpose: this.picked,
-          Iban: this.iban,
-        });
+        // 2️⃣ DOHVATI BALANS I IBAN ODABRANE KATEGORIJE
+        const balanceResponse = await instance.get(`animal/balans/${selectedId}`);
+        const currentBalance = parseFloat(balanceResponse.data.balance);
+        const shelterIban = balanceResponse.data.iban;
 
-        // UPDATE BALANCE
+        // 3️⃣ IZRAČUNAJ NOVI BALANS
+        const newBalance = parseFloat((currentBalance + parseFloat(this.amount)).toFixed(4));
+
+        // 4️⃣ AŽURIRAJ BALANS U BAZI
         await instance.put("animal/updateBalansDomain", {
-          id: selected.id,
-          balance: parseFloat(this.amount),
+          id: selectedId,
+          balance: newBalance
         });
 
-        // ADD TRANSACTION
+        // 5️⃣ DODAJ FUNDS ZAPIS
+        await instance.post("animal/addFunds", {
+          adopterId: parseInt(adopter.id),
+          amount: parseFloat(this.amount),
+          purpose: this.picked,
+          iban: this.iban
+        });
+
+        // 6️⃣ DODAJ TRANSAKCIJU
         await instance.post("animal/addTransactions", {
-          Iban: this.iban,
-          IbanAnimalShelter: selected.iban,
-          Type: "payment",
-          Cost: parseFloat(this.amount),
-          Purpose: this.picked,
+          iban: this.iban, // korisnikov IBAN
+          ibanAnimalShelter: shelterIban, // shelter IBAN iz baze
+          type: "Donation",
+          cost: parseFloat(this.amount),
+          purpose: this.picked
         });
 
+        // 7️⃣ PRIKAZI USPJEH
         await Swal.fire({
           title: "Donation Successful! 🎉",
           text: `Your donation for "${this.picked}" has been processed successfully.`,
-          icon: "success",
+          icon: "success"
         });
 
         window.location.reload();
 
       } catch (error) {
-        console.error("❌ Donation error:", error.response?.data || error.message);
+        console.error("❌ Donation error:");
         await Swal.fire({
           title: "Error",
-          text: "Something went wrong while processing your donation.",
-          icon: "error",
+          text:  "Something went wrong while processing your donation.",
+          icon: "error"
         });
       }
     },
