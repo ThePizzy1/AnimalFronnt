@@ -1,8 +1,11 @@
 <template>
   <div class="container mx-auto px-4 mt-6">
     <div class="flex">
-      <!-- 🧭 Navigation -->
-      <WorkerNavigation class="w-1/6" />
+    <!-- 🧭 Sidebar -->
+    <div class="w-1/6 text-gray-200 p-4  rounded-l-lg">
+      <Loading v-if="loadingError" />
+      <WorkerNavigation />
+    </div>
 
       <!-- 📄 Glavni sadržaj -->
       <div class="w-5/6 ml-auto text-gray-200">
@@ -109,7 +112,7 @@
         <!-- 📋 TABLICA -->
         <div class="mt-5 overflow-x-auto custom-scrollbar">
           <table class="w-full border-separate border-spacing-y-4 bg-[#0e0e0e] rounded-xl">
-            <thead>
+            <thead class="bg-gray-900 text-emerald-300 uppercase text-xs">
               <tr class="text-left text-gray-400 text-xs md:text-sm uppercase tracking-wider">
                 <th class="px-6 py-3"></th>
                 <th class="px-6 py-3">Name</th>
@@ -370,11 +373,14 @@
 import WorkerNavigation from './WorkerNavigation.vue'
 import instance from '@/axiosBase'
 import Swal from 'sweetalert2'
-
+import Loading from '../Loading.vue';
 export default {
-  components: { WorkerNavigation },
+  components: { 
+    WorkerNavigation , Loading
+  },
   data() {
     return {
+       loadingError:false,
          pictureAdd: null,
     imagePreview: null,
       userRole: localStorage.getItem('userRole'),
@@ -393,7 +399,7 @@ export default {
       singleItem: [],
       filters: { name: '', description: '', dateTime: '' },
       currentPage: 1,
-      itemsPerPage: 10,
+      itemsPerPage: 8,
     }
   },
   computed: {
@@ -537,10 +543,21 @@ export default {
 
     async fetchData() {
       try {
+        this.loadingError = true;
         const response = await instance.get('animal/news_db')
         this.items = response.data
+            if(this.items!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                }
       } catch (error) {
-        console.error('There was an error!', error)
+         setTimeout(() => {
+                this.loadingError = true; 
+                }, 5000)
+                this.$router.push(`/workerHome`);
+        console.error('There was an error!', error);
+     
       }
     },
     formatDate(date) {

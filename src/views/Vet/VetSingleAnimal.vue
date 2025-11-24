@@ -147,7 +147,7 @@
 
           <div class="overflow-x-auto custom-scrollbar">
             <table class="min-w-full text-center text-gray-300">
-              <thead>
+              <thead class="bg-gray-900 text-emerald-300 uppercase text-xs">
                 <tr class="border-b border-stone-700 text-emerald-400">
                   <th class="px-5 py-3 font-semibold">Name</th>
                   <th class="px-5 py-3 font-semibold">Description</th>

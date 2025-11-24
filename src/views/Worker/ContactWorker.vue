@@ -129,7 +129,7 @@
         <!-- TABLICA -->
         <div class="mt-5 overflow-x-auto custom-scrollbar">
           <table class="w-full border-separate border-spacing-y-4 bg-[#0e0e0e] rounded-xl">
-            <thead>
+            <thead class="bg-gray-900 text-emerald-300 uppercase text-xs">
               <tr class="text-left text-gray-400 text-xs md:text-sm uppercase tracking-wider">
                 <th class="px-6 py-3"></th>
                 <th class="px-6 py-3">Name</th>

@@ -63,7 +63,7 @@
 
       <!-- Table -->
       <div class="overflow-x-auto bg-[#1a1a1a]/80 rounded-2xl border border-gray-800 shadow-xl">
-        <table class="min-w-full divide-y divide-gray-800">
+        <table class="min-w-full text-left text-sm text-gray-300">
           <thead class="bg-gray-900 text-emerald-300 uppercase text-sm">
             <tr>
               <th class="px-5 py-3 text-left"></th>
@@ -465,6 +465,12 @@
                       {{ this.singleItem.notes}}
                     </span>
                     </div>
+                      <div class="col-span-2 ">
+                      <label for="singleCode" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Code</label>
+                      <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
+                      {{ this.itemsSingle.idAnimal }}
+                    </span>
+                    </div>
                     <div class="col-span-2 ">
                       <label for="singleCode" class="block mb-2 text-base font-medium text-gray-900 dark:text-stone-200">Animal Name</label>
                       <span type="text" id="singleCode"  class="bg-gray-50 border border-emerald-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-stone-200 dark:focus:ring-primary-500 dark:focus:border-primary-500" readonly>
@@ -586,7 +592,7 @@ export default {
   data() {
     return {
       currentPage: 1,    // trenutna stranica
-      itemsPerPage: 15,
+      itemsPerPage: 6,
        userRole: localStorage.getItem('userRole'),  
        generalSearchQuery: '',
       loadingError:false,
@@ -629,7 +635,7 @@ paginatedItems() {
    filteredItems() {
     const generalQuery = this.generalSearchQuery?.toLowerCase().trim() || '';
 
-    return this.items.filter(item => {
+    const filtered = this.items.filter(item => {
       const startTimeMatch = this.formatDate(item.startTime)?.toLowerCase().includes(generalQuery);
       const endTimeMatch = this.formatDate(item.endTime)?.toLowerCase().includes(generalQuery);
       const typeMatch = item.typeOfVisit?.toLowerCase().includes(generalQuery);
@@ -638,6 +644,11 @@ paginatedItems() {
 
       return startTimeMatch || endTimeMatch || typeMatch || notesMatch ||animalId;
     });
+      // onda sortiramo po startTime, najnoviji prvi
+  filtered.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
+
+  // i tek sada vraćamo rezultat
+  return filtered;
   }
   },
   mounted() {

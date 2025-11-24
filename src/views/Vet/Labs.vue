@@ -40,7 +40,7 @@
 
       <!-- Table -->
       <div class="overflow-x-auto bg-[#1a1a1a]/80 rounded-2xl border border-gray-800 shadow-xl">
-        <table class="min-w-full divide-y divide-gray-800">
+        <table class="min-w-full text-left text-sm text-gray-300">
           <thead class="bg-gray-900 text-emerald-300 uppercase text-sm">
             <tr>
               <th class="px-5 py-3 text-left font-semibold">Animal ID</th>

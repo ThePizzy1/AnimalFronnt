@@ -2,7 +2,7 @@
   <div class="flex">
     <!-- Navigacija -->
     <div class="w-1/6 text-stone-200 p-4 rounded-l-lg">
-      <component :is="role === 'Admin' ? 'AdminNavigation' : 'WorkerNavigation'" />
+      <component :is="role === 'Menager' ? 'WorkerNavigation' : 'AdminNavigation'" />
     </div>
 
     <!-- Glavni dio -->
@@ -43,7 +43,7 @@
         <table
           class="w-full border-separate border-spacing-y-4 bg-[#0e0e0e] rounded-xl p-4 shadow-md"
         >
-          <thead>
+          <thead class="bg-gray-900 text-emerald-300 uppercase text-xs">
             <tr class="text-left text-gray-400 text-xs md:text-sm uppercase tracking-wider">
               <th class="px-6 py-3"></th>
               <th class="px-6 py-3">IBAN</th>

@@ -171,15 +171,25 @@ const fetchUserDetails = async (userId) => {
 };
 
 onMounted(() => {
-  // Check if the page has been reloaded before
-  if (!localStorage.getItem('pageReloaded')) {
-    // Set flag in localStorage to indicate that the page has been reloaded
-    localStorage.setItem('pageReloaded', 'true');
-    // Reload the page
+  // Ako flag ne postoji, znači da je prvo učitavanje
+  if (!sessionStorage.getItem('cacheCleared')) {
+    // Briše sve što možeš
+    localStorage.clear();
+    sessionStorage.clear();
+    caches.keys().then(names => {
+      for (let name of names) caches.delete(name);
+    });
+
+    // Postavlja flag da se reload izvrši samo jednom
+    sessionStorage.setItem('cacheCleared', 'true');
+
+    // Reload stranice
     window.location.reload();
   } else {
-    // Clear flag to allow future reloads
-    localStorage.removeItem('pageReloaded');
+    // Posle reload-a, brišemo flag da se može ponovo koristiti sledeći put
+    sessionStorage.removeItem('cacheCleared');
   }
 });
+
+
 </script>

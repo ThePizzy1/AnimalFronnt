@@ -89,10 +89,10 @@
         </div>
 
         <!-- Table -->
-        <div class="overflow-x-auto bg-[#1a1a1a]/80 rounded-2xl border border-gray-800 shadow-xl">
-          <table class="min-w-full divide-y divide-gray-800">
-            <thead>
-              <tr class="text-gray-400 uppercase text-sm tracking-wide">
+         <div class="overflow-x-auto rounded-xl border border-gray-800 shadow-inner">
+          <table class="min-w-full text-left text-sm text-gray-300">
+            <thead class="bg-gray-900 text-emerald-300 uppercase text-xs">
+             <tr>
                 <th class="px-4 py-3 text-center"></th>
                 <th class="px-4 py-3 text-center font-semibold">Name</th>
                 <th class="px-4 py-3 text-center font-semibold">Vet</th>
@@ -226,7 +226,8 @@
               <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4z" />
             </svg>
             <svg v-if="!this.userExists && this.userExists!=null && this.username" class="w-5 h-5 fill-red-500" viewBox="0 0 384 512">
-              <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 41.4 361.4z" />
+              <path     d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+               />
             </svg>
           </div>
         </div>
@@ -255,11 +256,12 @@
             class="w-full bg-transparent border border-emerald-700 text-gray-100 rounded-xl px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
           />
           <div>
-            <svg v-if="this.animalExists && this.animalExists!=null && this.code" class="w-5 h-5 fill-yellow-400" viewBox="0 0 448 512">
-              <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256z" />
+          <svg v-if="this.animalExists  && code" class="w-5 h-5 fill-yellow-400" viewBox="0 0 448 512">
+              <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4z" />
             </svg>
-            <svg v-if="!this.animalExists && this.animalExists!=null && this.code" class="w-5 h-5 fill-red-500" viewBox="0 0 384 512">
-              <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3L41.4 361.4z" />
+            <svg v-if="!this.animalExists  && code" class="w-5 h-5 fill-red-500" viewBox="0 0 384 512">
+              <path     d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+              />
             </svg>
           </div>
         </div>
@@ -325,7 +327,7 @@
         <select
           v-model="selected"
           id="category"
-          class="w-full bg-transparent border border-emerald-700 text-gray-100 rounded-xl px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+          class="w-full bg-neutral-900 border border-emerald-700 text-gray-100 rounded-xl px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
         >
           <option disabled value="">Select Frequency</option>
           <option value="Daily">Daily</option>
@@ -430,7 +432,7 @@
         <select
           v-model="selectedUpdate"
           id="frequency"
-          class="w-full bg-transparent border border-emerald-700 text-gray-100 rounded-xl px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+          class="w-full bg-gray-500 border border-emerald-700 text-gray-100 rounded-xl px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
         >
           <option disabled value="">Select Frequency</option>
           <option value="Daily">Daily</option>
@@ -530,7 +532,12 @@
       <div class="col-span-2 mt-2">
         <h4 class="text-lg font-semibold text-emerald-400 border-b border-gray-700 pb-1 mb-3">Animal Info</h4>
       </div>
-
+   <div class="col-span-2">
+        <label class="block text-sm font-medium text-gray-400 mb-1">Code</label>
+        <div class="w-full bg-transparent border border-emerald-700 rounded-xl px-3 py-2">
+          {{ itemsSingle.idAnimal }}
+        </div>
+      </div>
       <div class="col-span-2">
         <label class="block text-sm font-medium text-gray-400 mb-1">Animal Name</label>
         <div class="w-full bg-transparent border border-emerald-700 rounded-xl px-3 py-2">
@@ -635,7 +642,7 @@
     data() {
     return {
         currentPage: 1,
-        itemsPerPage: 15,
+        itemsPerPage: 6,
        userRole: localStorage.getItem('userRole'),  
        generalSearchQuery: '',
       loadingError:false,

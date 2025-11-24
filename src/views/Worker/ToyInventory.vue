@@ -137,7 +137,7 @@
 
     <div class="overflow-x-auto mt-6 custom-scrollbar">
   <table class="w-full border-separate border-spacing-y-3 bg-[#0e0e0e] rounded-xl shadow-lg">
-    <thead>
+    <thead class="bg-gray-900 text-emerald-300 uppercase text-xs">
       <tr class="text-gray-400 text-xs md:text-sm uppercase tracking-wider">
         <th class="px-6 py-3"></th>
         <th class="px-6 py-3 text-center">Brand Name</th>
@@ -277,7 +277,7 @@
 
 <!-- 🟢 ADD TOY MODAL -->
 <div v-if="add" class="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
-  <div class="bg-[#0e0e0e] rounded-xl shadow-xl border border-gray-700/50 w-full max-w-md p-6">
+  <div class="bg-[#0e0e0e] rounded-xl shadow-xl border border-gray-700/50 w-full max-w-lg p-6 overflow-y-auto max-h-[90vh] custom-scrollbar">
     <!-- HEADER -->
     <div class="flex justify-between items-center mb-4">
       <h3 class="text-xl font-semibold text-white">Add Toy</h3>
@@ -602,7 +602,7 @@ export default {
       },
       pagination: {
   currentPage: 1,
-  itemsPerPage: 15, 
+  itemsPerPage: 6, 
 },
       // Početno stanje učitavanja
     };
@@ -670,19 +670,18 @@ goToPage(page) {
     },
    async handleSubmit() {
   try {
-    // 1️⃣ Izračun troška
     const quantity = parseInt(this.quantityAdd);
     const price = parseFloat(this.priceAdd);
     const totalCost = parseFloat((quantity * price).toFixed(4));
 
-    // 2️⃣ Dohvati trenutni balans (ID = 2)
-    const balanceResponse = await instance.get("balans/2");
+    // 1️⃣ Dohvati trenutni balans (ID = 1)
+    const balanceResponse = await instance.get("animal/balans/2");
     let currentBalance = parseFloat(balanceResponse.data.balance);
 
     if (isNaN(currentBalance)) currentBalance = 0;
     currentBalance = parseFloat(currentBalance.toFixed(4));
 
-    // 3️⃣ Provjera ima li dovoljno novca
+    // 2️⃣ Provjeri ima li dovoljno novca
     if (currentBalance < totalCost) {
       Swal.fire({
         title: "Not enough funds!",
@@ -692,25 +691,25 @@ goToPage(page) {
       return;
     }
 
-    // 4️⃣ Izračun novog balansa
+    // 3️⃣ Izračunaj i zaokruži novi balans
     const newBalance = parseFloat((currentBalance - totalCost).toFixed(4));
 
-    console.log(`Current balance: ${currentBalance}, total cost: ${totalCost}`);
+    console.log(`Current balance: ${currentBalance}, totalCost: ${totalCost}`);
     console.log(`Updated balance: ${currentBalance} -> ${newBalance}`);
 
-    // 5️⃣ Ažuriraj balans u bazi
-    await instance.put("updateBalansDomain", {
-      id: 2,
+    // 4️⃣ Ažuriraj balans u bazi
+    await instance.put("animal/updateBalansDomain", {
+      id:2,
       balance: newBalance,
     });
 
-    // 6️⃣ Dodaj transakciju
-    await instance.post("addTransactions", {
-      iban: null, // vanjski račun — nema IBAN-a za ovu transakciju
+    // 5️⃣ Dodaj transakciju
+    await instance.post("animal/addTransactions", {
+      iban: null, // vanjski IBAN (nema)
       ibanAnimalShelter: balanceResponse.data.iban ? balanceResponse.data.iban.toString() : null,
       type: "Toy Purchase",
       cost: totalCost,
-      purpose: `Purchased ${quantity} toy(s) at ${price.toFixed(2)} € each`,
+      purpose: `Purchased ${quantity} toy items (${this.nameAdd})`,
     });
 
     // 7️⃣ Dodaj igračku u bazu
@@ -764,55 +763,57 @@ goToPage(page) {
     
   async increment(id) {
   try {
-    // 1️⃣ Nađi igračku koja se povećava
-    const toy = this.items.find(item => item.id === id);
-    if (!toy) {
+   const food = this.items.find(item => item.id === id);
+    if (!food) {
       Swal.fire({
         title: "Error!",
-        text: "Toy not found.",
+        text: "Toy item not found.",
         icon: "error",
       });
       return;
     }
 
-    const toyPrice = parseFloat(toy.price);
+    const foodPrice = parseFloat(food.price);
 
-    // 2️⃣ Dohvati balans (ID = 2)
-    const balanceResponse = await instance.get("balans/2");
-    let currentBalance = parseFloat(balanceResponse.data.balance);
+    // 2️⃣ Dohvati trenutni balans i IBAN
+    const balanceResponse = await instance.get("animal/balans/2");
+    let { balance, iban } = balanceResponse.data;
 
+    let currentBalance = parseFloat(balance);
+    console.log(`Current balance: ${currentBalance}, Toy price: ${foodPrice}`);
     if (isNaN(currentBalance)) currentBalance = 0;
+
+    // 3️⃣ Zaokruži na 4 decimale
     currentBalance = parseFloat(currentBalance.toFixed(4));
 
-    // 3️⃣ Provjeri ima li dovoljno novca
-    if (currentBalance < toyPrice) {
+    // 4️⃣ Provjeri ima li dovoljno sredstava
+    if (currentBalance < foodPrice) {
       Swal.fire({
         title: "Not enough funds!",
-        text: `You need ${toyPrice.toFixed(2)} €, but only have ${currentBalance.toFixed(2)} € available.`,
+        text: `You need ${foodPrice.toFixed(2)} €, but only have ${currentBalance.toFixed(2)} € available.`,
         icon: "error",
       });
       return;
     }
 
-    // 4️⃣ Izračunaj novi balans (zaokružen na 4 decimale)
-    const newBalance = parseFloat((currentBalance - toyPrice).toFixed(4));
+    // 5️⃣ Izračunaj novi balans (zaokružen na 4 decimale)
+    const newBalance = parseFloat((currentBalance - foodPrice).toFixed(4));
 
-    console.log(`Current balance: ${currentBalance}, Toy price: ${toyPrice}`);
-    console.log(`Updated balance: ${currentBalance} -> ${newBalance}`);
-
-    // 5️⃣ Ažuriraj balans u bazi
-    await instance.put("updateBalansDomain", {
+    // 6️⃣ Ažuriraj balans u bazi
+    await instance.put("animal/updateBalansDomain", {
       id: 2,
       balance: newBalance,
     });
 
-    // 6️⃣ Dodaj transakciju
-    await instance.post("addTransactions", {
-      iban: null, // vanjski IBAN — nema
-      ibanAnimalShelter: balanceResponse.data.iban ? balanceResponse.data.iban.toString() : null,
+    console.log(`Updated balance: ${currentBalance} → ${newBalance}`);
+
+    // 7️⃣ Dodaj transakciju
+    await instance.post("animal/addTransactions", {
+      iban: null, // vanjski račun
+      ibanAnimalShelter: iban ? iban.toString() : null, // shelter račun
       type: "Toy Purchase",
-      cost: toyPrice,
-      purpose: `Purchased 1 toy (${toy.name})`,
+      cost: foodPrice,
+      purpose: `Purchased 1 food item (${food.name})`,
     });
 
     // 7️⃣ Povećaj količinu igračke u bazi
@@ -842,7 +843,7 @@ goToPage(page) {
 
 
 
-},
+
     async fetchData() {
       try {
         this.loadingError = true;
@@ -875,7 +876,7 @@ goToPage(page) {
       this.$router.push(`/singleToy/${id}`);
       console.log(`Navigate to details of item with ID: ${id}`);
     },
-  
+  },
 
   watch: {
     filters: {

@@ -23,13 +23,13 @@
           <table
             class="w-full border-separate border-spacing-y-4 bg-[#0e0e0e] rounded-xl p-4 md:p-6 shadow-md"
           >
-            <thead>
+           <thead class="bg-gray-900 text-emerald-300 uppercase text-xs">
               <tr class="text-left text-gray-400 text-xs md:text-sm uppercase tracking-wider">
                 <th class="px-6 py-3"></th>
                 <th class="px-6 py-3">IBAN</th>
                 <th class="px-6 py-3">Shelter IBAN</th>
                 <th class="px-6 py-3">Type</th>
-                <th class="px-6 py-3">Date</th>
+            
                 <th class="px-6 py-3">Cost</th>
                 <th class="px-6 py-3">Purpose</th>
               </tr>
@@ -60,7 +60,7 @@
                 <td class="px-6 py-5 text-white font-semibold">{{ item.iban }}</td>
                 <td class="px-6 py-5 text-gray-300">{{ item.ibanAnimalShelter }}</td>
                 <td class="px-6 py-5 text-gray-300">{{ item.type }}</td>
-                <td class="px-6 py-5 text-gray-300">{{ formatDate(item.date) }}</td>
+               
                 <td class="px-6 py-5 text-emerald-400 font-bold">{{ item.cost }} €</td>
                 <td class="px-6 py-5 text-gray-300">{{ item.purpose }}</td>
               </tr>

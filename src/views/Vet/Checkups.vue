@@ -77,9 +77,9 @@
 
       <!-- Table -->
       <div class="overflow-x-auto bg-[#1a1a1a]/80 rounded-2xl border border-gray-800 shadow-xl">
-        <table class="min-w-full divide-y divide-gray-800">
-          <thead>
-            <tr class="text-gray-400 uppercase text-sm tracking-wide">
+        <table class="min-w-full text-left text-sm text-gray-300">
+          <thead class="bg-gray-900 text-emerald-300 uppercase text-xs">
+           <tr>
               <th class="px-4 py-3 text-center"></th>
               <th class="px-4 py-3 text-center font-semibold">Start Time</th>
               <th class="px-4 py-3 text-center font-semibold">End Time</th>
@@ -553,7 +553,12 @@
           <div class="col-span-2 border-t border-gray-800 pt-4">
             <h4 class="text-emerald-400 font-semibold text-lg mb-2">Animal Info</h4>
           </div>
-
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-400 mb-2">Code</label>
+            <div class="bg-[#1a1a1a] border border-gray-700 rounded-lg px-3 py-2">
+              {{ itemsSingle.idAnimal }}
+            </div>
+          </div>
           <div class="col-span-2">
             <label class="block text-sm font-medium text-gray-400 mb-2">Name</label>
             <div class="bg-[#1a1a1a] border border-gray-700 rounded-lg px-3 py-2">
@@ -676,7 +681,7 @@ export default {
   data() {
     return {
       currentPage: 1,
-itemsPerPage: 15,
+itemsPerPage: 6,
 
        userRole: localStorage.getItem('userRole'),  
        generalSearchQuery: '',
@@ -715,19 +720,26 @@ paginatedItems() {
   return this.filteredItems.slice(start, start + this.itemsPerPage);
 },
 
-    filteredItems() {
-    const generalQuery = this.generalSearchQuery?.toLowerCase().trim() || '';
+   filteredItems() {
+  const generalQuery = this.generalSearchQuery?.toLowerCase().trim() || '';
 
-    return this.items.filter(item => {
-      const startTimeMatch = this.formatDate(item.startTime)?.toLowerCase().includes(generalQuery);
-      const endTimeMatch = this.formatDate(item.endTime)?.toLowerCase().includes(generalQuery);
-      const typeMatch = item.typeOfVisit?.toLowerCase().includes(generalQuery);
-      const notesMatch = item.notes?.toLowerCase().includes(generalQuery);
-      const idAnimal = item.animalId?.toString().toLowerCase().includes(generalQuery);
+  // prvo filtriramo
+  const filtered = this.items.filter(item => {
+    const startTimeMatch = this.formatDate(item.startTime)?.toLowerCase().includes(generalQuery);
+    const endTimeMatch = this.formatDate(item.endTime)?.toLowerCase().includes(generalQuery);
+    const typeMatch = item.typeOfVisit?.toLowerCase().includes(generalQuery);
+    const notesMatch = item.notes?.toLowerCase().includes(generalQuery);
+    const idAnimal = item.animalId?.toString().toLowerCase().includes(generalQuery);
 
-      return startTimeMatch || endTimeMatch || typeMatch || notesMatch || idAnimal;
-    });
-  }
+    return startTimeMatch || endTimeMatch || typeMatch || notesMatch || idAnimal;
+  });
+
+  // onda sortiramo po startTime, najnoviji prvi
+  filtered.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
+
+  // i tek sada vraćamo rezultat
+  return filtered;
+}
   },
   mounted() {
     this.fetchData();

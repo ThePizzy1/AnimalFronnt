@@ -47,9 +47,9 @@
       </div>
 
       <!-- Table -->
-      <section class="bg-[#121212] p-6 rounded-xl border border-gray-800 shadow-lg overflow-x-auto">
-        <table class="min-w-full text-left border-collapse">
-          <thead>
+      <div class="overflow-x-auto rounded-xl border border-gray-800 shadow-inner">
+     <table class="min-w-full text-left text-sm text-gray-300">
+          <thead class="bg-gray-900 text-emerald-300 uppercase text-xs">
             <tr class="text-emerald-400 border-b border-gray-700">
               <th class="py-3 px-4 font-semibold"></th>
               <th class="py-3 px-4 font-semibold">Animal Code</th>
@@ -174,7 +174,7 @@
             Next
           </button>
         </div>
-      </section>
+      </div>
     </main>
   </div>
 
@@ -528,7 +528,7 @@
       return {
            // PAGINACIJA
       currentPage: 1,
-      itemsPerPage: 15,
+      itemsPerPage: 6,
          userRole: localStorage.getItem('userRole'),  
          generalSearchQuery: '',
         remuveitem: null,

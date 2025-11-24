@@ -75,7 +75,7 @@
         <!-- Table -->
         <div class="overflow-x-auto rounded-xl border border-gray-800 shadow-inner">
           <table class="min-w-full text-left text-sm text-gray-300">
-            <thead class="bg-gray-900 text-emerald-300 uppercase text-xs">
+             <thead class="bg-gray-900 text-emerald-300 uppercase text-xs">
               <tr>
                 <th class="px-6 py-3"></th>
                 <th class="px-6 py-3">Start Time</th>
@@ -210,12 +210,8 @@
 
 
 <!-- Add Animal Modal -->
-<div
-  v-if="add"
-  class="fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center z-50 transition-all duration-300"
->
-  <div class="relative w-full max-w-lg bg-gray-900 border border-gray-700 rounded-2xl shadow-2xl p-6">
-    <!-- Header -->
+ <div v-if="add" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+ <div class="bg-[#0d0d0d] rounded-2xl shadow-lg border border-emerald-700 w-full max-w-lg p-6 space-y-4">
     <div class="flex items-center justify-between border-b border-gray-700 pb-3 mb-5">
       <h3 class="text-xl font-semibold text-emerald-400">Add Animal to Quarantine</h3>
       <button
@@ -237,70 +233,56 @@
 
     <!-- Body -->
     <form @submit.prevent="handleSubmit" class="grid grid-cols-2 gap-4">
-      <!-- Animal Code -->
-      <div class="col-span-2 sm:col-span-1">
-        <label for="code" class="block mb-1 text-sm font-semibold text-emerald-300">Animal Code</label>
-        <div class="flex items-center">
-          <input
-            type="text"
-            id="code"
-            v-model="code"
-            class="w-full bg-gray-800 border border-gray-700 text-gray-300 rounded-lg px-3 py-2 focus:ring-emerald-500 focus:border-emerald-500 placeholder-gray-500"
-          />
-          <div class="ml-2">
-            <!-- Green Check -->
+    
+             <div class="  col-span-2">
+          <label for="code" class="block mb-2 text-sm font-semibold text-emerald-300">Animal Code:</label>
+          <div class="flex items-center gap-2">
+            <input
+              id="code"
+              v-model="code"
+              type="text"
+              placeholder="Enter animal ID..."
+              class="w-full rounded-full border border-gray-700 bg-[#1a1a1a] text-gray-200 px-4 py-2.5 text-sm focus:ring-emerald-500 focus:border-emerald-500"
+            />
+             <div class="flex-shrink-0">
+              <svg
+                v-if="animalExists && code"
+                class="w-5 h-5 text-yellow-300"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 448 512"
+              >
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+              </svg>
+
+              <svg
+                v-else-if="!animalExists && code"
+                class="w-5 h-5 text-red-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 384 512"
+              >
+                <path
+                  d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+              </svg>
+            </div>
             <svg
-              v-if="this.animalExists && this.animalExists!=null && this.code"
-              class="w-5 h-5 fill-yellow-400"
-              viewBox="0 0 448 512"
+              @click="checkAnimal"
+              class="w-6 h-6 text-emerald-400 cursor-pointer hover:text-emerald-300 transition"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
             >
-              <path
-                d="M438.6 105.4c12.5 12.5 12.5 32.8 0 
-                45.3l-256 256c-12.5 12.5-32.8 
-                12.5-45.3 0l-128-128c-12.5-12.5-
-                12.5-32.8 0-45.3s32.8-12.5 
-                45.3 0L160 338.7 393.4 
-                105.4c12.5-12.5 32.8-12.5 45.3 0z"
-              />
-            </svg>
-            <!-- Red X -->
-            <svg
-              v-if="!this.animalExists && this.animalExists!=null && this.code"
-              class="w-5 h-5 fill-red-600"
-              viewBox="0 0 384 512"
-            >
-              <path
-                d="M342.6 150.6c12.5-12.5 12.5-32.8 
-                0-45.3s-32.8-12.5-45.3 0L192 
-                210.7 86.6 105.4c-12.5-12.5-
-                32.8-12.5-45.3 0s-12.5 32.8 
-                0 45.3L146.7 256 41.4 
-                361.4c-12.5 12.5-12.5 32.8 
-                0 45.3s32.8 12.5 45.3 0L192 
-                301.3 297.4 406.6c12.5 12.5 
-                32.8 12.5 45.3 0s12.5-32.8 
-                0-45.3L237.3 256 342.6 
-                150.6z"
-              />
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-3.5-3.5M17 10a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
-        </div>
+        
       </div>
 
-      <!-- Check Button -->
-      <div class="col-span-2 sm:col-span-1 flex flex-col justify-end">
-        <label class="block mb-1 text-sm font-semibold text-emerald-300">Check</label>
-        <svg
-          @click="checkAnimal"
-          class="w-7 h-7 text-emerald-400 hover:text-emerald-500 cursor-pointer transition"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 
-          0 7 7 0 0 1 14 0Z" />
-        </svg>
-      </div>
+  
 
       <!-- Start Date -->
       <div class="col-span-2 sm:col-span-1">
@@ -309,7 +291,7 @@
           type="date"
           v-model="startTimeAdd"
           id="dateStartAdd"
-          class="w-full bg-gray-800 border border-gray-700 text-gray-300 rounded-lg px-3 py-2 focus:ring-emerald-500 focus:border-emerald-500"
+         class="w-full rounded-full border border-gray-700 bg-[#1a1a1a] text-gray-200 px-4 py-2.5 text-sm focus:ring-emerald-500 focus:border-emerald-500"
           required
         />
       </div>
@@ -321,7 +303,7 @@
           type="date"
           v-model="endTimeAdd"
           id="dateEndAdd"
-          class="w-full bg-gray-800 border border-gray-700 text-gray-300 rounded-lg px-3 py-2 focus:ring-emerald-500 focus:border-emerald-500"
+         class="w-full rounded-full border border-gray-700 bg-[#1a1a1a] text-gray-200 px-4 py-2.5 text-sm focus:ring-emerald-500 focus:border-emerald-500"
           required
         />
       </div>
@@ -334,7 +316,7 @@
           v-model="notesAdd"
           rows="3"
           placeholder="Write notes here..."
-          class="w-full bg-gray-800 border border-gray-700 text-gray-300 rounded-lg px-3 py-2 focus:ring-emerald-500 focus:border-emerald-500"
+         class="w-full rounded-full border border-gray-700 bg-[#1a1a1a] text-gray-200 px-4 py-2.5 text-sm focus:ring-emerald-500 focus:border-emerald-500"
         ></textarea>
       </div>
 
@@ -430,6 +412,12 @@
       </div>
 
       <!-- Animal info -->
+        <div class="col-span-2">
+        <label class="block mb-1 text-sm font-semibold text-emerald-300">Code</label>
+        <div class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2">
+          {{ itemsSingle.idAnimal }}
+        </div>
+      </div>
       <div class="col-span-2">
         <label class="block mb-1 text-sm font-semibold text-emerald-300">Animal Name</label>
         <div class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2">
@@ -537,7 +525,7 @@ export default {
   data() {
     return {
       currentPage: 1,     // trenutna stranica
-    itemsPerPage: 15,   
+    itemsPerPage: 6,   
        userRole: localStorage.getItem('userRole'),  
        generalSearchQuery: '',   
       loadingError:false,
@@ -564,7 +552,7 @@ export default {
      filteredItems() {
     const generalQuery = this.generalSearchQuery?.toLowerCase().trim() || '';
 
-    return this.items.filter(item => {
+    const filtered = this.items.filter(item => {
       const startTimeMatch = this.formatDate(item.startTime)?.toLowerCase().includes(generalQuery);
       const endTimeMatch = this.formatDate(item.endTime)?.toLowerCase().includes(generalQuery);
       const typeMatch = item.typeOfVisit?.toLowerCase().includes(generalQuery);
@@ -572,6 +560,10 @@ export default {
       const idAnimal = item.animalId?.toString().toLowerCase().includes(generalQuery);
       return startTimeMatch || endTimeMatch || typeMatch || notesMatch || idAnimal;
     });
+      filtered.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
+
+  // i tek sada vraćamo rezultat
+  return filtered;
   },
 
   // 🔽 DODAJ OVO

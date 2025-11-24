@@ -113,7 +113,7 @@
       <!-- Table -->
       <div class="overflow-x-auto border border-gray-800 rounded-xl shadow-2xl">
         <table class="min-w-full border-collapse">
-          <thead class="bg-[#1a1a1a]">
+           <thead class="bg-gray-900 text-emerald-300 uppercase text-xs">
             <tr>
               <th class="px-5 py-3 text-center text-sm font-bold text-emerald-400 uppercase"></th>
               <th class="px-5 py-3 text-left text-sm font-bold text-emerald-400 uppercase">Name</th>

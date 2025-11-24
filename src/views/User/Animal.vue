@@ -197,6 +197,7 @@ export default defineComponent({
       animal: null,
       additionalDetails: {},
       showAdoptForm: false,
+      userId: localStorage.getItem('userId'),
       agreed: false
     };
   },
@@ -228,6 +229,7 @@ export default defineComponent({
    
    
       },
+          
     async fetchAnimalDetails(id) {
       try {
         this.loadingError = true;
@@ -277,7 +279,27 @@ export default defineComponent({
   if (!this.agreed) return;
 
   const id = parseInt(this.$route.params.id);
-  const userId = parseInt(localStorage.getItem('adopterid'));
+  const response = await instance.get(`animal/adopter/${this.userId}`, {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        });
+        this.user = response.data;
+        console.log(this.user);
+        if(this.user!=null) {
+                setTimeout(() => {
+                this.loadingError = false; 
+                }, 1000)
+                }
+        localStorage.setItem('adopterid', this.user.id);
+          if(this.adopterId!=this.user.id) {
+         localStorage.setItem('adopterid', this.user.id);
+        
+         
+        }
+
+         console.log(this.user.id);
+
 
   try {
     // 1. Update record
@@ -290,7 +312,7 @@ export default defineComponent({
     // 2. Save adoption data
     const adoptionData = {
       animalId: id,
-      adopterId: userId,
+      adopterId: this.user.id,
       adoptionDate: new Date().toISOString().split('T')[0]
     };
 
@@ -302,7 +324,7 @@ export default defineComponent({
     console.log("Status updated");
 
     // 4. Increment adopter's adoption count
-    await instance.put(`animal/incrementAdopted/${userId}`);
+    await instance.put(`animal/incrementAdopted/${this.user.id}`);
     console.log("Adoption count incremented");
 
     // 5. Success alert

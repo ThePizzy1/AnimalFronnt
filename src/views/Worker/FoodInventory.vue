@@ -135,7 +135,7 @@
 
     <div class="overflow-x-auto mt-6 custom-scrollbar">
   <table class="w-full border-separate border-spacing-y-3 bg-[#0e0e0e] rounded-xl shadow-lg">
-    <thead>
+    <thead class="bg-gray-900 text-emerald-300 uppercase text-xs">
       <tr class="text-gray-400 text-xs md:text-m uppercase tracking-wider">
         <th class="px-6 py-3"></th>
         <th class="px-6 py-3 text-center">Brand Name</th>
@@ -725,7 +725,7 @@ export default {
       // 📄 Paginacija
       pagination: {
         currentPage: 1,
-        itemsPerPage: 15,
+        itemsPerPage: 6,
       },
     };
   },
@@ -902,7 +902,7 @@ async increment(id) {
       }
     },
 
-    // 🟩 DODAVANJE FOODA
+    // 🟩 DODAVANJE hrane
    async handleSubmit() {
   try {
     const quantity = parseInt(this.quantityAdd);

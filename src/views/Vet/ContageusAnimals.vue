@@ -78,9 +78,9 @@
 
         <!-- Table -->
         <div class="overflow-x-auto bg-[#1a1a1a]/80 rounded-2xl border border-gray-800 shadow-xl">
-          <table class="min-w-full divide-y divide-gray-800">
-            <thead>
-              <tr class="text-gray-400 uppercase text-sm tracking-wide">
+          <table class="min-w-full text-left text-sm text-gray-300">
+            <thead class="bg-gray-900 text-emerald-300 uppercase text-xs">
+             <tr>
                 <th class="px-4 py-3 text-center"></th>
                 <th class="px-4 py-3 text-center font-semibold">Disease</th>
                 <th class="px-4 py-3 text-center font-semibold">Date</th>
@@ -180,14 +180,48 @@
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-400 mb-1">Animal Code</label>
+          <label for="code" class="block mb-2 text-sm font-semibold text-emerald-300">Animal Code:</label>
           <div class="flex items-center gap-2">
-            <input type="text" v-model="code"
-              class="flex-1 bg-[#1a1a1a] border border-emerald-700 rounded-xl px-3 py-2 text-gray-200 focus:ring-2 focus:ring-emerald-500" />
-            <svg @click="checkAnimal" class="w-6 h-6 text-emerald-400 hover:text-emerald-300 cursor-pointer"
-              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+            <input
+              id="code"
+              v-model="code"
+              type="text"
+              placeholder="Enter animal ID..."
+              class="w-full rounded-full border border-gray-700 bg-[#1a1a1a] text-gray-200 px-4 py-2.5 text-sm focus:ring-emerald-500 focus:border-emerald-500"
+            />
+             <div class="flex-shrink-0">
+              <svg
+                v-if="animalExists && code"
+                class="w-5 h-5 text-yellow-300"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 448 512"
+              >
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+              </svg>
+
+              <svg
+                v-else-if="!animalExists && code"
+                class="w-5 h-5 text-red-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 384 512"
+              >
+                <path
+                  d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+              </svg>
+            </div>
+            <svg
+              @click="checkAnimal"
+              class="w-6 h-6 text-emerald-400 cursor-pointer hover:text-emerald-300 transition"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-3.5-3.5M17 10a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
         </div>
@@ -227,7 +261,10 @@
           <label class="block text-sm font-medium text-gray-400 mb-1">Date</label>
           <div class="border border-emerald-700 rounded-xl px-3 py-2">{{ formatDate(singleItem.startTime) }}</div>
         </div>
-
+<div>
+          <label class="block text-sm font-medium text-gray-400 mb-1">Code</label>
+          <div class="border border-emerald-700 rounded-xl px-3 py-2">{{ itemsSingle.idAnimal }}</div>
+        </div>
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-1">Animal Name</label>
           <div class="border border-emerald-700 rounded-xl px-3 py-2">{{ itemsSingle.name }}</div>

@@ -138,6 +138,7 @@ async fetchData() {
     this.animalRecords = recordsRes.data || [];
     console.log("Adopted:"+this.animals.length);
 
+
   } catch (err) {
     console.error("❌ Greška pri dohvaćanju:", err);
   }
@@ -242,6 +243,7 @@ async fetchData() {
       };
     },
 
+    
     // === Diseases ===
     buildDiseasesChart() {
       const byDisease = {};
@@ -250,7 +252,7 @@ async fetchData() {
         const recovered = r.complited === true || r.completed === true;
 
         if (!byDisease[disease]) byDisease[disease] = { infected: 0, recovered: 0 };
-        if (recovered) byDisease[disease].recovered++;
+        if (!r.contageus) byDisease[disease].recovered++;
         else byDisease[disease].infected++;
       }
 

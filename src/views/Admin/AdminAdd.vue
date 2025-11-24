@@ -1,7 +1,7 @@
 <template>
   <div class="flex  min-h-screen text-stone-200">
     <!-- Sidebar -->
-    <div class="w-1/6 p-4 bg-black border-r border-stone-600 backdrop-blur-md rounded-l-xl shadow-inner">
+    <div class="w-1/6  bg-black border-r border-stone-600 backdrop-blur-md rounded-l-xl shadow-inner">
       <AdminNavigation/>
     </div>
 
@@ -426,31 +426,43 @@
 
 
       <!-- Owner Info -->
-      <div class="mt-6 p-6 bg-stone-800/60 border border-stone-500/40 rounded-2xl shadow-inner backdrop-blur-md">
-        <h2 class="text-xl font-bold mb-4 text-stone-100">Owner Info</h2>
+     <!-- Owner Info -->
+<div class="mt-6 p-6 bg-stone-800/60 border border-stone-500/40 rounded-2xl shadow-inner backdrop-blur-md">
+  <h2 class="text-xl font-bold mb-4 text-stone-100">Owner Info</h2>
 
-        <label class="inline-flex items-center cursor-pointer mb-4">
-          <input type="checkbox" v-model="isEditable" class="sr-only peer" />
-          <div
-            class="relative w-11 h-6 bg-stone-600/60 peer-focus:ring-2 peer-focus:ring-stone-300 rounded-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:w-5 after:h-5 after:bg-stone-300 after:rounded-full after:transition-all peer-checked:bg-emerald-600 peer-checked:after:translate-x-full">
-          </div>
-          <span class="ml-3 text-stone-200 font-medium">Enable Editing</span>
-        </label>
+  <label class="inline-flex items-center cursor-pointer mb-4">
+    <input type="checkbox" v-model="isEditable" class="sr-only peer" />
+    <div
+      class="relative w-11 h-6 bg-stone-600/60 peer-focus:ring-2 peer-focus:ring-stone-300 rounded-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:w-5 after:h-5 after:bg-stone-300 after:rounded-full after:transition-all peer-checked:bg-emerald-600 peer-checked:after:translate-x-full">
+    </div>
+    <span class="ml-3 text-stone-200 font-medium">Enable Editing</span>
+  </label>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div v-for="field in [
-            {id:'ownerName', label:'Name', model:'ownerName'},
-            {id:'ownerSurname', label:'Surname', model:'ownerSurname'},
-            {id:'ownerOIB', label:'OIB', model:'ownerOIB'},
-            {id:'ownerPhoneNumber', label:'Phone Number', model:'ownerPhoneNumber'}
-          ]" :key="field.id">
-            <label :for="field.id" class="block font-semibold mb-2 text-stone-300">{{ field.label }}:</label>
-            <input :id="field.id" v-model="field.model" :disabled="!isEditable"
-              class="w-full py-2 px-3 border border-stone-400/40 rounded-full shadow-inner"
-              :class="isEditable ? 'bg-stone-700/50 text-stone-100 focus:ring-2 focus:ring-stone-300 focus:outline-none' : 'bg-stone-600/40 text-stone-400 cursor-not-allowed'" />
-          </div>
-        </div>
-      </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="mt-4">
+      <label for="ownerName" class="block font-semibold mb-2 text-stone-300">Name:</label>
+      <input type="text" id="ownerName" v-model="ownerName" :readonly="!isEditable"
+        class="w-full py-1.5 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-xl shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+    </div>
+    <div class="mt-4">
+      <label for="ownerSurname" class="block font-semibold mb-2 text-stone-300">Surname:</label>
+      <input type="text" id="ownerSurname" v-model="ownerSurname" :readonly="!isEditable"
+        class="w-full py-1.5 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-xl shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+    </div>
+    <div class="mt-4">
+      <label for="ownerOIB" class="block font-semibold mb-2 text-stone-300">OIB:</label>
+      <input type="number" id="ownerOIB" v-model="ownerOIB" :readonly="!isEditable"
+        class="w-full py-1.5 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-xl shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+    </div>
+    <div class="mt-4">
+      <label for="ownerPhoneNumber" class="block font-semibold mb-2 text-stone-300">Phone Number:</label>
+      <input type="tel" id="ownerPhoneNumber" v-model="ownerPhoneNumber" :readonly="!isEditable"
+        class="w-full py-1.5 px-3 bg-stone-700/50 text-stone-100 border border-stone-400/40 rounded-xl shadow-inner focus:ring-2 focus:ring-stone-300 focus:outline-none" />
+    </div>
+  </div>
+</div>
+
+     
 
       <!-- Found Info -->
       <div class="mt-6 p-6 bg-stone-800/60 border border-stone-500/40 rounded-2xl shadow-inner backdrop-blur-md">
